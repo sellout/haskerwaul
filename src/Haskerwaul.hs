@@ -40,6 +40,7 @@ module Haskerwaul
   , module Haskerwaul.Comonoid
   , module Haskerwaul.Cospan
   , module Haskerwaul.Day
+  , module Haskerwaul.Dioid
   , module Haskerwaul.Duoid
   , module Haskerwaul.Duoid.Normal
   , module Haskerwaul.Endofunctor
@@ -106,7 +107,6 @@ module Haskerwaul
   , module Haskerwaul.Semilattice.Bounded
   , module Haskerwaul.Semigroupoid
   , module Haskerwaul.Semiring
-  , module Haskerwaul.Semiring.Idempotent
   , module Haskerwaul.Semiring.Near
   , module Haskerwaul.Semiring.Pre
   , module Haskerwaul.Semiring.Pre.Near
@@ -159,6 +159,7 @@ import Haskerwaul.Comonad
 import Haskerwaul.Comonoid
 import Haskerwaul.Cospan
 import Haskerwaul.Day
+import Haskerwaul.Dioid
 import Haskerwaul.Duoid
 import Haskerwaul.Duoid.Normal
 import Haskerwaul.Endofunctor
@@ -225,7 +226,6 @@ import Haskerwaul.Semilattice
 import Haskerwaul.Semilattice.Bounded
 import Haskerwaul.Semigroupoid
 import Haskerwaul.Semiring
-import Haskerwaul.Semiring.Idempotent
 import Haskerwaul.Semiring.Near
 import Haskerwaul.Semiring.Pre
 import Haskerwaul.Semiring.Pre.Near

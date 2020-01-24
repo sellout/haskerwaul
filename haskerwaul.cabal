@@ -59,6 +59,7 @@ library
                     , Haskerwaul.Comonoid
                     , Haskerwaul.Cospan
                     , Haskerwaul.Day
+                    , Haskerwaul.Dioid
                     , Haskerwaul.Duoid
                     , Haskerwaul.Duoid.Normal
                     , Haskerwaul.Endofunctor
@@ -130,7 +131,6 @@ library
                     , Haskerwaul.Semilattice.Bounded
                     , Haskerwaul.Semigroupoid
                     , Haskerwaul.Semiring
-                    , Haskerwaul.Semiring.Idempotent
                     , Haskerwaul.Semiring.Near
                     , Haskerwaul.Semiring.Pre
                     , Haskerwaul.Semiring.Pre.Near
