@@ -3,10 +3,12 @@
 module Haskerwaul.Day where
 
 import           Data.Constraint ((:-)(..), Dict(..))
+import           Data.Either (Either(..))
 import           Data.Proxy (Proxy(..))
 
 import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Monoidal
+import Haskerwaul.Duoid.Components
 import Haskerwaul.Functor.Monoidal.Lax
 import Haskerwaul.Isomorphism
 import Haskerwaul.Object
@@ -75,3 +77,17 @@ instance (d ~ (->), Category c, Bifunctor d d d dt) =>
          (Day c ct dt) where
   bimap f g =
     FS (NT (\(Day t fn) -> Day (bimap (runNT (inclusion f)) (runNT (inclusion g)) t) fn))
+
+instance Semigroup (->) (,) a =>
+         Magma (NaturalTransformation (->)) (Day (->) (,) (,)) (Diamond (Either a)) where
+  op = NT (\(Day (Diamond fa, Diamond gb) fn) -> Diamond (case (fa, gb) of
+              (Left a,  Left a')  -> Left (op (a, a'))
+              (Left a,  Right _)  -> Left a
+              (Right _, Left a)   -> Left a
+              (Right b, Right b') -> Right (fn (b, b'))))
+
+-- | The `Semigroup` constraint here is redundant, but we should only have a
+--  `Star` instance when we have a `Diamond` instance.
+instance Semigroup (->) (,) a =>
+         Magma (NaturalTransformation (->)) (Day (->) (,) (,)) (Star (Either a)) where
+  op = NT (\(Day (Star fa, Star gb) fn) -> Star (runNT op (Day (fa, gb) fn)))

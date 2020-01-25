@@ -141,6 +141,9 @@ library
                     , Haskerwaul.Topos.Grothendieck
                     , Haskerwaul.Transformation.Natural
   other-modules:      Haskerwaul.Constraint
+                    , Haskerwaul.Duoid.Components
+                    , Haskerwaul.Lattice.Components
+                    , Haskerwaul.Semiring.Components
   -- other-extensions:
   build-depends:       base ^>=4.12.0.0
                      , constraints

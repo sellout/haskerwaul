@@ -6,9 +6,14 @@ module Haskerwaul.Quasigroup.Right
   , module Haskerwaul.Magma
   ) where
 
+import           Prelude (Integer)
+import qualified Prelude as Base (Num(..))
+import           Data.Int (Int)
+
 import Haskerwaul.Bifunctor
 import Haskerwaul.Magma
 import Haskerwaul.Semigroupoid
+import Haskerwaul.Semiring.Components
 import Haskerwaul.Subcategory.Full
 import Haskerwaul.Transformation.Natural
 
@@ -32,3 +37,9 @@ instance RightQuasigroup (NaturalTransformation2 (->)) CProd k =>
          CProd
          (FullSubcategory c k) where
   rightQuotient = NT2 FS . rightQuotient . bimap (NT2 inclusion) (NT2 inclusion)
+
+instance RightQuasigroup (->) (,) (Additive Int) where
+  rightQuotient (Add x, Add y) = Add (x Base.- y)
+
+instance RightQuasigroup (->) (,) (Additive Integer) where
+  rightQuotient (Add x, Add y) = Add (x Base.- y)
