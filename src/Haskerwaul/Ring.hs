@@ -9,6 +9,8 @@ module Haskerwaul.Ring
   , module Haskerwaul.Ring.Nonunital
   ) where
 
+import Data.Proxy (Proxy(..))
+
 import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Monoidal
 import Haskerwaul.Group
@@ -17,12 +19,16 @@ import Haskerwaul.Rig
 import Haskerwaul.Ring.Nonunital
 
 -- | https://ncatlab.org/nlab/show/ring
-class (AbelianGroup k t (Additive a), Rig k t a, NonunitalRing k t a) =>
-      Ring k t a
+class (AbelianGroup c t (Additive a), Rig c t a, NonunitalRing c t a) =>
+      Ring c t a
 
-instance (AbelianGroup k t (Additive a), Monoid k t (Multiplicative a)) =>
-         Ring k t a
+instance (AbelianGroup c t (Additive a), Monoid c t (Multiplicative a)) =>
+         Ring c t a
 
-subtract :: (k ~ (->), MonoidalCategory k t, Ring k t a, Bifunctor k k k t)
-         => t a a `k` a
+subtract :: (c ~ (->), MonoidalCategory c t, Ring c t a, Bifunctor c c c t)
+         => t a a `c` a
 subtract = sum . quotient . bimap Add Add
+
+negate :: (c ~ (->), t ~ (,), MonoidalCategory c t, Ring c t a)
+       => Proxy t -> a `c` a
+negate t = sum . inverse t . Add

@@ -45,6 +45,9 @@ module Haskerwaul
   , module Haskerwaul.Duoid.Normal
   , module Haskerwaul.Endofunctor
   , module Haskerwaul.Field
+  , module Haskerwaul.Field.Totalized
+  , module Haskerwaul.Field.Totalized.One
+  , module Haskerwaul.Field.Totalized.Zero
   , module Haskerwaul.Functor
   , module Haskerwaul.Functor.Closed.Cartesian
   , module Haskerwaul.Functor.Closed.Lax
@@ -73,6 +76,10 @@ module Haskerwaul
   , module Haskerwaul.Magma
   , module Haskerwaul.Magma.Commutative
   , module Haskerwaul.Magma.Unital
+  , module Haskerwaul.Meadow
+  , module Haskerwaul.Meadow.Cancellation
+  , module Haskerwaul.Meadow.NonInvolutive
+  , module Haskerwaul.Meadow.NonTrivial
   , module Haskerwaul.Module
   , module Haskerwaul.Module.Left
   , module Haskerwaul.Module.Right
@@ -164,6 +171,9 @@ import Haskerwaul.Duoid
 import Haskerwaul.Duoid.Normal
 import Haskerwaul.Endofunctor
 import Haskerwaul.Field
+import Haskerwaul.Field.Totalized
+import Haskerwaul.Field.Totalized.One
+import Haskerwaul.Field.Totalized.Zero
 import Haskerwaul.Functor
 import Haskerwaul.Functor.Closed.Cartesian
 import Haskerwaul.Functor.Closed.Lax
@@ -192,6 +202,10 @@ import Haskerwaul.Loop
 import Haskerwaul.Magma
 import Haskerwaul.Magma.Commutative
 import Haskerwaul.Magma.Unital
+import Haskerwaul.Meadow
+import Haskerwaul.Meadow.Cancellation
+import Haskerwaul.Meadow.NonInvolutive
+import Haskerwaul.Meadow.NonTrivial
 import Haskerwaul.Module
 import Haskerwaul.Module.Left
 import Haskerwaul.Module.Right

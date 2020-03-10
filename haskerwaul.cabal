@@ -64,6 +64,9 @@ library
                     , Haskerwaul.Duoid.Normal
                     , Haskerwaul.Endofunctor
                     , Haskerwaul.Field
+                    , Haskerwaul.Field.Totalized
+                    , Haskerwaul.Field.Totalized.One
+                    , Haskerwaul.Field.Totalized.Zero
                     , Haskerwaul.Functor
                     , Haskerwaul.Functor.Closed.Cartesian
                     , Haskerwaul.Functor.Closed.Lax
@@ -94,6 +97,10 @@ library
                     , Haskerwaul.Magma
                     , Haskerwaul.Magma.Commutative
                     , Haskerwaul.Magma.Unital
+                    , Haskerwaul.Meadow
+                    , Haskerwaul.Meadow.Cancellation
+                    , Haskerwaul.Meadow.NonInvolutive
+                    , Haskerwaul.Meadow.NonTrivial
                     , Haskerwaul.Module
                     , Haskerwaul.Module.Left
                     , Haskerwaul.Module.Right
