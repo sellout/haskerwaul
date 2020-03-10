@@ -23,7 +23,7 @@ import Haskerwaul.Ring
 import Haskerwaul.Skewfield
 import Haskerwaul.Subcategory.Full
 
--- | https://ncatlab.org/nlab/show/cartesian+closed+category
+-- | [nLab](https://ncatlab.org/nlab/show/cartesian+closed+category)
 --
 --   AKA, "CCC". Operators basically require a CCC, since they tend to be
 --   curried versions of morphisms from a product.

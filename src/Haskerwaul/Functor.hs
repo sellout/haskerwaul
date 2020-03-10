@@ -11,13 +11,13 @@ import           Data.Functor.Const (Const(..))
 import Haskerwaul.Object
 import Haskerwaul.Semigroupoid
 
--- | https://ncatlab.org/nlab/show/functor
-class FOb (Ob j) (Ob k) f => Functor j k f where
-  map :: (Ob j a, Ob j b) => a `j` b -> f a `k` f b
+-- | [nLab](https://ncatlab.org/nlab/show/functor)
+class FOb (Ob c) (Ob d) f => Functor c d f where
+  map :: (Ob c a, Ob c b) => a `c` b -> f a `d` f b
 
-instance (j ~ (->), k ~ (->), Semigroupoid k, Functor j k f, Functor i j g) =>
-         Functor i k (Compose f g) where
-  map f = Compose . map @j (map @_ @j f) . getCompose
+instance (b ~ (->), c ~ (->), Semigroupoid c, Functor b c f, Functor a b g) =>
+         Functor a c (Compose f g) where
+  map f = Compose . map @b (map @_ @b f) . getCompose
 
 -- | __NB__: This instance only exists to eliminate the ambiguity between the
 --          `Base.Functor` constrained instance and the above instance when
@@ -26,9 +26,9 @@ instance {-# overlapping #-} (Functor (->) (->) f, Functor (->) (->) g) =>
          Functor (->) (->) (Compose f g) where
   map f = Compose . map @(->) (map @_ @(->) f) . getCompose
 
-instance (j ~ (->), k ~ (->), Semigroupoid k) =>
-         BOb (Functor j k) (Functor i j) (Functor i k) Compose where
-  inOp = Sub Dict
+instance (b ~ (->), c ~ (->), Semigroupoid c) =>
+         BOb (Functor b c) (Functor a b) (Functor a c) Compose where
+  inB = Sub Dict
 
 instance Functor (:-) (->) Dict where
   map = mapDict

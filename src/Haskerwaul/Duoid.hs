@@ -16,6 +16,15 @@ import Haskerwaul.Duoid.Components
 import Haskerwaul.Monoid
 import Haskerwaul.Transformation.Natural
 
+-- | [nLab](https://ncatlab.org/nlab/show/duoidal+category#definition)
+--
+-- = laws
+--   (see `Haskerwaul.Category.Duoidal.DuoidalCategory`)
+--
+--   [switch]: (A ⋆ B) ⋄ (C ⋆ D) → (A ⋄ C) ⋆ (B ⋄ D)
+--   [duplicate unit]: I → I ⋆ I
+--   [combine unit]: J ⋄ J → J
+--   [forward unit]: I →≅ (J ⋆ I) ⋄ (I ⋆ J) → (J ⋄ I) ⋆ (I ⋄ J) →≅ J
 class (Monoid c t (Diamond a), Monoid c t (Star a)) => Duoid c t a
 
 instance (Monoid c t (Diamond a), Monoid c t (Star a)) => Duoid c t a

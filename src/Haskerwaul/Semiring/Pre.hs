@@ -10,7 +10,7 @@ module Haskerwaul.Semiring.Pre
 import Haskerwaul.Semigroup.Commutative
 import Haskerwaul.Semiring.Pre.Near
 
--- | https://en.wikipedia.org/wiki/Semiring#Generalizations
+-- | [Wikipedia](https://en.wikipedia.org/wiki/Semiring#Generalizations)
 --
 --  __NB__: While `PreSemiring` and `Haskerwaul.Hemiring.Hemiring` are usually
 --          synonymous, we distinguish them here because of the two definitions

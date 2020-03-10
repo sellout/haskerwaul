@@ -8,6 +8,6 @@ module Haskerwaul.Category.Closed.Bicartesian
 import Haskerwaul.Category.Closed.Cartesian
 import Haskerwaul.Category.Monoidal.Cocartesian
 
--- | https://ncatlab.org/nlab/show/bicartesian+closed+category
-type BicartesianClosedCategory k =
-  (CartesianClosedCategory k, CocartesianMonoidalCategory k)
+-- | [nLab](https://ncatlab.org/nlab/show/bicartesian+closed+category)
+type BicartesianClosedCategory c =
+  (CartesianClosedCategory c, CocartesianMonoidalCategory c)

@@ -12,7 +12,7 @@ import           Data.Proxy (Proxy(..))
 import Haskerwaul.Lattice.Complemented
 import Haskerwaul.Object
 
--- | https://ncatlab.org/nlab/show/complemented+lattice
+-- | [nLab](https://ncatlab.org/nlab/show/complemented+lattice)
 class ComplementedLattice c t a => OrthocomplementedLattice c t a where
   complement :: Ob c a => Proxy t -> a `c` a
 

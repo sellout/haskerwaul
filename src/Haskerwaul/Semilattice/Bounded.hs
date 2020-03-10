@@ -10,7 +10,7 @@ module Haskerwaul.Semilattice.Bounded
 import Haskerwaul.Monoid.Commutative
 import Haskerwaul.Semilattice
 
--- | https://ncatlab.org/nlab/show/semilattice#BoundedAndPseudo
+-- | [nLab](https://ncatlab.org/nlab/show/semilattice#BoundedAndPseudo)
 class (CommutativeMonoid c t a, Semilattice c t a) => BoundedSemilattice c t a
 
 instance (CommutativeMonoid c t a, Semilattice c t a) =>

@@ -1,7 +1,11 @@
 {-# language UndecidableInstances
            , UndecidableSuperClasses #-}
 
-module Haskerwaul.Category.Monoidal.Symmetric where
+module Haskerwaul.Category.Monoidal.Symmetric
+  ( module Haskerwaul.Category.Monoidal.Symmetric
+  -- * extended modules
+  , module Haskerwaul.Category.Monoidal.Braided
+  ) where
 
 import           Data.Either (Either(..))
 
@@ -12,7 +16,7 @@ import Haskerwaul.Isomorphism
 import Haskerwaul.Object
 import Haskerwaul.Subcategory.Full
 
--- | https://ncatlab.org/nlab/show/symmetric+monoidal+category
+-- | [nLab](https://ncatlab.org/nlab/show/symmetric+monoidal+category)
 class BraidedMonoidalCategory c t => SymmetricMonoidalCategory c t
 
 symmetric :: (SymmetricMonoidalCategory c t, Ob c a, Ob c b)

@@ -9,7 +9,7 @@ module Haskerwaul.Functor.Closed.Cartesian
 import Haskerwaul.Category.Closed.Cartesian
 import Haskerwaul.Functor.Monoidal.Closed
 
--- | https://ncatlab.org/nlab/show/cartesian+closed+functor
+-- | [nLab](https://ncatlab.org/nlab/show/cartesian+closed+functor)
 class ( CartesianClosedCategory c
       , CartesianClosedCategory d
       , ClosedMonoidalFunctor c (Prod c) d (Prod d) f) =>

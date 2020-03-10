@@ -10,6 +10,6 @@ module Haskerwaul.Semigroup.Commutative
 import Haskerwaul.Magma.Commutative
 import Haskerwaul.Semigroup
 
-class (CommutativeMagma k t a, Semigroup k t a) => CommutativeSemigroup k t a
+class (CommutativeMagma c t a, Semigroup c t a) => CommutativeSemigroup c t a
 
-instance (CommutativeMagma k t a, Semigroup k t a) => CommutativeSemigroup k t a
+instance (CommutativeMagma c t a, Semigroup c t a) => CommutativeSemigroup c t a

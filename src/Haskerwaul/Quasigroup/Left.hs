@@ -17,9 +17,9 @@ import Haskerwaul.Magma
 import Haskerwaul.Subcategory.Full
 import Haskerwaul.Transformation.Natural
 
--- | https://ncatlab.org/nlab/show/quasigroup#definitions
-class Magma k t a => LeftQuasigroup k t a where
-  leftQuotient :: t a a `k` a
+-- | [nLab](https://ncatlab.org/nlab/show/quasigroup#definitions)
+class Magma c t a => LeftQuasigroup c t a where
+  leftQuotient :: t a a `c` a
 
 -- instance LeftQuasigroup (->) Either Void where
 --   leftQuotient = \case
@@ -27,19 +27,19 @@ class Magma k t a => LeftQuasigroup k t a where
 instance LeftQuasigroup (->) (,) () where
   leftQuotient ((), ()) = ()
 
--- instance Magma (NaturalTransformation2 (->)) CProd k =>
---          LeftQuasigroup (NaturalTransformation2 (->)) CProd (Iso k) where
+-- instance Magma (NaturalTransformation2 (->)) CProd c =>
+--          LeftQuasigroup (NaturalTransformation2 (->)) CProd (Iso c) where
 --   inverse = NT2 (\(Iso f g) -> Iso g f)
 
--- instance LeftQuasigroup (NaturalTransformation2 (->)) CProd k =>
---          LeftQuasigroup (NaturalTransformation2 (->)) CProd (Op k) where
+-- instance LeftQuasigroup (NaturalTransformation2 (->)) CProd c =>
+--          LeftQuasigroup (NaturalTransformation2 (->)) CProd (Op c) where
 --   inverse = NT2 (\(Op f) -> Op (runNT2 inverse f))
 
-instance LeftQuasigroup (NaturalTransformation2 (->)) CProd k =>
+instance LeftQuasigroup (NaturalTransformation2 (->)) CProd c =>
          LeftQuasigroup
          (NaturalTransformation2 (->))
          CProd
-         (FullSubcategory c k) where
+         (FullSubcategory ob c) where
   leftQuotient = NT2 FS . leftQuotient . bimap (NT2 inclusion) (NT2 inclusion)
 
 instance LeftQuasigroup (->) (,) (Additive Int) where

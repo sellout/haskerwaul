@@ -10,7 +10,7 @@ module Haskerwaul.Group.Abelian
 import Haskerwaul.Group
 import Haskerwaul.Monoid.Commutative
 
--- | https://ncatlab.org/nlab/show/abelian+group
-class (CommutativeMonoid k t a, Group k t a) => AbelianGroup k t a
+-- | [nLab](https://ncatlab.org/nlab/show/abelian+group)
+class (CommutativeMonoid c t a, Group c t a) => AbelianGroup c t a
 
-instance (CommutativeMonoid k t a, Group k t a) => AbelianGroup k t a
+instance (CommutativeMonoid c t a, Group c t a) => AbelianGroup c t a

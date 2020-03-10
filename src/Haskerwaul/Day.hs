@@ -15,7 +15,7 @@ import Haskerwaul.Object
 import Haskerwaul.Subcategory.Full
 import Haskerwaul.Transformation.Natural
 
--- | https://ncatlab.org/nlab/show/Day+convolution
+-- | [nLab](https://ncatlab.org/nlab/show/Day+convolution)
 data Day c ct dt f g a = forall x y. Day (dt (f x) (g y)) (ct x y `c` a)
 
 -- | This is overspecialized. It _should_ be
@@ -31,9 +31,9 @@ instance SemigroupalCategory
     (FS (NT (\(Day (Day (fa, gb) ifn, hc) ofn) ->
                 Day (fa, Day (gb, hc) (\(b, c) -> \a -> ofn (ifn (a, b), c))) (\(a, fn) -> fn a))))
 
-instance MonoidalCategory' j jt =>
-         MonoidalCategory' (NaturalTransformation k) (Day j jt kt) where
-  type Unit (NaturalTransformation k) (Day j jt kt) = j (Unit j jt)
+instance MonoidalCategory' c ct =>
+         MonoidalCategory' (NaturalTransformation d) (Day c ct dt) where
+  type Unit (NaturalTransformation d) (Day c ct dt) = c (Unit c ct)
 
 -- | __NB__: Super over-specified. Some `(->)` should be @j@ and some should be
 --          @k@. The `(,)` should be @t@.
@@ -56,18 +56,20 @@ instance (c ~ (->), d ~ (->), LaxMonoidalFunctor c ct d dt f) =>
 
 -- instance (c ~ (->), d ~ (->), LaxMonoidalFunctor c ct d dt f) =>
 --          UnitalMagma (NaturalTransformation d) (Day c ct dt) f where
+--   unit :: Proxy (Day c ct dt)
+--        -> NaturalTransformation d (Unit (NaturalTransformation d) (Day c ct dt)) f
 --   unit Proxy = NT (epsilon (Proxy :: Proxy c) (Proxy :: Proxy ct) (Proxy :: Proxy dt))
 
 instance (c ~ (->), d ~ (->), LaxMonoidalFunctor c ct d dt f) =>
          Semigroup (NaturalTransformation d) (Day c ct dt) f
 
-instance (k ~ (->), Semigroupoid j, Functor j k f, Functor j k g) =>
-         Functor j k (Day j jt kt f g) where
+instance (d ~ (->), Semigroupoid c, Functor c d f, Functor c d g) =>
+         Functor c d (Day c ct dt f g) where
   map f = \(Day t fn) -> Day t (f . fn)
 
 instance (d ~ (->), Semigroupoid c) =>
          BOb (Functor c d) (Functor c d) (Functor c d) (Day c ct dt) where
-  inOp = Sub Dict
+  inB = Sub Dict
 
 instance (d ~ (->), Category c, Bifunctor d d d dt) =>
          Bifunctor

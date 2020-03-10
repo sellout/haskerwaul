@@ -12,7 +12,7 @@ import Haskerwaul.Category.Closed
 import Haskerwaul.Functor.Closed.Lax
 import Haskerwaul.Isomorphism
 
--- | https://ncatlab.org/nlab/show/closed+functor
+-- | [nLab](https://ncatlab.org/nlab/show/closed+functor)
 class (ClosedCategory c, ClosedCategory d, LaxClosedFunctor c d f) =>
       StrongClosedFunctor c d f where
   fHatOp :: Proxy c -> Exp d (f x) (f y) `d` f (Exp c x y)

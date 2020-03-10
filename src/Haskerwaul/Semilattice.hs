@@ -15,8 +15,8 @@ import           Numeric.Natural (Natural)
 import Haskerwaul.Lattice.Components
 import Haskerwaul.Semigroup.Commutative
 
--- | https://ncatlab.org/nlab/show/semilattice
-class CommutativeSemigroup k t a => Semilattice k t a
+-- | [nLab](https://ncatlab.org/nlab/show/semilattice)
+class CommutativeSemigroup c t a => Semilattice c t a
 
 instance Semilattice (->) (,) (Join Bool)
 instance Semilattice (->) (,) (Meet Bool)

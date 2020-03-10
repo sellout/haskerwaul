@@ -9,7 +9,7 @@ module Haskerwaul.Category.Monoidal.Cocartesian
 import Haskerwaul.Category.Monoidal.Cartesian
 import Haskerwaul.Category.Opposite
 
--- | https://ncatlab.org/nlab/show/cocartesian+monoidal+category
-type CocartesianMonoidalCategory k = CartesianMonoidalCategory (Op k)
+-- | [nLab](https://ncatlab.org/nlab/show/cocartesian+monoidal+category)
+type CocartesianMonoidalCategory c = CartesianMonoidalCategory (Op c)
 
-type Coprod k = Prod (Op k)
+type Coprod c = Prod (Op c)

@@ -6,9 +6,9 @@ module Haskerwaul.Automorphism
 
 import Haskerwaul.Isomorphism
 
--- | https://ncatlab.org/nlab/show/automorphism
+-- | [nLab](https://ncatlab.org/nlab/show/automorphism)
 type Automorphism c a = Isomorphism c a a
 
--- | https://ncatlab.org/nlab/show/involution
+-- | [nLab](https://ncatlab.org/nlab/show/involution)
 involution :: a `c` a -> Automorphism c a
 involution f = Iso f f

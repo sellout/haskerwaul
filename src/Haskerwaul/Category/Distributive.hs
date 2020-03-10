@@ -8,6 +8,6 @@ module Haskerwaul.Category.Distributive
 import Haskerwaul.Category.Monoidal.Cartesian
 import Haskerwaul.Category.Monoidal.Distributive
 
--- | https://ncatlab.org/nlab/show/distributive+category
+-- | [nLab](https://ncatlab.org/nlab/show/distributive+category)
 type DistributiveCategory c =
   (CartesianMonoidalCategory c, DistributiveMonoidalCategory c (Prod c))

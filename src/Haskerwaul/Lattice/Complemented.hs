@@ -10,7 +10,7 @@ import qualified Data.Bool as Base
 
 import Haskerwaul.Lattice.Bounded
 
--- | https://ncatlab.org/nlab/show/complemented+lattice
+-- | [nLab](https://ncatlab.org/nlab/show/complemented+lattice)
 class BoundedLattice c t a => ComplementedLattice c t a
 
 instance ComplementedLattice (->) (,) Base.Bool where

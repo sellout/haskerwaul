@@ -10,7 +10,7 @@ import qualified Data.Bool as Base
 
 import Haskerwaul.Lattice.Distributive.Bounded
 
--- | https://ncatlab.org/nlab/show/Heyting+algebra
+-- | [nLab](https://ncatlab.org/nlab/show/Heyting+algebra)
 class BoundedDistributiveLattice c t a => HeytingAlgebra c t a
 
 instance HeytingAlgebra (->) (,) Base.Bool

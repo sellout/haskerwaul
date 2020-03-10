@@ -14,13 +14,13 @@ import Haskerwaul.Lattice.Components
 import Haskerwaul.Semigroupoid
 import Haskerwaul.Semilattice
 
--- | https://ncatlab.org/nlab/show/lattice
-class (Semilattice k t (Meet a), Semilattice k t (Join a)) => Lattice k t a
+-- | [nLab](https://ncatlab.org/nlab/show/lattice)
+class (Semilattice c t (Meet a), Semilattice c t (Join a)) => Lattice c t a
 
-instance (Semilattice k t (Meet a), Semilattice k t (Join a)) => Lattice k t a
+instance (Semilattice c t (Meet a), Semilattice c t (Join a)) => Lattice c t a
 
-meet :: (k ~ (->), Lattice k t a, Bifunctor k k k t) => t a a `k` a
+meet :: (c ~ (->), Lattice c t a, Bifunctor c c c t) => t a a `c` a
 meet = getMeet . op . bimap Meet Meet
 
-join :: (k ~ (->), Lattice k t a, Bifunctor k k k t) => t a a `k` a
+join :: (c ~ (->), Lattice c t a, Bifunctor c c c t) => t a a `c` a
 join = getJoin . op . bimap Join Join

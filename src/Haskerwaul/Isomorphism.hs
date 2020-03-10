@@ -9,7 +9,7 @@ import Haskerwaul.Object
 import Haskerwaul.Semigroupoid
 import Haskerwaul.Transformation.Natural
 
--- | https://ncatlab.org/nlab/show/isomorphism
+-- | [nLab](https://ncatlab.org/nlab/show/isomorphism)
 data Isomorphism c a b = Iso { to :: a `c` b, from :: b `c` a }
 
 type instance Ob (Isomorphism c) = Ob c

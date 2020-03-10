@@ -10,7 +10,7 @@ module Haskerwaul.Quasigroup
 import Haskerwaul.Quasigroup.Left
 import Haskerwaul.Quasigroup.Right
 
--- | https://ncatlab.org/nlab/show/quasigroup
-class (LeftQuasigroup k t a, RightQuasigroup k t a) => Quasigroup k t a
+-- | [nLab](https://ncatlab.org/nlab/show/quasigroup)
+class (LeftQuasigroup c t a, RightQuasigroup c t a) => Quasigroup c t a
 
-instance (LeftQuasigroup k t a, RightQuasigroup k t a) => Quasigroup k t a
+instance (LeftQuasigroup c t a, RightQuasigroup c t a) => Quasigroup c t a

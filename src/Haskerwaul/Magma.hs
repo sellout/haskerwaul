@@ -11,7 +11,7 @@ import qualified Data.Tuple as Base
 
 import Haskerwaul.Object
 
--- | https://ncatlab.org/nlab/show/magma
+-- | [nLab](https://ncatlab.org/nlab/show/magma)
 --
 --  __NB__: Since this is just any closed binary operation, it's lawless and
 --          thus not worth implementing unless there are other instances to
@@ -33,4 +33,4 @@ instance Magma (->) Either a where
     Right a -> a
 
 instance BOb (Magma (->) (,)) (Magma (->) (,)) (Magma (->) (,)) (,) where
-  inOp = Sub Dict
+  inB = Sub Dict

@@ -12,7 +12,7 @@ import Haskerwaul.Magma
 import Haskerwaul.Monoid.Commutative
 import Haskerwaul.Hemiring.Near
 
--- | https://en.wikipedia.org/wiki/Semiring#Generalizations
+-- | [Wikipedia](https://en.wikipedia.org/wiki/Semiring#Generalizations)
 --
 --  __NB__: While `Haskerwaul.Semiring.Pre.PreSemiring` and `Hemiring` are
 --          usually synonymous, we distinguish them here because of the two

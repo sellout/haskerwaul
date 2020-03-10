@@ -18,10 +18,10 @@ import Haskerwaul.Object
 import Haskerwaul.Object.Terminal
 import Haskerwaul.Transformation.Natural
 
--- | https://ncatlab.org/nlab/show/Kleisli+category
+-- | [nLab](https://ncatlab.org/nlab/show/Kleisli+category)
 --
---   TODO: Implement this as
--- >>> type Kleisli k m = FullSubcategory FreeAlgebra (EilenbergMoore k m)
+--  __TODO__: Implement this as
+-- >>> type Kleisli c m = FullSubcategory FreeAlgebra (EilenbergMoore c m)
 newtype Kleisli (c :: ok -> ok -> Type) m a b =
   Kleisli { runKleisli :: a `c` m b }
 

@@ -12,7 +12,7 @@ import Haskerwaul.Category
 import Haskerwaul.Group
 import Haskerwaul.Transformation.Natural
 
--- | https://ncatlab.org/nlab/show/groupoid
+-- | [nLab](https://ncatlab.org/nlab/show/groupoid)
 class (Group (NaturalTransformation2 (->)) CProd a, Category a) => Groupoid a
 
 instance (Group (NaturalTransformation2 (->)) CProd a, Category a) => Groupoid a

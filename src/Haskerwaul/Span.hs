@@ -1,6 +1,6 @@
 module Haskerwaul.Span where
 
--- | https://ncatlab.org/nlab/show/span
+-- | [nLab](https://ncatlab.org/nlab/show/span)
 data Span c x y = forall s. Span (s `c` x) (s `c` y)
 
 -- instance Magma (NaturalTransformation2 (->)) CProd (Span c) where
@@ -8,7 +8,7 @@ data Span c x y = forall s. Span (s `c` x) (s `c` y)
 
 -- instance Semigroup (NaturalTransformation2 (->)) CProd (Span c)
 
--- instance Semigroupoid k => Semigroupoid (Span c)
+-- instance Semigroupoid c => Semigroupoid (Span c)
 
 -- instance MonoidalCategory' (Span c) t where
 --   type Unit (Span c) t = Span c

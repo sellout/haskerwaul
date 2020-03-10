@@ -1,12 +1,20 @@
 -- | This re-exports everything in the library, providing a unified model of
 --   category theory.
+--
+--   In general, you shouldn't import this. This mostly ensures that all the
+--   pieces play well together. In practice, importing the "strongest" modules
+--   you need is enough, as they should each re-export all the modules they
+--   extend.
 module Haskerwaul
---  ( module Haskerwaul.Adjunction
-  ( module Haskerwaul.Algebra.Boolean
+  (
+--  module Haskerwaul.Adjunction
+  -- * algebras
+    module Haskerwaul.Algebra.Boolean
   , module Haskerwaul.Algebra.Heyting
   , module Haskerwaul.Automorphism
   , module Haskerwaul.Bifunctor
   , module Haskerwaul.Bimonoid
+  -- * categories
   , module Haskerwaul.Category
   , module Haskerwaul.Category.Bicartesian
   , module Haskerwaul.Category.Closed
@@ -41,13 +49,16 @@ module Haskerwaul
   , module Haskerwaul.Cospan
   , module Haskerwaul.Day
   , module Haskerwaul.Dioid
+  -- * duoids
   , module Haskerwaul.Duoid
   , module Haskerwaul.Duoid.Normal
   , module Haskerwaul.Endofunctor
+  -- * fields
   , module Haskerwaul.Field
   , module Haskerwaul.Field.Totalized
   , module Haskerwaul.Field.Totalized.One
   , module Haskerwaul.Field.Totalized.Zero
+  -- * functors
   , module Haskerwaul.Functor
   , module Haskerwaul.Functor.Closed.Cartesian
   , module Haskerwaul.Functor.Closed.Lax
@@ -59,13 +70,17 @@ module Haskerwaul
   , module Haskerwaul.Functor.Monoidal.Oplax
   , module Haskerwaul.Functor.Monoidal.Strong
   , module Haskerwaul.Functor.Strong
+  -- * groups
   , module Haskerwaul.Group
   , module Haskerwaul.Group.Abelian
   , module Haskerwaul.Groupoid
+  -- * hemirings
   , module Haskerwaul.Hemiring
   , module Haskerwaul.Hemiring.Near
+  -- * isomorphisms
   , module Haskerwaul.Isomorphism
   , module Haskerwaul.Isomorphism.Natural
+  -- * lattices
   , module Haskerwaul.Lattice
   , module Haskerwaul.Lattice.Bounded
   , module Haskerwaul.Lattice.Complemented
@@ -73,18 +88,23 @@ module Haskerwaul
   , module Haskerwaul.Lattice.Distributive.Bounded
   , module Haskerwaul.Lattice.Orthocomplemented
   , module Haskerwaul.Loop
+  -- * magmas
   , module Haskerwaul.Magma
   , module Haskerwaul.Magma.Commutative
   , module Haskerwaul.Magma.Unital
+  -- * meadows
   , module Haskerwaul.Meadow
   , module Haskerwaul.Meadow.Cancellation
   , module Haskerwaul.Meadow.NonInvolutive
   , module Haskerwaul.Meadow.NonTrivial
+  -- * modules
   , module Haskerwaul.Module
   , module Haskerwaul.Module.Left
   , module Haskerwaul.Module.Right
+  -- * monads
   , module Haskerwaul.Monad
   , module Haskerwaul.Monad.Frobenius
+  -- * monoids
   , module Haskerwaul.Monoid
   , module Haskerwaul.Monoid.Commutative
   , module Haskerwaul.Monoid.Commutative.Monus
@@ -93,26 +113,33 @@ module Haskerwaul
   , module Haskerwaul.Monoid.Frobenius.Commutative.Special
   , module Haskerwaul.Monoid.Frobenius.Special
   , module Haskerwaul.Monoid.Hopf
+  -- * objects
   , module Haskerwaul.Object
   , module Haskerwaul.Object.Initial
   , module Haskerwaul.Object.Terminal
   , module Haskerwaul.Profunctor
   , module Haskerwaul.Pullback
   , module Haskerwaul.Pushout
+  -- * quasigroups
   , module Haskerwaul.Quasigroup
   , module Haskerwaul.Quasigroup.Left
   , module Haskerwaul.Quasigroup.Right
+  -- * rigs
   , module Haskerwaul.Rig
   , module Haskerwaul.Rig.Monus
+  -- * rings
   , module Haskerwaul.Ring
   , module Haskerwaul.Ring.Commutative
   , module Haskerwaul.Ring.Nonunital
+  -- * semigroups
   , module Haskerwaul.Semigroup
   , module Haskerwaul.Semigroup.Commutative
   , module Haskerwaul.Semigroup.Inverse
+  -- * semilattices
   , module Haskerwaul.Semilattice
   , module Haskerwaul.Semilattice.Bounded
   , module Haskerwaul.Semigroupoid
+  -- * semirings
   , module Haskerwaul.Semiring
   , module Haskerwaul.Semiring.Near
   , module Haskerwaul.Semiring.Pre
@@ -120,6 +147,7 @@ module Haskerwaul
   , module Haskerwaul.Skewfield
   , module Haskerwaul.Span
   , module Haskerwaul.Subcategory.Full
+  -- * topoi (toposes)
   , module Haskerwaul.Topos.Elementary
   , module Haskerwaul.Topos.Grothendieck
   , module Haskerwaul.Transformation.Natural

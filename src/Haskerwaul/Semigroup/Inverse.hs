@@ -5,7 +5,7 @@ module Haskerwaul.Semigroup.Inverse where
 import Haskerwaul.Quasigroup
 import Haskerwaul.Semigroup
 
--- | https://ncatlab.org/nlab/show/inverse+semigroup
-class (Quasigroup k t a, Semigroup k t a) => InverseSemigroup k t a
+-- | [nLab](https://ncatlab.org/nlab/show/inverse+semigroup)
+class (Quasigroup c t a, Semigroup c t a) => InverseSemigroup c t a
 
-instance (Quasigroup k t a, Semigroup k t a) => InverseSemigroup k t a
+instance (Quasigroup c t a, Semigroup c t a) => InverseSemigroup c t a

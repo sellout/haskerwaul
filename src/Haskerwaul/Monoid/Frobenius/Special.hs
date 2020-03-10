@@ -8,5 +8,5 @@ module Haskerwaul.Monoid.Frobenius.Special
 
 import Haskerwaul.Monoid.Frobenius
 
--- | https://ncatlab.org/nlab/show/Frobenius+algebra#special_frobenius_algebras
-class FrobeniusMonoid k t a => SpecialFrobeniusMonoid k t a
+-- | [nLab](https://ncatlab.org/nlab/show/Frobenius+algebra#special_frobenius_algebras)
+class FrobeniusMonoid c t a => SpecialFrobeniusMonoid c t a

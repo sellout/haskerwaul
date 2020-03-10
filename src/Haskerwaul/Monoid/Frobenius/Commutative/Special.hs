@@ -10,8 +10,8 @@ module Haskerwaul.Monoid.Frobenius.Commutative.Special
 import Haskerwaul.Monoid.Frobenius.Commutative
 import Haskerwaul.Monoid.Frobenius.Special
 
-class (SpecialFrobeniusMonoid k t a, CommutativeFrobeniusMonoid k t a) =>
-      SpecialCommutativeFrobeniusMonoid k t a
+class (SpecialFrobeniusMonoid c t a, CommutativeFrobeniusMonoid c t a) =>
+      SpecialCommutativeFrobeniusMonoid c t a
 
-instance (SpecialFrobeniusMonoid k t a, CommutativeFrobeniusMonoid k t a) =>
-         SpecialCommutativeFrobeniusMonoid k t a
+instance (SpecialFrobeniusMonoid c t a, CommutativeFrobeniusMonoid c t a) =>
+         SpecialCommutativeFrobeniusMonoid c t a

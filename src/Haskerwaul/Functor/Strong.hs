@@ -11,7 +11,7 @@ import Haskerwaul.Category.Monoidal
 import Haskerwaul.Endofunctor
 import Haskerwaul.Functor
 
--- | https://ncatlab.org/nlab/show/tensorial+strength
+-- | [nLab](https://ncatlab.org/nlab/show/tensorial+strength)
 class (MonoidalCategory c t, Endofunctor c f) => StrongFunctor c t f where
   beta :: forall v w. t v (f w) `c` f (t v w)
 

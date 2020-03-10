@@ -16,7 +16,7 @@ import Haskerwaul.Category.Monoidal
 import Haskerwaul.Isomorphism
 import Haskerwaul.Object
 
--- | https://ncatlab.org/nlab/show/rig+category
+-- | [nLab](https://ncatlab.org/nlab/show/rig+category)
 class (MonoidalCategory c p, MonoidalCategory c s) => RigCategory c p s where
   leftDistribute :: (Ob c x, Ob c y, Ob c z)
                  => Isomorphism c (p x (s y z)) (s (p x y) (p x z))

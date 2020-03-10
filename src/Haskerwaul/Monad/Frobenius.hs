@@ -8,5 +8,5 @@ import           Data.Functor.Compose (Compose)
 import Haskerwaul.Monoid.Frobenius
 import Haskerwaul.Transformation.Natural
 
--- | https://ncatlab.org/nlab/show/Frobenius+monad
-type FrobeniusMonad k = FrobeniusMonoid (NaturalTransformation k) Compose
+-- | [nLab](https://ncatlab.org/nlab/show/Frobenius+monad)
+type FrobeniusMonad c = FrobeniusMonoid (NaturalTransformation c) Compose

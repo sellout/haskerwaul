@@ -20,7 +20,7 @@ import Haskerwaul.Object.Terminal
 import Haskerwaul.Subcategory.Full
 import Haskerwaul.Transformation.Natural
 
--- | https://ncatlab.org/nlab/show/cartesian+monoidal+category
+-- | [nLab](https://ncatlab.org/nlab/show/cartesian+monoidal+category)
 class ( MonoidalCategory c (Prod c)
       , HasTerminalObject c
       , Unit c (Prod c) ~ TerminalObject c) =>

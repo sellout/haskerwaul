@@ -13,7 +13,7 @@ import Haskerwaul.Endofunctor
 import Haskerwaul.Monoid
 import Haskerwaul.Transformation.Natural
 
--- | https://ncatlab.org/nlab/show/monad
+-- | [nLab](https://ncatlab.org/nlab/show/monad)
 class (Monoid (NaturalTransformation c) Compose m, Endofunctor c m) => Monad c m
 
 instance (Monoid (NaturalTransformation c) Compose m, Endofunctor c m) =>

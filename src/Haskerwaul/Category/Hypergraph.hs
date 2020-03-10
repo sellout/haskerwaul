@@ -9,11 +9,12 @@ import Haskerwaul.Category.Monoidal.Symmetric
 import Haskerwaul.Monoid.Frobenius.Commutative.Special
 import Haskerwaul.Subcategory.Full
 
-type HypergraphCategory k t =
-  SymmetricMonoidalCategory (FullSubcategory (SpecialCommutativeFrobeniusMonoid k t) k) t
+-- | [nLab](https://ncatlab.org/nlab/show/hypergraph+category)
+type HypergraphCategory c t =
+  SymmetricMonoidalCategory (FullSubcategory (SpecialCommutativeFrobeniusMonoid c t) c) t
 
 -- -- | https://ncatlab.org/nlab/show/hypergraph+category#examples
--- instance Category k =>
+-- instance Category c =>
 --          SymmetricMonoidalCategory
---          (FullSubcategory (SpecialCommutativeFrobeniusMonoid (Cospan k) t) (Cospan k))
+--          (FullSubcategory (SpecialCommutativeFrobeniusMonoid (Cospan c) t) (Cospan c))
 --          t

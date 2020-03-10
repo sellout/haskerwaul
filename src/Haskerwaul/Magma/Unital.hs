@@ -18,9 +18,13 @@ import Haskerwaul.Category.Monoidal'
 import Haskerwaul.Magma
 import Haskerwaul.Object
 
--- | https://ncatlab.org/nlab/show/unital+magma
-class (MonoidalCategory' k t, Magma k t a) => UnitalMagma k t a where
-  unit :: Proxy t -> Unit k t `k` a
+-- | [nLab](https://ncatlab.org/nlab/show/unital+magma)
+--
+-- = laws
+--   [left identity]: @`op` `unit` x == x@
+--   [right identity]: @`op` x `unit` == x@
+class (MonoidalCategory' c t, Magma c t a) => UnitalMagma c t a where
+  unit :: Proxy t -> Unit c t `c` a
 
 -- leftIdentity :: (UnitalMagma (->) (,) a, Eq a) => a -> Bool
 -- leftIdentity x = op (unit (), x) == x
@@ -39,4 +43,4 @@ instance UnitalMagma (->) Either a where
   unit Proxy = Base.absurd
 
 instance BOb (UnitalMagma (->) (,)) (UnitalMagma (->) (,)) (UnitalMagma (->) (,)) (,) where
-  inOp = Sub Dict
+  inB = Sub Dict

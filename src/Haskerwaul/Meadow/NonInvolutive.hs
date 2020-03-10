@@ -8,5 +8,5 @@ module Haskerwaul.Meadow.NonInvolutive
 
 import Haskerwaul.Meadow
 
--- | https://www.sciencedirect.com/science/article/pii/S1570868314000652
+-- | [Division by zero in non-involutive meadows](https://www.sciencedirect.com/science/article/pii/S1570868314000652)
 class Meadow c t a => NonInvolutiveMeadow c t a

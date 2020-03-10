@@ -12,7 +12,7 @@ import           Data.Void (Void)
 import Haskerwaul.Constraint
 import Haskerwaul.Object
 
--- | https://ncatlab.org/nlab/show/monoidal+category
+-- | [nLab](https://ncatlab.org/nlab/show/monoidal+category)
 class Ob c (Unit c t) =>
       MonoidalCategory' (c :: ok -> ok -> Type) (t :: ok -> ok -> ok) where
   type Unit c t :: ok

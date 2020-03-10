@@ -13,7 +13,7 @@ import Haskerwaul.Functor.Monoidal.Lax
 import Haskerwaul.Isomorphism
 import Haskerwaul.Object
 
--- | https://ncatlab.org/nlab/show/monoidal+functor
+-- | [nLab](https://ncatlab.org/nlab/show/monoidal+functor)
 class LaxMonoidalFunctor c ct d dt f => StrongMonoidalFunctor c ct d dt f where
   epsilonOp :: Proxy c -> Proxy ct -> Proxy dt -> f (Unit c ct) `d` Unit d dt
   muOp :: (Ob c x, Ob c y) => Proxy c -> f (ct x y) `d` dt (f x) (f y)

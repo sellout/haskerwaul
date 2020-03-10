@@ -13,7 +13,7 @@ import Haskerwaul.Isomorphism
 import Haskerwaul.Object
 import Haskerwaul.Object.Initial
 
--- | https://ncatlab.org/nlab/show/pointed+category
+-- | [nLab](https://ncatlab.org/nlab/show/pointed+category)
 class (Category c, HasInitialObject c, HasTerminalObject c) =>
       PointedCategory c where
   -- | Must be the inverse of `(!)` specialized to @`InitialObject` c@.

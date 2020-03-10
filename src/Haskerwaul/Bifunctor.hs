@@ -12,59 +12,51 @@ import Haskerwaul.Constraint
 import Haskerwaul.Object
 import Haskerwaul.Transformation.Natural
 
--- | https://ncatlab.org/nlab/show/bifunctor
+-- | [nLab](https://ncatlab.org/nlab/show/bifunctor)
 --
 --  __TODO__: This should be
 --           @type Bifunctor c1 c2 = `Haskerwaul.Functor.Functor` (c1 :**: c2)@
-class BOb (Ob i) (Ob j) (Ob k) f => Bifunctor i j k f where
-  bimap :: (Ob i a, Ob i b, Ob j c, Ob j d)
-        => a `i` b -> c `j` d -> f a c `k` f b d
+class BOb (Ob c1) (Ob c2) (Ob d) f => Bifunctor c1 c2 d f where
+  bimap :: (Ob c1 a1, Ob c1 b1, Ob c2 a2, Ob c2 b2)
+        => a1 `c1` b1 -> a2 `c2` b2 -> f a1 a2 `d` f b1 b2
 
-first :: forall i j k f a b c.
-         (Category j, Bifunctor i j k f, Ob i a, Ob i b, Ob j c)
-      => Proxy j -> a `i` b -> f a c `k` f b c
-first Proxy f = bimap @_ @j f id
+first :: forall c1 c2 d f a1 b1 a2.
+         (Category c2, Bifunctor c1 c2 d f, Ob c1 a1, Ob c1 b1, Ob c2 a2)
+      => Proxy c2 -> a1 `c1` b1 -> f a1 a2 `d` f b1 a2
+first Proxy f = bimap @_ @c2 f id
 
-second :: forall i j k f a c d.
-          (Category i, Bifunctor i j k f, Ob i a, Ob j c, Ob j d)
-       => Proxy i -> c `j` d -> f a c `k` f a d
-second Proxy g = bimap @i id g
-
--- first :: (Bifunctor j k l f, Category k, Ob j a, Ob j b, Ob k c)
---       => Proxy k -> a `j` b -> f (a :**: c) `l` f (b :**: c)
--- first Proxy f = map (ProdC f id)
-
--- second :: (Bifunctor j k l f, Category j, Ob j a, Ob k b, Ob k c)
---        => Proxy j -> b `k` c -> f (a :**: b) `l` f (a :**: c)
--- second Proxy f = map (ProdC id f)
+second :: forall c1 c2 d f a1 a2 b2.
+          (Category c1, Bifunctor c1 c2 d f, Ob c1 a1, Ob c2 a2, Ob c2 b2)
+       => Proxy c1 -> a2 `c2` b2 -> f a1 a2 `d` f a1 b2
+second Proxy g = bimap @c1 id g
 
 instance Base.Bifunctor f => Bifunctor (->) (->) (->) f where
   bimap = Base.bimap
 
-instance (Semigroupoid c, Bifunctor c d e t) =>
-         Bifunctor (Opposite c) (Opposite d) (Opposite e) t where
+instance (Semigroupoid c1, Bifunctor c1 c2 d t) =>
+         Bifunctor (Opposite c1) (Opposite c2) (Opposite d) t where
   bimap f g = Opposite (bimap (opposite f) (opposite g))
 
-instance (Ob c ~ All, Ob d ~ All, e ~ (->), Semigroupoid e, Bifunctor c d e t) =>
+instance (Ob c1 ~ All, Ob c2 ~ All, d ~ (->), Semigroupoid d, Bifunctor c1 c2 d t) =>
          Bifunctor
-         (NaturalTransformation c)
+         (NaturalTransformation c1)
+         (NaturalTransformation c2)
          (NaturalTransformation d)
-         (NaturalTransformation e)
          (FTensor t) where
   bimap f g = NT (FTensor . bimap (runNT f) (runNT g) . lowerFTensor)
 
-instance (Ob c ~ All, Ob d ~ All, e ~ (->), Semigroupoid e, Bifunctor c d e t) =>
+instance (Ob c1 ~ All, Ob c2 ~ All, d ~ (->), Semigroupoid d, Bifunctor c1 c2 d t) =>
          Bifunctor
-         (NaturalTransformation2 c)
+         (NaturalTransformation2 c1)
+         (NaturalTransformation2 c2)
          (NaturalTransformation2 d)
-         (NaturalTransformation2 e)
          (BTensor t) where
   bimap f g = NT2 (BTensor . bimap (runNT2 f) (runNT2 g) . lowerBTensor)
 
-instance (c ~ (->), d ~ (->)) =>
+instance (c1 ~ (->), c2 ~ (->)) =>
          Bifunctor
-         (NaturalTransformation2 c)
-         (NaturalTransformation2 d)
+         (NaturalTransformation2 c1)
+         (NaturalTransformation2 c2)
          (NaturalTransformation2 (->))
          CProd where
   bimap f g = NT2 (\(CProd x y) -> CProd (runNT2 f x) (runNT2 g y))

@@ -11,7 +11,7 @@ import           Data.Proxy (Proxy(..))
 
 import Haskerwaul.Lattice.Orthocomplemented
 
--- | https://ncatlab.org/nlab/show/complemented+lattice
+-- | [nLab](https://ncatlab.org/nlab/show/complemented+lattice)
 class OrthocomplementedLattice c t a => OrthomodularLattice c t a
 
 -- | With a lawful instance, this should always return `True` when the provided

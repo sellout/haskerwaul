@@ -7,7 +7,6 @@ import           Data.Constraint ((:-))
 import           Data.Functor.Compose (Compose(..))
 import           Data.Functor.Const (Const)
 import           Data.Functor.Identity (Identity(..))
-import           Data.Kind (Type)
 import           Data.Proxy (Proxy(..))
 
 import Haskerwaul.Category.Monoidal'
@@ -16,10 +15,12 @@ import Haskerwaul.Magma.Unital
 import Haskerwaul.Object
 import Haskerwaul.Semigroup
 
--- | https://ncatlab.org/nlab/show/natural+transformation
-newtype NaturalTransformation c f g = NT { runNT :: forall a. f a `c` g a }
+-- | [nLab](https://ncatlab.org/nlab/show/natural+transformation)
+newtype NaturalTransformation d f g = NT { runNT :: forall a. f a `d` g a }
 
-type instance Ob (NaturalTransformation _) = All
+-- | __FIXME__: This should maintain the @`Ob` c@ constraint somehow. E.g.,
+--             @`FOb` (`Ob` c) (`Ob` d)@.
+type instance Ob (NaturalTransformation d) = All
 
 instance MonoidalCategory' (NaturalTransformation c) Compose where
   type Unit (NaturalTransformation c) Compose = Identity
@@ -52,9 +53,11 @@ instance {-# overlappable #-} Base.Monad f =>
 --             `NaturalTransformation` with
 --             `Haskerwaul.Category.Product.ProductCategory`.
 
-newtype NaturalTransformation2 (c :: ok -> ok -> Type) (f :: j -> k -> ok) (g :: j -> k -> ok) =
-  NT2 { runNT2 :: forall a b. f a b `c` g a b }
+newtype NaturalTransformation2 d f g =
+  NT2 { runNT2 :: forall a b. f a b `d` g a b }
 
+-- | __FIXME__: This should maintain the @`Ob` c@ constraint somehow. E.g.,
+--             @`BOb` (`Ob` c1) (`Ob` c2) (`Ob` d)@.
 type instance Ob (NaturalTransformation2 _) = All
 
 newtype BTensor t f g a b = BTensor { lowerBTensor :: (t (f a b) (g a b)) }

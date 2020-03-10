@@ -13,7 +13,7 @@ import Haskerwaul.Object
 import Haskerwaul.Object.Terminal
 import Haskerwaul.Transformation.Natural
 
--- | https://ncatlab.org/nlab/show/opposite+category
+-- | [nLab](https://ncatlab.org/nlab/show/opposite+category)
 newtype Opposite c a b = Opposite { opposite :: b `c` a }
 
 type instance Ob (Opposite c) = Ob c

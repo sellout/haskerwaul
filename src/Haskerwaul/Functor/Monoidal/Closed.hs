@@ -10,7 +10,7 @@ module Haskerwaul.Functor.Monoidal.Closed
 import Haskerwaul.Functor.Closed.Strong
 import Haskerwaul.Functor.Monoidal.Strong
 
--- | https://ncatlab.org/nlab/show/closed+functor
+-- | [nLab](https://ncatlab.org/nlab/show/closed+functor)
 class (StrongClosedFunctor c d f, StrongMonoidalFunctor c ct d dt f) =>
       ClosedMonoidalFunctor c ct d dt f
 

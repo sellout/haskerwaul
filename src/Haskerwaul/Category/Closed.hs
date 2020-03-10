@@ -17,7 +17,7 @@ import Haskerwaul.Object
 import Haskerwaul.Subcategory.Full
 import Haskerwaul.Transformation.Natural
 
--- | https://ncatlab.org/nlab/show/closed+category
+-- | [nLab](https://ncatlab.org/nlab/show/closed+category)
 --
 --  __TODO__: This should have a
 --           @`Haskerwaul.Bifunctor.Bifunctor` (`Opposite` c) c c (`Exp` c)@

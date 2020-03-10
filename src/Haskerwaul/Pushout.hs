@@ -7,10 +7,10 @@ module Haskerwaul.Pushout
 import Haskerwaul.Category.Opposite
 import Haskerwaul.Pullback
 
--- | https://ncatlab.org/nlab/show/pushout
-type Pushout k = Pullback (Op k)
+-- | [nLab](https://ncatlab.org/nlab/show/pushout)
+type Pushout c = Pullback (Op c)
 
-type Coproduct k = Product (Op k)
+type Coproduct c = Product (Op c)
 
--- coproduct :: CocartesianCategory k => Coproduct k x y
+-- coproduct :: CocartesianMonoidalCategory c => Coproduct c x y
 -- coproduct = product

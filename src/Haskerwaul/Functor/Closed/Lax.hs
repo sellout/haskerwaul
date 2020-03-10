@@ -11,7 +11,7 @@ import           Data.Proxy (Proxy)
 import Haskerwaul.Category.Monoidal.Closed
 import Haskerwaul.Functor
 
--- | https://ncatlab.org/nlab/show/closed+functor
+-- | [nLab](https://ncatlab.org/nlab/show/closed+functor)
 class (ClosedCategory c, ClosedCategory d, Functor c d f) =>
       LaxClosedFunctor c d f where
   fHat :: Proxy c -> f (Exp c x y) `d` Exp d (f x) (f y)

@@ -17,7 +17,7 @@ import Haskerwaul.Functor
 import Haskerwaul.Isomorphism
 import Haskerwaul.Object
 
--- | https://ncatlab.org/nlab/show/monoidal+functor
+-- | [nLab](https://ncatlab.org/nlab/show/monoidal+functor)
 class (MonoidalCategory c ct, MonoidalCategory d dt, Functor c d f) =>
       LaxMonoidalFunctor c ct d dt f where
   epsilon :: Proxy c -> Proxy ct -> Proxy dt -> Unit d dt `d` f (Unit c ct)

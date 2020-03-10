@@ -18,7 +18,7 @@ import Haskerwaul.Group.Abelian
 import Haskerwaul.Rig
 import Haskerwaul.Ring.Nonunital
 
--- | https://ncatlab.org/nlab/show/ring
+-- | [nLab](https://ncatlab.org/nlab/show/ring)
 class (AbelianGroup c t (Additive a), Rig c t a, NonunitalRing c t a) =>
       Ring c t a
 

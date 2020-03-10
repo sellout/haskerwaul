@@ -7,5 +7,5 @@ module Haskerwaul.Functor.Contravariant
 import Haskerwaul.Category.Opposite
 import Haskerwaul.Functor
 
--- | https://ncatlab.org/nlab/show/contravariant+functor
+-- | [nLab](https://ncatlab.org/nlab/show/contravariant+functor)
 type ContravariantFunctor c = Functor (Op c)

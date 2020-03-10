@@ -16,11 +16,11 @@ import Haskerwaul.Lattice.Components
 import Haskerwaul.Magma
 import Haskerwaul.Semiring.Components
 
--- | https://ncatlab.org/nlab/show/commutative+magma
-class Magma k t a => CommutativeMagma k t a
+-- | [nLab](https://ncatlab.org/nlab/show/commutative+magma)
+class Magma c t a => CommutativeMagma c t a
 
 -- commutative
---   :: (BraidedMonoidalCategory k ob t, CommutativeMagma k t a, ob a, Eq a)
+--   :: (BraidedMonoidalCategory c ob t, CommutativeMagma c t a, ob a, Eq a)
 --   => t a a -> Bool
 -- commutative t = op t == op (braid t)
 

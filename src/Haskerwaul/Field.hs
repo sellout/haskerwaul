@@ -10,5 +10,5 @@ module Haskerwaul.Field
 import Haskerwaul.Group.Abelian
 import Haskerwaul.Skewfield
 
--- | https://ncatlab.org/nlab/show/field
-class (AbelianGroup k t (Multiplicative a), Skewfield k t a) => Field k t a
+-- | [nLab](https://ncatlab.org/nlab/show/field)
+class (AbelianGroup c t (Multiplicative a), Skewfield c t a) => Field c t a

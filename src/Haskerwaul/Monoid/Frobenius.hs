@@ -10,4 +10,5 @@ module Haskerwaul.Monoid.Frobenius
 import Haskerwaul.Comonoid
 import Haskerwaul.Monoid
 
-class (Monoid k t a, Comonoid k t a) => FrobeniusMonoid k t a
+-- | [nLab](https://ncatlab.org/nlab/show/Frobenius+algebra)
+class (Monoid c t a, Comonoid c t a) => FrobeniusMonoid c t a

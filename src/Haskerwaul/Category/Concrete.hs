@@ -9,7 +9,7 @@ module Haskerwaul.Category.Concrete
 import Haskerwaul.Category
 import Haskerwaul.Functor.Faithful
 
--- | https://ncatlab.org/nlab/show/concrete+category
+-- | [nLab](https://ncatlab.org/nlab/show/concrete+category)
 class (Category c, FaithfulFunctor c x f) => ConcreteCategory x f c where
 
 -- -- assuming  `Hom_2` is `hom(-, 2)`,`a @`Functor` (`Op` (->)) (->)@

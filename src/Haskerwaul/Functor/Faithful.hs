@@ -6,5 +6,5 @@ module Haskerwaul.Functor.Faithful
 
 import Haskerwaul.Functor
 
--- | https://ncatlab.org/nlab/show/faithful+functor
+-- | [nLab](https://ncatlab.org/nlab/show/faithful+functor)
 class Functor c d f => FaithfulFunctor c d f

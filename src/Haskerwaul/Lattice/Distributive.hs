@@ -10,7 +10,7 @@ import qualified Data.Bool as Base
 
 import Haskerwaul.Lattice
 
--- | https://ncatlab.org/nlab/show/distributive+lattice
+-- | [nLab](https://ncatlab.org/nlab/show/distributive+lattice)
 class Lattice c t a => DistributiveLattice c t a
 
 instance DistributiveLattice (->) (,) Base.Bool

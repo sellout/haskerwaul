@@ -10,9 +10,9 @@ module Haskerwaul.Monoid.Frobenius.Commutative
 import Haskerwaul.Monoid.Commutative
 import Haskerwaul.Monoid.Frobenius
 
--- | https://ncatlab.org/nlab/show/Frobenius+algebra#commutative_frobenius_algebras
-class (CommutativeMonoid k t a, FrobeniusMonoid k t a) =>
-      CommutativeFrobeniusMonoid k t a
+-- | [nLab](https://ncatlab.org/nlab/show/Frobenius+algebra#commutative_frobenius_algebras)
+class (CommutativeMonoid c t a, FrobeniusMonoid c t a) =>
+      CommutativeFrobeniusMonoid c t a
 
-instance (CommutativeMonoid k t a, FrobeniusMonoid k t a) =>
-         CommutativeFrobeniusMonoid k t a
+instance (CommutativeMonoid c t a, FrobeniusMonoid c t a) =>
+         CommutativeFrobeniusMonoid c t a

@@ -11,7 +11,7 @@ module Haskerwaul.Algebra.Boolean
 import Haskerwaul.Algebra.Heyting
 import Haskerwaul.Lattice.Orthocomplemented
 
--- | https://ncatlab.org/nlab/show/Boolean+algebra
+-- | [nLab](https://ncatlab.org/nlab/show/Boolean+algebra)
 class (OrthocomplementedLattice c t a, HeytingAlgebra c t a) =>
       BooleanAlgebra c t a
 

@@ -14,8 +14,8 @@ import           Data.Constraint ((:-)(..), (:=>)(..), Class(..), Dict(..))
 import           Data.Kind (Constraint)
 
 -- | A natural transformation in the category of constraints.
-class ConstraintTransformation k (f :: ok -> Constraint) (g :: ok -> Constraint) a where
-  constrainNT :: f a `k` g a
+class ConstraintTransformation c (f :: ok -> Constraint) (g :: ok -> Constraint) a where
+  constrainNT :: f a `c` g a
 
 instance (f a :=> g a) => ConstraintTransformation (:-) f g a where
   constrainNT = ins

@@ -22,34 +22,34 @@ import Haskerwaul.Object
 import Haskerwaul.Object.Terminal
 import Haskerwaul.Transformation.Natural
 
--- | https://ncatlab.org/nlab/show/full+subcategory
+-- | [nLab](https://ncatlab.org/nlab/show/full+subcategory)
 --
 --  `Haskerwaul.Magma.Unital.unit` (on objects) and `inclusion` (on morphisms)
---   form an <https://ncatlab.org/nlab/show/subcategory inclusion functor>.
+--   form an [inclusion functor](https://ncatlab.org/nlab/show/subcategory).
 --
 -- __NB__: This is probably less restrictive than you think. E.g.,
---        `FullSubcategory (Monoid (->) (,)) (->)` is /not/
---        <https://ncatlab.org/nlab/show/category+of+monoids Mon(Hask)>. The
+--        @`FullSubcategory` (`Monoid` (->) (,)) (->)@ is /not/
+--        [Mon(Hask)](https://ncatlab.org/nlab/show/category+of+monoids). The
 --         objects are the same, but the morphisms are simply Haskell functions,
 --        /not/ monoid homomorphisms.
-newtype FullSubcategory (c :: ok -> Constraint) (k :: ok -> ok -> Type) a b =
-  FS { inclusion :: a `k` b }
+newtype FullSubcategory (ob :: ok -> Constraint) (c :: ok -> ok -> Type) a b =
+  FS { inclusion :: a `c` b }
 
-type instance Ob (FullSubcategory c k) = CFProd (Ob k) c
+type instance Ob (FullSubcategory ob c) = CFProd (Ob c) ob
 
-instance Magma (NaturalTransformation2 (->)) CProd k =>
-         Magma (NaturalTransformation2 (->)) CProd (FullSubcategory c k) where
+instance Magma (NaturalTransformation2 (->)) CProd c =>
+         Magma (NaturalTransformation2 (->)) CProd (FullSubcategory ob c) where
   op = NT2 (\(CProd (FS f) (FS g)) -> FS (f . g))
 
-instance Semigroup (NaturalTransformation2 (->)) CProd k =>
-         Semigroup (NaturalTransformation2 (->)) CProd (FullSubcategory c k)
+instance Semigroup (NaturalTransformation2 (->)) CProd c =>
+         Semigroup (NaturalTransformation2 (->)) CProd (FullSubcategory ob c)
 
-instance (MonoidalCategory' k t, c (Unit k t)) =>
-         MonoidalCategory' (FullSubcategory c k) t where
-  type Unit (FullSubcategory c k) t = Unit k t
+instance (MonoidalCategory' c t, ob (Unit c t)) =>
+         MonoidalCategory' (FullSubcategory ob c) t where
+  type Unit (FullSubcategory ob c) t = Unit c t
 
-instance UnitalMagma (NaturalTransformation2 (->)) CProd k =>
-         UnitalMagma (NaturalTransformation2 (->)) CProd (FullSubcategory c k) where
+instance UnitalMagma (NaturalTransformation2 (->)) CProd c =>
+         UnitalMagma (NaturalTransformation2 (->)) CProd (FullSubcategory ob c) where
   unit Proxy = NT2 (\Refl -> FS id)
 
 instance {-# overlappable #-} (SemigroupalCategory c t, TOb ob t) =>
@@ -112,7 +112,7 @@ type family Constrained (ob :: ok -> Constraint) (c :: ok -> ok -> Type)
     Opposite (Constrained (CFProd ob ob') c)
   Constrained ob  c                       = FullSubcategory ob c
 
-isomorphismFS :: Isomorphism k a b -> Isomorphism (FullSubcategory c k) a b
+isomorphismFS :: Isomorphism c a b -> Isomorphism (FullSubcategory ob c) a b
 isomorphismFS = Base.uncurry Iso . (FS . to &&& FS . from)
 
 instance (HasTerminalObject c, ob (TerminalObject c)) =>

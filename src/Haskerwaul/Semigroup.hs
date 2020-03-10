@@ -14,7 +14,10 @@ import qualified Data.Semigroup as Base
 import Haskerwaul.Magma
 import Haskerwaul.Object
 
--- | https://ncatlab.org/nlab/show/semigroup
+-- | [nLab](https://ncatlab.org/nlab/show/semigroup)
+--
+-- = laws
+--   [associative]: op x (op y z) == op (op x y) z
 class Magma c t a => Semigroup c t a
 
 associative :: (Semigroup (->) (,) a, Eq a) => a -> a -> a -> Bool
@@ -29,4 +32,4 @@ instance (Semigroup (->) (,) a, Semigroup (->) (,) b) => Semigroup (->) (,) (a, 
 instance Semigroup (->) Either a
 
 instance BOb (Semigroup (->) (,)) (Semigroup (->) (,)) (Semigroup (->) (,)) (,) where
-  inOp = Sub Dict
+  inB = Sub Dict

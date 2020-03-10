@@ -7,8 +7,8 @@ import           Numeric.Natural
 import Haskerwaul.Monoid.Commutative.Monus
 import Haskerwaul.Semiring
 
--- | https://ncatlab.org/nlab/show/rig
-class (CommutativeMonoidMonus k t (Additive a), Semiring k t a) =>
-      RigMonus k t a
+-- | [nLab](https://ncatlab.org/nlab/show/rig)
+class (CommutativeMonoidMonus c t (Additive a), Semiring c t a) =>
+      RigMonus c t a
 
 instance RigMonus (->) (,) Natural

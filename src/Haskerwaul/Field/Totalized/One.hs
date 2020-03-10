@@ -10,6 +10,5 @@ module Haskerwaul.Field.Totalized.One
 import Haskerwaul.Field.Totalized
 import Haskerwaul.Meadow.NonInvolutive
 
--- | https://ncatlab.org/nlab/show/field
 class (NonInvolutiveMeadow c t a, TotalizedField c t a) =>
       OneTotalizedField c t a

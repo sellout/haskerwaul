@@ -14,8 +14,9 @@ import Haskerwaul.Monoid
 import Haskerwaul.Semigroup.Commutative
 import Haskerwaul.Semiring.Near
 
-class (NearSemiring k t a, CommutativeSemigroup k t (Additive a)) =>
-      Semiring k t a
+-- | [nLab](https://ncatlab.org/nlab/show/rig)
+class (NearSemiring c t a, CommutativeSemigroup c t (Additive a)) =>
+      Semiring c t a
 
-instance (CommutativeSemigroup k t (Additive a), Monoid k t (Multiplicative a)) =>
-         Semiring k t a
+instance (CommutativeSemigroup c t (Additive a), Monoid c t (Multiplicative a)) =>
+         Semiring c t a

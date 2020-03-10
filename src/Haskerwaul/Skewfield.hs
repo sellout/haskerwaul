@@ -14,7 +14,7 @@ import Haskerwaul.Category.Monoidal
 import Haskerwaul.Group
 import Haskerwaul.Ring
 
--- | https://ncatlab.org/nlab/show/skewfield
+-- | [nLab](https://ncatlab.org/nlab/show/skewfield)
 class (Group c t (Multiplicative a), Ring c t a) => Skewfield c t a
 
 --   FIXME: The `divide` operation introduced here is partial.

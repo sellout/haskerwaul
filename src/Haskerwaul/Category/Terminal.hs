@@ -4,18 +4,20 @@ import           Data.Constraint.Deferrable ((:~:)(..))
 import           Data.Kind (Type)
 import           Data.Proxy (Proxy(..))
 
+import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Monoidal
 import Haskerwaul.Category.Opposite
 import Haskerwaul.Category.Pointed
 import Haskerwaul.Constraint
+import Haskerwaul.Functor
 import Haskerwaul.Isomorphism
 import Haskerwaul.Object
 import Haskerwaul.Object.Terminal
 import Haskerwaul.Transformation.Natural
 
--- | https://ncatlab.org/nlab/show/terminal+category
+-- | [nLab](https://ncatlab.org/nlab/show/terminal+category)
 --
---  __NB__: This appears to have the same objects as `(->)`, but in this
+--  __NB__: This appears to have the same objects as @(->)@, but in this
 --          category, they're all isomorphic.
 data TerminalCategory a b = TermId
 
@@ -57,3 +59,10 @@ instance HasTerminalObject (Opposite (TerminalCategory :: Type -> Type -> Type))
 
 instance PointedCategory (TerminalCategory :: Type -> Type -> Type) where
   (!-) = TermId
+
+-- | There is a unique functor @c -> `TerminalCategory`@ for each category @c@.
+instance Functor c TerminalCategory f where
+  map _ = TermId
+
+instance Bifunctor c1 c2 TerminalCategory f where
+  bimap _ _ = TermId

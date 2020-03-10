@@ -14,7 +14,7 @@ import Haskerwaul.Object
 import Haskerwaul.Object.Terminal
 import Haskerwaul.Subcategory.Full
 
--- | https://ncatlab.org/nlab/show/topos
+-- | [nLab](https://ncatlab.org/nlab/show/topos)
 class (CartesianClosedCategory c, Ob c (Class c)) => ElementaryTopos c where
   -- | The classifying object in the category.
   type Class c

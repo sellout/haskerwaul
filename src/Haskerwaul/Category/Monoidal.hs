@@ -26,7 +26,7 @@ import Haskerwaul.Isomorphism
 import Haskerwaul.Object
 import Haskerwaul.Transformation.Natural
 
--- | https://ncatlab.org/nlab/show/monoidal+category
+-- | [nLab](https://ncatlab.org/nlab/show/monoidal+category)
 class (SemigroupalCategory c t, MonoidalCategory' c t) =>
       MonoidalCategory c t where
   leftIdentity :: Ob c a => Isomorphism c (t (Unit c t) a) a

@@ -10,6 +10,6 @@ module Haskerwaul.Category.Bicartesian
 import Haskerwaul.Category.Monoidal.Cartesian
 import Haskerwaul.Category.Monoidal.Cocartesian
 
--- | https://ncatlab.org/nlab/show/bicartesian+category
-type BicartesianCategory k =
-  (CartesianMonoidalCategory k, CocartesianMonoidalCategory k)
+-- | [nLab](https://ncatlab.org/nlab/show/bicartesian+category)
+type BicartesianCategory c =
+  (CartesianMonoidalCategory c, CocartesianMonoidalCategory c)

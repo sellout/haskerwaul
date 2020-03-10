@@ -10,6 +10,7 @@ module Haskerwaul.Monoid.Commutative
 import Haskerwaul.Magma.Commutative
 import Haskerwaul.Monoid
 
-class (CommutativeMagma k t a,  Monoid k t a) => CommutativeMonoid k t a
+-- | [nLab](https://ncatlab.org/nlab/show/commutative+monoid)
+class (CommutativeMagma c t a,  Monoid c t a) => CommutativeMonoid c t a
 
-instance (CommutativeMagma k t a,  Monoid k t a) => CommutativeMonoid k t a
+instance (CommutativeMagma c t a,  Monoid c t a) => CommutativeMonoid c t a

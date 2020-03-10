@@ -11,7 +11,7 @@ module Haskerwaul.Semiring.Near
 import Haskerwaul.Monoid
 import Haskerwaul.Semiring.Pre.Near
 
--- | https://ncatlab.org/nlab/show/near-ring
+-- | [nLab](https://ncatlab.org/nlab/show/near-ring)
 class (NearPreSemiring c t a, Monoid c t (Multiplicative a)) =>
       NearSemiring c t a
 

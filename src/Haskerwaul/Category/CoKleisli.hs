@@ -7,5 +7,5 @@ module Haskerwaul.Category.CoKleisli
 import Haskerwaul.Category.Kleisli
 import Haskerwaul.Category.Opposite
 
--- | https://ncatlab.org/nlab/show/Kleisli+category+of+a+comonad
-type CoKleisli k = Kleisli (Op k)
+-- | [nLab](https://ncatlab.org/nlab/show/Kleisli+category+of+a+comonad)
+type CoKleisli c = Kleisli (Op c)

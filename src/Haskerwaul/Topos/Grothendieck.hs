@@ -8,5 +8,5 @@ module Haskerwaul.Topos.Grothendieck
 
 import Haskerwaul.Topos.Elementary
 
--- | https://ncatlab.org/nlab/show/Grothendieck+topos
+-- | [nLab](https://ncatlab.org/nlab/show/Grothendieck+topos)
 class ElementaryTopos c => GrothendieckTopos c

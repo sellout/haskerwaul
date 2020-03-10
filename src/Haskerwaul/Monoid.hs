@@ -10,7 +10,7 @@ module Haskerwaul.Monoid
 import Haskerwaul.Magma.Unital
 import Haskerwaul.Semigroup
 
--- | https://ncatlab.org/nlab/show/monoid
+-- | [nLab](https://ncatlab.org/nlab/show/monoid)
 class (UnitalMagma c t a, Semigroup c t a) => Monoid c t a
 
 instance (UnitalMagma c t a, Semigroup c t a) => Monoid c t a

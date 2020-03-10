@@ -15,7 +15,7 @@ import Haskerwaul.Transformation.Natural
 -- | A categorical tensor.
 data CProd c d a b = forall z. CProd (z `c` b) (a `d` z)
 
--- | https://en.wikipedia.org/wiki/Semigroupoid
+-- | [Wikipedia](https://en.wikipedia.org/wiki/Semigroupoid)
 --
 --  __TODO__: This should have a @`Haskerwaul.Profunctor.Profunctor` c c c@
 --            constraint, but there are troublesome instances, so we skip the

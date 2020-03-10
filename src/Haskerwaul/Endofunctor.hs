@@ -6,5 +6,5 @@ module Haskerwaul.Endofunctor
 
 import Haskerwaul.Functor
 
--- | https://ncatlab.org/nlab/show/endofunctor
+-- | [nLab](https://ncatlab.org/nlab/show/endofunctor)
 type Endofunctor c = Functor c c

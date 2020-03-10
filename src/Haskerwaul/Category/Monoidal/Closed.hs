@@ -16,7 +16,7 @@ import Haskerwaul.Category.Monoidal
 import Haskerwaul.Object
 import Haskerwaul.Subcategory.Full
 
--- | https://ncatlab.org/nlab/show/closed+monoidal+category
+-- | [nLab](https://ncatlab.org/nlab/show/closed+monoidal+category)
 class (ClosedCategory c, MonoidalCategory c t) =>
       ClosedMonoidalCategory c t where
   apply :: (Ob c a, Ob c b) => t (Exp c a b) a `c` b

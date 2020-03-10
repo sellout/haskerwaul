@@ -17,9 +17,9 @@ import Haskerwaul.Semiring.Components
 import Haskerwaul.Subcategory.Full
 import Haskerwaul.Transformation.Natural
 
--- | https://ncatlab.org/nlab/show/quasigroup#definitions
-class Magma k t a => RightQuasigroup k t a where
-  rightQuotient :: t a a `k` a
+-- | [nLab](https://ncatlab.org/nlab/show/quasigroup#definitions)
+class Magma c t a => RightQuasigroup c t a where
+  rightQuotient :: t a a `c` a
 
 -- instance RightQuasigroup (->) Either Void where
 --   rightQuotient = \case
@@ -27,15 +27,15 @@ class Magma k t a => RightQuasigroup k t a where
 instance RightQuasigroup (->) (,) () where
   rightQuotient ((), ()) = ()
 
--- instance RightQuasigroup (NaturalTransformation2 (->)) CProd k =>
---          RightQuasigroup (NaturalTransformation2 (->)) CProd (Op k) where
+-- instance RightQuasigroup (NaturalTransformation2 (->)) CProd c =>
+--          RightQuasigroup (NaturalTransformation2 (->)) CProd (Op c) where
 --   inverse = NT2 (\(Op f) -> Op (runNT2 inverse f))
 
-instance RightQuasigroup (NaturalTransformation2 (->)) CProd k =>
+instance RightQuasigroup (NaturalTransformation2 (->)) CProd c =>
          RightQuasigroup
          (NaturalTransformation2 (->))
          CProd
-         (FullSubcategory c k) where
+         (FullSubcategory ob c) where
   rightQuotient = NT2 FS . rightQuotient . bimap (NT2 inclusion) (NT2 inclusion)
 
 instance RightQuasigroup (->) (,) (Additive Int) where

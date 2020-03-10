@@ -12,7 +12,7 @@ import           Data.Proxy (Proxy)
 import Haskerwaul.Loop
 import Haskerwaul.Monoid
 
--- | https://ncatlab.org/nlab/show/group
+-- | [nLab](https://ncatlab.org/nlab/show/group)
 class (Loop c t a, Monoid c t a) => Group c t a
 
 instance (Loop c t a, Monoid c t a) => Group c t a
@@ -20,7 +20,7 @@ instance (Loop c t a, Monoid c t a) => Group c t a
 inverse :: (c ~ (->), t ~ (,), Group c t a) => Proxy t -> a `c` a
 inverse = rightInverse
 
-quotient :: Group k t a => t a a `k` a
+quotient :: Group c t a => t a a `c` a
 quotient = rightQuotient
 
 -- * `Haskerwaul.Groupoid.Groupoid` instances

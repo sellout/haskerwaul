@@ -7,5 +7,5 @@ module Haskerwaul.Comonoid
 import Haskerwaul.Category.Opposite
 import Haskerwaul.Monoid
 
--- | https://ncatlab.org/nlab/show/comonoid
+-- | [nLab](https://ncatlab.org/nlab/show/comonoid)
 type Comonoid c = Monoid (Op c)

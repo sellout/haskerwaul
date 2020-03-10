@@ -13,9 +13,9 @@ import Haskerwaul.Monoid.Commutative
 import Haskerwaul.Rig.Near
 import Haskerwaul.Semiring
 
--- | https://ncatlab.org/nlab/show/rig
-class (CommutativeMonoid k t (Additive a), NearRig k t a, Semiring k t a) =>
-      Rig k t a
+-- | [nLab](https://ncatlab.org/nlab/show/rig)
+class (CommutativeMonoid c t (Additive a), NearRig c t a, Semiring c t a) =>
+      Rig c t a
 
-instance (CommutativeMonoid k t (Additive a), NearRig k t a, Semiring k t a) =>
-         Rig k t a
+instance (CommutativeMonoid c t (Additive a), NearRig c t a, Semiring c t a) =>
+         Rig c t a

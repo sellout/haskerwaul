@@ -8,5 +8,5 @@ module Haskerwaul.Isomorphism.Natural
 import Haskerwaul.Isomorphism
 import Haskerwaul.Transformation.Natural
 
--- | https://ncatlab.org/nlab/show/natural+isomorphism
+-- | [nLab](https://ncatlab.org/nlab/show/natural+isomorphism)
 type NaturalIsomorphism c = Isomorphism (NaturalTransformation c)
