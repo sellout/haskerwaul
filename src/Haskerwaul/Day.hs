@@ -18,12 +18,13 @@ import Haskerwaul.Transformation.Natural
 -- | [nLab](https://ncatlab.org/nlab/show/Day+convolution)
 data Day c ct dt f g a = forall x y. Day (dt (f x) (g y)) (ct x y `c` a)
 
--- | This is overspecialized. It _should_ be
---  @(`NaturalTransformation` k) (`Functor` j k) (`Day` j t)@ but it isn't yet
---   point-free enough for that.
-instance SemigroupalCategory
-         (FullSubcategory (Functor (->) (->)) (NaturalTransformation (->)))
-         (Day (->) (,) (,)) where
+-- | Functor categories have `Day` as a monoidal tensor.
+--
+--  __NB__: This is overspecialized.
+instance (c ~ (->), ct ~ (,), d ~ (->), dt ~ (,)) =>
+         SemigroupalCategory
+         (FullSubcategory (Functor c d) (NaturalTransformation d))
+         (Day c ct dt) where
   assoc =
     Iso
     (FS (NT (\(Day (fa, Day (gb, hc) ifn) ofn) ->
@@ -35,12 +36,13 @@ instance MonoidalCategory' c ct =>
          MonoidalCategory' (NaturalTransformation d) (Day c ct dt) where
   type Unit (NaturalTransformation d) (Day c ct dt) = c (Unit c ct)
 
--- | __NB__: Super over-specified. Some `(->)` should be @j@ and some should be
---          @k@. The `(,)` should be @t@.
-instance MonoidalCategory (->) (,) =>
+-- | Functor categories have `Day` as a monoidal tensor.
+--
+--  __NB__: Super over-specialized.
+instance (c ~ (->), ct ~ (,), d ~ (->), dt ~ (,), MonoidalCategory d dt) =>
          MonoidalCategory
-         (FullSubcategory (Functor (->) (->)) (NaturalTransformation (->)))
-         (Day (->) (,) (,)) where
+         (FullSubcategory (Functor c d) (NaturalTransformation d))
+         (Day c ct dt) where
   leftIdentity =
     Iso
     (FS (NT (\(Day (fa, gb) fn) -> map (\b -> fn (fa (), b)) gb)))

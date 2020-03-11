@@ -73,6 +73,8 @@ library
                     , Haskerwaul.Functor.Closed.Strong
                     , Haskerwaul.Functor.Contravariant
                     , Haskerwaul.Functor.Faithful
+                    , Haskerwaul.Functor.Faithful.Full
+                    , Haskerwaul.Functor.Full
                     , Haskerwaul.Functor.Monoidal.Closed
                     , Haskerwaul.Functor.Monoidal.Lax
                     , Haskerwaul.Functor.Monoidal.Oplax

@@ -21,10 +21,10 @@ import Haskerwaul.Transformation.Natural
 -- = laws
 --   (see `Haskerwaul.Category.Duoidal.DuoidalCategory`)
 --
---   [switch]: (A ⋆ B) ⋄ (C ⋆ D) → (A ⋄ C) ⋆ (B ⋄ D)
---   [duplicate unit]: I → I ⋆ I
---   [combine unit]: J ⋄ J → J
---   [forward unit]: I →≅ (J ⋆ I) ⋄ (I ⋆ J) → (J ⋄ I) ⋆ (I ⋄ J) →≅ J
+--   [switch]: @(A ⋆ B) ⋄ (C ⋆ D) → (A ⋄ C) ⋆ (B ⋄ D)@
+--   [duplicate unit]: @I → I ⋆ I@
+--   [combine unit]: @J ⋄ J → J@
+--   [forward unit]: @I →≅ (J ⋆ I) ⋄ (I ⋆ J) → (J ⋄ I) ⋆ (I ⋄ J) →≅ J@ (implied by the other laws)
 class (Monoid c t (Diamond a), Monoid c t (Star a)) => Duoid c t a
 
 instance (Monoid c t (Diamond a), Monoid c t (Star a)) => Duoid c t a

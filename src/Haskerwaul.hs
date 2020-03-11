@@ -65,6 +65,8 @@ module Haskerwaul
   , module Haskerwaul.Functor.Closed.Strong
   , module Haskerwaul.Functor.Contravariant
   , module Haskerwaul.Functor.Faithful
+  , module Haskerwaul.Functor.Faithful.Full
+  , module Haskerwaul.Functor.Full
   , module Haskerwaul.Functor.Monoidal.Closed
   , module Haskerwaul.Functor.Monoidal.Lax
   , module Haskerwaul.Functor.Monoidal.Oplax
@@ -208,6 +210,8 @@ import Haskerwaul.Functor.Closed.Lax
 import Haskerwaul.Functor.Closed.Strong
 import Haskerwaul.Functor.Contravariant
 import Haskerwaul.Functor.Faithful
+import Haskerwaul.Functor.Faithful.Full
+import Haskerwaul.Functor.Full
 import Haskerwaul.Functor.Monoidal.Closed
 import Haskerwaul.Functor.Monoidal.Lax
 import Haskerwaul.Functor.Monoidal.Oplax
