@@ -4,6 +4,7 @@
 module Haskerwaul.Bifunctor where
 
 import qualified Data.Bifunctor as Base
+import           Data.Constraint ((:-)(..), (:=>)(..), (***), Class(..), trans)
 import           Data.Proxy (Proxy(..))
 
 import Haskerwaul.Category
@@ -63,17 +64,12 @@ instance (c1 ~ (->), c2 ~ (->)) =>
 
 -- instance Bifunctor (:-) (:-) (:-) (,) where
 
--- instance Bifunctor
---          (NaturalTransformation (:-))
---          (NaturalTransformation (:-))
---          (NaturalTransformation (:-))
---          CFProd where
---   -- bimap :: forall a b c d
---   --        . (forall i.              a i :- b i)
---   --       -> (forall i.              c i :- d i)
---   --          (forall i0 i1. (a i0, c i1) :- (b i0, d i1)) -- (runNT f *** runNT g)
---   --       -> (forall i.     CFProd a c i :- CFProd b d i)
---   bimap f g = NT (runNT f *** runNT g)
+instance Bifunctor
+         (NaturalTransformation (:-))
+         (NaturalTransformation (:-))
+         (NaturalTransformation (:-))
+         CFProd where
+  bimap f g = NT (trans (trans ins (runNT f *** runNT g)) cls)
 
 -- * `Haskerwaul.Profunctor.Profunctor` instances
 
@@ -82,5 +78,5 @@ instance Semigroupoid c => Bifunctor (Opposite c) c (->) c where
   bimap f g fn = g . fn . opposite f
 
 -- instance Bifunctor (Opposite (:-)) (:-) (:-) (:=>) where
---   bimap :: b :- a -> c :- d -> (a :=> c) :- (b :=> d)
---   bimap f g = trans g (trans fn (opposite f))
+--   -- bimap :: b :- a -> c :- d -> (a :=> c) :- (b :=> d)
+--   bimap f g = trans g (trans ins (opposite f))

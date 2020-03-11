@@ -40,7 +40,10 @@ instance (c ~ (->), Category c, Monad c m) =>
   unit Proxy =
     NT2 (\Refl -> Kleisli (runNT (unit (Proxy :: Proxy Compose)) . Identity))
 
-instance (c ~ (->), SemigroupalCategory c t, Monad c m) =>
+instance ( c ~ (->)
+         , SemigroupalCategory c t
+         , Bifunctor (Kleisli c m) (Kleisli c m) (Kleisli c m) t
+         , Monad c m) =>
          SemigroupalCategory (Kleisli c m) t where
   assoc =
     Iso
@@ -50,7 +53,10 @@ instance (c ~ (->), SemigroupalCategory c t, Monad c m) =>
 instance (MonoidalCategory' c t) => MonoidalCategory' (Kleisli c m) t where
   type Unit (Kleisli c m) t = Unit c t
 
-instance (c ~ (->), MonoidalCategory c t, Monad c m) =>
+instance ( c ~ (->)
+         , MonoidalCategory c t
+         , Bifunctor (Kleisli c m) (Kleisli c m) (Kleisli c m) t
+         , Monad c m) =>
          MonoidalCategory (Kleisli c m) t where
   leftIdentity =
     Iso
@@ -65,7 +71,10 @@ instance (c ~ (->), ClosedCategory c, Monad c m) =>
          ClosedCategory (Kleisli c m) where
   type Exp (Kleisli c m) = Kleisli (Exp c) m
 
-instance (c ~ (->), ClosedMonoidalCategory c t, Bifunctor c c c t, Monad c m) =>
+instance ( c ~ (->)
+         , ClosedMonoidalCategory c t
+         , Bifunctor (Kleisli c m) (Kleisli c m) (Kleisli c m) t
+         , Monad c m) =>
          ClosedMonoidalCategory (Kleisli c m) t where
   apply = Kleisli (apply . first (Proxy :: Proxy c) runKleisli)
 
@@ -74,7 +83,10 @@ instance (c ~ (->), CartesianMonoidalCategory c, Monad c m) =>
   type TerminalObject (Kleisli c m) = TerminalObject c
   (!) = Kleisli (runNT (unit (Proxy :: Proxy Compose)) . Identity .  (!))
 
-instance (c ~ (->), CartesianMonoidalCategory c, Monad c m) =>
+instance ( c ~ (->)
+         , CartesianMonoidalCategory c
+         , Bifunctor (Kleisli c m) (Kleisli c m) (Kleisli c m) (Prod c)
+         , Monad c m) =>
          CartesianMonoidalCategory (Kleisli c m) where
   type Prod (Kleisli c m) = Prod c
   exl = Kleisli (runNT (unit (Proxy :: Proxy Compose)) . Identity . exl)

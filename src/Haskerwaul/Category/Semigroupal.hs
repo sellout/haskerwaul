@@ -19,10 +19,7 @@ import Haskerwaul.Isomorphism
 import Haskerwaul.Object
 import Haskerwaul.Transformation.Natural
 
--- | __TODO__: This should have a @`Bifunctor` c c c t@ constraint, but it's
---             been troublesome making an instance for `CFProd`, so we skip the
---             constraint here and add it on the instances that make use of it.
-class (Category c, TOb (Ob c) t) =>
+class (Category c, TOb (Ob c) t, Bifunctor c c c t) =>
       SemigroupalCategory c t where
   assoc :: (Ob c x, Ob c y, Ob c z) => Isomorphism c (t x (t y z)) (t (t x y) z)
 
@@ -46,7 +43,7 @@ instance SemigroupalCategory (->) Either where
 
 -- | Every functor category is additionally semigroupal in all the ways that the
 --   destination category is.
-instance (c ~ (->), SemigroupalCategory c t, Bifunctor c c c t) =>
+instance (c ~ (->), SemigroupalCategory c t) =>
          SemigroupalCategory (NaturalTransformation c) (FTensor t) where
   assoc =
     Iso
@@ -56,7 +53,7 @@ instance (c ~ (->), SemigroupalCategory c t, Bifunctor c c c t) =>
     p :: Proxy c
     p = Proxy
 
-instance (c ~ (->), SemigroupalCategory c t, Bifunctor c c c t) =>
+instance (c ~ (->), SemigroupalCategory c t) =>
          SemigroupalCategory (NaturalTransformation2 c) (BTensor t) where
   assoc =
     Iso

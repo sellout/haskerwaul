@@ -61,7 +61,7 @@ instance {-# overlappable #-} (MonoidalCategory c t, TOb ob t, ob (Unit c t)) =>
   leftIdentity = isomorphismFS leftIdentity
   rightIdentity = isomorphismFS rightIdentity
 
-instance (Semigroupoid c, Bifunctor c d e t, BOb cOb dOb eOb t) =>
+instance {-# overlappable #-} (Semigroupoid c, Bifunctor c d e t, BOb cOb dOb eOb t) =>
          Bifunctor (FullSubcategory cOb c) (FullSubcategory dOb d) (FullSubcategory eOb e) t where
   bimap f g = FS (bimap (inclusion f) (inclusion g))
 
