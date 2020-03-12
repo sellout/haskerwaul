@@ -76,6 +76,8 @@ library
                     , Haskerwaul.Functor.Faithful
                     , Haskerwaul.Functor.Faithful.Full
                     , Haskerwaul.Functor.Full
+                    , Haskerwaul.Functor.Hom
+                    , Haskerwaul.Functor.Hom.Internal
                     , Haskerwaul.Functor.Monoidal.Closed
                     , Haskerwaul.Functor.Monoidal.Lax
                     , Haskerwaul.Functor.Monoidal.Oplax

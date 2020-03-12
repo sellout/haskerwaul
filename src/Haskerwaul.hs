@@ -67,6 +67,8 @@ module Haskerwaul
   , module Haskerwaul.Functor.Faithful
   , module Haskerwaul.Functor.Faithful.Full
   , module Haskerwaul.Functor.Full
+  , module Haskerwaul.Functor.Hom
+  , module Haskerwaul.Functor.Hom.Internal
   , module Haskerwaul.Functor.Strong
   , module Haskerwaul.Profunctor
   -- ** monoidal functors
@@ -223,6 +225,8 @@ import Haskerwaul.Functor.Contravariant
 import Haskerwaul.Functor.Faithful
 import Haskerwaul.Functor.Faithful.Full
 import Haskerwaul.Functor.Full
+import Haskerwaul.Functor.Hom
+import Haskerwaul.Functor.Hom.Internal
 import Haskerwaul.Functor.Monoidal.Closed
 import Haskerwaul.Functor.Monoidal.Lax
 import Haskerwaul.Functor.Monoidal.Oplax
