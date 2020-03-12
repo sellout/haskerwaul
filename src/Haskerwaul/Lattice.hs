@@ -15,6 +15,8 @@ import Haskerwaul.Semigroupoid
 import Haskerwaul.Semilattice
 
 -- | [nLab](https://ncatlab.org/nlab/show/lattice)
+--
+--  __NB__: Instances for this are automatically coalesced.
 class (Semilattice c t (Meet a), Semilattice c t (Join a)) => Lattice c t a
 
 instance (Semilattice c t (Meet a), Semilattice c t (Join a)) => Lattice c t a

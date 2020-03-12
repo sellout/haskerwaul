@@ -22,6 +22,7 @@ library
                     , Haskerwaul.Adjunction
                     , Haskerwaul.Algebra.Boolean
                     , Haskerwaul.Algebra.Heyting
+                    , Haskerwaul.Algebra.Heyting.Complete
                     , Haskerwaul.Automorphism
                     , Haskerwaul.Bifunctor
                     , Haskerwaul.Bimonoid

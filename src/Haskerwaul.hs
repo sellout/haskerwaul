@@ -11,16 +11,10 @@ module Haskerwaul
   -- * algebras
     module Haskerwaul.Algebra.Boolean
   , module Haskerwaul.Algebra.Heyting
-  , module Haskerwaul.Automorphism
-  , module Haskerwaul.Bifunctor
-  , module Haskerwaul.Bimonoid
+  , module Haskerwaul.Algebra.Heyting.Complete
   -- * categories
   , module Haskerwaul.Category
   , module Haskerwaul.Category.Bicartesian
-  , module Haskerwaul.Category.Closed
-  , module Haskerwaul.Category.Closed.Bicartesian
-  , module Haskerwaul.Category.Closed.Cartesian
-  , module Haskerwaul.Category.Closed.Compact
   , module Haskerwaul.Category.CoKleisli
   , module Haskerwaul.Category.Concrete
   , module Haskerwaul.Category.Distributive
@@ -28,6 +22,18 @@ module Haskerwaul
   , module Haskerwaul.Category.Duoidal.Normal
   , module Haskerwaul.Category.Hypergraph
   , module Haskerwaul.Category.Kleisli
+  , module Haskerwaul.Category.Opposite
+  , module Haskerwaul.Category.Pointed
+  , module Haskerwaul.Category.Product
+  , module Haskerwaul.Category.Rig
+  , module Haskerwaul.Category.Semigroupal
+  , module Haskerwaul.Category.Terminal
+  -- ** closed categories
+  , module Haskerwaul.Category.Closed
+  , module Haskerwaul.Category.Closed.Bicartesian
+  , module Haskerwaul.Category.Closed.Cartesian
+  , module Haskerwaul.Category.Closed.Compact
+  -- ** monoidal categories
   , module Haskerwaul.Category.Monoidal
   , module Haskerwaul.Category.Monoidal.Braided
   , module Haskerwaul.Category.Monoidal.Cartesian
@@ -36,29 +42,23 @@ module Haskerwaul
   , module Haskerwaul.Category.Monoidal.Distributive
   , module Haskerwaul.Category.Monoidal.Symmetric
   , module Haskerwaul.Category.Monoidal'
-  , module Haskerwaul.Category.Opposite
-  , module Haskerwaul.Category.Pointed
-  , module Haskerwaul.Category.Product
-  , module Haskerwaul.Category.Rig
-  , module Haskerwaul.Category.Semigroupal
-  , module Haskerwaul.Category.Terminal
+  -- * cones
   , module Haskerwaul.Cocone
   , module Haskerwaul.Cone
-  , module Haskerwaul.Comonad
-  , module Haskerwaul.Comonoid
-  , module Haskerwaul.Cospan
   , module Haskerwaul.Day
   , module Haskerwaul.Dioid
   -- * duoids
   , module Haskerwaul.Duoid
   , module Haskerwaul.Duoid.Normal
-  , module Haskerwaul.Endofunctor
   -- * fields
   , module Haskerwaul.Field
   , module Haskerwaul.Field.Totalized
   , module Haskerwaul.Field.Totalized.One
   , module Haskerwaul.Field.Totalized.Zero
+  , module Haskerwaul.Skewfield
   -- * functors
+  , module Haskerwaul.Bifunctor
+  , module Haskerwaul.Endofunctor
   , module Haskerwaul.Functor
   , module Haskerwaul.Functor.Closed.Cartesian
   , module Haskerwaul.Functor.Closed.Lax
@@ -67,11 +67,13 @@ module Haskerwaul
   , module Haskerwaul.Functor.Faithful
   , module Haskerwaul.Functor.Faithful.Full
   , module Haskerwaul.Functor.Full
+  , module Haskerwaul.Functor.Strong
+  , module Haskerwaul.Profunctor
+  -- ** monoidal functors
   , module Haskerwaul.Functor.Monoidal.Closed
   , module Haskerwaul.Functor.Monoidal.Lax
   , module Haskerwaul.Functor.Monoidal.Oplax
   , module Haskerwaul.Functor.Monoidal.Strong
-  , module Haskerwaul.Functor.Strong
   -- * groups
   , module Haskerwaul.Group
   , module Haskerwaul.Group.Abelian
@@ -80,6 +82,7 @@ module Haskerwaul
   , module Haskerwaul.Hemiring
   , module Haskerwaul.Hemiring.Near
   -- * isomorphisms
+  , module Haskerwaul.Automorphism
   , module Haskerwaul.Isomorphism
   , module Haskerwaul.Isomorphism.Natural
   -- * lattices
@@ -89,6 +92,7 @@ module Haskerwaul
   , module Haskerwaul.Lattice.Distributive
   , module Haskerwaul.Lattice.Distributive.Bounded
   , module Haskerwaul.Lattice.Orthocomplemented
+  -- * loops
   , module Haskerwaul.Loop
   -- * magmas
   , module Haskerwaul.Magma
@@ -104,9 +108,12 @@ module Haskerwaul
   , module Haskerwaul.Module.Left
   , module Haskerwaul.Module.Right
   -- * monads
+  , module Haskerwaul.Comonad
   , module Haskerwaul.Monad
   , module Haskerwaul.Monad.Frobenius
   -- * monoids
+  , module Haskerwaul.Bimonoid
+  , module Haskerwaul.Comonoid
   , module Haskerwaul.Monoid
   , module Haskerwaul.Monoid.Commutative
   , module Haskerwaul.Monoid.Commutative.Monus
@@ -119,7 +126,7 @@ module Haskerwaul
   , module Haskerwaul.Object
   , module Haskerwaul.Object.Initial
   , module Haskerwaul.Object.Terminal
-  , module Haskerwaul.Profunctor
+  -- * pullbacks
   , module Haskerwaul.Pullback
   , module Haskerwaul.Pushout
   -- * quasigroups
@@ -146,12 +153,15 @@ module Haskerwaul
   , module Haskerwaul.Semiring.Near
   , module Haskerwaul.Semiring.Pre
   , module Haskerwaul.Semiring.Pre.Near
-  , module Haskerwaul.Skewfield
+  -- * spans
+  , module Haskerwaul.Cospan
   , module Haskerwaul.Span
+  -- * subcategories
   , module Haskerwaul.Subcategory.Full
   -- * topoi (toposes)
   , module Haskerwaul.Topos.Elementary
   , module Haskerwaul.Topos.Grothendieck
+  -- * natural transformations
   , module Haskerwaul.Transformation.Natural
   ) where
 
@@ -160,6 +170,7 @@ module Haskerwaul
 -- import Haskerwaul.Adjunction
 import Haskerwaul.Algebra.Boolean
 import Haskerwaul.Algebra.Heyting
+import Haskerwaul.Algebra.Heyting.Complete
 import Haskerwaul.Automorphism
 import Haskerwaul.Bifunctor
 import Haskerwaul.Bimonoid
