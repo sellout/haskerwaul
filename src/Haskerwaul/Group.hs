@@ -13,6 +13,8 @@ import Haskerwaul.Loop
 import Haskerwaul.Monoid
 
 -- | [nLab](https://ncatlab.org/nlab/show/group)
+--
+--  __NB__: Instances for this are automatically coalesced.
 class (Loop c t a, Monoid c t a) => Group c t a
 
 instance (Loop c t a, Monoid c t a) => Group c t a

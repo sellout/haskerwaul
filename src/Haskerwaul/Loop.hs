@@ -12,6 +12,9 @@ import           Data.Proxy (Proxy)
 import Haskerwaul.Magma.Unital
 import Haskerwaul.Quasigroup
 
+-- | [Wikipedia](https://en.wikipedia.org/wiki/Quasigroup#Loops)
+--
+--  __NB__: Instances for this are automatically coalesced.
 class (UnitalMagma c t a, Quasigroup c t a) => Loop c t a
 
 instance (UnitalMagma c t a, Quasigroup c t a) => Loop c t a

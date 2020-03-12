@@ -9,6 +9,8 @@ import           Data.Constraint.Deferrable ((:~:)(..))
 import           Data.Proxy (Proxy(..))
 
 import Haskerwaul.Magma.Unital
+import Haskerwaul.Quasigroup.Left
+import Haskerwaul.Quasigroup.Right
 import Haskerwaul.Semigroup
 import Haskerwaul.Transformation.Natural
 
@@ -49,6 +51,11 @@ instance Magma (NaturalTransformation2 (->)) CProd c =>
          Magma (NaturalTransformation2 (->)) CProd (NaturalTransformation2 c) where
   op = NT2 (\(CProd (NT2 f) (NT2 g)) -> NT2 (f . g))
 
+-- | a discrete groupoid --
+--  [nLab](https://ncatlab.org/nlab/show/discrete+category)
+instance Magma (NaturalTransformation2 (->)) CProd (:~:) where
+  op = NT2 (\(CProd Refl Refl) -> Refl)
+
 -- instance ( Magma (NaturalTransformation2 (->)) CProd c
 --          , Magma (NaturalTransformation2 (->)) CProd c') =>
 --          Magma (NaturalTransformation2 (->)) CProd (c :**: c') where
@@ -64,6 +71,10 @@ instance Semigroup (NaturalTransformation2 (->)) CProd c =>
 
 instance Semigroup (NaturalTransformation2 (->)) CProd c =>
          Semigroup (NaturalTransformation2 (->)) CProd (NaturalTransformation2 c)
+
+-- | a discrete groupoid --
+--  [nLab](https://ncatlab.org/nlab/show/discrete+category)
+instance Semigroup (NaturalTransformation2 (->)) CProd (:~:)
 
 -- instance ( Semigroup (NaturalTransformation2 (->)) CProd c
 --          , Semigroup (NaturalTransformation2 (->)) CProd c') =>
@@ -82,3 +93,18 @@ instance UnitalMagma (NaturalTransformation2 (->)) CProd c =>
 instance UnitalMagma (NaturalTransformation2 (->)) CProd c =>
          UnitalMagma (NaturalTransformation2 (->)) CProd (NaturalTransformation2 c) where
   unit Proxy = NT2 (\Refl -> NT2 id)
+
+-- | a discrete groupoid --
+--  [nLab](https://ncatlab.org/nlab/show/discrete+category)
+instance UnitalMagma (NaturalTransformation2 (->)) CProd (:~:) where
+  unit Proxy = NT2 id
+
+-- | a discrete groupoid --
+--  [nLab](https://ncatlab.org/nlab/show/discrete+category)
+instance LeftQuasigroup (NaturalTransformation2 (->)) CProd (:~:) where
+  leftQuotient = NT2 (\(CProd Refl Refl) -> Refl)
+
+-- | a discrete groupoid --
+--  [nLab](https://ncatlab.org/nlab/show/discrete+category)
+instance RightQuasigroup (NaturalTransformation2 (->)) CProd (:~:) where
+  rightQuotient = NT2 (\(CProd Refl Refl) -> Refl)

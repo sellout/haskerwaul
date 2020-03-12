@@ -20,6 +20,8 @@ import Haskerwaul.Endofunctor
 import Haskerwaul.Isomorphism
 import Haskerwaul.Object
 import Haskerwaul.Object.Terminal
+import Haskerwaul.Quasigroup.Left
+import Haskerwaul.Quasigroup.Right
 import Haskerwaul.Transformation.Natural
 
 -- | [nLab](https://ncatlab.org/nlab/show/full+subcategory)
@@ -51,6 +53,20 @@ instance (MonoidalCategory' c t, ob (Unit c t)) =>
 instance UnitalMagma (NaturalTransformation2 (->)) CProd c =>
          UnitalMagma (NaturalTransformation2 (->)) CProd (FullSubcategory ob c) where
   unit Proxy = NT2 (\Refl -> FS id)
+
+instance LeftQuasigroup (NaturalTransformation2 (->)) CProd c =>
+         LeftQuasigroup
+         (NaturalTransformation2 (->))
+         CProd
+         (FullSubcategory ob c) where
+  leftQuotient = NT2 FS . leftQuotient . bimap (NT2 inclusion) (NT2 inclusion)
+
+instance RightQuasigroup (NaturalTransformation2 (->)) CProd c =>
+         RightQuasigroup
+         (NaturalTransformation2 (->))
+         CProd
+         (FullSubcategory ob c) where
+  rightQuotient = NT2 FS . rightQuotient . bimap (NT2 inclusion) (NT2 inclusion)
 
 instance {-# overlappable #-} (SemigroupalCategory c t, TOb ob t) =>
                               SemigroupalCategory (FullSubcategory ob c) t where

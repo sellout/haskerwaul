@@ -10,12 +10,8 @@ import           Prelude (Integer)
 import qualified Prelude as Base (Num(..))
 import           Data.Int (Int)
 
-import Haskerwaul.Bifunctor
-import Haskerwaul.Semigroupoid
 import Haskerwaul.Semiring.Components
 import Haskerwaul.Magma
-import Haskerwaul.Subcategory.Full
-import Haskerwaul.Transformation.Natural
 
 -- | [nLab](https://ncatlab.org/nlab/show/quasigroup#definitions)
 class Magma c t a => LeftQuasigroup c t a where
@@ -34,13 +30,6 @@ instance LeftQuasigroup (->) (,) () where
 -- instance LeftQuasigroup (NaturalTransformation2 (->)) CProd c =>
 --          LeftQuasigroup (NaturalTransformation2 (->)) CProd (Op c) where
 --   inverse = NT2 (\(Op f) -> Op (runNT2 inverse f))
-
-instance LeftQuasigroup (NaturalTransformation2 (->)) CProd c =>
-         LeftQuasigroup
-         (NaturalTransformation2 (->))
-         CProd
-         (FullSubcategory ob c) where
-  leftQuotient = NT2 FS . leftQuotient . bimap (NT2 inclusion) (NT2 inclusion)
 
 instance LeftQuasigroup (->) (,) (Additive Int) where
   leftQuotient (Add x, Add y) = Add (y Base.- x)
