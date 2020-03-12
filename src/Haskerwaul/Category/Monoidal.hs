@@ -79,15 +79,9 @@ instance (c ~ (->), MonoidalCategory c t, Bifunctor c c c t) =>
     p :: Proxy c
     p = Proxy
 
--- instance MonoidalCategory (:-) Combine where
---   leftIdentity =
---     Iso
---     (trans weaken2 ins)
---     (trans ins (top &&& refl))
---   rightIdentity =
---     Iso
---     (trans weaken1 ins)
---     (trans ins (refl &&& top))
+instance MonoidalCategory (:-) Combine where
+  leftIdentity = Iso (trans weaken2 cls) (trans ins (top &&& refl))
+  rightIdentity = Iso (trans weaken1 cls) (trans ins (refl &&& top))
 
 instance MonoidalCategory (NaturalTransformation (:-)) CFProd where
   leftIdentity =

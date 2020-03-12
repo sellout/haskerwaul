@@ -43,11 +43,11 @@ instance (CartesianMonoidalCategory c, TOb ob (Prod c), ob (TerminalObject c)) =
   exr = FS exr
   duplicate = FS duplicate
 
--- instance CartesianMonoidalCategory (:-) where
---   type Prod (:-) = Combine
---   exl = trans weaken1 ins
---   exr = trans weaken2 ins
---   duplicate = Sub Dict
+instance CartesianMonoidalCategory (:-) where
+  type Prod (:-) = Combine
+  exl = trans weaken1 cls
+  exr = trans weaken2 cls
+  duplicate = Sub Dict
 
 instance CartesianMonoidalCategory (NaturalTransformation (:-)) where
   type Prod (NaturalTransformation (:-)) = CFProd

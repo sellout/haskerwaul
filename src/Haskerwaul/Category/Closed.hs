@@ -25,10 +25,7 @@ import Haskerwaul.Transformation.Natural
 --            `(:=>)`, so we skip the constraint here and add it on the
 --            instances that make use of it.
 class (Category c, TOb (Ob c) (Exp c)) => ClosedCategory c where
-  -- | By default, the exponential object is the same as the arrow of the
-  --   category. However, in some cases it is valid to "unwrap" the arrow. E.g.,
-  --   in a `FullSubcategory`, the exponential is the same as the exponential of
-  --   the category it restricts.
+  -- | [nLab](https://ncatlab.org/nlab/show/exponential+object)
   type Exp c :: ok -> ok -> ok
 
 instance ClosedCategory (->) where

@@ -65,6 +65,10 @@ instance {-# overlappable #-} (Semigroupoid c, Bifunctor c d e t, BOb cOb dOb eO
          Bifunctor (FullSubcategory cOb c) (FullSubcategory dOb d) (FullSubcategory eOb e) t where
   bimap f g = FS (bimap (inclusion f) (inclusion g))
 
+instance (Semigroupoid c, Bifunctor (Opposite c) d e t, BOb cOb dOb eOb t) =>
+         Bifunctor (Opposite (FullSubcategory cOb c)) (FullSubcategory dOb d) (FullSubcategory eOb e) t where
+  bimap (Opposite f) g = FS (bimap (Opposite (inclusion f)) (inclusion g))
+
 instance (c ~ (->)) =>
          SemigroupalCategory
          (FullSubcategory (Endofunctor c) (NaturalTransformation c))

@@ -62,7 +62,8 @@ instance (c1 ~ (->), c2 ~ (->)) =>
          CProd where
   bimap f g = NT2 (\(CProd x y) -> CProd (runNT2 f x) (runNT2 g y))
 
--- instance Bifunctor (:-) (:-) (:-) (,) where
+instance Bifunctor (:-) (:-) (:-) Combine where
+  bimap f g = trans ins (trans (f *** g) cls)
 
 instance Bifunctor
          (NaturalTransformation (:-))

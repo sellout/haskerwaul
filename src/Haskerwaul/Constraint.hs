@@ -14,7 +14,11 @@ import           Data.Constraint ((:-)(..), (:=>)(..), Class(..), Dict(..))
 import           Data.Kind (Constraint)
 
 -- | A natural transformation in the category of constraints.
-class ConstraintTransformation c (f :: ok -> Constraint) (g :: ok -> Constraint) a where
+class (f a :=> g a) =>
+      ConstraintTransformation
+      c
+      (f :: ok -> Constraint)
+      (g :: ok -> Constraint) a where
   constrainNT :: f a `c` g a
 
 instance (f a :=> g a) => ConstraintTransformation (:-) f g a where
@@ -52,9 +56,12 @@ x <+< Sub Dict = x
 -- | Because `(,)` is handled oddly, we can't use it in
 --  @`Haskerwaul.Category.Semigroupal.SemigroupalCategory` `(:-)` `(,)`@. This
 --   is our workaround.
-class Combine a b where
+class (a, b) => Combine a b where
 
 instance (a, b) => Combine a b
+
+instance Class (a, b) (Combine a b) where
+  cls = Sub Dict
 
 instance (a, b) :=> Combine a b where
   ins = Sub Dict
