@@ -4,7 +4,7 @@
 module Haskerwaul.Category.Monoidal.Cartesian
   ( module Haskerwaul.Category.Monoidal.Cartesian
   -- * extended modules
-  , module Haskerwaul.Category.Monoidal
+  , module Haskerwaul.Category.Monoidal.Symmetric
   ) where
 
 import           Data.Constraint
@@ -12,7 +12,7 @@ import           Data.Constraint
 import           Data.Either (Either(..))
 import qualified Data.Tuple as Base
 
-import Haskerwaul.Category.Monoidal
+import Haskerwaul.Category.Monoidal.Symmetric
 import Haskerwaul.Category.Opposite
 import Haskerwaul.Constraint
 import Haskerwaul.Object
@@ -21,7 +21,7 @@ import Haskerwaul.Subcategory.Full
 import Haskerwaul.Transformation.Natural
 
 -- | [nLab](https://ncatlab.org/nlab/show/cartesian+monoidal+category)
-class ( MonoidalCategory c (Prod c)
+class ( SymmetricMonoidalCategory c (Prod c)
       , HasTerminalObject c
       , Unit c (Prod c) ~ TerminalObject c) =>
       CartesianMonoidalCategory c where

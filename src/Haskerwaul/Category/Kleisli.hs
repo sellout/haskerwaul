@@ -78,6 +78,19 @@ instance ( c ~ (->)
          ClosedMonoidalCategory (Kleisli c m) t where
   apply = Kleisli (apply . first (Proxy :: Proxy c) runKleisli)
 
+instance ( c ~ (->)
+         , BraidedMonoidalCategory c t
+         , Bifunctor (Kleisli c m) (Kleisli c m) (Kleisli c m) t
+         , Monad c m) =>
+         BraidedMonoidalCategory (Kleisli c m) t where
+  braid = Kleisli (runNT (unit (Proxy :: Proxy Compose)) . Identity . braid)
+
+instance ( c ~ (->)
+         , SymmetricMonoidalCategory c t
+         , Bifunctor (Kleisli c m) (Kleisli c m) (Kleisli c m) t
+         , Monad c m) =>
+         SymmetricMonoidalCategory (Kleisli c m) t
+
 instance (c ~ (->), CartesianMonoidalCategory c, Monad c m) =>
          HasTerminalObject (Kleisli c m) where
   type TerminalObject (Kleisli c m) = TerminalObject c
