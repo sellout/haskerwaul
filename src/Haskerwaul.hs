@@ -99,6 +99,14 @@ module Haskerwaul
   , module Haskerwaul.Lattice.Distributive
   , module Haskerwaul.Lattice.Distributive.Bounded
   , module Haskerwaul.Lattice.Orthocomplemented
+  -- * laws
+  , module Haskerwaul.Law
+  , module Haskerwaul.Law.Associative
+  , module Haskerwaul.Law.Commutative
+  , module Haskerwaul.Law.Distributive.Left
+  , module Haskerwaul.Law.Distributive.Right
+  , module Haskerwaul.Law.Identity.Left
+  , module Haskerwaul.Law.Identity.Right
   -- * loops
   , module Haskerwaul.Loop
   -- * magmas
@@ -255,6 +263,13 @@ import Haskerwaul.Lattice.Complemented
 import Haskerwaul.Lattice.Distributive
 import Haskerwaul.Lattice.Distributive.Bounded
 import Haskerwaul.Lattice.Orthocomplemented
+import Haskerwaul.Law
+import Haskerwaul.Law.Associative
+import Haskerwaul.Law.Commutative
+import Haskerwaul.Law.Distributive.Left
+import Haskerwaul.Law.Distributive.Right
+import Haskerwaul.Law.Identity.Left
+import Haskerwaul.Law.Identity.Right
 import Haskerwaul.Loop
 import Haskerwaul.Magma
 import Haskerwaul.Magma.Commutative

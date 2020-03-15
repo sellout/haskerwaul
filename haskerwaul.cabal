@@ -92,6 +92,7 @@ library
                     , Haskerwaul.Hemiring
                     , Haskerwaul.Hemiring.Near
                     , Haskerwaul.Isomorphism
+                    , Haskerwaul.Isomorphism.Laws
                     , Haskerwaul.Isomorphism.Natural
                     , Haskerwaul.Lattice
                     , Haskerwaul.Lattice.Bounded
@@ -101,10 +102,18 @@ library
                     , Haskerwaul.Lattice.Distributive.Bounded
                     , Haskerwaul.Lattice.Orthocomplemented
                     , Haskerwaul.Lattice.Orthomodular
+                    , Haskerwaul.Law
+                    , Haskerwaul.Law.Associative
+                    , Haskerwaul.Law.Commutative
+                    , Haskerwaul.Law.Distributive.Left
+                    , Haskerwaul.Law.Distributive.Right
+                    , Haskerwaul.Law.Identity.Left
+                    , Haskerwaul.Law.Identity.Right
                     , Haskerwaul.Loop
                     , Haskerwaul.Magma
                     , Haskerwaul.Magma.Commutative
                     , Haskerwaul.Magma.Unital
+                    , Haskerwaul.Magma.Unital.Laws
                     , Haskerwaul.Meadow
                     , Haskerwaul.Meadow.Cancellation
                     , Haskerwaul.Meadow.NonInvolutive
@@ -123,6 +132,7 @@ library
                     , Haskerwaul.Monoid.Frobenius.Commutative.Special
                     , Haskerwaul.Monoid.Frobenius.Special
                     , Haskerwaul.Monoid.Hopf
+                    , Haskerwaul.Monoid.Laws
                     , Haskerwaul.Object
                     , Haskerwaul.Object.Free
                     , Haskerwaul.Object.Initial
@@ -144,6 +154,7 @@ library
                     , Haskerwaul.Semigroup
                     , Haskerwaul.Semigroup.Commutative
                     , Haskerwaul.Semigroup.Inverse
+                    , Haskerwaul.Semigroup.Laws
                     , Haskerwaul.Semilattice
                     , Haskerwaul.Semilattice.Bounded
                     , Haskerwaul.Semigroupoid
