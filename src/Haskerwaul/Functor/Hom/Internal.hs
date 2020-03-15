@@ -7,4 +7,5 @@ module Haskerwaul.Functor.Hom.Internal
 import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Opposite
 
+-- | [nLab](https://ncatlab.org/nlab/show/internal+hom)
 type InternalHomFunctor c = Bifunctor (Op c) c c

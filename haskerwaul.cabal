@@ -63,7 +63,10 @@ library
                     , Haskerwaul.Dioid
                     , Haskerwaul.Duoid
                     , Haskerwaul.Duoid.Normal
+                    , Haskerwaul.Embedding.Yoneda
                     , Haskerwaul.Endofunctor
+                    , Haskerwaul.Extension.Kan.Left
+                    , Haskerwaul.Extension.Kan.Right
                     , Haskerwaul.Field
                     , Haskerwaul.Field.Totalized
                     , Haskerwaul.Field.Totalized.One
@@ -110,6 +113,7 @@ library
                     , Haskerwaul.Module.Left
                     , Haskerwaul.Module.Right
                     , Haskerwaul.Monad
+                    , Haskerwaul.Monad.Codensity
                     , Haskerwaul.Monad.Frobenius
                     , Haskerwaul.Monoid
                     , Haskerwaul.Monoid.Commutative
@@ -120,6 +124,7 @@ library
                     , Haskerwaul.Monoid.Frobenius.Special
                     , Haskerwaul.Monoid.Hopf
                     , Haskerwaul.Object
+                    , Haskerwaul.Object.Free
                     , Haskerwaul.Object.Initial
                     , Haskerwaul.Object.Terminal
                     -- __TODO__: eliminate the Orphans module

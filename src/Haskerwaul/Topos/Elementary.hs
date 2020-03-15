@@ -17,8 +17,10 @@ import Haskerwaul.Subcategory.Full
 -- | [nLab](https://ncatlab.org/nlab/show/topos)
 class (CartesianClosedCategory c, Ob c (Class c)) => ElementaryTopos c where
   -- | The classifying object in the category.
+  --   [nLab](https://ncatlab.org/nlab/show/classifying+space)
   type Class c
   -- | The subobject classifier.
+  --   [nLab](https://ncatlab.org/nlab/show/subobject+classifier)
   true :: TerminalObject c `c` Class c
 
 instance ElementaryTopos (->) where

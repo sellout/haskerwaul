@@ -6,4 +6,5 @@ module Haskerwaul.Functor.Hom
 
 import Haskerwaul.Profunctor
 
+-- | [nLab](https://ncatlab.org/nlab/show/hom-functor)
 type HomFunctor c = Profunctor c c

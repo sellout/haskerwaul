@@ -50,6 +50,11 @@ module Haskerwaul
   -- * duoids
   , module Haskerwaul.Duoid
   , module Haskerwaul.Duoid.Normal
+  -- * embeddings
+  , module Haskerwaul.Embedding.Yoneda
+  -- * extensions
+  , module Haskerwaul.Extension.Kan.Left
+  , module Haskerwaul.Extension.Kan.Right
   -- * fields
   , module Haskerwaul.Field
   , module Haskerwaul.Field.Totalized
@@ -112,6 +117,7 @@ module Haskerwaul
   -- * monads
   , module Haskerwaul.Comonad
   , module Haskerwaul.Monad
+  , module Haskerwaul.Monad.Codensity
   , module Haskerwaul.Monad.Frobenius
   -- * monoids
   , module Haskerwaul.Bimonoid
@@ -126,6 +132,7 @@ module Haskerwaul
   , module Haskerwaul.Monoid.Hopf
   -- * objects
   , module Haskerwaul.Object
+  , module Haskerwaul.Object.Free
   , module Haskerwaul.Object.Initial
   , module Haskerwaul.Object.Terminal
   -- * pullbacks
@@ -212,7 +219,10 @@ import Haskerwaul.Day
 import Haskerwaul.Dioid
 import Haskerwaul.Duoid
 import Haskerwaul.Duoid.Normal
+import Haskerwaul.Embedding.Yoneda
 import Haskerwaul.Endofunctor
+import Haskerwaul.Extension.Kan.Left
+import Haskerwaul.Extension.Kan.Right
 import Haskerwaul.Field
 import Haskerwaul.Field.Totalized
 import Haskerwaul.Field.Totalized.One
@@ -257,6 +267,7 @@ import Haskerwaul.Module
 import Haskerwaul.Module.Left
 import Haskerwaul.Module.Right
 import Haskerwaul.Monad
+import Haskerwaul.Monad.Codensity
 import Haskerwaul.Monad.Frobenius
 import Haskerwaul.Monoid
 import Haskerwaul.Monoid.Commutative
@@ -267,6 +278,7 @@ import Haskerwaul.Monoid.Frobenius.Commutative.Special
 import Haskerwaul.Monoid.Frobenius.Special
 import Haskerwaul.Monoid.Hopf
 import Haskerwaul.Object
+import Haskerwaul.Object.Free
 import Haskerwaul.Object.Initial
 import Haskerwaul.Object.Terminal
 import Haskerwaul.Profunctor
