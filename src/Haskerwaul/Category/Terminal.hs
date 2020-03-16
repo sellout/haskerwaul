@@ -24,8 +24,8 @@ data TerminalCategory a b = TermId
 -- | There is a unique functor from any category @c@ to the
 --  `TerminalCategory`. As mentioned in "Haskerwaul.Functor", this can't be
 --   implemented as a `Functor` instance.
-terminal :: a `c` b -> TerminalCategory a b
-terminal _ = TermId
+toTerminal :: a `c` b -> TerminalCategory a b
+toTerminal _ = TermId
 
 type instance Ob TerminalCategory = All
 

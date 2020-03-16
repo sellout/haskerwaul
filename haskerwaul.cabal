@@ -37,6 +37,7 @@ library
                     , Haskerwaul.Category.Distributive
                     , Haskerwaul.Category.Duoidal
                     , Haskerwaul.Category.Duoidal.Normal
+                    , Haskerwaul.Category.Empty
                     , Haskerwaul.Category.Functor
                     , Haskerwaul.Category.Hypergraph
                     , Haskerwaul.Category.Kleisli
