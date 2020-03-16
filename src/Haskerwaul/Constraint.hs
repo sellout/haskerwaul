@@ -11,6 +11,7 @@
 module Haskerwaul.Constraint where
 
 import           Data.Constraint ((:-)(..), (:=>)(..), Class(..), Dict(..))
+import           Data.Functor.Compose (Compose(..))
 import           Data.Kind (Constraint)
 
 -- | A natural transformation in the category of constraints.
@@ -46,6 +47,14 @@ instance All a
 
 instance () :=> (All a) where
   ins = Sub Dict
+
+-- | Like `Data.Constraint.Bottom, but for @k -> `Data.Kind.Constraint`@. It
+--   should be impossible to create an instance for this.
+class None a where
+  nope :: f a
+
+none :: None a :- f a
+none = Sub (getCompose nope)
 
 -- | Compose an entailment with a constrained term to change the constraint
 --   required.

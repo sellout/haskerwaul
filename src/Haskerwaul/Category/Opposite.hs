@@ -1,6 +1,7 @@
 module Haskerwaul.Category.Opposite where
 
 import           Control.Arrow ((&&&))
+import           Data.Constraint ((:-)(..), Bottom(..), bottom)
 import           Data.Constraint.Deferrable ((:~:)(..))
 import           Data.Kind (Type)
 import           Data.Proxy (Proxy(..))
@@ -8,6 +9,7 @@ import qualified Data.Tuple as Base
 import qualified Data.Void as Base
 
 import Haskerwaul.Category
+import Haskerwaul.Constraint
 import Haskerwaul.Isomorphism
 import Haskerwaul.Object
 import Haskerwaul.Object.Terminal
@@ -35,6 +37,14 @@ instance UnitalMagma (NaturalTransformation2 (->)) CProd c =>
 instance HasTerminalObject (Opposite (->)) where
   type TerminalObject (Opposite (->)) = Base.Void
   (!) = Opposite Base.absurd
+
+instance HasTerminalObject (Opposite (:-)) where
+  type TerminalObject (Opposite (:-)) = Bottom
+  (!) = Opposite bottom
+
+instance HasTerminalObject (Opposite (NaturalTransformation (:-))) where
+  type TerminalObject (Opposite (NaturalTransformation (:-))) = None
+  (!) = Opposite (NT none)
 
 instance HasTerminalObject (Isomorphism c) =>
          HasTerminalObject (Opposite (Isomorphism c)) where
