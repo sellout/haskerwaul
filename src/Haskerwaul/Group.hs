@@ -7,8 +7,7 @@ module Haskerwaul.Group
   , module Haskerwaul.Monoid
   ) where
 
-import           Data.Proxy (Proxy)
-
+import Haskerwaul.Category.Monoidal.Cartesian
 import Haskerwaul.Loop
 import Haskerwaul.Monoid
 
@@ -19,7 +18,7 @@ class (Loop c t a, Monoid c t a) => Group c t a
 
 instance (Loop c t a, Monoid c t a) => Group c t a
 
-inverse :: (c ~ (->), t ~ (,), Group c t a) => Proxy t -> a `c` a
+inverse :: (CartesianMonoidalCategory c, Group c (Prod c) a) => a `c` a
 inverse = rightInverse
 
 quotient :: Group c t a => t a a `c` a

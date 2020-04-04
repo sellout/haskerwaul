@@ -1,4 +1,5 @@
-{-# language UndecidableSuperClasses #-}
+{-# language TypeApplications
+           , UndecidableSuperClasses #-}
 
 module Haskerwaul.Loop
   ( module Haskerwaul.Loop
@@ -7,8 +8,10 @@ module Haskerwaul.Loop
   , module Haskerwaul.Quasigroup
   ) where
 
-import           Data.Proxy (Proxy)
+import           Data.Proxy (Proxy(..))
 
+import Haskerwaul.Bifunctor
+import Haskerwaul.Category.Monoidal.Cartesian
 import Haskerwaul.Magma.Unital
 import Haskerwaul.Quasigroup
 
@@ -19,8 +22,18 @@ class (UnitalMagma c t a, Quasigroup c t a) => Loop c t a
 
 instance (UnitalMagma c t a, Quasigroup c t a) => Loop c t a
 
-leftInverse :: (c ~ (->), t ~ (,), Loop c t a) => Proxy t -> a `c` a
-leftInverse t x = rightQuotient (unit t (), x)
+leftInverse :: forall c a
+             . (CartesianMonoidalCategory c, Loop c (Prod c) a)
+            => a `c` a
+leftInverse =
+  rightQuotient
+  . first @c (Proxy :: Proxy c) (rightQuotient . duplicate)
+  . duplicate
 
-rightInverse :: (c ~ (->), t ~ (,), Loop c t a) => Proxy t -> a `c` a
-rightInverse t x = leftQuotient (x, unit t ())
+rightInverse :: forall c a
+              . (CartesianMonoidalCategory c, Loop c (Prod c) a)
+             => a `c` a
+rightInverse =
+  leftQuotient
+  . second @c @c (Proxy :: Proxy c) (leftQuotient . duplicate)
+  . duplicate

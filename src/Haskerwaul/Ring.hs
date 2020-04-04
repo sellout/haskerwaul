@@ -9,10 +9,8 @@ module Haskerwaul.Ring
   , module Haskerwaul.Ring.Nonunital
   ) where
 
-import Data.Proxy (Proxy(..))
-
 import Haskerwaul.Bifunctor
-import Haskerwaul.Category.Monoidal
+import Haskerwaul.Category.Monoidal.Cartesian
 import Haskerwaul.Group
 import Haskerwaul.Group.Abelian
 import Haskerwaul.Rig
@@ -29,6 +27,5 @@ subtract :: (c ~ (->), MonoidalCategory c t, Ring c t a, Bifunctor c c c t)
          => t a a `c` a
 subtract = sum . quotient . bimap Add Add
 
-negate :: (c ~ (->), t ~ (,), MonoidalCategory c t, Ring c t a)
-       => Proxy t -> a `c` a
-negate t = sum . inverse t . Add
+negate :: (c ~ (->), CartesianMonoidalCategory c, Ring c (Prod c) a) => a `c` a
+negate = sum . inverse . Add
