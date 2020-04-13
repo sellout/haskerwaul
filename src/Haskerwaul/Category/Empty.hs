@@ -30,7 +30,7 @@ instance Magma (NaturalTransformation2 (->)) CProd EmptyCategory where
 instance Semigroup (NaturalTransformation2 (->)) CProd EmptyCategory
 
 -- | __FIXME__: It should be impossible to apply this `unit`, because there is
---              no object that passes the `Nope` constraint. However, I don't
+--              no object that passes the `None` constraint. However, I don't
 --              think that's checked here, and we probably _can_ trigger this
 --             `error` easily. This is a pretty good illustration that `(:~:)`
 --              is the wrong @`Unit` (`NaturalTransformation2` (->)) `CProd`@.

@@ -16,7 +16,8 @@ class Functor c d f => FaithfulFunctor c d f
 --   the category of constraints and __Hask__.
 instance FaithfulFunctor (:-) (->) Dict
 
--- | `Identity` is a `FullFaithfulFunctor` (endofunctor, actually) in __Hask__.
+-- | `Identity` is a `Haskerwaul.Functor.Faithful.Full.FullFaithfulFunctor`
+--   (endofunctor, actually) in __Hask__.
 instance FaithfulFunctor (->) (->) Identity
 
 

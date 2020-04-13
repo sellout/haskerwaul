@@ -27,10 +27,9 @@ data MonoidLaws c t a =
     }
 
 -- | The constraints here should be simply @(`ElementaryTopos` c, `Monoid` c t
---   a)@, the `Bifunctor`s should be included in the Categories, and the
---   MonoidalCategory should be included in the Monoid (but that last bit causes
---   a cycle currently). And I have no idea why it's failing to resolve all the
---   `Ob`s correctly.
+--   a)@, the `MonoidalCategory` should be included in the `Monoid` (but that
+--   last bit causes a cycle currently). And I have no idea why it's failing to
+--   resolve all the `Ob`s correctly.
 monoidLaws :: ( Ob c (t (t a a) a), Ob c (t a a), Ob c (t (Unit c t) a), Ob c (t a (Unit c t))
               , ElementaryTopos c
               , MonoidalCategory c t, Monoid c t a)
