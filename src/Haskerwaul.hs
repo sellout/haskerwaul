@@ -105,6 +105,8 @@ module Haskerwaul
   , module Haskerwaul.Law.Commutative
   , module Haskerwaul.Law.Distributive.Left
   , module Haskerwaul.Law.Distributive.Right
+  , module Haskerwaul.Law.Homomorphism.Identity
+  , module Haskerwaul.Law.Homomorphism.Magma
   , module Haskerwaul.Law.Identity.Left
   , module Haskerwaul.Law.Identity.Right
   , module Haskerwaul.Law.Quotient.Left
@@ -270,6 +272,8 @@ import Haskerwaul.Law.Associative
 import Haskerwaul.Law.Commutative
 import Haskerwaul.Law.Distributive.Left
 import Haskerwaul.Law.Distributive.Right
+import Haskerwaul.Law.Homomorphism.Identity
+import Haskerwaul.Law.Homomorphism.Magma
 import Haskerwaul.Law.Identity.Left
 import Haskerwaul.Law.Identity.Right
 import Haskerwaul.Law.Quotient.Left

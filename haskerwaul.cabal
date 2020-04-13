@@ -108,6 +108,8 @@ library
                     , Haskerwaul.Law.Commutative
                     , Haskerwaul.Law.Distributive.Left
                     , Haskerwaul.Law.Distributive.Right
+                    , Haskerwaul.Law.Homomorphism.Identity
+                    , Haskerwaul.Law.Homomorphism.Magma
                     , Haskerwaul.Law.Identity.Left
                     , Haskerwaul.Law.Identity.Right
                     , Haskerwaul.Law.Quotient.Left
