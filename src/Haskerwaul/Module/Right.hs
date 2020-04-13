@@ -15,6 +15,6 @@ class (Ring c t r, AbelianGroup c t m) => RightModule c t r m where
   rightScale :: t m r `c` m
 
 -- -- | Every `CommutativeRig` forms a `Haskerwaul.Module.Module` with itself.
--- instance (c ~ (->), CommutativeRig c t r, Bifunctor c c c t) =>
+-- instance (c ~ (->), SemigroupalCategory c t, CommutativeRig c t r) =>
 --          RightModule c t r r where
 --   rightScale = multiply

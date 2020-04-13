@@ -45,7 +45,7 @@ instance MonoidalCategory (->) Either where
   leftIdentity = Iso (Base.either Base.absurd Base.id) Right
   rightIdentity = Iso (Base.either Base.id Base.absurd) Left
 
-instance (c ~ (->), MonoidalCategory c t, Bifunctor c c c t) =>
+instance (c ~ (->), MonoidalCategory c t) =>
          MonoidalCategory (NaturalTransformation c) (FTensor t) where
   leftIdentity =
     Iso
@@ -62,7 +62,7 @@ instance (c ~ (->), MonoidalCategory c t, Bifunctor c c c t) =>
     p :: Proxy c
     p = Proxy
 
-instance (c ~ (->), MonoidalCategory c t, Bifunctor c c c t) =>
+instance (c ~ (->), MonoidalCategory c t) =>
          MonoidalCategory (NaturalTransformation2 c) (BTensor t) where
   leftIdentity =
     Iso

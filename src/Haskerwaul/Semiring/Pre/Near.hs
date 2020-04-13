@@ -9,9 +9,8 @@ module Haskerwaul.Semiring.Pre.Near
   ) where
 
 import Haskerwaul.Bifunctor
-import Haskerwaul.Magma.Commutative
+import Haskerwaul.Category.Semigroupal
 import Haskerwaul.Semigroup
-import Haskerwaul.Semigroupoid
 import Haskerwaul.Semiring.Components
 
 class ( Semigroup c t (Additive a)
@@ -22,9 +21,9 @@ instance ( Semigroup c t (Additive a)
          , Semigroup c t (Multiplicative a)) =>
          NearPreSemiring c t a
 
-add :: (c ~ (->), NearPreSemiring c t a, Bifunctor c c c t) => t a a `c` a
+add :: (c ~ (->), SemigroupalCategory c t, NearPreSemiring c t a) => t a a `c` a
 add = sum . op . bimap Add Add
 
-multiply :: (c ~ (->), NearPreSemiring c t a, Bifunctor c c c t)
+multiply :: (c ~ (->), SemigroupalCategory c t, NearPreSemiring c t a)
          => t a a `c` a
 multiply = product . op . bimap Multiply Multiply

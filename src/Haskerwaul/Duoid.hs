@@ -37,10 +37,10 @@ starU :: (c ~ NaturalTransformation (->), MonoidalCategory c t, Duoid c t a)
       => Proxy t -> Unit c t `c` a
 starU t = NT getStar . unit t
 
-diamondT :: (c ~ NaturalTransformation (->), SemigroupalCategory c t, Duoid c t a, Bifunctor c c c t)
+diamondT :: (c ~ NaturalTransformation (->), SemigroupalCategory c t, Duoid c t a)
          => t a a `c` a
 diamondT = NT getDiamond . op . bimap (NT Diamond) (NT Diamond)
 
-starT :: (c ~ NaturalTransformation (->), SemigroupalCategory c t, Duoid c t a, Bifunctor c c c t)
+starT :: (c ~ NaturalTransformation (->), SemigroupalCategory c t, Duoid c t a)
       => t a a `c` a
 starT = NT getStar . op . bimap (NT Star) (NT Star)

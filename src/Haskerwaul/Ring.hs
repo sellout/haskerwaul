@@ -23,7 +23,7 @@ class (AbelianGroup c t (Additive a), Rig c t a, NonunitalRing c t a) =>
 instance (AbelianGroup c t (Additive a), Monoid c t (Multiplicative a)) =>
          Ring c t a
 
-subtract :: (c ~ (->), MonoidalCategory c t, Ring c t a, Bifunctor c c c t)
+subtract :: (c ~ (->), SemigroupalCategory c t, Ring c t a)
          => t a a `c` a
 subtract = sum . quotient . bimap Add Add
 

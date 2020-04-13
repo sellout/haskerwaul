@@ -16,7 +16,7 @@ import Haskerwaul.Ring
 class (Group c t (Multiplicative a), Ring c t a) => Skewfield c t a
 
 --   FIXME: The `divide` operation introduced here is partial.
-divide :: (c ~ (->), MonoidalCategory c t, Skewfield c t a, Bifunctor c c c t)
+divide :: (c ~ (->), MonoidalCategory c t, Skewfield c t a)
        => t a a `c` a
 divide = product . quotient . bimap Multiply Multiply
 
