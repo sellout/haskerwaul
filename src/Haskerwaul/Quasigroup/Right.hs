@@ -8,17 +8,23 @@ module Haskerwaul.Quasigroup.Right
 
 import           Prelude (Integer)
 import qualified Prelude as Base (Num(..))
+import           Data.Either (Either, either)
 import           Data.Int (Int)
+import           Data.Void (Void, absurd)
 
 import Haskerwaul.Magma
 import Haskerwaul.Semiring.Components
 
 -- | [nLab](https://ncatlab.org/nlab/show/quasigroup#definitions)
+--
+-- = laws
+--   [right quotient 1]: @`op` x (`rightQuotient` x y) == y@
+--   [right quotient 2]: @`rightQuotient` x (`op` x y) == y@
 class Magma c t a => RightQuasigroup c t a where
   rightQuotient :: t a a `c` a
 
--- instance RightQuasigroup (->) Either Void where
---   rightQuotient = \case
+instance RightQuasigroup (->) Either Void where
+  rightQuotient = either absurd absurd
 
 instance RightQuasigroup (->) (,) () where
   rightQuotient ((), ()) = ()

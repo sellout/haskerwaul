@@ -26,12 +26,6 @@ import Haskerwaul.Object
 class (MonoidalCategory' c t, Magma c t a) => UnitalMagma c t a where
   unit :: Proxy t -> Unit c t `c` a
 
--- leftIdentity :: (UnitalMagma (->) (,) a, Eq a) => a -> Bool
--- leftIdentity x = op (unit (), x) == x
-
--- rightIdentity :: (UnitalMagma (->) (,) a, Eq a) => a -> Bool
--- rightIdentity x = op (x, unit ()) == x
-
 instance {-# overlappable #-} Base.Monoid a => UnitalMagma (->) (,) a where
   unit Proxy () = Base.mempty
 

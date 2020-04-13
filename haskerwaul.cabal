@@ -110,6 +110,8 @@ library
                     , Haskerwaul.Law.Distributive.Right
                     , Haskerwaul.Law.Identity.Left
                     , Haskerwaul.Law.Identity.Right
+                    , Haskerwaul.Law.Quotient.Left
+                    , Haskerwaul.Law.Quotient.Right
                     , Haskerwaul.Loop
                     , Haskerwaul.Magma
                     , Haskerwaul.Magma.Commutative

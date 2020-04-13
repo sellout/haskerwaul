@@ -30,5 +30,5 @@ semigroupLaws :: ( Ob c (t (t a a) a), Ob c (t a a)
               => EquivalenceRelation c a -> SemigroupLaws c t a
 semigroupLaws eq =
   SemigroupLaws
-    { associative = checkLaw associativeLaw eq
+    { associative = checkLaw (associativeLaw op) eq
     }

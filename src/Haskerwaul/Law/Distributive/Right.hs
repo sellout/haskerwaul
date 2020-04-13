@@ -8,21 +8,19 @@ import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Monoidal.Cartesian
 import Haskerwaul.Isomorphism
 import Haskerwaul.Law
-import Haskerwaul.Semiring.Pre.Near
+import Haskerwaul.Object
 
 rightDistributiveLaw
   :: forall c a
-   . ( c ~ (->)
-     , CartesianMonoidalCategory c
-     , Semigroup c (Prod c) (Additive a)
-     , Semigroup c (Prod c) (Multiplicative a))
-  => Law c (Prod c (Prod c a a) a) a
-rightDistributiveLaw =
+   . ( Ob c (Prod c a a), Ob c (Prod c (Prod c a a) a), Ob c (Prod c a (Prod c a a))
+     , CartesianMonoidalCategory c, Ob c a)
+  => Prod c a a `c` a -> Prod c a a `c` a -> Law c (Prod c (Prod c a a) a) a
+rightDistributiveLaw multiply' add' =
   Law
-    (multiply . first p add)
+    (multiply' . first p add')
     -- __TODO__: This rewrite seems overcomplicated.
-    (add
-      . bimap multiply multiply
+    (add'
+      . bimap multiply' multiply'
       . to assoc
       . second p (braid @c)
       . from assoc

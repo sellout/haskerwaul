@@ -14,6 +14,8 @@
 --   Then you should be able to test that by doing something like 
 module Haskerwaul.Magma.Unital.Laws where
 
+import           Data.Proxy (Proxy(..))
+
 import Haskerwaul.Law
 import Haskerwaul.Law.Identity.Left
 import Haskerwaul.Law.Identity.Right
@@ -26,12 +28,15 @@ data UnitalMagmaLaws c t a =
     , rightIdentity :: (t a (Unit c t)) `c` Class c
     }
 
-unitalMagmaLaws :: ( Ob c (t (Unit c t) a), Ob c (t a (Unit c t))
+unitalMagmaLaws :: forall c t a
+                 . ( Ob c (t (Unit c t) a), Ob c (t a (Unit c t))
                    , ElementaryTopos c
                    , MonoidalCategory c t, UnitalMagma c t a)
                 => EquivalenceRelation c a -> UnitalMagmaLaws c t a
 unitalMagmaLaws eq =
   UnitalMagmaLaws
-    { leftIdentity = checkLaw leftIdentityLaw eq
-    , rightIdentity = checkLaw rightIdentityLaw eq
+    { leftIdentity = checkLaw (leftIdentityLaw op (unit p)) eq
+    , rightIdentity = checkLaw (rightIdentityLaw op (unit p)) eq
     }
+  where
+    p = Proxy :: Proxy t

@@ -54,11 +54,42 @@ There are a lot of one-character type parameters here, but we try to use them at
 - `a`, `b`, `x`, `y`, `z` -- objects in a category and/or elements of those objects (kind `ok`)
 - `t`, `t'`, `ct`, `dt` -- tensors (kind `ok -> ok -> ok`) in a category (`ct` and `dt` distinguish when we're talking about tensors in categories `c` and `d`)
 
+## law checking
+
+Haskerwaul attempts to make it as easy and flexible as possible to test laws
+using whatever mechanism you already use in your projects. We do this by
+breaking things into relatively small pieces.
+
+- Individual laws are defined under `Haskerwaul.Law` and should be minimally
+  constrained, taking the required morphisms as arguments. These build a `Law`
+  structure, which is basically just a tuple of morphisms that should commute.
+- Aggregate laws for a structure are defined in
+  `Haskerwaul.<structure>.Laws`. These should accumulate all the laws for their
+  substructures as well.
+
+The former are defined as abstractly as possible (e.g., you can often define a
+law for an arbitrary `MonoidalCategory`), while the latter currently require at
+least an `ElementaryTopos` in order to get the characteristic morphism. However,
+as you can see in `Haskerwaul.Semigroup.Laws` the laws can still be checked
+against tensors other than the Cartesian product.
+
+To test these laws, you need an `ElementaryTopos` for your testing
+library. There is one for [Hedgehog](https://hedgehog.qa/) included. This then
+lets you map each structure's laws into your topos, so you can test your own
+instances. Since the structure laws are cumulative, this means you don't need
+tests for `Magma _ _ Foo`, `UnitalMagma _ _ Foo`, etc. You should be able to do
+a single test of `Group _ _ Foo`.
+
+**NB**: One shortcoming is that since the structures are cumulative, and there
+are often shared sub-structures in the tree, we currently end up testing the
+more basic laws multiple times for a richer structure. It would be good to build
+up the laws without duplication.
+
 ## what to work on
 
 There are various patterns that indicate something can be improved.
 
-### `__TOOD__` or `__FIXME__`
+### `__TODO__` or `__FIXME__`
 
 These are the usual labels in comments to indicate that there is more work to be done on something. (The double-underscore on either side indicates to [Haddock](https://www.haskell.org/haddock/) that it should be bold when included in documentation.)
 

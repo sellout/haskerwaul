@@ -8,16 +8,14 @@ import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Monoidal.Cartesian
 import Haskerwaul.Isomorphism
 import Haskerwaul.Law
-import Haskerwaul.Semiring.Pre.Near
+import Haskerwaul.Object
 
 leftDistributiveLaw
   :: forall c a
-   . ( c ~ (->)
-     , CartesianMonoidalCategory c
-     , Semigroup c (Prod c) (Additive a)
-     , Semigroup c (Prod c) (Multiplicative a))
-  => Law c (Prod c a (Prod c a a)) a
-leftDistributiveLaw =
+   . ( Ob c (Prod c a a), Ob c (Prod c a (Prod c a a)), Ob c (Prod c (Prod c a a) a)
+     , CartesianMonoidalCategory c, Ob c a)
+  => Prod c a a `c` a -> Prod c a a `c` a -> Law c (Prod c a (Prod c a a)) a
+leftDistributiveLaw multiply add =
   Law
     (multiply . second p add)
     -- __TODO__: This rewrite seems overcomplicated.

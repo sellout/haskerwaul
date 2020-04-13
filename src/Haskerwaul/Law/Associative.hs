@@ -1,5 +1,3 @@
-{-# language TypeApplications #-}
-
 module Haskerwaul.Law.Associative where
 
 import           Data.Proxy (Proxy(..))
@@ -10,12 +8,9 @@ import Haskerwaul.Isomorphism
 import Haskerwaul.Law
 import Haskerwaul.Object
 
--- | The type here is a bit hard to read, but it's basically
---  @(a -> a -> `Bool`) -> a -> a -> a -> `Bool`@, but generalized to an
---   arbitrary topos.
 associativeLaw :: forall c t a
-                . (Ob c (t a a), SemigroupalCategory c t, Magma c t a)
-               => Law c (t (t a a) a) a
-associativeLaw = Law (op . first p (op @c)) (op . second p (op @c) . from assoc)
+                . (Ob c (t a a), SemigroupalCategory c t, Ob c a)
+               => t a a `c` a -> Law c (t (t a a) a) a
+associativeLaw op' = Law (op' . first p op') (op' . second p op' . from assoc)
   where
     p = Proxy :: Proxy c
