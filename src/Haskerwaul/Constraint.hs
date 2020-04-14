@@ -56,12 +56,6 @@ class None a where
 none :: None a :- f a
 none = Sub (getCompose nope)
 
--- | Compose an entailment with a constrained term to change the constraint
---   required.
-(<+<) :: a => (b => c) -> (a :- b) -> c
-x <+< Sub Dict = x
-{-# INLINE (<+<) #-}
-
 -- | Because `(,)` is handled oddly, we can't use it in
 --  @`Haskerwaul.Category.Semigroupal.SemigroupalCategory` `(:-)` `(,)`@. This
 --   is our workaround.

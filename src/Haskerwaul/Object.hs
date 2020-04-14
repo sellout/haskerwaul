@@ -2,7 +2,7 @@
 
 module Haskerwaul.Object where
 
-import           Data.Constraint ((:-)(..), Dict(..))
+import           Data.Constraint ((:-)(..), Dict(..), (\\))
 import           Data.Kind (Constraint, Type)
 import qualified Data.Ord as Base
 import qualified Data.Set as Set
@@ -38,7 +38,7 @@ instance FOb cOb All f where
 instance (FOb cOb dOb f, FOb cOb' dOb' f) =>
          FOb (CFProd cOb cOb') (CFProd dOb dOb') f where
   inF :: forall x. CFProd cOb cOb' x :- CFProd dOb dOb' (f x)
-  inF = Sub (Dict <+< inF @cOb @dOb @f @x <+< inF @cOb' @dOb' @f @x)
+  inF = Sub (Dict \\ inF @cOb @dOb @f @x \\ inF @cOb' @dOb' @f @x)
 
 instance FOb Base.Ord Base.Ord Set.Set where
   inF = Sub Dict
@@ -53,11 +53,11 @@ instance BOb cOb dOb All t where
 instance (BOb cOb dOb eOb b, BOb cOb' dOb' eOb' b) =>
          BOb (CFProd cOb cOb') (CFProd dOb dOb') (CFProd eOb eOb') b where
   inB :: forall x y. (CFProd cOb cOb' x, CFProd dOb dOb' y) :- CFProd eOb eOb' (b x y)
-  inB = Sub (Dict <+< inB @cOb @dOb @eOb @b @x @y <+< inB @cOb' @dOb' @eOb' @b @x @y)
+  inB = Sub (Dict \\ inB @cOb @dOb @eOb @b @x @y \\ inB @cOb' @dOb' @eOb' @b @x @y)
 
 -- instance BOb cOb dOb eOb c => BOb dOb cOb eOb (Opposite c) where
 --   inB :: forall x y. (cOb x, dOb y, BOb cOb dOb eOb (c x y)) :- BOb dOb cOb eOb (Op c x y)
---   inB = Sub (Dict <+< inB @cOb @dOb @eOb @c @x @y)
+--   inB = Sub (Dict \\ inB @cOb @dOb @eOb @c @x @y)
 
 -- | An `Ob` for a tensor.
 type TOb cOb = BOb cOb cOb cOb
