@@ -7,6 +7,5 @@ module Haskerwaul.Object.Initial
 import Haskerwaul.Category.Opposite
 import Haskerwaul.Object.Terminal
 
-type HasInitialObject c = HasTerminalObject (Opposite c)
-
+-- | [nLab](https://ncatlab.org/nlab/show/initial+object)
 type InitialObject c = TerminalObject (Opposite c)

@@ -10,7 +10,12 @@ import Haskerwaul.Constraint
 import Haskerwaul.Object
 import Haskerwaul.Transformation.Natural
 
+-- | There are multiple classes (see
+--  `Haskerwaul.Category.Monoidal.Cartesian.CartesianMonoidalCategory` or
+--  `Haskerwaul.Category.Pointed.PointedCategory`) that have terminal objects.
+--   This just gives us a common class for them to extend.
 class Ob c (TerminalObject c) => HasTerminalObject (c :: ok -> ok -> Type) where
+  -- | [nLab](https://ncatlab.org/nlab/show/terminal+object)
   type TerminalObject c :: ok
   (!) :: Ob c x => x `c` TerminalObject c
 

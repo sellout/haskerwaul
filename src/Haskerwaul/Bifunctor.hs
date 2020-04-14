@@ -81,3 +81,6 @@ instance Semigroupoid c => Bifunctor (Opposite c) c (->) c where
 -- instance Bifunctor (Opposite (:-)) (:-) (:-) (:=>) where
 --   -- bimap :: b :- a -> c :- d -> (a :=> c) :- (b :=> d)
 --   bimap f g = trans g (trans ins (opposite f))
+
+instance Bifunctor c1 c2 (->) (BConst a) where
+  bimap _ _ (BConst a) = BConst a

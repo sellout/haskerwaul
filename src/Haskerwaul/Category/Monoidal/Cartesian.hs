@@ -25,35 +25,39 @@ class ( SymmetricMonoidalCategory c (Prod c)
       , HasTerminalObject c
       , Unit c (Prod c) ~ TerminalObject c) =>
       CartesianMonoidalCategory c where
+  -- | [nLab](https://ncatlab.org/nlab/show/cartesian+product)
   type Prod c :: ok -> ok -> ok
+  -- | [nLab](https://ncatlab.org/nlab/show/projection)
   exl :: (Ob c a, Ob c b) => Prod c a b `c` a
+  -- | [nLab](https://ncatlab.org/nlab/show/projection)
   exr :: (Ob c a, Ob c b) => Prod c a b `c` b
-  duplicate :: Ob c a => a `c` Prod c a a
+  -- | [nLab](https://ncatlab.org/nlab/show/diagonal+morphism)
+  diagonal :: Ob c a => a `c` Prod c a a
 
 instance CartesianMonoidalCategory (->) where
   type Prod (->) = (,)
   exl = Base.fst
   exr = Base.snd
-  duplicate x = (x, x)
+  diagonal x = (x, x)
 
 instance (CartesianMonoidalCategory c, TOb ob (Prod c), ob (TerminalObject c)) =>
          CartesianMonoidalCategory (FullSubcategory ob c) where
   type Prod (FullSubcategory ob c) = Prod c
   exl = FS exl
   exr = FS exr
-  duplicate = FS duplicate
+  diagonal = FS diagonal
 
 instance CartesianMonoidalCategory (:-) where
   type Prod (:-) = Combine
   exl = trans weaken1 cls
   exr = trans weaken2 cls
-  duplicate = Sub Dict
+  diagonal = Sub Dict
 
 instance CartesianMonoidalCategory (NaturalTransformation (:-)) where
   type Prod (NaturalTransformation (:-)) = CFProd
   exl = NT (trans weaken1 cls)
   exr = NT (trans weaken2 cls)
-  duplicate = NT (Sub Dict)
+  diagonal = NT (Sub Dict)
 
 -- * `CocartesianCategory` instances (in this module to avoid orphans)
 
@@ -61,7 +65,7 @@ instance CartesianMonoidalCategory (Opposite (->)) where
   type Prod (Opposite (->)) = Either
   exl = Opposite Left
   exr = Opposite Right
-  duplicate =
+  diagonal =
     Opposite (\case
                  Left x -> x
                  Right x -> x)

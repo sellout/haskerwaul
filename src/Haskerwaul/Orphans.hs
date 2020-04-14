@@ -46,7 +46,7 @@ instance (c ~ (->), d ~ (->), Adjunction c d l r) =>
 
 -- instance (CartesianMonoidalCategory c, t ~ Prod c, Ob c a) =>
 --          Magma (Opposite c) t a where
---   op = Opposite duplicate
+--   op = Opposite diagonal
 
 -- instance (CartesianMonoidalCategory c, t ~ Prod c, Ob c a) =>
 --          Semigroup (Opposite c) t a

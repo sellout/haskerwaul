@@ -104,5 +104,5 @@ instance ( c ~ (->)
   type Prod (Kleisli c m) = Prod c
   exl = Kleisli (runNT (unit (Proxy :: Proxy Compose)) . Identity . exl)
   exr = Kleisli (runNT (unit (Proxy :: Proxy Compose)) . Identity . exr)
-  duplicate =
-    Kleisli (runNT (unit (Proxy :: Proxy Compose)) . Identity .  duplicate)
+  diagonal =
+    Kleisli (runNT (unit (Proxy :: Proxy Compose)) . Identity .  diagonal)

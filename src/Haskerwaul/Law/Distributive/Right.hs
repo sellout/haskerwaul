@@ -26,6 +26,6 @@ rightDistributiveLaw multiply' add' =
       . from assoc
       . first p (from (assoc @c))
       . to assoc
-      . second @c p (duplicate @c))
+      . second @c p (diagonal @c))
   where
     p = Proxy :: Proxy c

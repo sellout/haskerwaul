@@ -14,7 +14,7 @@ import Haskerwaul.Object
 lq1Law :: forall c a. (Ob c (Prod c a a), CartesianMonoidalCategory c, Ob c a)
        => Prod c a a `c` a -> Prod c a a `c` a -> Law c (Prod c a a) a
 lq1Law op' leftQuotient' =
-  Law exr (op' . first p leftQuotient' . to assoc . second p (duplicate @c))
+  Law exr (op' . first p leftQuotient' . to assoc . second p (diagonal @c))
   where
     p = Proxy :: Proxy c
 
@@ -22,6 +22,6 @@ lq1Law op' leftQuotient' =
 lq2Law :: forall c a. (Ob c (Prod c a a), CartesianMonoidalCategory c, Ob c a)
        => Prod c a a `c` a -> Prod c a a `c` a -> Law c (Prod c a a) a
 lq2Law op' leftQuotient' =
-  Law exr (leftQuotient' . first p op' . to assoc . second p (duplicate @c))
+  Law exr (leftQuotient' . first p op' . to assoc . second p (diagonal @c))
   where
     p = Proxy :: Proxy c

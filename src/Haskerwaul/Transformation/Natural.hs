@@ -53,6 +53,7 @@ instance {-# overlappable #-} Base.Monad f =>
 --             `NaturalTransformation` with
 --             `Haskerwaul.Category.Product.ProductCategory`.
 
+-- | Like `NaturalTransformation`, but over a bifunctor.
 newtype NaturalTransformation2 d f g =
   NT2 { runNT2 :: forall a b. f a b `d` g a b }
 
@@ -60,10 +61,12 @@ newtype NaturalTransformation2 d f g =
 --             @`BOb` (`Ob` c1) (`Ob` c2) (`Ob` d)@.
 type instance Ob (NaturalTransformation2 _) = All
 
+-- | Like `FTensor`, but lifted from the target category to a bifunctor.
 newtype BTensor t f g a b = BTensor { lowerBTensor :: (t (f a b) (g a b)) }
 
 instance MonoidalCategory' c t =>
          MonoidalCategory' (NaturalTransformation2 c) (BTensor t) where
   type Unit (NaturalTransformation2 c) (BTensor t) = BConst (Unit c t)
 
+-- | Like `Const`, but a bifunctor.
 newtype BConst a b c = BConst { getBConst :: a }

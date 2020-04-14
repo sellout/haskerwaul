@@ -14,7 +14,7 @@ import Haskerwaul.Object
 import Haskerwaul.Object.Initial
 
 -- | [nLab](https://ncatlab.org/nlab/show/pointed+category)
-class (Category c, HasInitialObject c, HasTerminalObject c) =>
+class (Category c, HasTerminalObject c, HasTerminalObject (Opposite c)) =>
       PointedCategory c where
   -- | Must be the inverse of `(!)` specialized to @`InitialObject` c@.
   (!-) :: TerminalObject c `c` InitialObject c

@@ -15,6 +15,7 @@ import Haskerwaul.Object
 -- | [nLab](https://ncatlab.org/nlab/show/monoidal+category)
 class Ob c (Unit c t) =>
       MonoidalCategory' (c :: ok -> ok -> Type) (t :: ok -> ok -> ok) where
+  -- | [nLab](https://ncatlab.org/nlab/show/unit+object)
   type Unit c t :: ok
 
 instance MonoidalCategory' (->) (,) where

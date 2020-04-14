@@ -24,4 +24,4 @@ data Law c a b = Law (a `c` b) (a `c` b)
 --            This seems overly restrictive.
 checkLaw :: (ElementaryTopos c, Ob c a, Ob c b)
          => Law c a b -> EquivalenceRelation c b -> a `c` Class c
-checkLaw (Law x y) eq = eq . bimap x y . duplicate
+checkLaw (Law x y) eq = eq . bimap x y . diagonal

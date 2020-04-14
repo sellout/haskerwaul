@@ -27,13 +27,13 @@ leftInverse :: forall c a
             => a `c` a
 leftInverse =
   rightQuotient
-  . first @c (Proxy :: Proxy c) (rightQuotient . duplicate)
-  . duplicate
+  . first @c (Proxy :: Proxy c) (rightQuotient . diagonal)
+  . diagonal
 
 rightInverse :: forall c a
               . (CartesianMonoidalCategory c, Loop c (Prod c) a)
              => a `c` a
 rightInverse =
   leftQuotient
-  . second @c @c (Proxy :: Proxy c) (leftQuotient . duplicate)
-  . duplicate
+  . second @c @c (Proxy :: Proxy c) (leftQuotient . diagonal)
+  . diagonal

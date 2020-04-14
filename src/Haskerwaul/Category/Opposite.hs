@@ -74,6 +74,8 @@ type family Op (c :: ok -> ok -> Type) :: ok -> ok -> Type where
   -- CompactClosedCategory c => Op c      = c
   Op c                                 = Opposite c
 
+-- | The dual of an `Isomorphism` is an `Isomorphism` in the `Opposite`
+--   category.
 opIsomorphism
   :: Isomorphism
      (NaturalTransformation2 (->))
