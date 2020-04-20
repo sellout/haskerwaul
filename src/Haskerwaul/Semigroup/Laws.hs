@@ -17,6 +17,7 @@ module Haskerwaul.Semigroup.Laws where
 import Haskerwaul.Law
 import Haskerwaul.Law.Associative
 import Haskerwaul.Object
+import Haskerwaul.Relation.Homogeneous
 import Haskerwaul.Topos.Elementary
 
 data SemigroupLaws c t a =
@@ -27,7 +28,7 @@ data SemigroupLaws c t a =
 semigroupLaws :: ( Ob c (t (t a a) a), Ob c (t a a)
                  , ElementaryTopos c
                  , SemigroupalCategory c t, Semigroup c t a)
-              => EquivalenceRelation c a -> SemigroupLaws c t a
+              => HomogeneousRelation c a -> SemigroupLaws c t a
 semigroupLaws eq =
   SemigroupLaws
     { associative = checkLaw (associativeLaw op) eq

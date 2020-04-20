@@ -14,10 +14,10 @@
 --   Then you should be able to test that by doing something like 
 module Haskerwaul.Monoid.Laws where
 
-import Haskerwaul.Law
 import Haskerwaul.Magma.Unital.Laws
 import Haskerwaul.Object
 import Haskerwaul.Semigroup.Laws
+import Haskerwaul.Relation.Homogeneous
 import Haskerwaul.Topos.Elementary
 
 data MonoidLaws c t a =
@@ -33,7 +33,7 @@ data MonoidLaws c t a =
 monoidLaws :: ( Ob c (t (t a a) a), Ob c (t a a), Ob c (t (Unit c t) a), Ob c (t a (Unit c t))
               , ElementaryTopos c
               , MonoidalCategory c t, Monoid c t a)
-           => EquivalenceRelation c a -> MonoidLaws c t a
+           => HomogeneousRelation c a -> MonoidLaws c t a
 monoidLaws eq =
   -- __TODO__: Why can't I define this with @do@ notation?
   MonoidLaws

@@ -154,6 +154,12 @@ module Haskerwaul
   , module Haskerwaul.Quasigroup
   , module Haskerwaul.Quasigroup.Left
   , module Haskerwaul.Quasigroup.Right
+  -- * relations
+  , module Haskerwaul.Relation.Binary
+  , module Haskerwaul.Relation.Equivalence
+  , module Haskerwaul.Relation.Homogeneous
+  , module Haskerwaul.Relation.Nullary
+  , module Haskerwaul.Relation.Unary
   -- * rigs
   , module Haskerwaul.Rig
   , module Haskerwaul.Rig.Monus
@@ -310,6 +316,11 @@ import Haskerwaul.Pushout
 import Haskerwaul.Quasigroup
 import Haskerwaul.Quasigroup.Left
 import Haskerwaul.Quasigroup.Right
+import Haskerwaul.Relation.Binary
+import Haskerwaul.Relation.Equivalence
+import Haskerwaul.Relation.Homogeneous
+import Haskerwaul.Relation.Nullary
+import Haskerwaul.Relation.Unary
 import Haskerwaul.Rig
 import Haskerwaul.Rig.Monus
 import Haskerwaul.Ring

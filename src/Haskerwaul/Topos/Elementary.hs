@@ -21,6 +21,9 @@ class (CartesianClosedCategory c, Ob c (Class c)) => ElementaryTopos c where
   type Class c
   -- | The subobject classifier.
   --   [nLab](https://ncatlab.org/nlab/show/subobject+classifier)
+  --
+  --  __NB__: This is a `Haskerwaul.Relation.Nullary.NullaryRelation`, but we
+  --          can't use the synonym here because it creates an import cycle.
   true :: TerminalObject c `c` Class c
 
 instance ElementaryTopos (->) where

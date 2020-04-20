@@ -150,6 +150,11 @@ library
                     , Haskerwaul.Quasigroup
                     , Haskerwaul.Quasigroup.Left
                     , Haskerwaul.Quasigroup.Right
+                    , Haskerwaul.Relation.Binary
+                    , Haskerwaul.Relation.Equivalence
+                    , Haskerwaul.Relation.Homogeneous
+                    , Haskerwaul.Relation.Nullary
+                    , Haskerwaul.Relation.Unary
                     , Haskerwaul.Rig
                     , Haskerwaul.Rig.Monus
                     , Haskerwaul.Rig.Near
