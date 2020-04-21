@@ -105,6 +105,7 @@ library
                     , Haskerwaul.Lattice.Orthomodular
                     , Haskerwaul.Law
                     , Haskerwaul.Law.Associative
+                    , Haskerwaul.Law.Asymmetry
                     , Haskerwaul.Law.Commutative
                     , Haskerwaul.Law.Distributive.Left
                     , Haskerwaul.Law.Distributive.Right
@@ -114,6 +115,8 @@ library
                     , Haskerwaul.Law.Identity.Right
                     , Haskerwaul.Law.Quotient.Left
                     , Haskerwaul.Law.Quotient.Right
+                    , Haskerwaul.Law.Reflexivity
+                    , Haskerwaul.Law.Symmetry
                     , Haskerwaul.Loop
                     , Haskerwaul.Magma
                     , Haskerwaul.Magma.Commutative

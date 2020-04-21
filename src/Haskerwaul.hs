@@ -102,6 +102,7 @@ module Haskerwaul
   -- * laws
   , module Haskerwaul.Law
   , module Haskerwaul.Law.Associative
+  , module Haskerwaul.Law.Asymmetry
   , module Haskerwaul.Law.Commutative
   , module Haskerwaul.Law.Distributive.Left
   , module Haskerwaul.Law.Distributive.Right
@@ -111,6 +112,8 @@ module Haskerwaul
   , module Haskerwaul.Law.Identity.Right
   , module Haskerwaul.Law.Quotient.Left
   , module Haskerwaul.Law.Quotient.Right
+  , module Haskerwaul.Law.Reflexivity
+  , module Haskerwaul.Law.Symmetry
   -- * loops
   , module Haskerwaul.Loop
   -- * magmas
@@ -275,6 +278,7 @@ import Haskerwaul.Lattice.Distributive.Bounded
 import Haskerwaul.Lattice.Orthocomplemented
 import Haskerwaul.Law
 import Haskerwaul.Law.Associative
+import Haskerwaul.Law.Asymmetry
 import Haskerwaul.Law.Commutative
 import Haskerwaul.Law.Distributive.Left
 import Haskerwaul.Law.Distributive.Right
@@ -284,6 +288,8 @@ import Haskerwaul.Law.Identity.Left
 import Haskerwaul.Law.Identity.Right
 import Haskerwaul.Law.Quotient.Left
 import Haskerwaul.Law.Quotient.Right
+import Haskerwaul.Law.Reflexivity
+import Haskerwaul.Law.Symmetry
 import Haskerwaul.Loop
 import Haskerwaul.Magma
 import Haskerwaul.Magma.Commutative
