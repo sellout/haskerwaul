@@ -1,79 +1,91 @@
-{-# language UndecidableInstances
+{-# language TypeApplications
+           , UndecidableInstances
            , UndecidableSuperClasses #-}
 
-module Haskerwaul.Relation.Equivalence where
+module Haskerwaul.Relation.Equivalence
+  ( module Haskerwaul.Relation.Equivalence
+  -- * extended modules
+  , module Haskerwaul.Preorder
+  , module Haskerwaul.Relation.Equivalence.Partial
+  , module Haskerwaul.Relation.Tolerance
+  ) where
 
-import qualified Data.Eq as Base
-import           Data.Int (Int, Int8, Int16, Int32, Int64)
-import           Data.Word (Word, Word8, Word16, Word32, Word64)
-import           Numeric.Natural (Natural)
-import           Prelude (Double, Float, Integer)
+import           Data.Proxy (Proxy(..))
 
 import Haskerwaul.Bifunctor
 import Haskerwaul.Isomorphism
-import Haskerwaul.Lattice.Components
+import Haskerwaul.Lattice
 import Haskerwaul.Object
-import Haskerwaul.Semiring.Components
+import Haskerwaul.Preorder
+import Haskerwaul.Semiring.Idempotent
+import Haskerwaul.Relation.Equivalence.Partial
 import Haskerwaul.Relation.Homogeneous
+import Haskerwaul.Relation.Tolerance
 import Haskerwaul.Topos.Elementary
 
-class Ob c a => EquivalenceRelation c a where
-  equiv :: HomogeneousRelation c a
+-- | [nLab](https://ncatlab.org/nlab/show/equivalence+relation)
+--
+--   At minimum, an `EquivalenceRelation` /is/ a `Preorder`, where @`le` =
+--  `equiv`@. However, more usefully, an `EquivalenceRelation` is congruent with
+--   a `Preorder` if @`equiv` x y ==> `le` x y@.
+--
+--  __NB__: Instances for this are automatically coalesced.
+--
+-- = laws
+--   [`Haskerwaul.Law.Reflexivity.reflexivity`]: @`equiv` x x = `true`@
+--   [`Haskerwaul.Law.Symmetry.symmetry`]: @`equiv` x y ==> `equiv` y x@
+--   [transitivity]: @`equiv` x y && `equiv` y z ==> `equiv` x z@
+class (Preorder c a, PartialEquivalenceRelation c a, ToleranceRelation c a) =>
+      EquivalenceRelation c a where
 
-instance EquivalenceRelation (->) Natural where
-  equiv = from curry (Base.==)
+-- | Every `Semilattice` has a canonical `Haskerwaul.Order.PartialOrder` as
+--   @`le` (a, b) = `equiv` (`op` (a, b), b)@.
+--
+--  __FIXME__: How are these `Ob` constraints not implied by
+--             @`ElementaryTopos` c@?
+canonicalOrderFromSemilattice
+  :: forall c a
+   . (ElementaryTopos c, Ob c a, Ob c (Prod c a a), EquivalenceRelation c a, Semilattice c (Prod c) a)
+  => HomogeneousRelation c a
+canonicalOrderFromSemilattice = equiv . first @c p op . to assoc . second p (diagonal @c)
+  where
+    p = Proxy :: Proxy c
 
-instance EquivalenceRelation (->) Int where
-  equiv = from curry (Base.==)
+-- | Every `IdempotentSemiring` has a canonical `Haskerwaul.Order.PartialOrder`
+--   as the canonical `Haskerwaul.Order.PartialOrder` on its `Additive`
+--  `Semilattice`. This also applies more generally to
+--  `Haskerwaul.Dioid.Dioid`s, but there we don't have the benefit of an
+--  `Additive` `Semilattice` to fall back on.
+canonicalOrderFromIdempotentSemiring
+  :: (c ~ (->), ElementaryTopos c, EquivalenceRelation c a, IdempotentSemiring c (Prod c) a)
+  => HomogeneousRelation c a
+canonicalOrderFromIdempotentSemiring =
+  canonicalOrderFromSemilattice . bimap Add Add
 
-instance EquivalenceRelation (->) Int8 where
-  equiv = from curry (Base.==)
+-- | Every `Lattice` has a canonical `Haskerwaul.Order.PartialOrder` as the
+--   canonical `Haskerwaul.Order.PartialOrder` on its `Join` `Semilattice`.
+canonicalOrderFromLattice
+  :: forall c a
+   . (c ~ (->), ElementaryTopos c, EquivalenceRelation c a, Lattice c (Prod c) a)
+  => HomogeneousRelation c a
+canonicalOrderFromLattice =
+  equiv
+  . bimap (getJoin . op) getJoin
+  . to assoc
+  . second p (diagonal @c)
+  . bimap Join Join
+  where
+    p = Proxy :: Proxy c
 
-instance EquivalenceRelation (->) Int16 where
-  equiv = from curry (Base.==)
+instance (Preorder c a, PartialEquivalenceRelation c a, ToleranceRelation c a) =>
+         EquivalenceRelation c a
 
-instance EquivalenceRelation (->) Int32 where
-  equiv = from curry (Base.==)
-
-instance EquivalenceRelation (->) Int64 where
-  equiv = from curry (Base.==)
-
-instance EquivalenceRelation (->) Integer where
-  equiv = from curry (Base.==)
-
-instance EquivalenceRelation (->) Word where
-  equiv = from curry (Base.==)
-
-instance EquivalenceRelation (->) Word8 where
-  equiv = from curry (Base.==)
-
-instance EquivalenceRelation (->) Word16 where
-  equiv = from curry (Base.==)
-
-instance EquivalenceRelation (->) Word32 where
-  equiv = from curry (Base.==)
-
-instance EquivalenceRelation (->) Word64 where
-  equiv = from curry (Base.==)
-
-instance EquivalenceRelation (->) Float where
-  equiv = from curry (Base.==)
-
-instance EquivalenceRelation (->) Double where
-  equiv = from curry (Base.==)
-
-instance (c ~ (->), ElementaryTopos c, EquivalenceRelation c a, Ob c (Meet a)) =>
-         EquivalenceRelation c (Meet a) where
-  equiv = equiv . bimap getMeet getMeet
-
-instance (c ~ (->), ElementaryTopos c, EquivalenceRelation c a, Ob c (Join a)) =>
-         EquivalenceRelation c (Join a) where
-  equiv = equiv . bimap getJoin getJoin
-
-instance (c ~ (->), ElementaryTopos c, EquivalenceRelation c a, Ob c (Additive a)) =>
-         EquivalenceRelation c (Additive a) where
-  equiv = equiv . bimap sum sum
-
-instance (c ~ (->), ElementaryTopos c, EquivalenceRelation c a, Ob c (Multiplicative a)) =>
-         EquivalenceRelation c (Multiplicative a) where
-  equiv = equiv . bimap product product
+-- __TODO__: Where can these instances live without being orphaned?
+--
+-- instance (c ~ (->), ElementaryTopos c, EquivalenceRelation c a, Semilattice c (Prod c) (Meet a)) =>
+--          Preorder c (Meet a) where
+--   le = canonicalOrderFromSemilattice
+--
+-- instance (c ~ (->), ElementaryTopos c, EquivalenceRelation c a, Semilattice c (Prod c) (Join a)) =>
+--          Preorder c (Join a) where
+--   le = canonicalOrderFromSemilattice

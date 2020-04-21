@@ -66,6 +66,7 @@ library
                     , Haskerwaul.Duoid.Normal
                     , Haskerwaul.Embedding.Yoneda
                     , Haskerwaul.Endofunctor
+                    , Haskerwaul.Equality
                     , Haskerwaul.Extension.Kan.Left
                     , Haskerwaul.Extension.Kan.Right
                     , Haskerwaul.Field
@@ -145,8 +146,12 @@ library
                     , Haskerwaul.Object.Free
                     , Haskerwaul.Object.Initial
                     , Haskerwaul.Object.Terminal
+                    , Haskerwaul.Order.Partial
+                    , Haskerwaul.Order.Prefix
+                    , Haskerwaul.Order.Total
                     -- __TODO__: eliminate the Orphans module
                     , Haskerwaul.Orphans
+                    , Haskerwaul.Preorder
                     , Haskerwaul.Profunctor
                     , Haskerwaul.Pullback
                     , Haskerwaul.Pushout
@@ -154,9 +159,12 @@ library
                     , Haskerwaul.Quasigroup.Left
                     , Haskerwaul.Quasigroup.Right
                     , Haskerwaul.Relation.Binary
+                    , Haskerwaul.Relation.Dependency
                     , Haskerwaul.Relation.Equivalence
+                    , Haskerwaul.Relation.Equivalence.Partial
                     , Haskerwaul.Relation.Homogeneous
                     , Haskerwaul.Relation.Nullary
+                    , Haskerwaul.Relation.Tolerance
                     , Haskerwaul.Relation.Unary
                     , Haskerwaul.Rig
                     , Haskerwaul.Rig.Monus
