@@ -99,9 +99,11 @@ library
                     , Haskerwaul.Lattice
                     , Haskerwaul.Lattice.Bounded
                     , Haskerwaul.Lattice.Complemented
+                    , Haskerwaul.Lattice.Complemented.Uniquely
                     , Haskerwaul.Lattice.Complete
                     , Haskerwaul.Lattice.Distributive
                     , Haskerwaul.Lattice.Distributive.Bounded
+                    , Haskerwaul.Lattice.Modular
                     , Haskerwaul.Lattice.Orthocomplemented
                     , Haskerwaul.Lattice.Orthomodular
                     , Haskerwaul.Law
@@ -121,6 +123,7 @@ library
                     , Haskerwaul.Loop
                     , Haskerwaul.Magma
                     , Haskerwaul.Magma.Commutative
+                    , Haskerwaul.Magma.Idempotent
                     , Haskerwaul.Magma.Unital
                     , Haskerwaul.Magma.Unital.Laws
                     , Haskerwaul.Meadow
@@ -174,6 +177,7 @@ library
                     , Haskerwaul.Ring.Nonunital
                     , Haskerwaul.Semigroup
                     , Haskerwaul.Semigroup.Commutative
+                    , Haskerwaul.Semigroup.Idempotent
                     , Haskerwaul.Semigroup.Inverse
                     , Haskerwaul.Semigroup.Laws
                     , Haskerwaul.Semilattice

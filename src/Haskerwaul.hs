@@ -96,9 +96,12 @@ module Haskerwaul
   , module Haskerwaul.Lattice
   , module Haskerwaul.Lattice.Bounded
   , module Haskerwaul.Lattice.Complemented
+  , module Haskerwaul.Lattice.Complemented.Uniquely
   , module Haskerwaul.Lattice.Distributive
   , module Haskerwaul.Lattice.Distributive.Bounded
+  , module Haskerwaul.Lattice.Modular
   , module Haskerwaul.Lattice.Orthocomplemented
+  , module Haskerwaul.Lattice.Orthomodular
   -- * laws
   , module Haskerwaul.Law
   , module Haskerwaul.Law.Associative
@@ -119,6 +122,7 @@ module Haskerwaul
   -- * magmas
   , module Haskerwaul.Magma
   , module Haskerwaul.Magma.Commutative
+  , module Haskerwaul.Magma.Idempotent
   , module Haskerwaul.Magma.Unital
   -- * meadows
   , module Haskerwaul.Meadow
@@ -182,6 +186,7 @@ module Haskerwaul
   -- * semigroups
   , module Haskerwaul.Semigroup
   , module Haskerwaul.Semigroup.Commutative
+  , module Haskerwaul.Semigroup.Idempotent
   , module Haskerwaul.Semigroup.Inverse
   -- * semilattices
   , module Haskerwaul.Semilattice
@@ -283,9 +288,12 @@ import Haskerwaul.Isomorphism.Natural
 import Haskerwaul.Lattice
 import Haskerwaul.Lattice.Bounded
 import Haskerwaul.Lattice.Complemented
+import Haskerwaul.Lattice.Complemented.Uniquely
 import Haskerwaul.Lattice.Distributive
 import Haskerwaul.Lattice.Distributive.Bounded
+import Haskerwaul.Lattice.Modular
 import Haskerwaul.Lattice.Orthocomplemented
+import Haskerwaul.Lattice.Orthomodular
 import Haskerwaul.Law
 import Haskerwaul.Law.Associative
 import Haskerwaul.Law.Asymmetry
@@ -303,6 +311,7 @@ import Haskerwaul.Law.Symmetry
 import Haskerwaul.Loop
 import Haskerwaul.Magma
 import Haskerwaul.Magma.Commutative
+import Haskerwaul.Magma.Idempotent
 import Haskerwaul.Magma.Unital
 import Haskerwaul.Meadow
 import Haskerwaul.Meadow.Cancellation
@@ -351,6 +360,7 @@ import Haskerwaul.Ring.Commutative
 import Haskerwaul.Ring.Nonunital
 import Haskerwaul.Semigroup
 import Haskerwaul.Semigroup.Commutative
+import Haskerwaul.Semigroup.Idempotent
 import Haskerwaul.Semigroup.Inverse
 import Haskerwaul.Semilattice
 import Haskerwaul.Semilattice.Bounded

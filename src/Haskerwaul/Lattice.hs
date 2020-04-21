@@ -18,10 +18,10 @@ import Haskerwaul.Semilattice
 --  __NB__: Instances for this are automatically coalesced.
 class (Semilattice c t (Meet a), Semilattice c t (Join a)) => Lattice c t a
 
-instance (Semilattice c t (Meet a), Semilattice c t (Join a)) => Lattice c t a
-
 meet :: (c ~ (->), SemigroupalCategory c t, Lattice c t a) => t a a `c` a
 meet = getMeet . op . bimap Meet Meet
 
 join :: (c ~ (->), SemigroupalCategory c t, Lattice c t a) => t a a `c` a
 join = getJoin . op . bimap Join Join
+
+instance (Semilattice c t (Meet a), Semilattice c t (Join a)) => Lattice c t a

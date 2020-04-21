@@ -3,18 +3,14 @@
 module Haskerwaul.Lattice.Orthocomplemented
   ( module Haskerwaul.Lattice.Orthocomplemented
   -- * extended modules
-  , module Haskerwaul.Lattice.Complemented
+  , module Haskerwaul.Lattice.Complemented.Uniquely
   ) where
 
 import qualified Data.Bool as Base
-import           Data.Proxy (Proxy(..))
 
-import Haskerwaul.Lattice.Complemented
-import Haskerwaul.Object
+import Haskerwaul.Lattice.Complemented.Uniquely
 
 -- | [nLab](https://ncatlab.org/nlab/show/complemented+lattice)
-class ComplementedLattice c t a => OrthocomplementedLattice c t a where
-  complement :: Ob c a => Proxy t -> a `c` a
+class UniquelyComplementedLattice c t a => OrthocomplementedLattice c t a
 
-instance OrthocomplementedLattice (->) (,) Base.Bool where
-  complement Proxy = Base.not
+instance OrthocomplementedLattice (->) (,) Base.Bool

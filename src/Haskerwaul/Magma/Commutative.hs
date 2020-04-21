@@ -17,12 +17,10 @@ import Haskerwaul.Magma
 import Haskerwaul.Semiring.Components
 
 -- | [nLab](https://ncatlab.org/nlab/show/commutative+magma)
+--
+-- = laws
+--   [`Haskerwaul.Law.Associative.commutativeLaw`]: @`op` x y == `op` y x@
 class Magma c t a => CommutativeMagma c t a
-
--- commutative
---   :: (BraidedMonoidalCategory c ob t, CommutativeMagma c t a, ob a, Eq a)
---   => t a a -> Bool
--- commutative t = op t == op (braid t)
 
 instance CommutativeMagma (->) (,) (Join Bool)
 instance CommutativeMagma (->) (,) (Meet Bool)
