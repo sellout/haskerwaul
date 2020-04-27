@@ -22,7 +22,7 @@ import Haskerwaul.Topos.Elementary
 -- | [nLab](https://ncatlab.org/nlab/show/partial+order)
 --
 -- = laws
---   [antisymmetry]: @`le` (x, y) && `le (y, z)` ==> `equiv` (x, y)@
+--   [antisymmetry]: @`le` (x, y) && `le (y, z)` ==> `Haskerwaul.Relation.Equivalence.Partial.equiv` (x, y)@
 class Preorder c a => PartialOrder c a
 
 -- | We can get an equivalence relation from any partial order, but we may also

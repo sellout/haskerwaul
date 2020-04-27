@@ -8,6 +8,6 @@ import Haskerwaul.Relation.Tolerance
 --
 -- = laws
 --   [finite]: ?
---   [`Haskerwaul.Law.Reflexivity.reflexivity`]: @`tolerate` x x = `true`@
+--   [`Haskerwaul.Law.Reflexivity.reflexivity`]: @`tolerate` x x = `Haskerwaul.Topos.Elementary.true`@
 --   [`Haskerwaul.Law.Symmetry.symmetry`]: @`tolerate` x y ==> `tolerate` y x@
 class ToleranceRelation c a => DependencyRelation c a
