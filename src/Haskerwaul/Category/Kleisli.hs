@@ -15,7 +15,6 @@ import Haskerwaul.Functor
 import Haskerwaul.Isomorphism
 import Haskerwaul.Monad
 import Haskerwaul.Object
-import Haskerwaul.Object.Terminal
 import Haskerwaul.Transformation.Natural
 
 -- | [nLab](https://ncatlab.org/nlab/show/Kleisli+category)

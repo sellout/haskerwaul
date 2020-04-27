@@ -5,6 +5,7 @@ module Haskerwaul.Category.Monoidal.Cartesian
   ( module Haskerwaul.Category.Monoidal.Cartesian
   -- * extended modules
   , module Haskerwaul.Category.Monoidal.Symmetric
+  , module Haskerwaul.Object.Terminal
   ) where
 
 import           Data.Constraint

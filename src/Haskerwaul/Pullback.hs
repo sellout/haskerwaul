@@ -1,7 +1,6 @@
 module Haskerwaul.Pullback where
 
 import Haskerwaul.Category.Monoidal.Cartesian
-import Haskerwaul.Object.Terminal
 
 -- | [nLab](https://ncatlab.org/nlab/show/pullback)
 data Pullback c t a x y =

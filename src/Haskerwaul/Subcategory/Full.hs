@@ -12,12 +12,14 @@ import           Data.Proxy (Proxy(..))
 import qualified Data.Set as Set
 import qualified Data.Tuple as Base
 
+import Haskerwaul.Algebra.Heyting
 import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Opposite
 import Haskerwaul.Category.Monoidal
 import Haskerwaul.Constraint
 import Haskerwaul.Endofunctor
 import Haskerwaul.Isomorphism
+import Haskerwaul.Lattice.Complemented.Uniquely
 import Haskerwaul.Object
 import Haskerwaul.Object.Terminal
 import Haskerwaul.Quasigroup.Left
@@ -139,3 +141,37 @@ instance (HasTerminalObject c, ob (TerminalObject c)) =>
          HasTerminalObject (FullSubcategory ob c) where
   type TerminalObject (FullSubcategory ob c) = TerminalObject c
   (!) = FS (!)
+
+instance (SemigroupalCategory (FullSubcategory ob c) t, ob a, Magma c t a) =>
+         Magma (FullSubcategory ob c) t a where
+  op = FS op
+
+instance (SemigroupalCategory (FullSubcategory ob c) t, ob a, CommutativeMagma c t a) =>
+         CommutativeMagma (FullSubcategory ob c) t a
+
+instance (SemigroupalCategory (FullSubcategory ob c) t, ob a, IdempotentMagma c t a) =>
+         IdempotentMagma (FullSubcategory ob c) t a
+
+instance (SemigroupalCategory (FullSubcategory ob c) t, ob a, Semigroup c t a) =>
+         Semigroup (FullSubcategory ob c) t a
+
+instance (MonoidalCategory (FullSubcategory ob c) t, ob a, ob (Unit c t), UnitalMagma c t a) =>
+         UnitalMagma (FullSubcategory ob c) t a where
+  unit t = FS (unit t)
+
+instance (MonoidalCategory (FullSubcategory ob c) t, ob a, ob (Meet a), ob (Join a), ComplementedLattice c t a) =>
+         ComplementedLattice (FullSubcategory ob c) t a
+
+instance (MonoidalCategory (FullSubcategory ob c) t, ob a, ob (Meet a), ob (Join a), UniquelyComplementedLattice c t a) =>
+         UniquelyComplementedLattice (FullSubcategory ob c) t a where
+  complement p = FS (complement p)
+
+instance (MonoidalCategory (FullSubcategory ob c) t, ob a, ob (Meet a), ob (Join a), ModularLattice c t a) =>
+         ModularLattice (FullSubcategory ob c) t a
+
+instance (MonoidalCategory (FullSubcategory ob c) t, ob a, ob (Meet a), ob (Join a), DistributiveLattice c t a) =>
+         DistributiveLattice (FullSubcategory ob c) t a
+
+instance (MonoidalCategory (FullSubcategory ob c) t, ob a, ob (Meet a), ob (Join a), HeytingAlgebra c t a) =>
+         HeytingAlgebra (FullSubcategory ob c) t a where
+  implies = FS implies

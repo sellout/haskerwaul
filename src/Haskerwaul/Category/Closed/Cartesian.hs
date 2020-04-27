@@ -17,7 +17,6 @@ import Haskerwaul.Category.Monoidal.Closed
 import Haskerwaul.Isomorphism
 import Haskerwaul.Monoid.Commutative.Monus
 import Haskerwaul.Object
-import Haskerwaul.Object.Terminal
 import Haskerwaul.Rig.Monus
 import Haskerwaul.Ring
 import Haskerwaul.Skewfield

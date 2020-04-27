@@ -9,13 +9,14 @@ module Haskerwaul.Topos.Elementary
 
 import           Data.Bool (Bool(..))
 
+import Haskerwaul.Algebra.Heyting
 import Haskerwaul.Category.Closed.Cartesian
 import Haskerwaul.Object
-import Haskerwaul.Object.Terminal
 import Haskerwaul.Subcategory.Full
 
 -- | [nLab](https://ncatlab.org/nlab/show/topos)
-class (CartesianClosedCategory c, Ob c (Class c)) => ElementaryTopos c where
+class (CartesianClosedCategory c, Ob c (Class c), HeytingAlgebra c (Prod c) (Class c)) =>
+      ElementaryTopos c where
   -- | The classifying object in the category.
   --   [nLab](https://ncatlab.org/nlab/show/classifying+space)
   type Class c
@@ -34,7 +35,9 @@ instance ( ElementaryTopos c
          , TOb ob (Prod c)
          , ob (TerminalObject c)
          , TOb ob (Exp c)
-         , ob (Class c)) =>
+         , ob (Class c)
+         , ob (Meet (Class c))
+         , ob (Join (Class c))) =>
          ElementaryTopos (FullSubcategory ob c) where
   type Class (FullSubcategory ob c) = Class c
   true = FS true
