@@ -15,6 +15,8 @@ import Haskerwaul.Semigroup.Commutative
 import Haskerwaul.Semiring.Near
 
 -- | [nLab](https://ncatlab.org/nlab/show/rig)
+--
+--  __NB__: Instances for this are automatically coalesced.
 class (NearSemiring c t a, CommutativeSemigroup c t (Additive a)) =>
       Semiring c t a
 

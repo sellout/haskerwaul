@@ -23,8 +23,8 @@ zeroIso
   :: PointedCategory c => Isomorphism c (InitialObject c) (TerminalObject c)
 zeroIso = Iso (!) (!-)
 
-zero :: (PointedCategory c, Ob c a, Ob c b) => a `c` b
-zero = opposite (!) . (!-) . (!)
+zeroMorphism :: (PointedCategory c, Ob c a, Ob c b) => a `c` b
+zeroMorphism = opposite (!) . (!-) . (!)
 
 instance (Category c, HasTerminalObject (Isomorphism c)) =>
          PointedCategory (Isomorphism c) where

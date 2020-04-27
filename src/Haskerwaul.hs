@@ -183,6 +183,7 @@ module Haskerwaul
   , module Haskerwaul.Relation.Unary
   -- * rigs
   , module Haskerwaul.Rig
+  , module Haskerwaul.Rig.Idempotent
   , module Haskerwaul.Rig.Monus
   -- * rings
   , module Haskerwaul.Ring
@@ -199,9 +200,13 @@ module Haskerwaul
   , module Haskerwaul.Semigroupoid
   -- * semirings
   , module Haskerwaul.Semiring
+  , module Haskerwaul.Semiring.Idempotent
+  , module Haskerwaul.Semiring.MaxPlus
+  , module Haskerwaul.Semiring.MinPlus
   , module Haskerwaul.Semiring.Near
   , module Haskerwaul.Semiring.Pre
   , module Haskerwaul.Semiring.Pre.Near
+  , module Haskerwaul.Semiring.Tropical
   -- * spans
   , module Haskerwaul.Cospan
   , module Haskerwaul.Span
@@ -364,6 +369,7 @@ import Haskerwaul.Relation.Nullary
 import Haskerwaul.Relation.Tolerance
 import Haskerwaul.Relation.Unary
 import Haskerwaul.Rig
+import Haskerwaul.Rig.Idempotent
 import Haskerwaul.Rig.Monus
 import Haskerwaul.Ring
 import Haskerwaul.Ring.Commutative
@@ -376,9 +382,13 @@ import Haskerwaul.Semilattice
 import Haskerwaul.Semilattice.Bounded
 import Haskerwaul.Semigroupoid
 import Haskerwaul.Semiring
+import Haskerwaul.Semiring.Idempotent
+import Haskerwaul.Semiring.MaxPlus
+import Haskerwaul.Semiring.MinPlus
 import Haskerwaul.Semiring.Near
 import Haskerwaul.Semiring.Pre
 import Haskerwaul.Semiring.Pre.Near
+import Haskerwaul.Semiring.Tropical
 import Haskerwaul.Skewfield
 import Haskerwaul.Span
 import Haskerwaul.Subcategory.Full
