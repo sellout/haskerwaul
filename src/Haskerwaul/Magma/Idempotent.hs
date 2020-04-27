@@ -15,6 +15,9 @@ import           Prelude (Integer)
 import Haskerwaul.Lattice.Components
 import Haskerwaul.Magma
 
+-- |
+-- = laws
+--   [`Haskerwaul.Law.Idempotency.idempotency`]: @`op` a a == a@
 class Magma c t a => IdempotentMagma c t a
 
 instance IdempotentMagma (->) (,) (Join Bool)

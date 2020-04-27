@@ -22,7 +22,7 @@ import Haskerwaul.Object
 -- | [nLab](https://ncatlab.org/nlab/show/semigroup)
 --
 -- = laws
---   [`Haskerwaul.Law.Associative.associativeLaw`]: @`op` x (`op` y z) == `op` (`op` x y) z
+--   [`Haskerwaul.Law.Associativity.associativity`]: @`op` x (`op` y z) == `op` (`op` x y) z
 class Magma c t a => Semigroup c t a
 
 -- | Take advantage of this instance when possible. I.e., define your semigroup

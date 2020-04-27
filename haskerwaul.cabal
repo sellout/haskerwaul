@@ -107,15 +107,20 @@ library
                     , Haskerwaul.Lattice.Orthocomplemented
                     , Haskerwaul.Lattice.Orthomodular
                     , Haskerwaul.Law
-                    , Haskerwaul.Law.Associative
+                    , Haskerwaul.Law.Alternativity.Left
+                    , Haskerwaul.Law.Alternativity.Right
+                    , Haskerwaul.Law.Associativity
                     , Haskerwaul.Law.Asymmetry
-                    , Haskerwaul.Law.Commutative
+                    , Haskerwaul.Law.Commutativity
                     , Haskerwaul.Law.Distributive.Left
                     , Haskerwaul.Law.Distributive.Right
+                    , Haskerwaul.Law.Flexibility
                     , Haskerwaul.Law.Homomorphism.Identity
                     , Haskerwaul.Law.Homomorphism.Magma
+                    , Haskerwaul.Law.Idempotency
                     , Haskerwaul.Law.Identity.Left
                     , Haskerwaul.Law.Identity.Right
+                    , Haskerwaul.Law.Modularity
                     , Haskerwaul.Law.Quotient.Left
                     , Haskerwaul.Law.Quotient.Right
                     , Haskerwaul.Law.Reflexivity

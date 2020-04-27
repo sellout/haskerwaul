@@ -104,15 +104,20 @@ module Haskerwaul
   , module Haskerwaul.Lattice.Orthomodular
   -- * laws
   , module Haskerwaul.Law
-  , module Haskerwaul.Law.Associative
+  , module Haskerwaul.Law.Alternativity.Left
+  , module Haskerwaul.Law.Alternativity.Right
+  , module Haskerwaul.Law.Associativity
   , module Haskerwaul.Law.Asymmetry
-  , module Haskerwaul.Law.Commutative
+  , module Haskerwaul.Law.Commutativity
   , module Haskerwaul.Law.Distributive.Left
   , module Haskerwaul.Law.Distributive.Right
+  , module Haskerwaul.Law.Flexibility
   , module Haskerwaul.Law.Homomorphism.Identity
   , module Haskerwaul.Law.Homomorphism.Magma
+  , module Haskerwaul.Law.Idempotency
   , module Haskerwaul.Law.Identity.Left
   , module Haskerwaul.Law.Identity.Right
+  , module Haskerwaul.Law.Modularity
   , module Haskerwaul.Law.Quotient.Left
   , module Haskerwaul.Law.Quotient.Right
   , module Haskerwaul.Law.Reflexivity
@@ -295,15 +300,20 @@ import Haskerwaul.Lattice.Modular
 import Haskerwaul.Lattice.Orthocomplemented
 import Haskerwaul.Lattice.Orthomodular
 import Haskerwaul.Law
-import Haskerwaul.Law.Associative
+import Haskerwaul.Law.Alternativity.Left
+import Haskerwaul.Law.Alternativity.Right
+import Haskerwaul.Law.Associativity
 import Haskerwaul.Law.Asymmetry
-import Haskerwaul.Law.Commutative
+import Haskerwaul.Law.Commutativity
 import Haskerwaul.Law.Distributive.Left
 import Haskerwaul.Law.Distributive.Right
+import Haskerwaul.Law.Flexibility
 import Haskerwaul.Law.Homomorphism.Identity
 import Haskerwaul.Law.Homomorphism.Magma
+import Haskerwaul.Law.Idempotency
 import Haskerwaul.Law.Identity.Left
 import Haskerwaul.Law.Identity.Right
+import Haskerwaul.Law.Modularity
 import Haskerwaul.Law.Quotient.Left
 import Haskerwaul.Law.Quotient.Right
 import Haskerwaul.Law.Reflexivity

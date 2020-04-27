@@ -19,7 +19,7 @@ import Haskerwaul.Semiring.Components
 -- | [nLab](https://ncatlab.org/nlab/show/commutative+magma)
 --
 -- = laws
---   [`Haskerwaul.Law.Associative.commutativeLaw`]: @`op` x y == `op` y x@
+--   [`Haskerwaul.Law.Commutativity.commutativity`]: @`op` x y == `op` y x@
 class Magma c t a => CommutativeMagma c t a
 
 instance CommutativeMagma (->) (,) (Join Bool)
