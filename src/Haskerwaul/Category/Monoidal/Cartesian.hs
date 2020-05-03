@@ -41,6 +41,13 @@ instance CartesianMonoidalCategory (->) where
   exr = Base.snd
   diagonal x = (x, x)
 
+instance (c ~ (->), CartesianMonoidalCategory c) =>
+         CartesianMonoidalCategory (NaturalTransformation c) where
+  type Prod (NaturalTransformation c) = FTensor (Prod c)
+  exl = NT (exl . lowerFTensor)
+  exr = NT (exr . lowerFTensor)
+  diagonal = NT (FTensor . diagonal)
+
 instance (CartesianMonoidalCategory c, TOb ob (Prod c), ob (TerminalObject c)) =>
          CartesianMonoidalCategory (FullSubcategory ob c) where
   type Prod (FullSubcategory ob c) = Prod c

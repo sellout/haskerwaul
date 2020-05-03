@@ -4,10 +4,12 @@
 module Haskerwaul.Object.Terminal where
 
 import           Data.Constraint ((:-)(..), Dict(..))
+import           Data.Functor.Const (Const (..))
 import           Data.Kind (Type)
 
 import Haskerwaul.Constraint
 import Haskerwaul.Object
+import Haskerwaul.Semigroupoid
 import Haskerwaul.Transformation.Natural
 
 -- | There are multiple classes (see
@@ -30,3 +32,10 @@ instance HasTerminalObject (:-) where
 instance HasTerminalObject (NaturalTransformation (:-)) where
   type TerminalObject (NaturalTransformation (:-)) = All
   (!) = NT (Sub Dict)
+
+instance (c ~ (->), HasTerminalObject c) =>
+         HasTerminalObject (NaturalTransformation c) where
+  type TerminalObject (NaturalTransformation c) = Const (TerminalObject c)
+  -- TODO: Replace this with `NT (first (!))`, but it currently causes an import
+  --       cycle.
+  (!) = NT (Const . (!))

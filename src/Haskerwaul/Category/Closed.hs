@@ -8,6 +8,7 @@ module Haskerwaul.Category.Closed
   ) where
 
 import           Data.Constraint ((:-), (:=>))
+import           Data.Kind (Type)
 
 import Haskerwaul.Category
 import Haskerwaul.Category.Opposite
@@ -30,6 +31,13 @@ class (Category c, TOb (Ob c) (Exp c)) => ClosedCategory c where
 
 instance ClosedCategory (->) where
   type Exp (->) = (->)
+
+data ExpTransformation (c :: Type -> Type -> Type) f g a =
+  ET { runET :: f a `c` g a }
+
+instance ClosedCategory c =>
+         ClosedCategory (NaturalTransformation (c :: Type -> Type -> Type)) where
+  type Exp (NaturalTransformation c) = ExpTransformation (Exp c)
 
 instance ClosedCategory (:-) where
   type Exp (:-) = (:=>)

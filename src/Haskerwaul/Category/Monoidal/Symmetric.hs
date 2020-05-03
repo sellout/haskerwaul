@@ -30,6 +30,9 @@ instance SymmetricMonoidalCategory (->) (,)
 
 instance SymmetricMonoidalCategory (->) Either
 
+instance (c ~ (->), SymmetricMonoidalCategory c t) =>
+         SymmetricMonoidalCategory (NaturalTransformation c) (FTensor t)
+
 instance SymmetricMonoidalCategory (:-) Combine
 
 instance SymmetricMonoidalCategory (NaturalTransformation (:-)) CFProd

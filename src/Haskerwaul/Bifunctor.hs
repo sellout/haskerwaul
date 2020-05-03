@@ -5,6 +5,7 @@ module Haskerwaul.Bifunctor where
 
 import qualified Data.Bifunctor as Base
 import           Data.Constraint ((:-)(..), (:=>)(..), (***), Class(..), trans)
+import           Data.Functor.Const (Const (..))
 import           Data.Proxy (Proxy(..))
 
 import Haskerwaul.Category
@@ -33,6 +34,9 @@ second Proxy g = bimap @c1 id g
 
 instance Base.Bifunctor f => Bifunctor (->) (->) (->) f where
   bimap = Base.bimap
+
+instance Bifunctor (->) c (->) Const where
+  bimap f _ = Const . f . getConst
 
 instance (Semigroupoid c1, Bifunctor c1 c2 d t) =>
          Bifunctor (Opposite c1) (Opposite c2) (Opposite d) t where
