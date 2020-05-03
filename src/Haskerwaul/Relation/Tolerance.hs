@@ -1,16 +1,18 @@
 {-# language UndecidableInstances
            , UndecidableSuperClasses #-}
 
-module Haskerwaul.Relation.Tolerance where
+module Haskerwaul.Relation.Tolerance
+  ( module Haskerwaul.Relation.Tolerance
+  -- * extended modules
+  , module Haskerwaul.Relation.Homogeneous
+  ) where
 
-import qualified Data.Eq as Base
+import           Data.Bool (Bool)
 import           Data.Int (Int, Int8, Int16, Int32, Int64)
 import           Data.Word (Word, Word8, Word16, Word32, Word64)
 import           Numeric.Natural (Natural)
 import           Prelude (Double, Float, Integer)
 
-import Haskerwaul.Bifunctor
-import Haskerwaul.Isomorphism
 import Haskerwaul.Lattice.Components
 import Haskerwaul.Object
 import Haskerwaul.Relation.Homogeneous
@@ -20,65 +22,50 @@ import Haskerwaul.Topos.Elementary
 -- | [Wikipedia](https://en.wikipedia.org/wiki/Tolerance_relation)
 --
 -- = laws
---   [`Haskerwaul.Law.Reflexivity.reflexivity`]: @`tolerate` x x = `true`@
---   [`Haskerwaul.Law.Symmetry.symmetry`]: @`tolerate` x y ==> `tolerate` y x@
-class Ob c a => ToleranceRelation c a where
-  tolerate :: HomogeneousRelation c a
+--   [`Haskerwaul.Law.Reflexivity.reflexivity`]: @`rel` x x = `true`@
+--   [`Haskerwaul.Law.Symmetry.symmetry`]: @`rel` x y ==> `rel` y x@
+class HomogeneousRelation c a => ToleranceRelation c a
 
-instance ToleranceRelation (->) Natural where
-  tolerate = from curry (Base.==)
+instance ToleranceRelation (->) ()
 
-instance ToleranceRelation (->) Int where
-  tolerate = from curry (Base.==)
+instance ToleranceRelation (->) Bool
 
-instance ToleranceRelation (->) Int8 where
-  tolerate = from curry (Base.==)
+instance ToleranceRelation (->) Natural
 
-instance ToleranceRelation (->) Int16 where
-  tolerate = from curry (Base.==)
+instance ToleranceRelation (->) Int
 
-instance ToleranceRelation (->) Int32 where
-  tolerate = from curry (Base.==)
+instance ToleranceRelation (->) Int8
 
-instance ToleranceRelation (->) Int64 where
-  tolerate = from curry (Base.==)
+instance ToleranceRelation (->) Int16
 
-instance ToleranceRelation (->) Integer where
-  tolerate = from curry (Base.==)
+instance ToleranceRelation (->) Int32
 
-instance ToleranceRelation (->) Word where
-  tolerate = from curry (Base.==)
+instance ToleranceRelation (->) Int64
 
-instance ToleranceRelation (->) Word8 where
-  tolerate = from curry (Base.==)
+instance ToleranceRelation (->) Integer
 
-instance ToleranceRelation (->) Word16 where
-  tolerate = from curry (Base.==)
+instance ToleranceRelation (->) Word
 
-instance ToleranceRelation (->) Word32 where
-  tolerate = from curry (Base.==)
+instance ToleranceRelation (->) Word8
 
-instance ToleranceRelation (->) Word64 where
-  tolerate = from curry (Base.==)
+instance ToleranceRelation (->) Word16
 
-instance ToleranceRelation (->) Float where
-  tolerate = from curry (Base.==)
+instance ToleranceRelation (->) Word32
 
-instance ToleranceRelation (->) Double where
-  tolerate = from curry (Base.==)
+instance ToleranceRelation (->) Word64
+
+instance ToleranceRelation (->) Float
+
+instance ToleranceRelation (->) Double
 
 instance (c ~ (->), ElementaryTopos c, ToleranceRelation c a, Ob c (Meet a)) =>
-         ToleranceRelation c (Meet a) where
-  tolerate = tolerate . bimap getMeet getMeet
+         ToleranceRelation c (Meet a)
 
 instance (c ~ (->), ElementaryTopos c, ToleranceRelation c a, Ob c (Join a)) =>
-         ToleranceRelation c (Join a) where
-  tolerate = tolerate . bimap getJoin getJoin
+         ToleranceRelation c (Join a)
 
 instance (c ~ (->), ElementaryTopos c, ToleranceRelation c a, Ob c (Additive a)) =>
-         ToleranceRelation c (Additive a) where
-  tolerate = tolerate . bimap sum sum
+         ToleranceRelation c (Additive a)
 
 instance (c ~ (->), ElementaryTopos c, ToleranceRelation c a, Ob c (Multiplicative a)) =>
-         ToleranceRelation c (Multiplicative a) where
-  tolerate = tolerate . bimap product product
+         ToleranceRelation c (Multiplicative a)

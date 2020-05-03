@@ -18,8 +18,8 @@ import Haskerwaul.Lattice
 import Haskerwaul.Object
 import Haskerwaul.Preorder
 import Haskerwaul.Semiring.Idempotent
+import Haskerwaul.Relation.Binary
 import Haskerwaul.Relation.Equivalence.Partial
-import Haskerwaul.Relation.Homogeneous
 import Haskerwaul.Relation.Tolerance
 import Haskerwaul.Topos.Elementary
 
@@ -46,7 +46,7 @@ class (Preorder c a, PartialEquivalenceRelation c a, ToleranceRelation c a) =>
 canonicalOrderFromSemilattice
   :: forall c a
    . (ElementaryTopos c, Ob c a, Ob c (Prod c a a), EquivalenceRelation c a, Semilattice c (Prod c) a)
-  => HomogeneousRelation c a
+  => BinaryRelation c a a
 canonicalOrderFromSemilattice = equiv . first @c p op . to assoc . second p (diagonal @c)
   where
     p = Proxy :: Proxy c
@@ -58,7 +58,7 @@ canonicalOrderFromSemilattice = equiv . first @c p op . to assoc . second p (dia
 --  `Additive` `Semilattice` to fall back on.
 canonicalOrderFromIdempotentSemiring
   :: (c ~ (->), ElementaryTopos c, EquivalenceRelation c a, IdempotentSemiring c (Prod c) a)
-  => HomogeneousRelation c a
+  => BinaryRelation c a a
 canonicalOrderFromIdempotentSemiring =
   canonicalOrderFromSemilattice . bimap Add Add
 
@@ -67,7 +67,7 @@ canonicalOrderFromIdempotentSemiring =
 canonicalOrderFromLattice
   :: forall c a
    . (c ~ (->), ElementaryTopos c, EquivalenceRelation c a, Lattice c (Prod c) a)
-  => HomogeneousRelation c a
+  => BinaryRelation c a a
 canonicalOrderFromLattice =
   equiv
   . bimap (getJoin . op) getJoin

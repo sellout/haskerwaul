@@ -160,6 +160,7 @@ module Haskerwaul
   , module Haskerwaul.Object.Initial
   , module Haskerwaul.Object.Terminal
   -- * orders
+  , module Haskerwaul.Order.Canonical
   , module Haskerwaul.Order.Partial
   , module Haskerwaul.Order.Prefix
   , module Haskerwaul.Order.Total
@@ -172,9 +173,9 @@ module Haskerwaul
   , module Haskerwaul.Quasigroup.Left
   , module Haskerwaul.Quasigroup.Right
   -- * relations
-  , module Haskerwaul.Equality
   , module Haskerwaul.Relation.Binary
   , module Haskerwaul.Relation.Dependency
+  , module Haskerwaul.Relation.Equality
   , module Haskerwaul.Relation.Equivalence
   , module Haskerwaul.Relation.Equivalence.Partial
   , module Haskerwaul.Relation.Homogeneous
@@ -266,7 +267,6 @@ import Haskerwaul.Duoid
 import Haskerwaul.Duoid.Normal
 import Haskerwaul.Embedding.Yoneda
 import Haskerwaul.Endofunctor
-import Haskerwaul.Equality
 import Haskerwaul.Extension.Kan.Left
 import Haskerwaul.Extension.Kan.Right
 import Haskerwaul.Field
@@ -350,6 +350,7 @@ import Haskerwaul.Object
 import Haskerwaul.Object.Free
 import Haskerwaul.Object.Initial
 import Haskerwaul.Object.Terminal
+import Haskerwaul.Order.Canonical
 import Haskerwaul.Order.Partial
 import Haskerwaul.Order.Prefix
 import Haskerwaul.Order.Total
@@ -362,6 +363,7 @@ import Haskerwaul.Quasigroup.Left
 import Haskerwaul.Quasigroup.Right
 import Haskerwaul.Relation.Binary
 import Haskerwaul.Relation.Dependency
+import Haskerwaul.Relation.Equality
 import Haskerwaul.Relation.Equivalence
 import Haskerwaul.Relation.Equivalence.Partial
 import Haskerwaul.Relation.Homogeneous

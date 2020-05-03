@@ -1,17 +1,21 @@
 {-# language UndecidableInstances
            , UndecidableSuperClasses #-}
 
-module Haskerwaul.Preorder where
+module Haskerwaul.Preorder
+  ( module Haskerwaul.Preorder
+  -- * extended modules
+  , module Haskerwaul.Relation.Homogeneous
+  ) where
 
+import           Data.Bool (Bool)
 import           Data.Int (Int, Int8, Int16, Int32, Int64)
-import qualified Data.Ord as Base
 import           Data.Word (Word, Word8, Word16, Word32, Word64)
 import           Numeric.Natural (Natural)
 import           Prelude (Double, Float, Integer)
 
-import Haskerwaul.Bifunctor
-import Haskerwaul.Isomorphism
 import Haskerwaul.Object
+import Haskerwaul.Order.Canonical
+import Haskerwaul.Relation.Binary
 import Haskerwaul.Relation.Homogeneous
 import Haskerwaul.Semiring.Components
 import Haskerwaul.Topos.Elementary
@@ -25,55 +29,75 @@ import Haskerwaul.Topos.Elementary
 -- = laws
 --   [`Haskerwaul.Law.Reflexivity.reflexivity`]: @`le` (x, x) == `true` ()@
 --   [transitivity]: @`le` (x, y) && `le (y, z)` ==> `le` (x, z)@
-class Ob c a => Preorder c a where
-  le :: HomogeneousRelation c a
+class HomogeneousRelation c a => Preorder c a
 
-instance Preorder (->) Natural where
-  le = from curry (Base.<=)
+le :: Preorder c a => BinaryRelation c a a
+le = rel
 
-instance Preorder (->) Int where
-  le = from curry (Base.<=)
+instance Preorder (->) ()
 
-instance Preorder (->) Int8 where
-  le = from curry (Base.<=)
+instance Preorder (->) Bool
 
-instance Preorder (->) Int16 where
-  le = from curry (Base.<=)
+instance Preorder (->) Natural
 
-instance Preorder (->) Int32 where
-  le = from curry (Base.<=)
+instance Preorder (->) Int
 
-instance Preorder (->) Int64 where
-  le = from curry (Base.<=)
+instance Preorder (->) Int8
 
-instance Preorder (->) Integer where
-  le = from curry (Base.<=)
+instance Preorder (->) Int16
 
-instance Preorder (->) Word where
-  le = from curry (Base.<=)
+instance Preorder (->) Int32
 
-instance Preorder (->) Word8 where
-  le = from curry (Base.<=)
+instance Preorder (->) Int64
 
-instance Preorder (->) Word16 where
-  le = from curry (Base.<=)
+instance Preorder (->) Integer
 
-instance Preorder (->) Word32 where
-  le = from curry (Base.<=)
+instance Preorder (->) Word
 
-instance Preorder (->) Word64 where
-  le = from curry (Base.<=)
+instance Preorder (->) Word8
 
-instance Preorder (->) Float where
-  le = from curry (Base.<=)
+instance Preorder (->) Word16
 
-instance Preorder (->) Double where
-  le = from curry (Base.<=)
+instance Preorder (->) Word32
+
+instance Preorder (->) Word64
+
+instance Preorder (->) Float
+
+instance Preorder (->) Double
+
+instance Preorder (->) (Canonical Bool)
+
+instance Preorder (->) (Canonical Natural)
+
+instance Preorder (->) (Canonical Int)
+
+instance Preorder (->) (Canonical Int8)
+
+instance Preorder (->) (Canonical Int16)
+
+instance Preorder (->) (Canonical Int32)
+
+instance Preorder (->) (Canonical Int64)
+
+instance Preorder (->) (Canonical Integer)
+
+instance Preorder (->) (Canonical Word)
+
+instance Preorder (->) (Canonical Word8)
+
+instance Preorder (->) (Canonical Word16)
+
+instance Preorder (->) (Canonical Word32)
+
+instance Preorder (->) (Canonical Word64)
+
+instance Preorder (->) (Canonical Float)
+
+instance Preorder (->) (Canonical Double)
 
 instance (c ~ (->), ElementaryTopos c, Preorder c a, Ob c (Additive a)) =>
-         Preorder c (Additive a) where
-  le = le . bimap sum sum
+         Preorder c (Additive a)
 
 instance (c ~ (->), ElementaryTopos c, Preorder c a, Ob c (Multiplicative a)) =>
-         Preorder c (Multiplicative a) where
-  le = le . bimap product product
+         Preorder c (Multiplicative a)

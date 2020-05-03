@@ -66,7 +66,6 @@ library
                     , Haskerwaul.Duoid.Normal
                     , Haskerwaul.Embedding.Yoneda
                     , Haskerwaul.Endofunctor
-                    , Haskerwaul.Equality
                     , Haskerwaul.Extension.Kan.Left
                     , Haskerwaul.Extension.Kan.Right
                     , Haskerwaul.Field
@@ -154,6 +153,7 @@ library
                     , Haskerwaul.Object.Free
                     , Haskerwaul.Object.Initial
                     , Haskerwaul.Object.Terminal
+                    , Haskerwaul.Order.Canonical
                     , Haskerwaul.Order.Partial
                     , Haskerwaul.Order.Prefix
                     , Haskerwaul.Order.Total
@@ -168,6 +168,7 @@ library
                     , Haskerwaul.Quasigroup.Right
                     , Haskerwaul.Relation.Binary
                     , Haskerwaul.Relation.Dependency
+                    , Haskerwaul.Relation.Equality
                     , Haskerwaul.Relation.Equivalence
                     , Haskerwaul.Relation.Equivalence.Partial
                     , Haskerwaul.Relation.Homogeneous

@@ -20,7 +20,7 @@ import Haskerwaul.Law
 import Haskerwaul.Law.Identity.Left
 import Haskerwaul.Law.Identity.Right
 import Haskerwaul.Object
-import Haskerwaul.Relation.Homogeneous
+import Haskerwaul.Relation.Binary
 import Haskerwaul.Topos.Elementary
 
 data UnitalMagmaLaws c t a =
@@ -33,7 +33,7 @@ unitalMagmaLaws :: forall c t a
                  . ( Ob c (t (Unit c t) a), Ob c (t a (Unit c t))
                    , ElementaryTopos c
                    , MonoidalCategory c t, UnitalMagma c t a)
-                => HomogeneousRelation c a -> UnitalMagmaLaws c t a
+                => BinaryRelation c a a -> UnitalMagmaLaws c t a
 unitalMagmaLaws eq =
   UnitalMagmaLaws
     { leftIdentity = checkLaw (leftIdentityLaw op (unit p)) eq

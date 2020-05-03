@@ -4,7 +4,7 @@ import Haskerwaul.Category.Monoidal.Braided
 import Haskerwaul.Isomorphism
 import Haskerwaul.Law
 import Haskerwaul.Object
-import Haskerwaul.Relation.Homogeneous
+import Haskerwaul.Relation.Binary
 import Haskerwaul.Topos.Elementary
 
 isomorphismLaw :: (Category c, Ob c a, Ob c b) => Isomorphism c a b -> Law c a a
@@ -20,7 +20,7 @@ data IsomorphismLaws c a b =
     }
 
 isomorphismLaws :: (ElementaryTopos c, Ob c a, Ob c b)
-                => Isomorphism c a b -> HomogeneousRelation c a -> HomogeneousRelation c b -> IsomorphismLaws c a b
+                => Isomorphism c a b -> BinaryRelation c a a -> BinaryRelation c b b -> IsomorphismLaws c a b
 isomorphismLaws iso eqA eqB =
   IsomorphismLaws
     { forward = checkLaw (isomorphismLaw iso) eqA

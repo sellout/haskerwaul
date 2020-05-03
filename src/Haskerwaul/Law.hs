@@ -3,7 +3,7 @@ module Haskerwaul.Law where
 
 import Haskerwaul.Bifunctor
 import Haskerwaul.Object
-import Haskerwaul.Relation.Homogeneous
+import Haskerwaul.Relation.Binary
 import Haskerwaul.Topos.Elementary
 
 -- | A law is a pair of morphisms that should be equivalent.
@@ -22,5 +22,5 @@ data Law c a b = Law (a `c` b) (a `c` b)
 --           `ElementaryTopos` in order to have some way to evaluate the result.
 --            This seems overly restrictive.
 checkLaw :: (ElementaryTopos c, Ob c a, Ob c b)
-         => Law c a b -> HomogeneousRelation c b -> a `c` Class c
+         => Law c a b -> BinaryRelation c b b -> a `c` Class c
 checkLaw (Law x y) eq = eq . bimap x y . diagonal
