@@ -158,6 +158,7 @@ module Haskerwaul
   , module Haskerwaul.Object
   , module Haskerwaul.Object.Free
   , module Haskerwaul.Object.Initial
+  , module Haskerwaul.Object.NaturalNumbers
   , module Haskerwaul.Object.Terminal
   -- * orders
   , module Haskerwaul.Order.Canonical
@@ -349,6 +350,7 @@ import Haskerwaul.Monoid.Hopf
 import Haskerwaul.Object
 import Haskerwaul.Object.Free
 import Haskerwaul.Object.Initial
+import Haskerwaul.Object.NaturalNumbers
 import Haskerwaul.Object.Terminal
 import Haskerwaul.Order.Canonical
 import Haskerwaul.Order.Partial

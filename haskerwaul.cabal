@@ -152,6 +152,7 @@ library
                     , Haskerwaul.Object
                     , Haskerwaul.Object.Free
                     , Haskerwaul.Object.Initial
+                    , Haskerwaul.Object.NaturalNumbers
                     , Haskerwaul.Object.Terminal
                     , Haskerwaul.Order.Canonical
                     , Haskerwaul.Order.Partial
