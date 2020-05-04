@@ -12,6 +12,7 @@ import           Data.Word (Word, Word8, Word16, Word32, Word64)
 import           Numeric.Natural (Natural)
 import           Prelude (Double, Float, Integer)
 
+import Haskerwaul.Negation
 import Haskerwaul.Order.Canonical
 import Haskerwaul.Order.Partial
 
@@ -21,7 +22,7 @@ import Haskerwaul.Order.Partial
 --   [downward totality]: @`le` (x, z) && `le` (y, z) ==> `le` (x, y) || `le` (y, x)@
 class PartialOrder c a => PrefixOrder c a
 
-instance PrefixOrder (->) ()
+instance PrefixOrder (->) (Negate ())
 
 instance PrefixOrder (->) (Canonical Bool)
 

@@ -174,12 +174,20 @@ module Haskerwaul
   , module Haskerwaul.Quasigroup.Left
   , module Haskerwaul.Quasigroup.Right
   -- * relations
+  , module Haskerwaul.Negation
+  , module Haskerwaul.Relation.Apartness
+  , module Haskerwaul.Relation.Apartness.Tight
   , module Haskerwaul.Relation.Binary
   , module Haskerwaul.Relation.Dependency
   , module Haskerwaul.Relation.Equality
+  , module Haskerwaul.Relation.Equality.Decidable
+  , module Haskerwaul.Relation.Equality.Stable
   , module Haskerwaul.Relation.Equivalence
   , module Haskerwaul.Relation.Equivalence.Partial
   , module Haskerwaul.Relation.Homogeneous
+  , module Haskerwaul.Relation.Inequality
+  , module Haskerwaul.Relation.Inequality.Denial
+  , module Haskerwaul.Relation.Inequality.Tight
   , module Haskerwaul.Relation.Nullary
   , module Haskerwaul.Relation.Tolerance
   , module Haskerwaul.Relation.Unary
@@ -347,6 +355,7 @@ import Haskerwaul.Monoid.Frobenius.Commutative
 import Haskerwaul.Monoid.Frobenius.Commutative.Special
 import Haskerwaul.Monoid.Frobenius.Special
 import Haskerwaul.Monoid.Hopf
+import Haskerwaul.Negation
 import Haskerwaul.Object
 import Haskerwaul.Object.Free
 import Haskerwaul.Object.Initial
@@ -363,12 +372,19 @@ import Haskerwaul.Pushout
 import Haskerwaul.Quasigroup
 import Haskerwaul.Quasigroup.Left
 import Haskerwaul.Quasigroup.Right
+import Haskerwaul.Relation.Apartness
+import Haskerwaul.Relation.Apartness.Tight
 import Haskerwaul.Relation.Binary
 import Haskerwaul.Relation.Dependency
 import Haskerwaul.Relation.Equality
+import Haskerwaul.Relation.Equality.Decidable
+import Haskerwaul.Relation.Equality.Stable
 import Haskerwaul.Relation.Equivalence
 import Haskerwaul.Relation.Equivalence.Partial
 import Haskerwaul.Relation.Homogeneous
+import Haskerwaul.Relation.Inequality
+import Haskerwaul.Relation.Inequality.Denial
+import Haskerwaul.Relation.Inequality.Tight
 import Haskerwaul.Relation.Nullary
 import Haskerwaul.Relation.Tolerance
 import Haskerwaul.Relation.Unary

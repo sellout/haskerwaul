@@ -34,38 +34,6 @@ class HomogeneousRelation c a => Preorder c a
 le :: Preorder c a => BinaryRelation c a a
 le = rel
 
-instance Preorder (->) ()
-
-instance Preorder (->) Bool
-
-instance Preorder (->) Natural
-
-instance Preorder (->) Int
-
-instance Preorder (->) Int8
-
-instance Preorder (->) Int16
-
-instance Preorder (->) Int32
-
-instance Preorder (->) Int64
-
-instance Preorder (->) Integer
-
-instance Preorder (->) Word
-
-instance Preorder (->) Word8
-
-instance Preorder (->) Word16
-
-instance Preorder (->) Word32
-
-instance Preorder (->) Word64
-
-instance Preorder (->) Float
-
-instance Preorder (->) Double
-
 instance Preorder (->) (Canonical Bool)
 
 instance Preorder (->) (Canonical Natural)

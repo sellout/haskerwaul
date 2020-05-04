@@ -95,7 +95,28 @@ These are the usual labels in comments to indicate that there is more work to be
 
 ### `~ (->)`, `~ (,)`, `~ All`
 
-Patterns like these are used when an instance has to be over-constrained. This way we still get to use the type parameters we want in the instance declaration and also have a way to `grep` for cases that are overconstrained, while arriving at something that works in the mean time.
+Patterns like these are used when an instance has to be over-constrained. This
+way we still get to use the type parameters we want in the instance declaration
+and also have a way to `grep` for cases that are overconstrained, while arriving
+at something that works in the mean time.
+
+### newtypes
+
+Newtypes are commonly used to workaround the "uniqueness" of instances. However,
+aside from the other issues that we won't get into here, the fact that newtypes
+are restricted to **Hask** means that we are often very overconstrained as a
+result (see `~ (->)` above).
+
+### relations
+
+The way relations are currently implemented means that an `EqualityRelation`
+_is_ a `PartialOrder`, and since these are defined with type classes, it means
+the `PartialOrder` that is richer than the discrete one implied by the
+`EqualityRelation` needs to be made distinct via a newtype. And similarly, the
+(unique) `EqualityRelation` also needs a newtype to make it distinct from the
+`InequalityRelation` that it's derived from.
+
+See "newtypes" above.
 
 ### enriched categories
 

@@ -16,9 +16,10 @@ import           Prelude (Double, Float, Integer)
 
 import Haskerwaul.Bifunctor
 import Haskerwaul.Lattice
+import Haskerwaul.Object
 import Haskerwaul.Preorder
 import Haskerwaul.Order.Canonical
-import Haskerwaul.Relation.Binary
+import Haskerwaul.Semiring.Components
 import Haskerwaul.Topos.Elementary
 
 -- | [nLab](https://ncatlab.org/nlab/show/partial+order)
@@ -33,38 +34,6 @@ class Preorder c a => PartialOrder c a
 defaultEquivalence :: forall c a. (c ~ (->), ElementaryTopos c, PartialOrder c a)
                    => BinaryRelation c a a
 defaultEquivalence = meet . bimap (le @c) (le @c . braid) . diagonal
-
-instance PartialOrder (->) ()
-
-instance PartialOrder (->) Bool
-
-instance PartialOrder (->) Natural
-
-instance PartialOrder (->) Int
-
-instance PartialOrder (->) Int8
-
-instance PartialOrder (->) Int16
-
-instance PartialOrder (->) Int32
-
-instance PartialOrder (->) Int64
-
-instance PartialOrder (->) Integer
-
-instance PartialOrder (->) Word
-
-instance PartialOrder (->) Word8
-
-instance PartialOrder (->) Word16
-
-instance PartialOrder (->) Word32
-
-instance PartialOrder (->) Word64
-
-instance PartialOrder (->) Float
-
-instance PartialOrder (->) Double
 
 instance PartialOrder (->) (Canonical Bool)
 
@@ -95,3 +64,9 @@ instance PartialOrder (->) (Canonical Word64)
 instance PartialOrder (->) (Canonical Float)
 
 instance PartialOrder (->) (Canonical Double)
+
+instance (c ~ (->), ElementaryTopos c, PartialOrder c a, Ob c (Additive a)) =>
+         PartialOrder c (Additive a)
+
+instance (c ~ (->), ElementaryTopos c, PartialOrder c a, Ob c (Multiplicative a)) =>
+         PartialOrder c (Multiplicative a)

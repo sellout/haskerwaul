@@ -11,6 +11,7 @@ import           Data.Int (Int, Int8, Int16, Int32, Int64)
 import           Data.Word (Word, Word8, Word16, Word32, Word64)
 import           Prelude (Double, Float)
 
+import Haskerwaul.Negation
 import Haskerwaul.Relation.Tolerance
 
 -- | [Wikipedia](https://en.wikipedia.org/wiki/Dependency_relation)
@@ -21,30 +22,30 @@ import Haskerwaul.Relation.Tolerance
 --   [`Haskerwaul.Law.Symmetry.symmetry`]: @`rel` x y ==> `rel` y x@
 class ToleranceRelation c a => DependencyRelation c a
 
-instance DependencyRelation (->) ()
+instance DependencyRelation (->) (Negate ())
 
-instance DependencyRelation (->) Bool
+instance DependencyRelation (->) (Negate Bool)
 
-instance DependencyRelation (->) Int
+instance DependencyRelation (->) (Negate Int)
 
-instance DependencyRelation (->) Int8
+instance DependencyRelation (->) (Negate Int8)
 
-instance DependencyRelation (->) Int16
+instance DependencyRelation (->) (Negate Int16)
 
-instance DependencyRelation (->) Int32
+instance DependencyRelation (->) (Negate Int32)
 
-instance DependencyRelation (->) Int64
+instance DependencyRelation (->) (Negate Int64)
 
-instance DependencyRelation (->) Word
+instance DependencyRelation (->) (Negate Word)
 
-instance DependencyRelation (->) Word8
+instance DependencyRelation (->) (Negate Word8)
 
-instance DependencyRelation (->) Word16
+instance DependencyRelation (->) (Negate Word16)
 
-instance DependencyRelation (->) Word32
+instance DependencyRelation (->) (Negate Word32)
 
-instance DependencyRelation (->) Word64
+instance DependencyRelation (->) (Negate Word64)
 
-instance DependencyRelation (->) Float
+instance DependencyRelation (->) (Negate Float)
 
-instance DependencyRelation (->) Double
+instance DependencyRelation (->) (Negate Double)

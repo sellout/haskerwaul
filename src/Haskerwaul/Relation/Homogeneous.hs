@@ -1,7 +1,11 @@
 {-# language UndecidableInstances
            , UndecidableSuperClasses #-}
 
-module Haskerwaul.Relation.Homogeneous where
+module Haskerwaul.Relation.Homogeneous
+  ( module Haskerwaul.Relation.Homogeneous
+  -- * extended modules
+  , module Haskerwaul.Relation.Binary
+  ) where
 
 import           Data.Bool (Bool (..))
 import qualified Data.Eq as Base
@@ -31,52 +35,52 @@ class Ob c a => HomogeneousRelation c a where
   rel :: BinaryRelation c a a
 
 instance HomogeneousRelation (->) () where
-  rel ((), ()) = True
+  rel ((), ()) = False
 
 instance HomogeneousRelation (->) Bool where
-  rel = from curry (Base.==)
+  rel = from curry (Base./=)
 
 instance HomogeneousRelation (->) Natural where
-  rel = from curry (Base.==)
+  rel = from curry (Base./=)
 
 instance HomogeneousRelation (->) Int where
-  rel = from curry (Base.==)
+  rel = from curry (Base./=)
 
 instance HomogeneousRelation (->) Int8 where
-  rel = from curry (Base.==)
+  rel = from curry (Base./=)
 
 instance HomogeneousRelation (->) Int16 where
-  rel = from curry (Base.==)
+  rel = from curry (Base./=)
 
 instance HomogeneousRelation (->) Int32 where
-  rel = from curry (Base.==)
+  rel = from curry (Base./=)
 
 instance HomogeneousRelation (->) Int64 where
-  rel = from curry (Base.==)
+  rel = from curry (Base./=)
 
 instance HomogeneousRelation (->) Integer where
-  rel = from curry (Base.==)
+  rel = from curry (Base./=)
 
 instance HomogeneousRelation (->) Word where
-  rel = from curry (Base.==)
+  rel = from curry (Base./=)
 
 instance HomogeneousRelation (->) Word8 where
-  rel = from curry (Base.==)
+  rel = from curry (Base./=)
 
 instance HomogeneousRelation (->) Word16 where
-  rel = from curry (Base.==)
+  rel = from curry (Base./=)
 
 instance HomogeneousRelation (->) Word32 where
-  rel = from curry (Base.==)
+  rel = from curry (Base./=)
 
 instance HomogeneousRelation (->) Word64 where
-  rel = from curry (Base.==)
+  rel = from curry (Base./=)
 
 instance HomogeneousRelation (->) Float where
-  rel = from curry (Base.==)
+  rel = from curry (Base./=)
 
 instance HomogeneousRelation (->) Double where
-  rel = from curry (Base.==)
+  rel = from curry (Base./=)
 
 instance HomogeneousRelation (->) (Canonical Bool) where
   rel = from curry (Base.<=) . bimap decanonicalize decanonicalize

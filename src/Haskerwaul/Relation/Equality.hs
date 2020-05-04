@@ -16,4 +16,7 @@ import Haskerwaul.Relation.Equivalence
 --  __NB__: Instances for this are automatically coalesced.
 class (EquivalenceRelation c a, PartialOrder c a) => EqualityRelation c a
 
+eq :: EqualityRelation c a => BinaryRelation c a a
+eq = equiv
+
 instance (EquivalenceRelation c a, PartialOrder c a) => EqualityRelation c a

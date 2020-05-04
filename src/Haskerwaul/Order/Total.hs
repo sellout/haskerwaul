@@ -16,7 +16,6 @@ import           Prelude (Double, Float, Integer)
 import Haskerwaul.Algebra.Boolean
 import Haskerwaul.Order.Canonical
 import Haskerwaul.Order.Prefix
-import Haskerwaul.Relation.Binary
 import Haskerwaul.Topos.Elementary
 
 -- | [nLab](https://ncatlab.org/nlab/show/total+order)

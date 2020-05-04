@@ -149,6 +149,7 @@ library
                     , Haskerwaul.Monoid.Frobenius.Special
                     , Haskerwaul.Monoid.Hopf
                     , Haskerwaul.Monoid.Laws
+                    , Haskerwaul.Negation
                     , Haskerwaul.Object
                     , Haskerwaul.Object.Free
                     , Haskerwaul.Object.Initial
@@ -167,12 +168,19 @@ library
                     , Haskerwaul.Quasigroup
                     , Haskerwaul.Quasigroup.Left
                     , Haskerwaul.Quasigroup.Right
+                    , Haskerwaul.Relation.Apartness
+                    , Haskerwaul.Relation.Apartness.Tight
                     , Haskerwaul.Relation.Binary
                     , Haskerwaul.Relation.Dependency
                     , Haskerwaul.Relation.Equality
+                    , Haskerwaul.Relation.Equality.Decidable
+                    , Haskerwaul.Relation.Equality.Stable
                     , Haskerwaul.Relation.Equivalence
                     , Haskerwaul.Relation.Equivalence.Partial
                     , Haskerwaul.Relation.Homogeneous
+                    , Haskerwaul.Relation.Inequality
+                    , Haskerwaul.Relation.Inequality.Denial
+                    , Haskerwaul.Relation.Inequality.Tight
                     , Haskerwaul.Relation.Nullary
                     , Haskerwaul.Relation.Tolerance
                     , Haskerwaul.Relation.Unary

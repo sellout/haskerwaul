@@ -18,7 +18,6 @@ import Haskerwaul.Lattice
 import Haskerwaul.Object
 import Haskerwaul.Preorder
 import Haskerwaul.Semiring.Idempotent
-import Haskerwaul.Relation.Binary
 import Haskerwaul.Relation.Equivalence.Partial
 import Haskerwaul.Relation.Tolerance
 import Haskerwaul.Topos.Elementary
