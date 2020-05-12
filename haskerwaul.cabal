@@ -6,7 +6,8 @@ cabal-version:       2.0
 name:                haskerwaul
 version:             0.1.0.0
 synopsis:            Category-parametric programming
--- description:
+description:         This library gives an extremely abstract presentation of
+                     various CT and abstract algebra concepts.
 -- bug-reports:
 license:             GPL-3
 license-file:        LICENSE
@@ -15,7 +16,10 @@ maintainer:          greg@technomadic.org
 -- copyright:
 category:            Control
 build-type:          Simple
-extra-source-files:  CHANGELOG.md
+extra-source-files:  README.md
+source-repository head
+  type:     git
+  location: git@github.com:sellout/haskerwaul.git
 
 library
   exposed-modules:    Haskerwaul
@@ -218,7 +222,7 @@ library
                     , Haskerwaul.Lattice.Components
                     , Haskerwaul.Semiring.Components
   -- other-extensions:
-  build-depends:       base ^>=4.12.0.0
+  build-depends:       base >= 4.12 && < 5
                      , constraints
                      , containers
   hs-source-dirs:      src
@@ -241,11 +245,4 @@ library
                      , TupleSections
                      , TypeFamilies
                      , TypeOperators
-  ghc-options:         -Wall -O2
-
-test-suite haskerwaul-test
-  default-language:    Haskell2010
-  type:                exitcode-stdio-1.0
-  hs-source-dirs:      test
-  main-is:             MyLibTest.hs
-  build-depends:       base ^>=4.12.0.0
+  ghc-options:         -Wall

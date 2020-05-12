@@ -1,4 +1,5 @@
-{-# language UndecidableSuperClasses #-}
+{-# language UndecidableInstances
+           , UndecidableSuperClasses #-}
 
 module Haskerwaul.Relation.Apartness.Tight
   ( module Haskerwaul.Relation.Apartness.Tight
