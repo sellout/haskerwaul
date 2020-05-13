@@ -1,4 +1,5 @@
-{-# language RecordWildCards #-}
+{-# language RecordWildCards
+           , TypeApplications #-}
 
 -- | This is the entry point for testing all of the classes provided by
 -- Haskerwaul. Users probably shouldn't be using this directly, but this
@@ -14,6 +15,8 @@
 --   Then you should be able to test that by doing something like 
 module Haskerwaul.Semigroup.Laws where
 
+import           Data.Constraint ((\\))
+
 import Haskerwaul.Law
 import Haskerwaul.Law.Associativity
 import Haskerwaul.Object
@@ -25,11 +28,13 @@ data SemigroupLaws c t a =
     { associative :: (t (t a a) a) `c` Class c
     }
 
-semigroupLaws :: ( Ob c (t (t a a) a), Ob c (t a a)
-                 , ElementaryTopos c
-                 , SemigroupalCategory c t, Semigroup c t a)
-              => BinaryRelation c a a -> SemigroupLaws c t a
+semigroupLaws
+  :: forall c t a
+   . (ElementaryTopos c, Ob c a, SemigroupalCategory c t, Semigroup c t a)
+  => BinaryRelation c a a -> SemigroupLaws c t a
 semigroupLaws eq =
   SemigroupLaws
     { associative = checkLaw (associativity op) eq
     }
+  \\ inT @(Ob c) @t @(t a a) @a
+  \\ inT @(Ob c) @t @a @a

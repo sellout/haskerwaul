@@ -9,7 +9,6 @@ import           Data.Functor.Const (Const (..))
 import           Data.Proxy (Proxy(..))
 
 import Haskerwaul.Category
-import Haskerwaul.Category.Opposite
 import Haskerwaul.Constraint
 import Haskerwaul.Object
 import Haskerwaul.Transformation.Natural
@@ -37,10 +36,6 @@ instance Base.Bifunctor f => Bifunctor (->) (->) (->) f where
 
 instance Bifunctor (->) c (->) Const where
   bimap f _ = Const . f . getConst
-
-instance (Semigroupoid c1, Bifunctor c1 c2 d t) =>
-         Bifunctor (Opposite c1) (Opposite c2) (Opposite d) t where
-  bimap f g = Opposite (bimap (opposite f) (opposite g))
 
 instance (Ob c1 ~ All, Ob c2 ~ All, d ~ (->), Semigroupoid d, Bifunctor c1 c2 d t) =>
          Bifunctor
@@ -75,16 +70,6 @@ instance Bifunctor
          (NaturalTransformation (:-))
          CFProd where
   bimap f g = NT (trans (trans ins (runNT f *** runNT g)) cls)
-
--- * `Haskerwaul.Profunctor.Profunctor` instances
-
--- | The arrow of every `Semigroupoid` is a `Haskerwaul.Profunctor.Profunctor`.
-instance Semigroupoid c => Bifunctor (Opposite c) c (->) c where
-  bimap f g fn = g . fn . opposite f
-
--- instance Bifunctor (Opposite (:-)) (:-) (:-) (:=>) where
---   -- bimap :: b :- a -> c :- d -> (a :=> c) :- (b :=> d)
---   bimap f g = trans g (trans ins (opposite f))
 
 instance Bifunctor c1 c2 (->) (BConst a) where
   bimap _ _ (BConst a) = BConst a

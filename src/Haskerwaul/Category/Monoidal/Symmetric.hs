@@ -12,11 +12,9 @@ import           Data.Either (Either(..))
 
 import Haskerwaul.Category.Monoidal'
 import Haskerwaul.Category.Monoidal.Braided
-import Haskerwaul.Category.Opposite
 import Haskerwaul.Constraint
 import Haskerwaul.Isomorphism
 import Haskerwaul.Object
-import Haskerwaul.Subcategory.Full
 import Haskerwaul.Transformation.Natural
 
 -- | [nLab](https://ncatlab.org/nlab/show/symmetric+monoidal+category)
@@ -36,9 +34,3 @@ instance (c ~ (->), SymmetricMonoidalCategory c t) =>
 instance SymmetricMonoidalCategory (:-) Combine
 
 instance SymmetricMonoidalCategory (NaturalTransformation (:-)) CFProd
-
-instance SymmetricMonoidalCategory c t =>
-         SymmetricMonoidalCategory (Opposite c) t
-
-instance (SymmetricMonoidalCategory c t, TOb ob t, ob (Unit c t)) =>
-         SymmetricMonoidalCategory (FullSubcategory ob c) t

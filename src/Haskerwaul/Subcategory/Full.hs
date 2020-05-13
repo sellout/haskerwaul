@@ -15,13 +15,13 @@ import qualified Data.Tuple as Base
 import Haskerwaul.Algebra.Heyting
 import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Opposite
-import Haskerwaul.Category.Monoidal
+import Haskerwaul.Category.Monoidal.Cartesian
+import Haskerwaul.Category.Monoidal.Closed
 import Haskerwaul.Constraint
 import Haskerwaul.Endofunctor
 import Haskerwaul.Isomorphism
 import Haskerwaul.Lattice.Complemented.Uniquely
 import Haskerwaul.Object
-import Haskerwaul.Object.Terminal
 import Haskerwaul.Quasigroup.Left
 import Haskerwaul.Quasigroup.Right
 import Haskerwaul.Transformation.Natural
@@ -130,8 +130,7 @@ type family Constrained (ob :: ok -> Constraint) (c :: ok -> ok -> Type)
      :: ok -> ok -> Type where
   Constrained All c                       = c
   Constrained ob  (FullSubcategory ob' c) = Constrained (CFProd ob ob') c
-  Constrained ob  (Opposite (FullSubcategory ob' c)) =
-    Opposite (Constrained (CFProd ob ob') c)
+  Constrained ob  (Opposite c)            = Opposite (Constrained ob c)
   Constrained ob  c                       = FullSubcategory ob c
 
 isomorphismFS :: Isomorphism c a b -> Isomorphism (FullSubcategory ob c) a b
@@ -175,3 +174,36 @@ instance (MonoidalCategory (FullSubcategory ob c) t, ob a, ob (Meet a), ob (Join
 instance (MonoidalCategory (FullSubcategory ob c) t, ob a, ob (Meet a), ob (Join a), HeytingAlgebra c t a) =>
          HeytingAlgebra (FullSubcategory ob c) t a where
   implies = FS implies
+
+instance (BraidedMonoidalCategory c t, TOb ob t, ob (Unit c t)) =>
+         BraidedMonoidalCategory (FullSubcategory ob c) t where
+  braid = FS braid
+
+instance (SymmetricMonoidalCategory c t, TOb ob t, ob (Unit c t)) =>
+         SymmetricMonoidalCategory (FullSubcategory ob c) t
+
+-- | If @c@ is Cartesian monoidal and the requisite objects are in the
+--   subcategory, then the subcategory is also Cartesian monoidal.
+instance (CartesianMonoidalCategory c, TOb ob (Prod c), ob (TerminalObject c)) =>
+         CartesianMonoidalCategory (FullSubcategory ob c) where
+  type Prod (FullSubcategory ob c) = Prod c
+  exl = FS exl
+  exr = FS exr
+  diagonal = FS diagonal
+
+-- instance CartesianMonoidalCategory (FullSubcategory (Monoid (->) (,)) (Opposite (->))) where
+--   type Prod (FullSubcategory (Monoid (->) (,)) (Opposite (->))) = (,)
+--   exl = FS (Opposite (, id))
+--   exr = FS (Opposite (id, ))
+
+-- | If @c@ is closed and the requisite objects are in the subcategory then the
+--   subcategory is also closed monoidal.
+instance (ClosedCategory c, TOb ob (Exp c)) =>
+         ClosedCategory (FullSubcategory ob c) where
+  type Exp (FullSubcategory ob c) = Exp c
+
+-- | If @c@ is closed monoidal and the requisite objects are in the subcategory
+--   then the subcategory is also closed monoidal.
+instance (ClosedMonoidalCategory c t, TOb ob t, ob (Unit c t), TOb ob (Exp c)) =>
+         ClosedMonoidalCategory (FullSubcategory ob c) t where
+  apply = FS apply

@@ -11,12 +11,9 @@ import           Data.Constraint ((:-)(..), Dict(..))
 import           Data.Either (Either(..))
 import qualified Data.Tuple as Base
 
-import Haskerwaul.Category.Monoidal'
 import Haskerwaul.Category.Monoidal
-import Haskerwaul.Category.Opposite
 import Haskerwaul.Constraint
 import Haskerwaul.Object
-import Haskerwaul.Subcategory.Full
 import Haskerwaul.Transformation.Natural
 
 -- | [nLab](https://ncatlab.org/nlab/show/braided+monoidal+category)
@@ -40,11 +37,3 @@ instance BraidedMonoidalCategory (:-) Combine where
 
 instance BraidedMonoidalCategory (NaturalTransformation (:-)) CFProd where
   braid = NT (Sub Dict)
-
-instance BraidedMonoidalCategory c t =>
-         BraidedMonoidalCategory (Opposite c) t where
-  braid = Opposite braid
-
-instance (BraidedMonoidalCategory c t, TOb ob t, ob (Unit c t)) =>
-         BraidedMonoidalCategory (FullSubcategory ob c) t where
-  braid = FS braid

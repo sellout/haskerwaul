@@ -17,6 +17,8 @@ import Haskerwaul.Rig
 import Haskerwaul.Ring.Nonunital
 
 -- | [nLab](https://ncatlab.org/nlab/show/ring)
+--
+--  __NB__: Instances for this are automatically coalesced.
 class (AbelianGroup c t (Additive a), Rig c t a, NonunitalRing c t a) =>
       Ring c t a
 

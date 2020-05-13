@@ -2,6 +2,7 @@
 
 module Haskerwaul.Law.Modularity where
 
+import           Data.Constraint ((\\))
 import           Data.Proxy (Proxy(..))
 
 import Haskerwaul.Algebra.Heyting
@@ -16,7 +17,8 @@ import Haskerwaul.Topos.Elementary
 --   (using modular law)
 modularity
   :: forall c a b
-   . ( Ob c (Prod c (Prod c a b) a), Ob c (Prod c a b), Ob c (Prod c b a)
+  -- see `ElementaryTopos` for why the `HeytingAlgebra` constraint isn't implied
+   . ( HeytingAlgebra c (Prod c) (Class c)
      , ElementaryTopos c, Ob c a, Ob c b, Preorder c a, EquivalenceRelation c b)
   => Prod c a b `c` b
   -> Prod c b a `c` b
@@ -33,5 +35,8 @@ modularity join' meet' =
         (join' . second @c p meet' . from assoc)
       . diagonal)
    . diagonal)
+  \\ inT @(Ob c) @(Prod c) @(Prod c a b) @a
+  \\ inT @(Ob c) @(Prod c) @a @b
+  \\ inT @(Ob c) @(Prod c) @b @a
   where
     p = Proxy :: Proxy c

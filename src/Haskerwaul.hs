@@ -46,7 +46,9 @@ module Haskerwaul
   , module Haskerwaul.Cocone
   , module Haskerwaul.Cone
   , module Haskerwaul.Day
+  -- * dioids
   , module Haskerwaul.Dioid
+  , module Haskerwaul.Dioid.Commutative
   -- * duoids
   , module Haskerwaul.Duoid
   , module Haskerwaul.Duoid.Normal
@@ -197,6 +199,7 @@ module Haskerwaul
   , module Haskerwaul.Rig.Monus
   -- * rings
   , module Haskerwaul.Ring
+  , module Haskerwaul.Ring.Boolean
   , module Haskerwaul.Ring.Commutative
   , module Haskerwaul.Ring.Nonunital
   -- * semigroups
@@ -272,6 +275,7 @@ import Haskerwaul.Comonoid
 import Haskerwaul.Cospan
 import Haskerwaul.Day
 import Haskerwaul.Dioid
+import Haskerwaul.Dioid.Commutative
 import Haskerwaul.Duoid
 import Haskerwaul.Duoid.Normal
 import Haskerwaul.Embedding.Yoneda
@@ -392,6 +396,7 @@ import Haskerwaul.Rig
 import Haskerwaul.Rig.Idempotent
 import Haskerwaul.Rig.Monus
 import Haskerwaul.Ring
+import Haskerwaul.Ring.Boolean
 import Haskerwaul.Ring.Commutative
 import Haskerwaul.Ring.Nonunital
 import Haskerwaul.Semigroup

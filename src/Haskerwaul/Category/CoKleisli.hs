@@ -8,4 +8,4 @@ import Haskerwaul.Category.Kleisli
 import Haskerwaul.Category.Opposite
 
 -- | [nLab](https://ncatlab.org/nlab/show/Kleisli+category+of+a+comonad)
-type CoKleisli c = Kleisli (Op c)
+type CoKleisli c w = Op (Kleisli (Op c) w)

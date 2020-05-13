@@ -10,15 +10,12 @@ module Haskerwaul.Category.Monoidal.Cartesian
 
 import           Data.Constraint
   ((:-)(..), Dict(..), cls, trans, weaken1, weaken2)
-import           Data.Either (Either(..))
 import qualified Data.Tuple as Base
 
 import Haskerwaul.Category.Monoidal.Symmetric
-import Haskerwaul.Category.Opposite
 import Haskerwaul.Constraint
 import Haskerwaul.Object
 import Haskerwaul.Object.Terminal
-import Haskerwaul.Subcategory.Full
 import Haskerwaul.Transformation.Natural
 
 -- | [nLab](https://ncatlab.org/nlab/show/cartesian+monoidal+category)
@@ -41,19 +38,12 @@ instance CartesianMonoidalCategory (->) where
   exr = Base.snd
   diagonal x = (x, x)
 
-instance (c ~ (->), CartesianMonoidalCategory c) =>
-         CartesianMonoidalCategory (NaturalTransformation c) where
-  type Prod (NaturalTransformation c) = FTensor (Prod c)
+instance (d ~ (->), CartesianMonoidalCategory d) =>
+         CartesianMonoidalCategory (NaturalTransformation d) where
+  type Prod (NaturalTransformation d) = FTensor (Prod d)
   exl = NT (exl . lowerFTensor)
   exr = NT (exr . lowerFTensor)
   diagonal = NT (FTensor . diagonal)
-
-instance (CartesianMonoidalCategory c, TOb ob (Prod c), ob (TerminalObject c)) =>
-         CartesianMonoidalCategory (FullSubcategory ob c) where
-  type Prod (FullSubcategory ob c) = Prod c
-  exl = FS exl
-  exr = FS exr
-  diagonal = FS diagonal
 
 instance CartesianMonoidalCategory (:-) where
   type Prod (:-) = Combine
@@ -66,19 +56,3 @@ instance CartesianMonoidalCategory (NaturalTransformation (:-)) where
   exl = NT (trans weaken1 cls)
   exr = NT (trans weaken2 cls)
   diagonal = NT (Sub Dict)
-
--- * `CocartesianCategory` instances (in this module to avoid orphans)
-
-instance CartesianMonoidalCategory (Opposite (->)) where
-  type Prod (Opposite (->)) = Either
-  exl = Opposite Left
-  exr = Opposite Right
-  diagonal =
-    Opposite (\case
-                 Left x -> x
-                 Right x -> x)
-
--- instance CartesianMonoidalCategory (FullSubcategory (Monoid (->) (,)) (Opposite (->))) where
---   type Prod (FullSubcategory (Monoid (->) (,)) (Opposite (->))) = (,)
---   exl = FS (Opposite (, id))
---   exr = FS (Opposite (id, ))

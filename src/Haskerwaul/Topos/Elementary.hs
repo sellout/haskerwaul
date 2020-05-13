@@ -8,6 +8,7 @@ module Haskerwaul.Topos.Elementary
   ) where
 
 import           Data.Bool (Bool(..))
+import           Data.Kind (Type)
 
 import Haskerwaul.Algebra.Heyting
 import Haskerwaul.Category.Closed.Cartesian
@@ -15,11 +16,15 @@ import Haskerwaul.Object
 import Haskerwaul.Subcategory.Full
 
 -- | [nLab](https://ncatlab.org/nlab/show/topos)
-class (CartesianClosedCategory c, Ob c (Class c), HeytingAlgebra c (Prod c) (Class c)) =>
-      ElementaryTopos c where
+--
+--  __TODO__: There should be a @`HeytingAlgebra` c (`Prod` c) (`Class` c)@
+--            constraint here, but that currently forces our object to kind
+--           `Type`, so we omit it to allow for more flexible instances.
+class (CartesianClosedCategory c, Ob c (Class c)) =>
+      ElementaryTopos (c :: ok -> ok -> Type) where
   -- | The classifying object in the category.
   --   [nLab](https://ncatlab.org/nlab/show/classifying+space)
-  type Class c
+  type Class c :: ok
   -- | The subobject classifier.
   --   [nLab](https://ncatlab.org/nlab/show/subobject+classifier)
   --

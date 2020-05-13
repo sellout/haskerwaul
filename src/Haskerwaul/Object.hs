@@ -61,3 +61,6 @@ instance (BOb cOb dOb eOb b, BOb cOb' dOb' eOb' b) =>
 
 -- | An `Ob` for a tensor.
 type TOb cOb = BOb cOb cOb cOb
+
+inT :: forall cOb b x y. (BOb cOb cOb cOb b) => (cOb x, cOb y) :- cOb (b x y)
+inT = inB

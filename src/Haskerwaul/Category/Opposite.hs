@@ -1,24 +1,34 @@
+{-# language UndecidableInstances #-}
+
 module Haskerwaul.Category.Opposite where
 
 import           Control.Arrow ((&&&))
 import           Data.Constraint ((:-)(..), Bottom(..), bottom)
 import           Data.Constraint.Deferrable ((:~:)(..))
+import           Data.Either (Either(..))
+import           Data.Functor.Compose (Compose(..))
+import           Data.Functor.Identity (Identity(..))
 import           Data.Kind (Type)
 import           Data.Proxy (Proxy(..))
 import qualified Data.Tuple as Base
 import qualified Data.Void as Base
 
-import Haskerwaul.Category
+import Haskerwaul.Bifunctor
+import Haskerwaul.Category.Monoidal.Cartesian
 import Haskerwaul.Constraint
+import Haskerwaul.Functor
 import Haskerwaul.Isomorphism
+import Haskerwaul.Monad
 import Haskerwaul.Object
-import Haskerwaul.Object.Terminal
 import Haskerwaul.Transformation.Natural
 
 -- | [nLab](https://ncatlab.org/nlab/show/opposite+category)
 newtype Opposite c a b = Opposite { opposite :: b `c` a }
 
 type instance Ob (Opposite c) = Ob c
+
+-- instance (FOb (Ob c) (Ob c) f, opOb ~ Ob (Opposite c)) => FOb opOb opO f where
+--   inF = Sub Dict
 
 instance Magma (NaturalTransformation2 (->)) CProd c =>
          Magma (NaturalTransformation2 (->)) CProd (Opposite c) where
@@ -69,7 +79,6 @@ instance HasTerminalObject (Isomorphism c) =>
 --          get a unique opposite category for it.
 type family Op (c :: ok -> ok -> Type) :: ok -> ok -> Type where
   Op (Opposite c)                      = c
-  -- Op (FullSubcategory ob (Opposite c)) = Constrained ob c
   Op (Isomorphism (Opposite c))        = Isomorphism c
   -- CompactClosedCategory c => Op c      = c
   Op c                                 = Opposite c
@@ -86,6 +95,9 @@ opIsomorphism =
   (NT2 (Base.uncurry Iso . (Opposite . to &&& Opposite . from) . opposite))
   (NT2 (Opposite . Base.uncurry Iso . (opposite . to &&& opposite . from)))
 
+opOpIso :: Isomorphism (NaturalTransformation2 (->)) (Opposite (Opposite c)) c
+opOpIso = Iso (NT2 (opposite . opposite)) (NT2 (Opposite . Opposite))
+
 -- | Natural transformation that converts an `Isomorphism` to an `Isomorphism`
 --   in the opposite category.
 isomorphismOp
@@ -97,3 +109,50 @@ isomorphismOp =
   Iso
   (NT2 (Base.uncurry Iso . (Opposite . from &&& Opposite . to)))
   (NT2 (Base.uncurry Iso . (opposite . from &&& opposite . to)))
+
+-- | Functors are self-dual.
+instance {-# overlappable #-} Functor c d f =>
+                              Functor (Opposite c) (Opposite d) f where
+  map (Opposite f) = Opposite (map f)
+
+instance (Semigroupoid c1, Bifunctor c1 c2 d t) =>
+         Bifunctor (Opposite c1) (Opposite c2) (Opposite d) t where
+  bimap f g = Opposite (bimap (opposite f) (opposite g))
+
+-- | The arrow of every `Semigroupoid` is a `Haskerwaul.Profunctor.Profunctor`.
+instance Semigroupoid c => Bifunctor (Opposite c) c (->) c where
+  bimap f g fn = g . fn . opposite f
+
+-- instance Bifunctor (Opposite (:-)) (:-) (:-) (:=>) where
+--   -- bimap :: b :- a -> c :- d -> (a :=> c) :- (b :=> d)
+--   bimap f g = trans g (trans ins (opposite f))
+
+instance {-# OVERLAPPABLE #-} Monad' (Opposite (->)) m => Monad (Opposite (->)) m where
+  pure = runNT (unit (Proxy :: Proxy Compose)) . Opposite runIdentity
+  flatten = runNT op . Opposite getCompose
+
+-- | Every semigroupal structure is semigroupal in the opposite category.
+instance SemigroupalCategory c t => SemigroupalCategory (Opposite c) t where
+  assoc = runNT2 (to isomorphismOp) assoc
+
+-- | Every monoidal structure is monoidal in the opposite category.
+instance MonoidalCategory c t => MonoidalCategory (Opposite c) t where
+  leftIdentity = runNT2 (to isomorphismOp) leftIdentity
+  rightIdentity = runNT2 (to isomorphismOp) rightIdentity
+
+-- `CocartesianCategory` instances (in this module to avoid orphans)
+instance CartesianMonoidalCategory (Opposite (->)) where
+  type Prod (Opposite (->)) = Either
+  exl = Opposite Left
+  exr = Opposite Right
+  diagonal =
+    Opposite (\case
+                 Left x -> x
+                 Right x -> x)
+
+instance BraidedMonoidalCategory c t =>
+         BraidedMonoidalCategory (Opposite c) t where
+  braid = Opposite braid
+
+instance SymmetricMonoidalCategory c t =>
+         SymmetricMonoidalCategory (Opposite c) t

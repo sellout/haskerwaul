@@ -1,4 +1,5 @@
-{-# language UndecidableSuperClasses #-}
+{-# language TypeApplications
+           , UndecidableSuperClasses #-}
 
 module Haskerwaul.Category.Duoidal.Normal
   ( module Haskerwaul.Category.Duoidal.Normal
@@ -6,6 +7,7 @@ module Haskerwaul.Category.Duoidal.Normal
   , module Haskerwaul.Category.Duoidal
   ) where
 
+import           Data.Constraint ((\\))
 import           Data.Functor.Compose (Compose)
 import           Data.Functor.Identity (Identity(..))
 import           Data.Proxy (Proxy(..))
@@ -22,13 +24,14 @@ class DuoidalCategory c di st => NormalDuoidalCategory c di st where
   -- | This must form a lawful isomorphism with `foreUnit`.
   backUnit :: Proxy di -> Proxy st -> Unit c st `c` Unit c di
 
-unitIso :: ( Ob c (di (Unit c st) (Unit c di)),
-             Ob c (di (Unit c di) (Unit c st)),
-             Ob c (st (Unit c st) (Unit c di)),
-             Ob c (st (Unit c di) (Unit c st)),
-             NormalDuoidalCategory c di st)
+unitIso :: forall c di st. (NormalDuoidalCategory c di st)
         => Proxy di -> Proxy st -> Isomorphism c (Unit c di) (Unit c st)
-unitIso di st = Iso (foreUnit di st) (backUnit di st)
+unitIso di st =
+  Iso (foreUnit di st) (backUnit di st)
+  \\ inT @(Ob c) @di @(Unit c st) @(Unit c di)
+  \\ inT @(Ob c) @di @(Unit c di) @(Unit c st)
+  \\ inT @(Ob c) @st @(Unit c st) @(Unit c di)
+  \\ inT @(Ob c) @st @(Unit c di) @(Unit c st)
 
 -- | `Endofunctor` categories are normal duoidal with respect to `Day` and
 --   `Compose`.

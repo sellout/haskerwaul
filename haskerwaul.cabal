@@ -63,9 +63,11 @@ library
                     , Haskerwaul.Cone
                     , Haskerwaul.Comonad
                     , Haskerwaul.Comonoid
+                    , Haskerwaul.Constraint
                     , Haskerwaul.Cospan
                     , Haskerwaul.Day
                     , Haskerwaul.Dioid
+                    , Haskerwaul.Dioid.Commutative
                     , Haskerwaul.Duoid
                     , Haskerwaul.Duoid.Normal
                     , Haskerwaul.Embedding.Yoneda
@@ -193,6 +195,7 @@ library
                     , Haskerwaul.Rig.Monus
                     , Haskerwaul.Rig.Near
                     , Haskerwaul.Ring
+                    , Haskerwaul.Ring.Boolean
                     , Haskerwaul.Ring.Commutative
                     , Haskerwaul.Ring.Nonunital
                     , Haskerwaul.Semigroup
@@ -217,8 +220,7 @@ library
                     , Haskerwaul.Topos.Elementary
                     , Haskerwaul.Topos.Grothendieck
                     , Haskerwaul.Transformation.Natural
-  other-modules:      Haskerwaul.Constraint
-                    , Haskerwaul.Duoid.Components
+  other-modules:      Haskerwaul.Duoid.Components
                     , Haskerwaul.Lattice.Components
                     , Haskerwaul.Semiring.Components
   -- other-extensions:

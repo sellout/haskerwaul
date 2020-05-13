@@ -34,8 +34,8 @@ class (CartesianMonoidalCategory c, ClosedMonoidalCategory c (Prod c)) =>
   --               Isomorphism c (Exp c (Prod c x y) z) (Exp c x (Exp c y z))
   curry :: (Ob c x, Ob c y, Ob c z)
         => Isomorphism (->) (Prod c x y `c` z) (x `c` Exp c y z)
-  -- | this is basically `to curry $ id`, but you need `tuple` in order to
-  --   define it that way, so this breaks the cycle.
+  -- | this is basically @`to` `curry` `$` `id`@, but you need `tuple` in order
+  --   to define it that way, so this breaks the cycle.
   tuple :: (Ob c x, Ob c y) => x `c` Exp c y (Prod c x y)
 
 instance CartesianClosedCategory (->) where

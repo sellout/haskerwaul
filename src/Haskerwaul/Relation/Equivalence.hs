@@ -10,6 +10,7 @@ module Haskerwaul.Relation.Equivalence
   , module Haskerwaul.Relation.Tolerance
   ) where
 
+import           Data.Constraint ((\\))
 import           Data.Proxy (Proxy(..))
 
 import Haskerwaul.Bifunctor
@@ -44,9 +45,11 @@ class (Preorder c a, PartialEquivalenceRelation c a, ToleranceRelation c a) =>
 --             @`ElementaryTopos` c@?
 canonicalOrderFromSemilattice
   :: forall c a
-   . (ElementaryTopos c, Ob c a, Ob c (Prod c a a), EquivalenceRelation c a, Semilattice c (Prod c) a)
+   . (ElementaryTopos c, Ob c a, EquivalenceRelation c a, Semilattice c (Prod c) a)
   => BinaryRelation c a a
-canonicalOrderFromSemilattice = equiv . first @c p op . to assoc . second p (diagonal @c)
+canonicalOrderFromSemilattice =
+  equiv . first @c p op . to assoc . second p (diagonal @c)
+  \\ inT @(Ob c) @(Prod c) @a @a
   where
     p = Proxy :: Proxy c
 

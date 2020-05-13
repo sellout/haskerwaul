@@ -18,7 +18,6 @@ import qualified Data.Tuple as Base
 import qualified Data.Void as Base
 
 import Haskerwaul.Category.Monoidal'
-import Haskerwaul.Category.Opposite
 import Haskerwaul.Category.Semigroupal
 import Haskerwaul.Constraint
 import Haskerwaul.Bifunctor
@@ -31,11 +30,6 @@ class (SemigroupalCategory c t, MonoidalCategory' c t) =>
       MonoidalCategory c t where
   leftIdentity :: Ob c a => Isomorphism c (t (Unit c t) a) a
   rightIdentity :: Ob c a => Isomorphism c (t a (Unit c t)) a
-
--- | Every monoidal structure is monoidal in the opposite category.
-instance MonoidalCategory c t => MonoidalCategory (Opposite c) t where
-  leftIdentity = runNT2 (to isomorphismOp) leftIdentity
-  rightIdentity = runNT2 (to isomorphismOp) rightIdentity
 
 instance MonoidalCategory (->) (,) where
   leftIdentity = Iso Base.snd ((), )

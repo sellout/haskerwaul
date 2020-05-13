@@ -8,6 +8,7 @@ module Haskerwaul.Category.Duoidal
   , module Haskerwaul.Category.Monoidal
   ) where
 
+import           Data.Constraint ((\\))
 import           Data.Functor.Compose (Compose(..))
 import           Data.Functor.Identity (Identity(..))
 import           Data.Proxy (Proxy(..))
@@ -29,12 +30,7 @@ class (MonoidalCategory c di, MonoidalCategory c st) =>
   duplicateUnit :: Proxy di -> Unit c di `c` st (Unit c di) (Unit c di)
   combineUnit :: Proxy st -> di (Unit c st) (Unit c st) `c` Unit c st
 
-foreUnit :: forall c di st
-          . ( Ob c (di (Unit c st) (Unit c di)),
-              Ob c (di (Unit c di) (Unit c st)),
-              Ob c (st (Unit c st) (Unit c di)),
-              Ob c (st (Unit c di) (Unit c st)),
-              DuoidalCategory c di st)
+foreUnit :: forall c di st. (DuoidalCategory c di st)
          => Proxy di -> Proxy st -> Unit c di `c` Unit c st
 foreUnit Proxy Proxy =
   to (leftIdentity @c @st)
@@ -42,6 +38,10 @@ foreUnit Proxy Proxy =
   . switch
   . bimap (from (leftIdentity @c @st)) (from (rightIdentity @c @st))
   . from (rightIdentity @c @di)
+  \\ inT @(Ob c) @di @(Unit c st) @(Unit c di)
+  \\ inT @(Ob c) @di @(Unit c di) @(Unit c st)
+  \\ inT @(Ob c) @st @(Unit c st) @(Unit c di)
+  \\ inT @(Ob c) @st @(Unit c di) @(Unit c st)
 
 -- | `Endofunctor` categories are normal duoidal with respect to `Day` and
 --   `Compose`.

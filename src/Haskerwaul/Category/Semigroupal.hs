@@ -12,7 +12,6 @@ import           Data.Either (Either(..))
 import           Data.Proxy (Proxy(..))
 
 import Haskerwaul.Category
-import Haskerwaul.Category.Opposite
 import Haskerwaul.Constraint
 import Haskerwaul.Bifunctor
 import Haskerwaul.Isomorphism
@@ -22,9 +21,6 @@ import Haskerwaul.Transformation.Natural
 class (Category c, TOb (Ob c) t, Bifunctor c c c t) =>
       SemigroupalCategory c t where
   assoc :: (Ob c x, Ob c y, Ob c z) => Isomorphism c (t x (t y z)) (t (t x y) z)
-
-instance SemigroupalCategory c t => SemigroupalCategory (Opposite c) t where
-  assoc = runNT2 (to isomorphismOp) assoc
 
 instance SemigroupalCategory (->) (,) where
   assoc = Iso (\(a, (b, c)) -> ((a, b), c)) (\((a, b), c) -> (a, (b, c)))

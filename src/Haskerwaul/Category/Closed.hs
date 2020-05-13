@@ -11,11 +11,12 @@ import           Data.Constraint ((:-), (:=>))
 import           Data.Kind (Type)
 
 import Haskerwaul.Category
+import Haskerwaul.Category.Kleisli
 import Haskerwaul.Category.Opposite
 import Haskerwaul.Constraint
 import Haskerwaul.Isomorphism
+import Haskerwaul.Monad
 import Haskerwaul.Object
-import Haskerwaul.Subcategory.Full
 import Haskerwaul.Transformation.Natural
 
 -- | [nLab](https://ncatlab.org/nlab/show/closed+category)
@@ -35,9 +36,9 @@ instance ClosedCategory (->) where
 data ExpTransformation (c :: Type -> Type -> Type) f g a =
   ET { runET :: f a `c` g a }
 
-instance ClosedCategory c =>
-         ClosedCategory (NaturalTransformation (c :: Type -> Type -> Type)) where
-  type Exp (NaturalTransformation c) = ExpTransformation (Exp c)
+instance ClosedCategory d =>
+         ClosedCategory (NaturalTransformation (d :: Type -> Type -> Type)) where
+  type Exp (NaturalTransformation d) = ExpTransformation (Exp d)
 
 instance ClosedCategory (:-) where
   type Exp (:-) = (:=>)
@@ -49,10 +50,18 @@ instance (ClosedCategory c, TOb (Ob c) (Opposite (Exp c))) =>
          ClosedCategory (Opposite c) where
   type Exp (Opposite c) = Opposite (Exp c)
   
-instance (ClosedCategory c, TOb ob (Exp c)) =>
-         ClosedCategory (FullSubcategory ob c) where
-  type Exp (FullSubcategory ob c) = Exp c
-
 instance (ClosedCategory c, TOb (Ob c) (Isomorphism c)) =>
          ClosedCategory (Isomorphism c) where
   type Exp (Isomorphism c) = Isomorphism c
+
+-- This instance can't be provided generically, I don't think. It does exist for
+-- specific underlying categories, though (see the instance below).
+-- instance (ClosedCategory c, Monad c m) => ClosedCategory (Kleisli c m) where
+--   type Exp (Kleisli c m) = Kleisli (Exp c) m
+
+instance {-# overlappable #-}
+         ( Ob c ~ All
+         , ClosedCategory c, Monad c m
+         , BOb (Ob c) (Ob c) (Ob c) (Kleisli (Exp c) m)) =>
+         ClosedCategory (Kleisli (c :: Type -> Type -> Type) m) where
+  type Exp (Kleisli c m) = Kleisli (Exp c) m
