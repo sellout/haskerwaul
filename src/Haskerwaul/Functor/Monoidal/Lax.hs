@@ -23,12 +23,33 @@ class (MonoidalCategory c ct, MonoidalCategory d dt, Functor c d f) =>
   epsilon :: Proxy c -> Proxy ct -> Proxy dt -> Unit d dt `d` f (Unit c ct)
   mu :: (Ob c x, Ob c y) => Proxy c -> dt (f x) (f y) `d` f (ct x y)
 
+-- | `Applicative` is base's view of a `LaxMonoidalFunctor` on the Cartesian
+--   product in __Hask__.
 instance Base.Applicative f => LaxMonoidalFunctor (->) (,) (->) (,) f where
   epsilon Proxy Proxy Proxy = Base.pure
   mu Proxy = from curry (Base.liftA2 (,))
 
+-- | `LaxMonoidalFunctors` on `Either` in __Hask__ are trivial.
 instance Endofunctor (->) f => LaxMonoidalFunctor (->) Either (->) Either f where
   epsilon Proxy Proxy Proxy = Base.absurd
   mu Proxy = \case
     Left fx  -> map Left fx
     Right fy -> map Right fy
+
+-- | A `LaxMonoidalFunctor`s entire purpose is to preserve the monoidal
+--   structure from the source (@a@) to the destination (@f a@).
+instance (LaxMonoidalFunctor c ct d dt f, Magma c ct a) => Magma d dt (f a) where
+  op = map op . mu
+
+-- | A `LaxMonoidalFunctor`s entire purpose is to preserve the monoidal
+--   structure from the source (@a@) to the destination (@f a@).
+instance (LaxMonoidalFunctor c ct d dt f, Semigroup c ct a) => Semigroup d dt (f a)
+
+-- | A `LaxMonoidalFunctor`s entire purpose is to preserve the monoidal
+--   structure from the source (@a@) to the destination (@f a@).
+instance (LaxMonoidalFunctor c ct d dt f, UnitalMagma c ct a) => UnitalMagma d dt (f a) where
+  unit dt = epsilon (Proxy :: Proxy c) (Proxy :: Proxy ct) dt
+
+-- | A `LaxMonoidalFunctor`s entire purpose is to preserve the monoidal
+--   structure from the source (@a@) to the destination (@f a@).
+instance (LaxMonoidalFunctor c ct d dt f, Monoid c ct a) => Monoid d dt (f a)

@@ -107,6 +107,22 @@ aside from the other issues that we won't get into here, the fact that newtypes
 are restricted to **Hask** means that we are often very overconstrained as a
 result (see `~ (->)` above).
 
+So, we try to avoid newtypes as much as possible. In `base`, you see things like
+```haskell
+newtype Ap f a = Ap { getAp :: f a }
+instance (Applicative f, Monoid a) => Monoid (Ap f a) where
+  ...
+```
+but that forces `f :: k -> Type` (granted, `Applicative` already forces
+`f :: Type -> Type`, so it's no loss in `base`). However, we want to stay more
+kind-polymorphic, so we take a different tradeoff and write stuff like
+```haskell
+instance (LaxMonoidalFunctor c ct d dt f, Monoid c ct a) => Monoid d dt (f a) where
+  ...
+```
+(where `LaxMonoidalFunctor` is our equivalent of `Applicative`), which means we
+need `UndecidableInstances`, etc., but it's worth it to be kind-polymorphic.
+
 ### relations
 
 The way relations are currently implemented means that an `EqualityRelation`
