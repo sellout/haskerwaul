@@ -1,6 +1,10 @@
 {-# language UndecidableInstances #-}
 
-module Haskerwaul.Subcategory.Full where
+module Haskerwaul.Subcategory.Full
+  ( module Haskerwaul.Subcategory.Full
+  -- * extended modules
+  , module Haskerwaul.Subcategory
+  )where
 
 import           Control.Arrow ((&&&))
 import           Data.Constraint.Deferrable ((:~:)(..))
@@ -24,22 +28,23 @@ import Haskerwaul.Lattice.Complemented.Uniquely
 import Haskerwaul.Object
 import Haskerwaul.Quasigroup.Left
 import Haskerwaul.Quasigroup.Right
+import Haskerwaul.Subcategory
 import Haskerwaul.Transformation.Natural
 
 -- | [nLab](https://ncatlab.org/nlab/show/full+subcategory)
 --
---  `Haskerwaul.Magma.Unital.unit` (on objects) and `inclusion` (on morphisms)
---   form an [inclusion functor](https://ncatlab.org/nlab/show/subcategory).
---
--- __NB__: This is probably less restrictive than you think. E.g.,
+-- __NB__: This is probably less restricted than you think. E.g.,
 --        @`FullSubcategory` (`Monoid` (->) (,)) (->)@ is /not/
 --        [Mon(Hask)](https://ncatlab.org/nlab/show/category+of+monoids). The
 --         objects are the same, but the morphisms are simply Haskell functions,
 --        /not/ monoid homomorphisms.
 newtype FullSubcategory (ob :: ok -> Constraint) (c :: ok -> ok -> Type) a b =
-  FS { inclusion :: a `c` b }
+  FS (a `c` b)
 
 type instance Ob (FullSubcategory ob c) = CFProd (Ob c) ob
+
+instance Subcategory (FullSubcategory ob c) c where
+  inclusion (FS f) = f
 
 instance Magma (NaturalTransformation2 (->)) CProd c =>
          Magma (NaturalTransformation2 (->)) CProd (FullSubcategory ob c) where
@@ -81,11 +86,11 @@ instance {-# overlappable #-} (MonoidalCategory c t, TOb ob t, ob (Unit c t)) =>
 
 instance {-# overlappable #-} (Semigroupoid c, Bifunctor c d e t, BOb cOb dOb eOb t) =>
          Bifunctor (FullSubcategory cOb c) (FullSubcategory dOb d) (FullSubcategory eOb e) t where
-  bimap f g = FS (bimap (inclusion f) (inclusion g))
+  bimap (FS f) (FS g) = FS (bimap f g)
 
 instance (Semigroupoid c, Bifunctor (Opposite c) d e t, BOb cOb dOb eOb t) =>
          Bifunctor (Opposite (FullSubcategory cOb c)) (FullSubcategory dOb d) (FullSubcategory eOb e) t where
-  bimap (Opposite f) g = FS (bimap (Opposite (inclusion f)) (inclusion g))
+  bimap (Opposite (FS f)) (FS g) = FS (bimap (Opposite f) g)
 
 instance (c ~ (->)) =>
          SemigroupalCategory
@@ -112,8 +117,7 @@ instance (c ~ (->)) =>
          (FullSubcategory (Endofunctor c) (NaturalTransformation c))
          (FullSubcategory (Endofunctor c) (NaturalTransformation c))
          Compose where
-  bimap f g =
-    FS (NT (Compose . runNT (inclusion f) . map (runNT (inclusion g)) . getCompose))
+  bimap (FS f) (FS g) = FS (NT (Compose . runNT f . map (runNT g) . getCompose))
 
 -- | See, `Set.Set` /is/ a `Functor`.
 instance Functor

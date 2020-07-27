@@ -224,7 +224,9 @@ module Haskerwaul
   , module Haskerwaul.Cospan
   , module Haskerwaul.Span
   -- * subcategories
+  , module Haskerwaul.Subcategory
   , module Haskerwaul.Subcategory.Full
+  , module Haskerwaul.Subcategory.Wide
   -- * topoi (toposes)
   , module Haskerwaul.Topos.Elementary
   , module Haskerwaul.Topos.Grothendieck
@@ -416,7 +418,9 @@ import Haskerwaul.Semiring.Pre.Near
 import Haskerwaul.Semiring.Tropical
 import Haskerwaul.Skewfield
 import Haskerwaul.Span
+import Haskerwaul.Subcategory
 import Haskerwaul.Subcategory.Full
+import Haskerwaul.Subcategory.Wide
 import Haskerwaul.Topos.Elementary
 import Haskerwaul.Topos.Grothendieck
 import Haskerwaul.Transformation.Natural

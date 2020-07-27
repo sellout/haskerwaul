@@ -216,7 +216,9 @@ library
                     , Haskerwaul.Semiring.Tropical
                     , Haskerwaul.Skewfield
                     , Haskerwaul.Span
+                    , Haskerwaul.Subcategory
                     , Haskerwaul.Subcategory.Full
+                    , Haskerwaul.Subcategory.Wide
                     , Haskerwaul.Topos.Elementary
                     , Haskerwaul.Topos.Grothendieck
                     , Haskerwaul.Transformation.Natural
