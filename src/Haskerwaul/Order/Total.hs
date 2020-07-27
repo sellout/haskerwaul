@@ -11,7 +11,7 @@ import           Data.Int (Int, Int8, Int16, Int32, Int64)
 import           Data.Proxy (Proxy(..))
 import           Data.Word (Word, Word8, Word16, Word32, Word64)
 import           Numeric.Natural (Natural)
-import           Prelude (Double, Float, Integer)
+import           Prelude (Integer)
 
 import Haskerwaul.Algebra.Boolean
 import Haskerwaul.Order.Canonical
@@ -60,7 +60,3 @@ instance TotalOrder (->) (Canonical Word16)
 instance TotalOrder (->) (Canonical Word32)
 
 instance TotalOrder (->) (Canonical Word64)
-
-instance TotalOrder (->) (Canonical Float)
-
-instance TotalOrder (->) (Canonical Double)

@@ -50,6 +50,10 @@ instance PrefixOrder (->) (Canonical Word32)
 
 instance PrefixOrder (->) (Canonical Word64)
 
+-- | `Float` doesn't have a stronger ordering than this because of NaNs. NaNs
+--   are incomparable to anything.
 instance PrefixOrder (->) (Canonical Float)
 
+-- | `Double` doesn't have a stronger ordering than this because of NaNs. NaNs
+--   are incomparable to anything.
 instance PrefixOrder (->) (Canonical Double)
