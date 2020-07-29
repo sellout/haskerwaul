@@ -6,5 +6,12 @@ module Haskerwaul.Monad.Codensity
 
 import Haskerwaul.Extension.Kan.Right
 
--- | [nLab](https://ncatlab.org/nlab/show/codensity+monad)
-type CodensityMonad c f = RightKanExtension c f f
+-- |
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/codensity+monad)
+-- - [Wikipedia](https://en.wikipedia.org/wiki/Codensity_monad)
+type Codensity c f = RightKanExtension c f f
+
+-- instance (c ~ (->), CartesianClosedCategory c) => Monad c (Codensity c f) where
+--   pure = Ran . to curry (apply . braid)

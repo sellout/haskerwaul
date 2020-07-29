@@ -13,8 +13,9 @@ import Haskerwaul.Transformation.Natural
 
 -- |
 -- = references
---   [nLab](https://ncatlab.org/nlab/show/span)
---   [Wikipedia](https://en.wikipedia.org/wiki/Span_(category_theory))
+--
+-- - [nLab](https://ncatlab.org/nlab/show/span)
+-- - [Wikipedia](https://en.wikipedia.org/wiki/Span_(category_theory))
 data Span c x y = forall s. Span (s `c` x) (s `c` y)
 
 type instance Ob (Span c) = Ob c

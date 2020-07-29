@@ -6,13 +6,29 @@ module Haskerwaul.Extension.Kan.Left
   ) where
 
 import Haskerwaul.Functor
-import Haskerwaul.Object
 import Haskerwaul.Semigroupoid
 
--- | [nLab](https://ncatlab.org/nlab/show/Kan+extension)
-data LeftKanExtension cp p f a where
-  Lan :: p b `cp` a -> f b -> LeftKanExtension cp p f a
+-- |
+--  __NB__: This implementation, moreso than
+--         `Haskerwaul.Extension.Kan.Right.RightKanExtension`, illustrates why
+--          /D/ in the Kan extension
+--
+--             f
+--           C -> D
+--          p|  /`
+--           C'
+--
+--          must be @(->)@. In the GADT, it's not possible for us to use an
+--          arrow other than @->@ in the last position, and that is a morphism
+--          in /D/.
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/Kan+extension)
+-- - [Wikipedia](https://en.wikipedia.org/wiki/Kan_extension)
+data LeftKanExtension c' p f a where
+  Lan :: p b `c'` a -> f b -> LeftKanExtension c' p f a
 
-instance (d ~ (->), Semigroupoid cp, FOb (Ob cp) (Ob d) (LeftKanExtension cp p f)) =>
-         Functor cp d (LeftKanExtension cp p f) where
+instance (d ~ (->), Semigroupoid c') =>
+         Functor c' d (LeftKanExtension c' p f) where
   map f (Lan g h) = Lan (f . g) h
