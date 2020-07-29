@@ -1,3 +1,4 @@
+{-# language TypeApplications #-}
 {-# language UndecidableSuperClasses #-}
 
 module Haskerwaul.Functor.Monoidal.Lax
@@ -7,6 +8,7 @@ module Haskerwaul.Functor.Monoidal.Lax
   ) where
 
 import qualified Control.Applicative as Base
+import           Data.Constraint ((\\))
 import           Data.Either (Either(..))
 import           Data.Proxy (Proxy(..))
 import qualified Data.Void as Base
@@ -38,18 +40,17 @@ instance Endofunctor (->) f => LaxMonoidalFunctor (->) Either (->) Either f wher
 
 -- | A `LaxMonoidalFunctor`s entire purpose is to preserve the monoidal
 --   structure from the source (@a@) to the destination (@f a@).
-instance (LaxMonoidalFunctor c ct d dt f, Magma c ct a) => Magma d dt (f a) where
-  op = map op . mu
+mapOp
+  :: forall c ct d dt f a
+   . (LaxMonoidalFunctor c ct d dt f, Magma c ct a)
+  => Proxy c -> Proxy ct -> dt (f a) (f a) `d` (f a)
+mapOp Proxy Proxy =
+  map (op @c @ct) . mu (Proxy :: Proxy c) \\ inT @(Ob c) @ct @a @a
 
 -- | A `LaxMonoidalFunctor`s entire purpose is to preserve the monoidal
 --   structure from the source (@a@) to the destination (@f a@).
-instance (LaxMonoidalFunctor c ct d dt f, Semigroup c ct a) => Semigroup d dt (f a)
-
--- | A `LaxMonoidalFunctor`s entire purpose is to preserve the monoidal
---   structure from the source (@a@) to the destination (@f a@).
-instance (LaxMonoidalFunctor c ct d dt f, UnitalMagma c ct a) => UnitalMagma d dt (f a) where
-  unit dt = epsilon (Proxy :: Proxy c) (Proxy :: Proxy ct) dt
-
--- | A `LaxMonoidalFunctor`s entire purpose is to preserve the monoidal
---   structure from the source (@a@) to the destination (@f a@).
-instance (LaxMonoidalFunctor c ct d dt f, Monoid c ct a) => Monoid d dt (f a)
+mapUnit
+  :: forall c ct d dt f a
+   . (LaxMonoidalFunctor c ct d dt f, UnitalMagma c ct a)
+  => Proxy c -> Proxy ct -> Proxy dt -> Unit d dt `d` (f a)
+mapUnit c ct dt = map @c (unit ct) . epsilon c ct dt

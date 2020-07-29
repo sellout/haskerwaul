@@ -1,4 +1,5 @@
-{-# language UndecidableInstances #-}
+{-# language TypeApplications
+           , UndecidableInstances #-}
 
 module Haskerwaul.Day where
 
@@ -80,7 +81,7 @@ instance (d ~ (->), Category c, Bifunctor d d d dt) =>
          (FullSubcategory (Functor c d) (NaturalTransformation d))
          (Day c ct dt) where
   bimap f g =
-    FS (NT (\(Day t fn) -> Day (bimap (runNT (inclusion f)) (runNT (inclusion g)) t) fn))
+    FS (NT (\(Day t fn) -> Day (bimap @d @d (runNT (inclusion f)) (runNT (inclusion g)) t) fn))
 
 instance Semigroup (->) (,) a =>
          Magma (NaturalTransformation (->)) (Day (->) (,) (,)) (Diamond (Either a)) where
