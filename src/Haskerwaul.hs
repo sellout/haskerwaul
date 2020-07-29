@@ -23,11 +23,13 @@ module Haskerwaul
   , module Haskerwaul.Category.Hypergraph
   , module Haskerwaul.Category.Kleisli
   , module Haskerwaul.Category.Opposite
+  , module Haskerwaul.Category.Over
   , module Haskerwaul.Category.Pointed
   , module Haskerwaul.Category.Product
   , module Haskerwaul.Category.Rig
   , module Haskerwaul.Category.Semigroupal
   , module Haskerwaul.Category.Terminal
+  , module Haskerwaul.Category.Under
   -- ** closed categories
   , module Haskerwaul.Category.Closed
   , module Haskerwaul.Category.Closed.Bicartesian
@@ -265,11 +267,13 @@ import Haskerwaul.Category.Monoidal.Distributive
 import Haskerwaul.Category.Monoidal.Symmetric
 import Haskerwaul.Category.Monoidal'
 import Haskerwaul.Category.Opposite
+import Haskerwaul.Category.Over
 import Haskerwaul.Category.Pointed
 import Haskerwaul.Category.Product
 import Haskerwaul.Category.Rig
 import Haskerwaul.Category.Semigroupal
 import Haskerwaul.Category.Terminal
+import Haskerwaul.Category.Under
 import Haskerwaul.Cocone
 import Haskerwaul.Cone
 import Haskerwaul.Comonad

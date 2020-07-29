@@ -54,11 +54,13 @@ library
                     , Haskerwaul.Category.Monoidal.Symmetric
                     , Haskerwaul.Category.Monoidal'
                     , Haskerwaul.Category.Opposite
+                    , Haskerwaul.Category.Over
                     , Haskerwaul.Category.Pointed
                     , Haskerwaul.Category.Product
                     , Haskerwaul.Category.Rig
                     , Haskerwaul.Category.Semigroupal
                     , Haskerwaul.Category.Terminal
+                    , Haskerwaul.Category.Under
                     , Haskerwaul.Cocone
                     , Haskerwaul.Cone
                     , Haskerwaul.Comonad
