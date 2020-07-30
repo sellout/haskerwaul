@@ -33,12 +33,12 @@ type instance Ob TerminalCategory = All
 terminalIso :: Isomorphism TerminalCategory a b
 terminalIso = Iso TermId TermId
 
-instance Magma (NaturalTransformation2 (->)) CProd TerminalCategory where
-  op = NT2 (\(CProd _ _) -> TermId)
+instance Magma (NaturalTransformation2 (->)) Procompose TerminalCategory where
+  op = NT2 (\(Procompose _ _) -> TermId)
 
-instance Semigroup (NaturalTransformation2 (->)) CProd TerminalCategory
+instance Semigroup (NaturalTransformation2 (->)) Procompose TerminalCategory
 
-instance UnitalMagma (NaturalTransformation2 (->)) CProd TerminalCategory where
+instance UnitalMagma (NaturalTransformation2 (->)) Procompose TerminalCategory where
   unit Proxy = NT2 (\Refl -> TermId)
 
 -- | Every object is a tensor.

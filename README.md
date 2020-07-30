@@ -117,11 +117,10 @@ but that forces `f :: k -> Type` (granted, `Applicative` already forces
 `f :: Type -> Type`, so it's no loss in `base`). However, we want to stay more
 kind-polymorphic, so we take a different tradeoff and write stuff like
 ```haskell
-instance (LaxMonoidalFunctor c ct d dt f, Monoid c ct a) => Monoid d dt (f a) where
-  ...
+instance (LaxMonoidalFunctor c ct d dt f, Monoid c ct a) => Monoid d dt (f a)
 ```
 (where `LaxMonoidalFunctor` is our equivalent of `Applicative`), which means we
-need `UndecidableInstances`, etc., but it's worth it to be kind-polymorphic.
+need `UndecidableInstances`, but it's worth it to be kind-polymorphic.
 
 ### relations
 
@@ -140,7 +139,7 @@ In "plain" category theory, the Hom functor for a category **C** is a functor **
 
 One way to model this is to add a parameter `v` to `Category c`, like
 ```haskell
-class Monoid (NaturalTransformation2 v) CProd c => Category v c
+class Monoid (NaturalTransformation2 v) Procompose c => Category v c
 ```
 However, this means that the same category, enriched differently, has multiple instances. Modeling the enrichment separaetely, e.g.,
 ```haskell
@@ -150,7 +149,7 @@ seems good, but the Hom functor is fundamental to the definition of composition 
 
 ### PolyKinds
 
-This library strives to take advantage of `PolyKinds`, which make it possible to say things like `Category ~ Monoid (NaturalTransformation (->)) CProd`, however we use newtypes like `Additive` and `Multiplicative` to say things like `Semiring a ~ (Monoid (Additive a), Monoid (Multiplicative a))`, and since fully-applied type constructors need to have kind `Type` it means that `Semiring` _isn't_ kind-polymorphic.
+This library strives to take advantage of `PolyKinds`, which make it possible to say things like `Category ~ Monoid (NaturalTransformation (->)) Procompose`, however we use newtypes like `Additive` and `Multiplicative` to say things like `Semiring a ~ (Monoid (Additive a), Monoid (Multiplicative a))`, and since fully-applied type constructors need to have kind `Type` it means that `Semiring` _isn't_ kind-polymorphic.
 
 As a result, at various places in the code we find ourselves stuck dealing with `Type` when we'd like to remain polymorphic. Remedying this would be very helpful.
 

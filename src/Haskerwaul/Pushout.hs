@@ -8,7 +8,7 @@ import Haskerwaul.Category.Opposite
 import Haskerwaul.Pullback
 
 -- | [nLab](https://ncatlab.org/nlab/show/pushout)
-type Pushout c = Pullback (Op c)
+type PushoutSquare c = PullbackSquare (Op c)
 
 type Coproduct c = Product (Op c)
 

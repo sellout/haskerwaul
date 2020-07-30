@@ -26,15 +26,15 @@ newtype Kleisli (c :: ok -> ok -> Type) m a b =
 type instance Ob (Kleisli c m) = Ob c
 
 instance (Ob c ~ All, Semigroupoid c, Monad c m, FOb (Ob c) (Ob c) m) =>
-         Magma (NaturalTransformation2 (->)) CProd (Kleisli c m) where
+         Magma (NaturalTransformation2 (->)) Procompose (Kleisli c m) where
   op =
-    NT2 (\(CProd (Kleisli f) (Kleisli g)) -> Kleisli (flatten . map f . g))
+    NT2 (\(Procompose (Kleisli f) (Kleisli g)) -> Kleisli (flatten . map f . g))
 
 instance (Ob c ~ All, Semigroupoid c, Monad c m) =>
-         Semigroup (NaturalTransformation2 (->)) CProd (Kleisli c m)
+         Semigroup (NaturalTransformation2 (->)) Procompose (Kleisli c m)
 
 instance (Ob c ~ All, Category c, Monad c m) =>
-         UnitalMagma (NaturalTransformation2 (->)) CProd (Kleisli c m) where
+         UnitalMagma (NaturalTransformation2 (->)) Procompose (Kleisli c m) where
   unit Proxy = NT2 (\Refl -> Kleisli pure)
 
 instance ( Ob c ~ All

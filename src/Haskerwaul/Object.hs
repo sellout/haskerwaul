@@ -55,10 +55,6 @@ instance (BOb cOb dOb eOb b, BOb cOb' dOb' eOb' b) =>
   inB :: forall x y. (CFProd cOb cOb' x, CFProd dOb dOb' y) :- CFProd eOb eOb' (b x y)
   inB = Sub (Dict \\ inB @cOb @dOb @eOb @b @x @y \\ inB @cOb' @dOb' @eOb' @b @x @y)
 
--- instance BOb cOb dOb eOb c => BOb dOb cOb eOb (Opposite c) where
---   inB :: forall x y. (cOb x, dOb y, BOb cOb dOb eOb (c x y)) :- BOb dOb cOb eOb (Op c x y)
---   inB = Sub (Dict \\ inB @cOb @dOb @eOb @c @x @y)
-
 -- | An `Ob` for a tensor.
 type TOb cOb = BOb cOb cOb cOb
 

@@ -29,12 +29,12 @@ instance LeftQuasigroup (->) Either Void where
 instance LeftQuasigroup (->) (,) () where
   leftQuotient ((), ()) = ()
 
--- instance Magma (NaturalTransformation2 (->)) CProd c =>
---          LeftQuasigroup (NaturalTransformation2 (->)) CProd (Iso c) where
+-- instance Magma (NaturalTransformation2 (->)) Procompose c =>
+--          LeftQuasigroup (NaturalTransformation2 (->)) Procompose (Iso c) where
 --   inverse = NT2 (\(Iso f g) -> Iso g f)
 
--- instance LeftQuasigroup (NaturalTransformation2 (->)) CProd c =>
---          LeftQuasigroup (NaturalTransformation2 (->)) CProd (Op c) where
+-- instance LeftQuasigroup (NaturalTransformation2 (->)) Procompose c =>
+--          LeftQuasigroup (NaturalTransformation2 (->)) Procompose (Op c) where
 --   inverse = NT2 (\(Op f) -> Op (runNT2 inverse f))
 
 instance LeftQuasigroup (->) (,) (Additive Int) where

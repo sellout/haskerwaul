@@ -12,9 +12,14 @@ import Haskerwaul.Monoid
 import Haskerwaul.Semigroupoid
 import Haskerwaul.Transformation.Natural
 
--- | [nLab](https://ncatlab.org/nlab/show/category)
-class (Monoid (NaturalTransformation2 (->)) CProd c, Semigroupoid c) =>
+-- |
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/category)
+-- - [Wikipedia](https://en.wikipedia.org/wiki/Category_(mathematics)
+--  __NB__: Instances for this are automatically coalesced.
+class (Monoid (NaturalTransformation2 (->)) Procompose c, Semigroupoid c) =>
       Category c
 
-instance (Monoid (NaturalTransformation2 (->)) CProd c, Semigroupoid c) =>
+instance (Monoid (NaturalTransformation2 (->)) Procompose c, Semigroupoid c) =>
          Category c

@@ -46,32 +46,32 @@ type instance Ob (FullSubcategory ob c) = CFProd (Ob c) ob
 instance Subcategory (FullSubcategory ob c) c where
   inclusion (FS f) = f
 
-instance Magma (NaturalTransformation2 (->)) CProd c =>
-         Magma (NaturalTransformation2 (->)) CProd (FullSubcategory ob c) where
-  op = NT2 (\(CProd (FS f) (FS g)) -> FS (f . g))
+instance Magma (NaturalTransformation2 (->)) Procompose c =>
+         Magma (NaturalTransformation2 (->)) Procompose (FullSubcategory ob c) where
+  op = NT2 (\(Procompose (FS f) (FS g)) -> FS (f . g))
 
-instance Semigroup (NaturalTransformation2 (->)) CProd c =>
-         Semigroup (NaturalTransformation2 (->)) CProd (FullSubcategory ob c)
+instance Semigroup (NaturalTransformation2 (->)) Procompose c =>
+         Semigroup (NaturalTransformation2 (->)) Procompose (FullSubcategory ob c)
 
 instance (MonoidalCategory' c t, ob (Unit c t)) =>
          MonoidalCategory' (FullSubcategory ob c) t where
   type Unit (FullSubcategory ob c) t = Unit c t
 
-instance UnitalMagma (NaturalTransformation2 (->)) CProd c =>
-         UnitalMagma (NaturalTransformation2 (->)) CProd (FullSubcategory ob c) where
+instance UnitalMagma (NaturalTransformation2 (->)) Procompose c =>
+         UnitalMagma (NaturalTransformation2 (->)) Procompose (FullSubcategory ob c) where
   unit Proxy = NT2 (\Refl -> FS id)
 
-instance LeftQuasigroup (NaturalTransformation2 (->)) CProd c =>
+instance LeftQuasigroup (NaturalTransformation2 (->)) Procompose c =>
          LeftQuasigroup
          (NaturalTransformation2 (->))
-         CProd
+         Procompose
          (FullSubcategory ob c) where
   leftQuotient = NT2 FS . leftQuotient . bimap (NT2 inclusion) (NT2 inclusion)
 
-instance RightQuasigroup (NaturalTransformation2 (->)) CProd c =>
+instance RightQuasigroup (NaturalTransformation2 (->)) Procompose c =>
          RightQuasigroup
          (NaturalTransformation2 (->))
-         CProd
+         Procompose
          (FullSubcategory ob c) where
   rightQuotient = NT2 FS . rightQuotient . bimap (NT2 inclusion) (NT2 inclusion)
 

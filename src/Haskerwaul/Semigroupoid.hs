@@ -1,3 +1,9 @@
+-- |
+--  __NB__: This module includes `UnitalMagma` and `Quasigroup` instances for
+--          various categories (even though those would fit better in
+--         "Haskerwaul.Category" and "Haskerwaul.Groupoid", respectively)
+--          because it avoids them being orphan instances, since `Procompose` is
+--          defined here.
 module Haskerwaul.Semigroupoid
   ( module Haskerwaul.Semigroupoid
   -- * extended modules
@@ -14,97 +20,125 @@ import Haskerwaul.Quasigroup.Right
 import Haskerwaul.Semigroup
 import Haskerwaul.Transformation.Natural
 
--- | A categorical tensor.
-data CProd c d a b = forall z. CProd (z `c` b) (a `d` z)
+-- | Composition of profunctors, a tensor in profunctor categories.
+--
+--  __TODO__: Is this any more general than the version in profunctors? If not,
+--            maybe we should depend on that library (although maybe that
+--            introduces too many other conflicting definitions).
+data Procompose c d a b = forall z. Procompose (z `c` b) (a `d` z)
 
--- | [Wikipedia](https://en.wikipedia.org/wiki/Semigroupoid)
+-- |
+-- = references
+--
+-- - [Wikipedia](https://en.wikipedia.org/wiki/Semigroupoid)
 --
 --  __TODO__: This should have a @`Haskerwaul.Profunctor.Profunctor` c c c@
 --            constraint, but there are troublesome instances, so we skip the
 --            constraint here and add it on the instances that make use of it.
-type Semigroupoid = Semigroup (NaturalTransformation2 (->)) CProd
+type Semigroupoid = Semigroup (NaturalTransformation2 (->)) Procompose
 
 -- | Just a bit of sugar over `op`, when it's used categorcally.
-(.) :: Magma (NaturalTransformation2 (->)) CProd c
+(.) :: Magma (NaturalTransformation2 (->)) Procompose c
     => z `c` b -> a `c` z -> a `c` b
-f . g = runNT2 op (CProd f g)
+f . g = runNT2 op (Procompose f g)
 
 -- | Just a bit of sugar over `unit`, when it's used categorcally.
-id :: UnitalMagma (NaturalTransformation2 (->)) CProd c => a `c` a
-id = runNT2 (unit (Proxy :: Proxy CProd)) Refl
+id :: UnitalMagma (NaturalTransformation2 (->)) Procompose c => a `c` a
+id = runNT2 (unit (Proxy :: Proxy Procompose)) Refl
 
--- | I don't think this is the correct unit, but it seems to work.
-instance MonoidalCategory' (NaturalTransformation2 (->)) CProd where
-  type Unit (NaturalTransformation2 (->)) CProd = (:~:)
+-- | The correct unit here is the Hom functor, but I don't know how to define
+--   that, and this approach seems to work well enough for now.
+instance MonoidalCategory' (NaturalTransformation2 (->)) Procompose where
+  type Unit (NaturalTransformation2 (->)) Procompose = (:~:)
 
--- * `Magma` instances
-
+-- | All `Base.Category` instances are also `Semigroupoid` instances.
 instance {-# overlappable #-} Base.Category c =>
-                              Magma (NaturalTransformation2 (->)) CProd c where
-  op = NT2 (\(CProd f g) -> f . g)
+                              Magma (NaturalTransformation2 (->)) Procompose c where
+  op = NT2 (\(Procompose f g) -> f . g)
 
-instance Magma (NaturalTransformation2 (->)) CProd c =>
-         Magma (NaturalTransformation2 (->)) CProd (NaturalTransformation c) where
-  op = NT2 (\(CProd (NT f) (NT g)) -> NT (f . g))
-
-instance Magma (NaturalTransformation2 (->)) CProd c =>
-         Magma (NaturalTransformation2 (->)) CProd (NaturalTransformation2 c) where
-  op = NT2 (\(CProd (NT2 f) (NT2 g)) -> NT2 (f . g))
-
--- | a discrete groupoid --
---  [nLab](https://ncatlab.org/nlab/show/discrete+category)
-instance Magma (NaturalTransformation2 (->)) CProd (:~:) where
-  op = NT2 (\(CProd Refl Refl) -> Refl)
-
--- instance ( Magma (NaturalTransformation2 (->)) CProd c
---          , Magma (NaturalTransformation2 (->)) CProd c') =>
---          Magma (NaturalTransformation2 (->)) CProd (c :**: c') where
---   op = NT2 (\(CProd (NT (ProdC f)) (NT (ProdC g))) -> NT (f . g))
-
--- * `Semigroup` instances
-
+-- | All `Base.Category` instances are also `Semigroupoid` instances.
 instance {-# overlappable #-} Base.Category c =>
-                              Semigroup (NaturalTransformation2 (->)) CProd c
+                              Semigroup (NaturalTransformation2 (->)) Procompose c
 
-instance Semigroup (NaturalTransformation2 (->)) CProd c =>
-         Semigroup (NaturalTransformation2 (->)) CProd (NaturalTransformation c)
-
-instance Semigroup (NaturalTransformation2 (->)) CProd c =>
-         Semigroup (NaturalTransformation2 (->)) CProd (NaturalTransformation2 c)
-
--- | a discrete groupoid --
---  [nLab](https://ncatlab.org/nlab/show/discrete+category)
-instance Semigroup (NaturalTransformation2 (->)) CProd (:~:)
-
--- instance ( Semigroup (NaturalTransformation2 (->)) CProd c
---          , Semigroup (NaturalTransformation2 (->)) CProd c') =>
---          Semigroup (NaturalTransformation2 (->)) CProd (c :**: c')
-
--- * `UnitalMagma` instances
-
+-- | All `Base.Category` instances are also `Haskerwaul.Category` instances.
 instance {-# overlappable #-} Base.Category c =>
-                              UnitalMagma (NaturalTransformation2 (->)) CProd c where
+                              UnitalMagma (NaturalTransformation2 (->)) Procompose c where
   unit Proxy = NT2 (\Refl -> Base.id)
 
-instance UnitalMagma (NaturalTransformation2 (->)) CProd c =>
-         UnitalMagma (NaturalTransformation2 (->)) CProd (NaturalTransformation c) where
+-- | If /C/ is a `Semigroupoid`, then so are /C/-valued functors.
+instance Magma (NaturalTransformation2 (->)) Procompose c =>
+         Magma (NaturalTransformation2 (->)) Procompose (NaturalTransformation c) where
+  op = NT2 (\(Procompose (NT f) (NT g)) -> NT (f . g))
+
+-- | If /C/ is a `Semigroupoid`, then so are /C/-valued functors.
+instance Semigroup (NaturalTransformation2 (->)) Procompose c =>
+         Semigroup (NaturalTransformation2 (->)) Procompose (NaturalTransformation c)
+
+-- | If /C/ is a `Category`, then so are /C/-valued functors.
+instance UnitalMagma (NaturalTransformation2 (->)) Procompose c =>
+         UnitalMagma (NaturalTransformation2 (->)) Procompose (NaturalTransformation c) where
   unit Proxy = NT2 (\Refl -> NT id)
 
-instance UnitalMagma (NaturalTransformation2 (->)) CProd c =>
-         UnitalMagma (NaturalTransformation2 (->)) CProd (NaturalTransformation2 c) where
+-- | If /C/ is a `Semigroupoid`, then so are /C/-valud bifunctors.
+instance Magma (NaturalTransformation2 (->)) Procompose c =>
+         Magma (NaturalTransformation2 (->)) Procompose (NaturalTransformation2 c) where
+  op = NT2 (\(Procompose (NT2 f) (NT2 g)) -> NT2 (f . g))
+
+-- | If /C/ is a `Semigroupoid`, then so are /C/-valud bifunctors.
+instance Semigroup (NaturalTransformation2 (->)) Procompose c =>
+         Semigroup (NaturalTransformation2 (->)) Procompose (NaturalTransformation2 c)
+
+-- | If /C/ is a `Category`, then so are /C/-valud bifunctors.
+instance UnitalMagma (NaturalTransformation2 (->)) Procompose c =>
+         UnitalMagma (NaturalTransformation2 (->)) Procompose (NaturalTransformation2 c) where
   unit Proxy = NT2 (\Refl -> NT2 id)
 
--- | a discrete groupoid --
---  [nLab](https://ncatlab.org/nlab/show/discrete+category)
-instance UnitalMagma (NaturalTransformation2 (->)) CProd (:~:) where
+-- | a discrete groupoid
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/discrete+category)
+instance Magma (NaturalTransformation2 (->)) Procompose (:~:) where
+  op = NT2 (\(Procompose Refl Refl) -> Refl)
+
+-- | a discrete groupoid
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/discrete+category)
+instance Semigroup (NaturalTransformation2 (->)) Procompose (:~:)
+
+-- | a discrete groupoid
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/discrete+category)
+instance UnitalMagma (NaturalTransformation2 (->)) Procompose (:~:) where
   unit Proxy = NT2 id
 
--- | a discrete groupoid --
---  [nLab](https://ncatlab.org/nlab/show/discrete+category)
-instance LeftQuasigroup (NaturalTransformation2 (->)) CProd (:~:) where
-  leftQuotient = NT2 (\(CProd Refl Refl) -> Refl)
+-- | a discrete groupoid
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/discrete+category)
+instance LeftQuasigroup (NaturalTransformation2 (->)) Procompose (:~:) where
+  leftQuotient = NT2 (\(Procompose Refl Refl) -> Refl)
 
--- | a discrete groupoid --
---  [nLab](https://ncatlab.org/nlab/show/discrete+category)
-instance RightQuasigroup (NaturalTransformation2 (->)) CProd (:~:) where
-  rightQuotient = NT2 (\(CProd Refl Refl) -> Refl)
+-- | a discrete groupoid
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/discrete+category)
+instance RightQuasigroup (NaturalTransformation2 (->)) Procompose (:~:) where
+  rightQuotient = NT2 (\(Procompose Refl Refl) -> Refl)
+
+-- -- | If /C/ and /C'/ are `Semigroupoid` instances, then so is their product.
+-- instance ( Magma (NaturalTransformation2 (->)) Procompose c
+--          , Magma (NaturalTransformation2 (->)) Procompose c') =>
+--          Magma (NaturalTransformation2 (->)) Procompose (c :**: c') where
+--   op = NT2 (\(Procompose (NT (ProdC f)) (NT (ProdC g))) -> NT (f . g))
+
+-- -- | If /C/ and /C'/ are `Semigroupoid` instances, then so is their product.
+-- instance ( Semigroup (NaturalTransformation2 (->)) Procompose c
+--          , Semigroup (NaturalTransformation2 (->)) Procompose c') =>
+--          Semigroup (NaturalTransformation2 (->)) Procompose (c :**: c')

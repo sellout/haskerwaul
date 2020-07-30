@@ -68,8 +68,8 @@ instance SemigroupalCategory (:-) Combine where
 instance SemigroupalCategory (NaturalTransformation (:-)) CFProd where
   assoc = Iso (NT (Sub Dict)) (NT (Sub Dict))
 
-instance SemigroupalCategory (NaturalTransformation2 (->)) CProd where
+instance SemigroupalCategory (NaturalTransformation2 (->)) Procompose where
   assoc =
     Iso
-    (NT2 (\(CProd f (CProd g h)) -> CProd (CProd f g) h))
-    (NT2 (\(CProd (CProd f g) h) -> CProd f (CProd g h)))
+    (NT2 (\(Procompose f (Procompose g h)) -> Procompose (Procompose f g) h))
+    (NT2 (\(Procompose (Procompose f g) h) -> Procompose f (Procompose g h)))

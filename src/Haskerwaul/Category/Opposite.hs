@@ -30,19 +30,27 @@ type instance Ob (Opposite c) = Ob c
 -- instance (FOb (Ob c) (Ob c) f, opOb ~ Ob (Opposite c)) => FOb opOb opO f where
 --   inF = Sub Dict
 
-instance Magma (NaturalTransformation2 (->)) CProd c =>
-         Magma (NaturalTransformation2 (->)) CProd (Opposite c) where
-  op = NT2 (\(CProd (Opposite f) (Opposite g)) -> Opposite (g . f))
+-- instance BOb cOb dOb eOb c => BOb dOb cOb eOb (Opposite c) where
+--   inB :: forall x y. (cOb x, dOb y, BOb cOb dOb eOb (c x y)) :- BOb dOb cOb eOb (Op c x y)
+--   inB = Sub (Dict \\ inB @cOb @dOb @eOb @c @x @y)
 
-instance Semigroup (NaturalTransformation2 (->)) CProd c =>
-         Semigroup (NaturalTransformation2 (->)) CProd (Opposite c)
+-- | If /C/ is a `Semigroupoid`, then so is /C^op/.
+instance Magma (NaturalTransformation2 (->)) Procompose c =>
+         Magma (NaturalTransformation2 (->)) Procompose (Opposite c) where
+  op = NT2 (\(Procompose (Opposite f) (Opposite g)) -> Opposite (g . f))
 
+-- | If /C/ is a `Semigroupoid`, then so is /C^op/.
+instance Semigroup (NaturalTransformation2 (->)) Procompose c =>
+         Semigroup (NaturalTransformation2 (->)) Procompose (Opposite c)
+
+-- | If /C/ is a `Category`, then so is /C^op/.
+instance UnitalMagma (NaturalTransformation2 (->)) Procompose c =>
+         UnitalMagma (NaturalTransformation2 (->)) Procompose (Opposite c) where
+  unit Proxy = NT2 (\Refl -> Opposite id)
+
+-- | If /C/ is a `MonoidalCategory`, then so is /C^op/.
 instance MonoidalCategory' c t => MonoidalCategory' (Opposite c) t where
   type Unit (Opposite c) t = Unit c t
-
-instance UnitalMagma (NaturalTransformation2 (->)) CProd c =>
-         UnitalMagma (NaturalTransformation2 (->)) CProd (Opposite c) where
-  unit Proxy = NT2 (\Refl -> Opposite id)
 
 instance HasTerminalObject (Opposite (->)) where
   type TerminalObject (Opposite (->)) = Base.Void

@@ -15,6 +15,6 @@ import Haskerwaul.Transformation.Natural
 -- | [nLab](https://ncatlab.org/nlab/show/groupoid)
 --
 --  __NB__: Instances for this are automatically coalesced.
-class (Group (NaturalTransformation2 (->)) CProd a, Category a) => Groupoid a
+class (Group (NaturalTransformation2 (->)) Procompose a, Category a) => Groupoid a
 
-instance (Group (NaturalTransformation2 (->)) CProd a, Category a) => Groupoid a
+instance (Group (NaturalTransformation2 (->)) Procompose a, Category a) => Groupoid a

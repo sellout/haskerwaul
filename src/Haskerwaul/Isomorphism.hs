@@ -14,15 +14,15 @@ data Isomorphism c a b = Iso { to :: a `c` b, from :: b `c` a }
 
 type instance Ob (Isomorphism c) = Ob c
 
-instance Magma (NaturalTransformation2 (->)) CProd c =>
-         Magma (NaturalTransformation2 (->)) CProd (Isomorphism c) where
-  op = NT2 (\(CProd f g) -> Iso (to f . to g) (from g . from f))
+instance Magma (NaturalTransformation2 (->)) Procompose c =>
+         Magma (NaturalTransformation2 (->)) Procompose (Isomorphism c) where
+  op = NT2 (\(Procompose f g) -> Iso (to f . to g) (from g . from f))
 
-instance Semigroup (NaturalTransformation2 (->)) CProd c =>
-         Semigroup (NaturalTransformation2 (->)) CProd (Isomorphism c)
+instance Semigroup (NaturalTransformation2 (->)) Procompose c =>
+         Semigroup (NaturalTransformation2 (->)) Procompose (Isomorphism c)
 
-instance UnitalMagma (NaturalTransformation2 (->)) CProd c =>
-         UnitalMagma (NaturalTransformation2 (->)) CProd (Isomorphism c) where
+instance UnitalMagma (NaturalTransformation2 (->)) Procompose c =>
+         UnitalMagma (NaturalTransformation2 (->)) Procompose (Isomorphism c) where
   unit Proxy = NT2 (\Refl -> Iso id id)
 
 instance MonoidalCategory' c t => MonoidalCategory' (Isomorphism c) t where

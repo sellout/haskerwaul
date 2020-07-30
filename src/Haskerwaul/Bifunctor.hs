@@ -58,8 +58,8 @@ instance (c1 ~ (->), c2 ~ (->)) =>
          (NaturalTransformation2 c1)
          (NaturalTransformation2 c2)
          (NaturalTransformation2 (->))
-         CProd where
-  bimap f g = NT2 (\(CProd x y) -> CProd (runNT2 f x) (runNT2 g y))
+         Procompose where
+  bimap f g = NT2 (\(Procompose x y) -> Procompose (runNT2 f x) (runNT2 g y))
 
 instance Bifunctor (:-) (:-) (:-) Combine where
   bimap f g = trans ins (trans (f *** g) cls)
