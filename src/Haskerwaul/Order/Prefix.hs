@@ -52,8 +52,18 @@ instance PrefixOrder (->) (Canonical Word64)
 
 -- | `Float` doesn't have a stronger ordering than this because of NaNs. NaNs
 --   are incomparable to anything.
+--
+--  __NB__: There are tradeoffs between this approach and one that fits NaNs
+--          between -Inf +Inf (e.g., the other approach allows for a
+--         `Haskerwaul.Lattice.Bounded.BoundedLattice` instance. We should
+--          probably provide distinct @newtype@ wrappers so we can offer both.
 instance PrefixOrder (->) (Canonical Float)
 
 -- | `Double` doesn't have a stronger ordering than this because of NaNs. NaNs
 --   are incomparable to anything.
+--
+--  __NB__: There are tradeoffs between this approach and one that fits NaNs
+--          between -Inf +Inf (e.g., the other approach allows for a
+--         `Haskerwaul.Lattice.Bounded.BoundedLattice` instance. We should
+--          probably provide distinct @newtype@ wrappers so we can offer both.
 instance PrefixOrder (->) (Canonical Double)

@@ -12,7 +12,11 @@ import qualified Data.Word as Base
 
 import Haskerwaul.Lattice
 
--- | [nLab](https://ncatlab.org/nlab/show/modular+lattice)
+-- |
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/modular+lattice)
+-- - [Wikipedia](https://en.wikipedia.org/wiki/Modular_lattice)
 class Lattice c t a => ModularLattice c t a
 
 instance ModularLattice (->) (,) Base.Bool
