@@ -223,6 +223,7 @@ library
                     , Haskerwaul.Subcategory.Wide
                     , Haskerwaul.Topos.Elementary
                     , Haskerwaul.Topos.Grothendieck
+                    , Haskerwaul.Transformation.Dinatural
                     , Haskerwaul.Transformation.Natural
   other-modules:      Haskerwaul.Duoid.Components
                     , Haskerwaul.Lattice.Components

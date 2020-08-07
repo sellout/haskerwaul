@@ -29,9 +29,9 @@ instance RightQuasigroup (->) Either Void where
 instance RightQuasigroup (->) (,) () where
   rightQuotient ((), ()) = ()
 
--- instance RightQuasigroup (NaturalTransformation2 (->)) Procompose c =>
---          RightQuasigroup (NaturalTransformation2 (->)) Procompose (Op c) where
---   inverse = NT2 (\(Op f) -> Op (runNT2 inverse f))
+-- instance RightQuasigroup (DinaturalTransformation (->)) Procompose c =>
+--          RightQuasigroup (DinaturalTransformation (->)) Procompose (Op c) where
+--   inverse = DT (\(Op f) -> Op (runDT inverse f))
 
 instance RightQuasigroup (->) (,) (Additive Int) where
   rightQuotient (Add x, Add y) = Add (x Base.- y)

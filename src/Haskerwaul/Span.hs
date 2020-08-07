@@ -10,7 +10,7 @@ import Haskerwaul.Category.Monoidal.Cartesian
 import Haskerwaul.Constraint
 import Haskerwaul.Object
 import Haskerwaul.Pullback
-import Haskerwaul.Transformation.Natural
+import Haskerwaul.Transformation.Dinatural
 
 -- |
 -- = references
@@ -25,23 +25,23 @@ type instance Ob (Span c) = Ob c
 -- how to set the `Ob` constraint on the existential.
 
 instance (Ob c ~ All, CartesianMonoidalCategory c) =>
-         Magma (NaturalTransformation2 (->)) Procompose (Span c) where
+         Magma (DinaturalTransformation (->)) Procompose (Span c) where
   op =
-    NT2
+    DT
     (\(Procompose (Span b c) (Span a b')) ->
         let pb = cartesianPullbackSquare b' b in Span (a . lx pb) (c . ly pb)
     )
 
 instance (Ob c ~ All, CartesianMonoidalCategory c) =>
-         Semigroup (NaturalTransformation2 (->)) Procompose (Span c)
+         Semigroup (DinaturalTransformation (->)) Procompose (Span c)
 
 instance MonoidalCategory c t => MonoidalCategory' (Span c) t where
   type Unit (Span c) t = Unit c t
 
 instance (Ob c ~ All, CartesianMonoidalCategory c) =>
-         UnitalMagma (NaturalTransformation2 (->)) Procompose (Span c) where
-  unit :: Proxy Procompose -> NaturalTransformation2 (->) (:~:) (Span c)
-  unit Proxy = NT2 (\Refl -> Span id id)
+         UnitalMagma (DinaturalTransformation (->)) Procompose (Span c) where
+  unit :: Proxy Procompose -> DinaturalTransformation (->) (:~:) (Span c)
+  unit Proxy = DT (\Refl -> Span id id)
 
 instance (SemigroupalCategory c t, Magma c t a) => Magma (Span c) t a where
   op = Span id op \\ inT @(Ob c) @t @a @a

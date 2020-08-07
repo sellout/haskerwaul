@@ -26,8 +26,8 @@ quotient = rightQuotient
 
 -- * `Haskerwaul.Groupoid.Groupoid` instances
 
--- instance Group (NaturalTransformation2 (->)) Procompose (:~:) where
---   inverse = NT2 sym
+-- instance Group (DinaturalTransformation (->)) Procompose (:~:) where
+--   inverse = DT sym
 
--- instance Group (NaturalTransformation2 (->)) Procompose (Iso c) where
---   inverse = NT2 (\(Iso to from) -> Iso from to)
+-- instance Group (DinaturalTransformation (->)) Procompose (Iso c) where
+--   inverse = DT (\(Iso to from) -> Iso from to)

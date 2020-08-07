@@ -11,7 +11,7 @@ import Haskerwaul.Object
 --   @b@ is commutative in the image of @a@.
 --
 --  __NB__: This should also be able to test the functor laws. If we specialize
---        * @c ~ `Haskerwaul.Transformation.Natural.NaturalTransformation2` (->)@
+--        * @c ~ `Haskerwaul.Transformation.Natural.DinaturalTransformation` (->)@
 --          and
 --        * @t ~ `Procompose`@,
 --

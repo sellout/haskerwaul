@@ -18,6 +18,7 @@ import Haskerwaul.Magma.Unital
 import Haskerwaul.Quasigroup.Left
 import Haskerwaul.Quasigroup.Right
 import Haskerwaul.Semigroup
+import Haskerwaul.Transformation.Dinatural
 import Haskerwaul.Transformation.Natural
 
 -- | Composition of profunctors, a tensor in profunctor categories.
@@ -35,110 +36,110 @@ data Procompose c d a b = forall z. Procompose (z `c` b) (a `d` z)
 --  __TODO__: This should have a @`Haskerwaul.Profunctor.Profunctor` c c c@
 --            constraint, but there are troublesome instances, so we skip the
 --            constraint here and add it on the instances that make use of it.
-type Semigroupoid = Semigroup (NaturalTransformation2 (->)) Procompose
+type Semigroupoid = Semigroup (DinaturalTransformation (->)) Procompose
 
 -- | Just a bit of sugar over `op`, when it's used categorcally.
-(.) :: Magma (NaturalTransformation2 (->)) Procompose c
+(.) :: Magma (DinaturalTransformation (->)) Procompose c
     => z `c` b -> a `c` z -> a `c` b
-f . g = runNT2 op (Procompose f g)
+f . g = runDT op (Procompose f g)
 
 -- | Just a bit of sugar over `unit`, when it's used categorcally.
-id :: UnitalMagma (NaturalTransformation2 (->)) Procompose c => a `c` a
-id = runNT2 (unit (Proxy :: Proxy Procompose)) Refl
+id :: UnitalMagma (DinaturalTransformation (->)) Procompose c => a `c` a
+id = runDT (unit (Proxy :: Proxy Procompose)) Refl
 
 -- | The correct unit here is the Hom functor, but I don't know how to define
 --   that, and this approach seems to work well enough for now.
-instance MonoidalCategory' (NaturalTransformation2 (->)) Procompose where
-  type Unit (NaturalTransformation2 (->)) Procompose = (:~:)
+instance MonoidalCategory' (DinaturalTransformation (->)) Procompose where
+  type Unit (DinaturalTransformation (->)) Procompose = (:~:)
 
 -- | All `Base.Category` instances are also `Semigroupoid` instances.
 instance {-# overlappable #-} Base.Category c =>
-                              Magma (NaturalTransformation2 (->)) Procompose c where
-  op = NT2 (\(Procompose f g) -> f . g)
+                              Magma (DinaturalTransformation (->)) Procompose c where
+  op = DT (\(Procompose f g) -> f . g)
 
 -- | All `Base.Category` instances are also `Semigroupoid` instances.
 instance {-# overlappable #-} Base.Category c =>
-                              Semigroup (NaturalTransformation2 (->)) Procompose c
+                              Semigroup (DinaturalTransformation (->)) Procompose c
 
 -- | All `Base.Category` instances are also `Haskerwaul.Category` instances.
 instance {-# overlappable #-} Base.Category c =>
-                              UnitalMagma (NaturalTransformation2 (->)) Procompose c where
-  unit Proxy = NT2 (\Refl -> Base.id)
+                              UnitalMagma (DinaturalTransformation (->)) Procompose c where
+  unit Proxy = DT (\Refl -> Base.id)
 
 -- | If /C/ is a `Semigroupoid`, then so are /C/-valued functors.
-instance Magma (NaturalTransformation2 (->)) Procompose c =>
-         Magma (NaturalTransformation2 (->)) Procompose (NaturalTransformation c) where
-  op = NT2 (\(Procompose (NT f) (NT g)) -> NT (f . g))
+instance Magma (DinaturalTransformation (->)) Procompose c =>
+         Magma (DinaturalTransformation (->)) Procompose (NaturalTransformation c) where
+  op = DT (\(Procompose (NT f) (NT g)) -> NT (f . g))
 
 -- | If /C/ is a `Semigroupoid`, then so are /C/-valued functors.
-instance Semigroup (NaturalTransformation2 (->)) Procompose c =>
-         Semigroup (NaturalTransformation2 (->)) Procompose (NaturalTransformation c)
+instance Semigroup (DinaturalTransformation (->)) Procompose c =>
+         Semigroup (DinaturalTransformation (->)) Procompose (NaturalTransformation c)
 
 -- | If /C/ is a `Category`, then so are /C/-valued functors.
-instance UnitalMagma (NaturalTransformation2 (->)) Procompose c =>
-         UnitalMagma (NaturalTransformation2 (->)) Procompose (NaturalTransformation c) where
-  unit Proxy = NT2 (\Refl -> NT id)
+instance UnitalMagma (DinaturalTransformation (->)) Procompose c =>
+         UnitalMagma (DinaturalTransformation (->)) Procompose (NaturalTransformation c) where
+  unit Proxy = DT (\Refl -> NT id)
 
 -- | If /C/ is a `Semigroupoid`, then so are /C/-valud bifunctors.
-instance Magma (NaturalTransformation2 (->)) Procompose c =>
-         Magma (NaturalTransformation2 (->)) Procompose (NaturalTransformation2 c) where
-  op = NT2 (\(Procompose (NT2 f) (NT2 g)) -> NT2 (f . g))
+instance Magma (DinaturalTransformation (->)) Procompose c =>
+         Magma (DinaturalTransformation (->)) Procompose (DinaturalTransformation c) where
+  op = DT (\(Procompose (DT f) (DT g)) -> DT (f . g))
 
 -- | If /C/ is a `Semigroupoid`, then so are /C/-valud bifunctors.
-instance Semigroup (NaturalTransformation2 (->)) Procompose c =>
-         Semigroup (NaturalTransformation2 (->)) Procompose (NaturalTransformation2 c)
+instance Semigroup (DinaturalTransformation (->)) Procompose c =>
+         Semigroup (DinaturalTransformation (->)) Procompose (DinaturalTransformation c)
 
 -- | If /C/ is a `Category`, then so are /C/-valud bifunctors.
-instance UnitalMagma (NaturalTransformation2 (->)) Procompose c =>
-         UnitalMagma (NaturalTransformation2 (->)) Procompose (NaturalTransformation2 c) where
-  unit Proxy = NT2 (\Refl -> NT2 id)
+instance UnitalMagma (DinaturalTransformation (->)) Procompose c =>
+         UnitalMagma (DinaturalTransformation (->)) Procompose (DinaturalTransformation c) where
+  unit Proxy = DT (\Refl -> DT id)
 
 -- | a discrete groupoid
 --
 -- = references
 --
 -- - [nLab](https://ncatlab.org/nlab/show/discrete+category)
-instance Magma (NaturalTransformation2 (->)) Procompose (:~:) where
-  op = NT2 (\(Procompose Refl Refl) -> Refl)
+instance Magma (DinaturalTransformation (->)) Procompose (:~:) where
+  op = DT (\(Procompose Refl Refl) -> Refl)
 
 -- | a discrete groupoid
 --
 -- = references
 --
 -- - [nLab](https://ncatlab.org/nlab/show/discrete+category)
-instance Semigroup (NaturalTransformation2 (->)) Procompose (:~:)
+instance Semigroup (DinaturalTransformation (->)) Procompose (:~:)
 
 -- | a discrete groupoid
 --
 -- = references
 --
 -- - [nLab](https://ncatlab.org/nlab/show/discrete+category)
-instance UnitalMagma (NaturalTransformation2 (->)) Procompose (:~:) where
-  unit Proxy = NT2 id
+instance UnitalMagma (DinaturalTransformation (->)) Procompose (:~:) where
+  unit Proxy = DT id
 
 -- | a discrete groupoid
 --
 -- = references
 --
 -- - [nLab](https://ncatlab.org/nlab/show/discrete+category)
-instance LeftQuasigroup (NaturalTransformation2 (->)) Procompose (:~:) where
-  leftQuotient = NT2 (\(Procompose Refl Refl) -> Refl)
+instance LeftQuasigroup (DinaturalTransformation (->)) Procompose (:~:) where
+  leftQuotient = DT (\(Procompose Refl Refl) -> Refl)
 
 -- | a discrete groupoid
 --
 -- = references
 --
 -- - [nLab](https://ncatlab.org/nlab/show/discrete+category)
-instance RightQuasigroup (NaturalTransformation2 (->)) Procompose (:~:) where
-  rightQuotient = NT2 (\(Procompose Refl Refl) -> Refl)
+instance RightQuasigroup (DinaturalTransformation (->)) Procompose (:~:) where
+  rightQuotient = DT (\(Procompose Refl Refl) -> Refl)
 
 -- -- | If /C/ and /C'/ are `Semigroupoid` instances, then so is their product.
--- instance ( Magma (NaturalTransformation2 (->)) Procompose c
---          , Magma (NaturalTransformation2 (->)) Procompose c') =>
---          Magma (NaturalTransformation2 (->)) Procompose (c :**: c') where
---   op = NT2 (\(Procompose (NT (ProdC f)) (NT (ProdC g))) -> NT (f . g))
+-- instance ( Magma (DinaturalTransformation (->)) Procompose c
+--          , Magma (DinaturalTransformation (->)) Procompose c') =>
+--          Magma (DinaturalTransformation (->)) Procompose (c :**: c') where
+--   op = DT (\(Procompose (NT (ProdC f)) (NT (ProdC g))) -> NT (f . g))
 
 -- -- | If /C/ and /C'/ are `Semigroupoid` instances, then so is their product.
--- instance ( Semigroup (NaturalTransformation2 (->)) Procompose c
---          , Semigroup (NaturalTransformation2 (->)) Procompose c') =>
---          Semigroup (NaturalTransformation2 (->)) Procompose (c :**: c')
+-- instance ( Semigroup (DinaturalTransformation (->)) Procompose c
+--          , Semigroup (DinaturalTransformation (->)) Procompose c') =>
+--          Semigroup (DinaturalTransformation (->)) Procompose (c :**: c')

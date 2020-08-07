@@ -10,7 +10,7 @@ import           Prelude (error)
 import Haskerwaul.Constraint
 import Haskerwaul.Groupoid
 import Haskerwaul.Object
-import Haskerwaul.Transformation.Natural
+import Haskerwaul.Transformation.Dinatural
 
 -- | [nLab](https://ncatlab.org/nlab/show/empty+category)
 --
@@ -24,25 +24,25 @@ fromEmpty = \case
 -- | There are no objects in the empty category.
 type instance Ob EmptyCategory = None
 
-instance Magma (NaturalTransformation2 (->)) Procompose EmptyCategory where
-  op = NT2 (\case)
+instance Magma (DinaturalTransformation (->)) Procompose EmptyCategory where
+  op = DT (\case)
 
-instance Semigroup (NaturalTransformation2 (->)) Procompose EmptyCategory
+instance Semigroup (DinaturalTransformation (->)) Procompose EmptyCategory
 
 -- | __FIXME__: It should be impossible to apply this `unit`, because there is
 --              no object that passes the `None` constraint. However, I don't
 --              think that's checked here, and we probably _can_ trigger this
 --             `error` easily. This is a pretty good illustration that `(:~:)`
---              is the wrong @`Unit` (`NaturalTransformation2` (->)) `Procompose`@.
-instance UnitalMagma (NaturalTransformation2 (->)) Procompose EmptyCategory where
+--              is the wrong @`Unit` (`DinaturalTransformation` (->)) `Procompose`@.
+instance UnitalMagma (DinaturalTransformation (->)) Procompose EmptyCategory where
   unit Proxy =
-    NT2
+    DT
     (\Refl ->
        error
        "There is no object, thus no identity morphism, in the empty category.")
 
-instance LeftQuasigroup (NaturalTransformation2 (->)) Procompose EmptyCategory where
-  leftQuotient = NT2 (\case)
+instance LeftQuasigroup (DinaturalTransformation (->)) Procompose EmptyCategory where
+  leftQuotient = DT (\case)
 
-instance RightQuasigroup (NaturalTransformation2 (->)) Procompose EmptyCategory where
-  rightQuotient = NT2 (\case)
+instance RightQuasigroup (DinaturalTransformation (->)) Procompose EmptyCategory where
+  rightQuotient = DT (\case)

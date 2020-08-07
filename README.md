@@ -139,7 +139,7 @@ In "plain" category theory, the Hom functor for a category **C** is a functor **
 
 One way to model this is to add a parameter `v` to `Category c`, like
 ```haskell
-class Monoid (NaturalTransformation2 v) Procompose c => Category v c
+class Monoid (DinaturalTransformation v) Procompose c => Category v c
 ```
 However, this means that the same category, enriched differently, has multiple instances. Modeling the enrichment separaetely, e.g.,
 ```haskell

@@ -10,11 +10,11 @@ module Haskerwaul.Groupoid
 
 import Haskerwaul.Category
 import Haskerwaul.Group
-import Haskerwaul.Transformation.Natural
+import Haskerwaul.Transformation.Dinatural
 
 -- | [nLab](https://ncatlab.org/nlab/show/groupoid)
 --
 --  __NB__: Instances for this are automatically coalesced.
-class (Group (NaturalTransformation2 (->)) Procompose a, Category a) => Groupoid a
+class (Group (DinaturalTransformation (->)) Procompose a, Category a) => Groupoid a
 
-instance (Group (NaturalTransformation2 (->)) Procompose a, Category a) => Groupoid a
+instance (Group (DinaturalTransformation (->)) Procompose a, Category a) => Groupoid a

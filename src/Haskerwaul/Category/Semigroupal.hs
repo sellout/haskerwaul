@@ -16,6 +16,7 @@ import Haskerwaul.Constraint
 import Haskerwaul.Bifunctor
 import Haskerwaul.Isomorphism
 import Haskerwaul.Object
+import Haskerwaul.Transformation.Dinatural
 import Haskerwaul.Transformation.Natural
 
 class (Category c, TOb (Ob c) t, Bifunctor c c c t) =>
@@ -50,11 +51,11 @@ instance (c ~ (->), SemigroupalCategory c t) =>
     p = Proxy
 
 instance (c ~ (->), SemigroupalCategory c t) =>
-         SemigroupalCategory (NaturalTransformation2 c) (BTensor t) where
+         SemigroupalCategory (DinaturalTransformation c) (BTensor t) where
   assoc =
     Iso
-    (NT2 (BTensor . first p BTensor . to assoc . second p lowerBTensor . lowerBTensor))
-    (NT2 (BTensor . second p BTensor . from assoc . first p lowerBTensor . lowerBTensor))
+    (DT (BTensor . first p BTensor . to assoc . second p lowerBTensor . lowerBTensor))
+    (DT (BTensor . second p BTensor . from assoc . first p lowerBTensor . lowerBTensor))
    where
     p :: Proxy c
     p = Proxy
@@ -68,8 +69,8 @@ instance SemigroupalCategory (:-) Combine where
 instance SemigroupalCategory (NaturalTransformation (:-)) CFProd where
   assoc = Iso (NT (Sub Dict)) (NT (Sub Dict))
 
-instance SemigroupalCategory (NaturalTransformation2 (->)) Procompose where
+instance SemigroupalCategory (DinaturalTransformation (->)) Procompose where
   assoc =
     Iso
-    (NT2 (\(Procompose f (Procompose g h)) -> Procompose (Procompose f g) h))
-    (NT2 (\(Procompose (Procompose f g) h) -> Procompose f (Procompose g h)))
+    (DT (\(Procompose f (Procompose g h)) -> Procompose (Procompose f g) h))
+    (DT (\(Procompose (Procompose f g) h) -> Procompose f (Procompose g h)))

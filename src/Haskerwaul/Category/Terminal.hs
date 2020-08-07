@@ -13,7 +13,7 @@ import Haskerwaul.Functor
 import Haskerwaul.Isomorphism
 import Haskerwaul.Object
 import Haskerwaul.Object.Terminal
-import Haskerwaul.Transformation.Natural
+import Haskerwaul.Transformation.Dinatural
 
 -- | [nLab](https://ncatlab.org/nlab/show/terminal+category)
 --
@@ -33,13 +33,13 @@ type instance Ob TerminalCategory = All
 terminalIso :: Isomorphism TerminalCategory a b
 terminalIso = Iso TermId TermId
 
-instance Magma (NaturalTransformation2 (->)) Procompose TerminalCategory where
-  op = NT2 (\(Procompose _ _) -> TermId)
+instance Magma (DinaturalTransformation (->)) Procompose TerminalCategory where
+  op = DT (\(Procompose _ _) -> TermId)
 
-instance Semigroup (NaturalTransformation2 (->)) Procompose TerminalCategory
+instance Semigroup (DinaturalTransformation (->)) Procompose TerminalCategory
 
-instance UnitalMagma (NaturalTransformation2 (->)) Procompose TerminalCategory where
-  unit Proxy = NT2 (\Refl -> TermId)
+instance UnitalMagma (DinaturalTransformation (->)) Procompose TerminalCategory where
+  unit Proxy = DT (\Refl -> TermId)
 
 -- | Every object is a tensor.
 instance SemigroupalCategory TerminalCategory t where

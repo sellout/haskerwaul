@@ -29,6 +29,7 @@ import Haskerwaul.Object
 import Haskerwaul.Quasigroup.Left
 import Haskerwaul.Quasigroup.Right
 import Haskerwaul.Subcategory
+import Haskerwaul.Transformation.Dinatural
 import Haskerwaul.Transformation.Natural
 
 -- | [nLab](https://ncatlab.org/nlab/show/full+subcategory)
@@ -46,34 +47,34 @@ type instance Ob (FullSubcategory ob c) = CFProd (Ob c) ob
 instance Subcategory (FullSubcategory ob c) c where
   inclusion (FS f) = f
 
-instance Magma (NaturalTransformation2 (->)) Procompose c =>
-         Magma (NaturalTransformation2 (->)) Procompose (FullSubcategory ob c) where
-  op = NT2 (\(Procompose (FS f) (FS g)) -> FS (f . g))
+instance Magma (DinaturalTransformation (->)) Procompose c =>
+         Magma (DinaturalTransformation (->)) Procompose (FullSubcategory ob c) where
+  op = DT (\(Procompose (FS f) (FS g)) -> FS (f . g))
 
-instance Semigroup (NaturalTransformation2 (->)) Procompose c =>
-         Semigroup (NaturalTransformation2 (->)) Procompose (FullSubcategory ob c)
+instance Semigroup (DinaturalTransformation (->)) Procompose c =>
+         Semigroup (DinaturalTransformation (->)) Procompose (FullSubcategory ob c)
 
 instance (MonoidalCategory' c t, ob (Unit c t)) =>
          MonoidalCategory' (FullSubcategory ob c) t where
   type Unit (FullSubcategory ob c) t = Unit c t
 
-instance UnitalMagma (NaturalTransformation2 (->)) Procompose c =>
-         UnitalMagma (NaturalTransformation2 (->)) Procompose (FullSubcategory ob c) where
-  unit Proxy = NT2 (\Refl -> FS id)
+instance UnitalMagma (DinaturalTransformation (->)) Procompose c =>
+         UnitalMagma (DinaturalTransformation (->)) Procompose (FullSubcategory ob c) where
+  unit Proxy = DT (\Refl -> FS id)
 
-instance LeftQuasigroup (NaturalTransformation2 (->)) Procompose c =>
+instance LeftQuasigroup (DinaturalTransformation (->)) Procompose c =>
          LeftQuasigroup
-         (NaturalTransformation2 (->))
+         (DinaturalTransformation (->))
          Procompose
          (FullSubcategory ob c) where
-  leftQuotient = NT2 FS . leftQuotient . bimap (NT2 inclusion) (NT2 inclusion)
+  leftQuotient = DT FS . leftQuotient . bimap (DT inclusion) (DT inclusion)
 
-instance RightQuasigroup (NaturalTransformation2 (->)) Procompose c =>
+instance RightQuasigroup (DinaturalTransformation (->)) Procompose c =>
          RightQuasigroup
-         (NaturalTransformation2 (->))
+         (DinaturalTransformation (->))
          Procompose
          (FullSubcategory ob c) where
-  rightQuotient = NT2 FS . rightQuotient . bimap (NT2 inclusion) (NT2 inclusion)
+  rightQuotient = DT FS . rightQuotient . bimap (DT inclusion) (DT inclusion)
 
 instance {-# overlappable #-} (SemigroupalCategory c t, TOb ob t) =>
                               SemigroupalCategory (FullSubcategory ob c) t where

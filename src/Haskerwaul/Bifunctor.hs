@@ -11,6 +11,7 @@ import           Data.Proxy (Proxy(..))
 import Haskerwaul.Category
 import Haskerwaul.Constraint
 import Haskerwaul.Object
+import Haskerwaul.Transformation.Dinatural
 import Haskerwaul.Transformation.Natural
 
 -- | [nLab](https://ncatlab.org/nlab/show/bifunctor)
@@ -47,19 +48,19 @@ instance (Ob c1 ~ All, Ob c2 ~ All, d ~ (->), Semigroupoid d, Bifunctor c1 c2 d 
 
 instance (Ob c1 ~ All, Ob c2 ~ All, d ~ (->), Semigroupoid d, Bifunctor c1 c2 d t) =>
          Bifunctor
-         (NaturalTransformation2 c1)
-         (NaturalTransformation2 c2)
-         (NaturalTransformation2 d)
+         (DinaturalTransformation c1)
+         (DinaturalTransformation c2)
+         (DinaturalTransformation d)
          (BTensor t) where
-  bimap f g = NT2 (BTensor . bimap (runNT2 f) (runNT2 g) . lowerBTensor)
+  bimap f g = DT (BTensor . bimap (runDT f) (runDT g) . lowerBTensor)
 
 instance (c1 ~ (->), c2 ~ (->)) =>
          Bifunctor
-         (NaturalTransformation2 c1)
-         (NaturalTransformation2 c2)
-         (NaturalTransformation2 (->))
+         (DinaturalTransformation c1)
+         (DinaturalTransformation c2)
+         (DinaturalTransformation (->))
          Procompose where
-  bimap f g = NT2 (\(Procompose x y) -> Procompose (runNT2 f x) (runNT2 g y))
+  bimap f g = DT (\(Procompose x y) -> Procompose (runDT f x) (runDT g y))
 
 instance Bifunctor (:-) (:-) (:-) Combine where
   bimap f g = trans ins (trans (f *** g) cls)

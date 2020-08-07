@@ -20,6 +20,7 @@ import Haskerwaul.Functor
 import Haskerwaul.Isomorphism
 import Haskerwaul.Monad
 import Haskerwaul.Object
+import Haskerwaul.Transformation.Dinatural
 import Haskerwaul.Transformation.Natural
 
 -- | [nLab](https://ncatlab.org/nlab/show/opposite+category)
@@ -35,18 +36,18 @@ type instance Ob (Opposite c) = Ob c
 --   inB = Sub (Dict \\ inB @cOb @dOb @eOb @c @x @y)
 
 -- | If /C/ is a `Semigroupoid`, then so is /C^op/.
-instance Magma (NaturalTransformation2 (->)) Procompose c =>
-         Magma (NaturalTransformation2 (->)) Procompose (Opposite c) where
-  op = NT2 (\(Procompose (Opposite f) (Opposite g)) -> Opposite (g . f))
+instance Magma (DinaturalTransformation (->)) Procompose c =>
+         Magma (DinaturalTransformation (->)) Procompose (Opposite c) where
+  op = DT (\(Procompose (Opposite f) (Opposite g)) -> Opposite (g . f))
 
 -- | If /C/ is a `Semigroupoid`, then so is /C^op/.
-instance Semigroup (NaturalTransformation2 (->)) Procompose c =>
-         Semigroup (NaturalTransformation2 (->)) Procompose (Opposite c)
+instance Semigroup (DinaturalTransformation (->)) Procompose c =>
+         Semigroup (DinaturalTransformation (->)) Procompose (Opposite c)
 
 -- | If /C/ is a `Category`, then so is /C^op/.
-instance UnitalMagma (NaturalTransformation2 (->)) Procompose c =>
-         UnitalMagma (NaturalTransformation2 (->)) Procompose (Opposite c) where
-  unit Proxy = NT2 (\Refl -> Opposite id)
+instance UnitalMagma (DinaturalTransformation (->)) Procompose c =>
+         UnitalMagma (DinaturalTransformation (->)) Procompose (Opposite c) where
+  unit Proxy = DT (\Refl -> Opposite id)
 
 -- | If /C/ is a `MonoidalCategory`, then so is /C^op/.
 instance MonoidalCategory' c t => MonoidalCategory' (Opposite c) t where
@@ -95,28 +96,28 @@ type family Op (c :: ok -> ok -> Type) :: ok -> ok -> Type where
 --   category.
 opIsomorphism
   :: Isomorphism
-     (NaturalTransformation2 (->))
+     (DinaturalTransformation (->))
      (Opposite (Isomorphism c))
      (Isomorphism (Opposite c))
 opIsomorphism =
   Iso
-  (NT2 (Base.uncurry Iso . (Opposite . to &&& Opposite . from) . opposite))
-  (NT2 (Opposite . Base.uncurry Iso . (opposite . to &&& opposite . from)))
+  (DT (Base.uncurry Iso . (Opposite . to &&& Opposite . from) . opposite))
+  (DT (Opposite . Base.uncurry Iso . (opposite . to &&& opposite . from)))
 
-opOpIso :: Isomorphism (NaturalTransformation2 (->)) (Opposite (Opposite c)) c
-opOpIso = Iso (NT2 (opposite . opposite)) (NT2 (Opposite . Opposite))
+opOpIso :: Isomorphism (DinaturalTransformation (->)) (Opposite (Opposite c)) c
+opOpIso = Iso (DT (opposite . opposite)) (DT (Opposite . Opposite))
 
 -- | Natural transformation that converts an `Isomorphism` to an `Isomorphism`
 --   in the opposite category.
 isomorphismOp
   :: Isomorphism
-     (NaturalTransformation2 (->))
+     (DinaturalTransformation (->))
      (Isomorphism c)
      (Isomorphism (Opposite c))
 isomorphismOp =
   Iso
-  (NT2 (Base.uncurry Iso . (Opposite . from &&& Opposite . to)))
-  (NT2 (Base.uncurry Iso . (opposite . from &&& opposite . to)))
+  (DT (Base.uncurry Iso . (Opposite . from &&& Opposite . to)))
+  (DT (Base.uncurry Iso . (opposite . from &&& opposite . to)))
 
 -- | Functors are self-dual.
 instance {-# overlappable #-} Functor c d f =>
@@ -141,12 +142,12 @@ instance {-# OVERLAPPABLE #-} Monad' (Opposite (->)) m => Monad (Opposite (->)) 
 
 -- | Every semigroupal structure is semigroupal in the opposite category.
 instance SemigroupalCategory c t => SemigroupalCategory (Opposite c) t where
-  assoc = runNT2 (to isomorphismOp) assoc
+  assoc = runDT (to isomorphismOp) assoc
 
 -- | Every monoidal structure is monoidal in the opposite category.
 instance MonoidalCategory c t => MonoidalCategory (Opposite c) t where
-  leftIdentity = runNT2 (to isomorphismOp) leftIdentity
-  rightIdentity = runNT2 (to isomorphismOp) rightIdentity
+  leftIdentity = runDT (to isomorphismOp) leftIdentity
+  rightIdentity = runDT (to isomorphismOp) rightIdentity
 
 -- `CocartesianCategory` instances (in this module to avoid orphans)
 instance CartesianMonoidalCategory (Opposite (->)) where

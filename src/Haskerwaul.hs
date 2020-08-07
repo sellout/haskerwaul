@@ -233,6 +233,7 @@ module Haskerwaul
   , module Haskerwaul.Topos.Elementary
   , module Haskerwaul.Topos.Grothendieck
   -- * natural transformations
+  , module Haskerwaul.Transformation.Dinatural
   , module Haskerwaul.Transformation.Natural
   ) where
 
@@ -427,4 +428,5 @@ import Haskerwaul.Subcategory.Full
 import Haskerwaul.Subcategory.Wide
 import Haskerwaul.Topos.Elementary
 import Haskerwaul.Topos.Grothendieck
+import Haskerwaul.Transformation.Dinatural
 import Haskerwaul.Transformation.Natural

@@ -14,7 +14,7 @@ import Haskerwaul.Functor
 import Haskerwaul.Isomorphism
 import Haskerwaul.Monad
 import Haskerwaul.Object
-import Haskerwaul.Transformation.Natural
+import Haskerwaul.Transformation.Dinatural
 
 -- | [nLab](https://ncatlab.org/nlab/show/Kleisli+category)
 --
@@ -26,16 +26,16 @@ newtype Kleisli (c :: ok -> ok -> Type) m a b =
 type instance Ob (Kleisli c m) = Ob c
 
 instance (Ob c ~ All, Semigroupoid c, Monad c m, FOb (Ob c) (Ob c) m) =>
-         Magma (NaturalTransformation2 (->)) Procompose (Kleisli c m) where
+         Magma (DinaturalTransformation (->)) Procompose (Kleisli c m) where
   op =
-    NT2 (\(Procompose (Kleisli f) (Kleisli g)) -> Kleisli (flatten . map f . g))
+    DT (\(Procompose (Kleisli f) (Kleisli g)) -> Kleisli (flatten . map f . g))
 
 instance (Ob c ~ All, Semigroupoid c, Monad c m) =>
-         Semigroup (NaturalTransformation2 (->)) Procompose (Kleisli c m)
+         Semigroup (DinaturalTransformation (->)) Procompose (Kleisli c m)
 
 instance (Ob c ~ All, Category c, Monad c m) =>
-         UnitalMagma (NaturalTransformation2 (->)) Procompose (Kleisli c m) where
-  unit Proxy = NT2 (\Refl -> Kleisli pure)
+         UnitalMagma (DinaturalTransformation (->)) Procompose (Kleisli c m) where
+  unit Proxy = DT (\Refl -> Kleisli pure)
 
 instance ( Ob c ~ All
          , SemigroupalCategory c t

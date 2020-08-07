@@ -10,7 +10,7 @@ module Haskerwaul.Category
 
 import Haskerwaul.Monoid
 import Haskerwaul.Semigroupoid
-import Haskerwaul.Transformation.Natural
+import Haskerwaul.Transformation.Dinatural
 
 -- |
 -- = references
@@ -18,8 +18,8 @@ import Haskerwaul.Transformation.Natural
 -- - [nLab](https://ncatlab.org/nlab/show/category)
 -- - [Wikipedia](https://en.wikipedia.org/wiki/Category_(mathematics)
 --  __NB__: Instances for this are automatically coalesced.
-class (Monoid (NaturalTransformation2 (->)) Procompose c, Semigroupoid c) =>
+class (Monoid (DinaturalTransformation (->)) Procompose c, Semigroupoid c) =>
       Category c
 
-instance (Monoid (NaturalTransformation2 (->)) Procompose c, Semigroupoid c) =>
+instance (Monoid (DinaturalTransformation (->)) Procompose c, Semigroupoid c) =>
          Category c

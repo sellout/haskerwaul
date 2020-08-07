@@ -23,6 +23,7 @@ import Haskerwaul.Constraint
 import Haskerwaul.Bifunctor
 import Haskerwaul.Isomorphism
 import Haskerwaul.Object
+import Haskerwaul.Transformation.Dinatural
 import Haskerwaul.Transformation.Natural
 
 -- | [nLab](https://ncatlab.org/nlab/show/monoidal+category)
@@ -57,18 +58,18 @@ instance (c ~ (->), MonoidalCategory c t) =>
     p = Proxy
 
 instance (c ~ (->), MonoidalCategory c t) =>
-         MonoidalCategory (NaturalTransformation2 c) (BTensor t) where
+         MonoidalCategory (DinaturalTransformation c) (BTensor t) where
   leftIdentity =
     Iso
-    (NT2 (to leftIdentity . first p getBConst . lowerBTensor))
-    (NT2 (BTensor . first p BConst . from leftIdentity))
+    (DT (to leftIdentity . first p getBConst . lowerBTensor))
+    (DT (BTensor . first p BConst . from leftIdentity))
    where
     p :: Proxy c
     p = Proxy
   rightIdentity =
     Iso
-    (NT2 (to rightIdentity . second p getBConst . lowerBTensor))
-    (NT2 (BTensor . second p BConst . from rightIdentity))
+    (DT (to rightIdentity . second p getBConst . lowerBTensor))
+    (DT (BTensor . second p BConst . from rightIdentity))
    where
     p :: Proxy c
     p = Proxy
