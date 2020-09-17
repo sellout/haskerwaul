@@ -165,3 +165,25 @@ instance BraidedMonoidalCategory c t =>
 
 instance SymmetricMonoidalCategory c t =>
          SymmetricMonoidalCategory (Opposite c) t
+
+-- -- | "... every object in a cartesian monoidal category can be made into a
+-- --    comonoid in a unique way."
+-- --   ⸻[nLab](https://ncatlab.org/nlab/show/comonoid#examples)
+-- instance (CartesianMonoidalCategory c) => Magma (Op c) (Prod c) a where
+--   op = Op diagonal
+
+-- -- | "... every object in a cartesian monoidal category can be made into a
+-- --    comonoid in a unique way."
+-- --   ⸻[nLab](https://ncatlab.org/nlab/show/comonoid#examples)
+-- instance CartesianMonoidalCategory c => Semigroup (Op c) (Prod c) a
+
+-- -- | "... every object in a cartesian monoidal category can be made into a
+-- --    comonoid in a unique way."
+-- --   ⸻[nLab](https://ncatlab.org/nlab/show/comonoid#examples)
+-- instance CartesianMonoidalCategory c => UnitalMagma (Op c) (Prod c) a where
+--   unit Proxy = (!)
+
+-- -- | "... every object in a cartesian monoidal category can be made into a
+-- --    comonoid in a unique way."
+-- --   ⸻[nLab](https://ncatlab.org/nlab/show/comonoid#examples)
+-- instance CartesianMonoidalCategory c => Monoid (Op c) (Prod c) a
