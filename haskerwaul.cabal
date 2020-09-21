@@ -259,3 +259,46 @@ library
                      , TypeFamilies
                      , TypeOperators
   ghc-options:         -Wall
+
+library haskerwaul-base
+  exposed-modules:     Haskerwaul.Base.Prelude
+  hs-source-dirs:      base
+  build-depends:       base >= 4.12 && < 5
+                     , haskerwaul
+  default-language:    Haskell2010
+  default-extensions:  ConstraintKinds
+                     , DataKinds
+                     , EmptyCase
+                     , ExistentialQuantification
+                     , FlexibleContexts
+                     , FlexibleInstances
+                     , InstanceSigs
+                     , LambdaCase
+                     , MultiParamTypeClasses
+                     , NoImplicitPrelude
+                     , NoMonomorphismRestriction
+                     , PolyKinds
+                     , QuantifiedConstraints
+                     , RankNTypes
+                     , ScopedTypeVariables
+                     , TupleSections
+                     , TypeFamilies
+                     , TypeOperators
+  ghc-options:         -Wall
+
+-- This is like haskerwaul-base, except that it uses all the same module names
+-- as actual base. So, all you need to do is switch the dependency in your build
+-- file, and now you're using Haskerwaul. The problem is if/when Haskerwaul's
+-- replacements don't match up 100%. In that case, you can either do
+-- package-qualified imports using this dependency /and/ base, or depend on
+-- haskerwaul-base /and/ base and have non-conflicting module names.
+--
+-- This package should be able to be completely generated, since it just
+-- re-exports every module from haskerwaul-base without the @Haskerwaul.Base.@
+-- module prefix.
+library haskerwaul-trample
+  exposed-modules:     Prelude
+  hs-source-dirs:      trample
+  build-depends:       haskerwaul-base
+  default-language:    Haskell2010
+  ghc-options:         -Wall
