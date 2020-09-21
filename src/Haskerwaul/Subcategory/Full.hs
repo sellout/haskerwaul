@@ -40,7 +40,7 @@ import Haskerwaul.Transformation.Natural
 --         objects are the same, but the morphisms are simply Haskell functions,
 --        /not/ monoid homomorphisms.
 newtype FullSubcategory (ob :: ok -> Constraint) (c :: ok -> ok -> Type) a b =
-  FS (a `c` b)
+  FS { runFS :: a `c` b }
 
 type instance Ob (FullSubcategory ob c) = CFProd (Ob c) ob
 

@@ -15,9 +15,8 @@
 module Haskerwaul.Monoid.Laws where
 
 import Haskerwaul.Magma.Unital.Laws
+import Haskerwaul.Category.Monoidal
 import Haskerwaul.Semigroup.Laws
-import Haskerwaul.Relation.Binary
-import Haskerwaul.Topos.Elementary
 
 data MonoidLaws c t a =
   MonoidLaws
@@ -29,12 +28,9 @@ data MonoidLaws c t a =
 --   a)@, the `MonoidalCategory` should be included in the `Monoid` (but that
 --   last bit causes a cycle currently). And I have no idea why it's failing to
 --   resolve all the `Ob`s correctly.
-monoidLaws
-  :: (ElementaryTopos c, MonoidalCategory c t, Monoid c t a)
-  => BinaryRelation c a a -> MonoidLaws c t a
-monoidLaws eq =
-  -- __TODO__: Why can't I define this with @do@ notation?
+monoidLaws :: (MonoidalCategory c t, Monoid c t a) => MonoidLaws c t a
+monoidLaws =
   MonoidLaws
-    { semigroup = semigroupLaws eq
-    , unitalMagma = unitalMagmaLaws eq
+    { semigroup = semigroupLaws
+    , unitalMagma = unitalMagmaLaws
     }

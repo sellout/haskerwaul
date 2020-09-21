@@ -10,10 +10,11 @@ import Haskerwaul.Category.Monoidal.Cartesian
 import Haskerwaul.Isomorphism
 import Haskerwaul.Law
 import Haskerwaul.Object
+import Haskerwaul.Relation.Equality
 
 -- | @x = (x / y) y@
 lq1Law :: forall c a. (CartesianMonoidalCategory c, Ob c a)
-       => Prod c a a `c` a -> Prod c a a `c` a -> Law c (Prod c a a) a
+       => Prod c a a `c` a -> Prod c a a `c` a -> Law c EqualityRelation (Prod c a a) a
 lq1Law op' leftQuotient' =
   Law exr (op' . first p leftQuotient' . to assoc . second p (diagonal @c))
   \\ inT @(Ob c) @(Prod c) @a @a
@@ -22,7 +23,7 @@ lq1Law op' leftQuotient' =
 
 -- | @x = (x y) / y@
 lq2Law :: forall c a. (CartesianMonoidalCategory c, Ob c a)
-       => Prod c a a `c` a -> Prod c a a `c` a -> Law c (Prod c a a) a
+       => Prod c a a `c` a -> Prod c a a `c` a -> Law c EqualityRelation (Prod c a a) a
 lq2Law op' leftQuotient' =
   Law exr (leftQuotient' . first p op' . to assoc . second p (diagonal @c))
   \\ inT @(Ob c) @(Prod c) @a @a

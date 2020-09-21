@@ -4,6 +4,7 @@ import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Semigroupal
 import Haskerwaul.Law
 import Haskerwaul.Object
+import Haskerwaul.Relation.Equality
 
 -- | This homomorphism covers most properties for a single morphism (except
 --   identities). E.g., this is also used for semigroup homomorphism. That is,
@@ -17,6 +18,7 @@ import Haskerwaul.Object
 --
 --          leaving @a@ and @b@ to be morphisms in the source and target
 --          categories, respectively.
-magmaHomomorphism :: (SemigroupalCategory c t, Ob c a, Ob c b)
-                  => t a a `c` a -> t b b `c` b -> a `c` b -> Law c (t a a) b
+magmaHomomorphism
+  :: (SemigroupalCategory c t, Ob c a, Ob c b)
+  => t a a `c` a -> t b b `c` b -> a `c` b -> Law c EqualityRelation (t a a) b
 magmaHomomorphism opA opB f = Law (f . opA) (opB . bimap f f)

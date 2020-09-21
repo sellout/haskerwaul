@@ -65,8 +65,10 @@ instance PartialOrder (->) (Canonical Float)
 
 instance PartialOrder (->) (Canonical Double)
 
-instance (c ~ (->), ElementaryTopos c, PartialOrder c a, Ob c (Additive a)) =>
+instance {-# incoherent #-}
+         (c ~ (->), ElementaryTopos c, PartialOrder c a, Ob c (Additive a)) =>
          PartialOrder c (Additive a)
 
-instance (c ~ (->), ElementaryTopos c, PartialOrder c a, Ob c (Multiplicative a)) =>
+instance {-# incoherent #-}
+         (c ~ (->), ElementaryTopos c, PartialOrder c a, Ob c (Multiplicative a)) =>
          PartialOrder c (Multiplicative a)

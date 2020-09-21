@@ -20,14 +20,18 @@ import Haskerwaul.Topos.Elementary
 --   [`Haskerwaul.Law.Symmetry.symmetry`]: @`rel` x y ==> `rel` y x@
 class HomogeneousRelation c a => ToleranceRelation c a
 
-instance (c ~ (->), ElementaryTopos c, ToleranceRelation c a, Ob c (Meet a)) =>
+instance {-# incoherent #-}
+         (c ~ (->), ElementaryTopos c, ToleranceRelation c a, Ob c (Meet a)) =>
          ToleranceRelation c (Meet a)
 
-instance (c ~ (->), ElementaryTopos c, ToleranceRelation c a, Ob c (Join a)) =>
+instance {-# incoherent #-}
+         (c ~ (->), ElementaryTopos c, ToleranceRelation c a, Ob c (Join a)) =>
          ToleranceRelation c (Join a)
 
-instance (c ~ (->), ElementaryTopos c, ToleranceRelation c a, Ob c (Additive a)) =>
+instance {-# incoherent #-}
+         (c ~ (->), ElementaryTopos c, ToleranceRelation c a, Ob c (Additive a)) =>
          ToleranceRelation c (Additive a)
 
-instance (c ~ (->), ElementaryTopos c, ToleranceRelation c a, Ob c (Multiplicative a)) =>
+instance {-# incoherent #-}
+         (c ~ (->), ElementaryTopos c, ToleranceRelation c a, Ob c (Multiplicative a)) =>
          ToleranceRelation c (Multiplicative a)

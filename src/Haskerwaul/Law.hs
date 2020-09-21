@@ -1,26 +1,51 @@
 -- | Defining laws in a category-polymorphic way is tricky.
 module Haskerwaul.Law where
 
+import           Data.Constraint (Constraint)
+import           Data.Kind (Type)
+
 import Haskerwaul.Bifunctor
 import Haskerwaul.Object
-import Haskerwaul.Relation.Binary
+import Haskerwaul.Relation.Homogeneous
 import Haskerwaul.Topos.Elementary
 
--- | A law is a pair of morphisms that should be equivalent.
+-- | A law is a pair of morphisms with a relation constraint.
 --
---  __NB__: Since it's simply a test of equivalence, it doesn't matter which
---          morphism is which, but for the purposes of reporting, we treat the
---          first argument as the "expectation" and the second as the
---         "actual". This means that the first should generally be the simpler
---          one that doesn't necessarily use all the operations involved.
-data Law c a b = Law (a `c` b) (a `c` b)
+--   The relation is managed at the type level because we define laws in
+--   arbitrary categories (or even semigroupoids), but can only validate them in
+--   a topos. When a law is defined, we don't know which topos(es) it may be
+--   tested in, so the constraint allows us to concretize the comparison after
+--   we've chosen a topos for testing.
+--
+--   The @relation@ should be a subclass of `HomogeneousRelation`. This isn't
+--  (yet) enforced anywhere, but if it's not the case, your @relation@ will be
+--   redundant and an arbitrary `HomogeneousRelation` will be found and used.
+--
+--  __NB__: For the purposes of reporting, we treat the first argument as the
+--         "expectation" and the second as the "actual". This means that the
+--          first should generally be the simpler one that doesn't necessarily
+--          use all the operations involved. However, if you have a @relation@
+--          that isn't reflexive, you don't get to choose which side is the
+--          simpler one.
+data Law c (relation :: (Type -> Type -> Type) -> Type -> Constraint) a b =
+  Law
+  { expectation :: a `c` b,
+    actual :: a `c` b
+  }
 
--- | Builds a [characteristic morphism](https://ncatlab.org/nlab/show/characteristic+function#of_a_subobject)
+-- | Builds a [characteristic
+--   morphism](https://ncatlab.org/nlab/show/characteristic+function#of_a_subobject)
 --   for testing a `Law`.
 --
---  __TODO__: Regardless of what the constraints on the `Law` are, we need an
---           `ElementaryTopos` in order to have some way to evaluate the result.
---            This seems overly restrictive.
-checkLaw :: (ElementaryTopos c, Ob c a, Ob c b)
-         => Law c a b -> BinaryRelation c b b -> a `c` Class c
-checkLaw (Law x y) eq = eq . bimap x y . diagonal
+--   The first argument, @translate@, should be a category homomorphism,
+--   bringing us from the category we're testing to the topos we can validate
+--   within. If this is not a homomorphism, all bets are off for your test doing
+--   anything reasonable. The most trivial case is when you are already in the
+--   topos, then you can use `id`. Otherwise, you may have various newtype
+--   wrappers and unwrappers, like `NT`/`runNT`, `Opposite`/`opposite`, etc. and
+--   they can generally be composed to move across vast spaces of __Cat__.
+checkLaw
+  :: (ElementaryTopos c, rel c y, HomogeneousRelation c y, Ob c x)
+  => (a `d` b -> x `c` y) -> Law d rel a b -> x `c` Class c
+checkLaw translate (Law exp act) =
+  rel . bimap (translate exp) (translate act) . diagonal

@@ -10,10 +10,11 @@ import Haskerwaul.Category.Monoidal.Cartesian
 import Haskerwaul.Isomorphism
 import Haskerwaul.Law
 import Haskerwaul.Object
+import Haskerwaul.Relation.Equality
 
 leftDistributiveLaw
   :: forall c a. (CartesianMonoidalCategory c, Ob c a)
-  => Prod c a a `c` a -> Prod c a a `c` a -> Law c (Prod c a (Prod c a a)) a
+  => Prod c a a `c` a -> Prod c a a `c` a -> Law c EqualityRelation (Prod c a (Prod c a a)) a
 leftDistributiveLaw multiply add =
   Law
   (multiply . second p add)

@@ -64,8 +64,10 @@ instance Preorder (->) (Canonical Float)
 
 instance Preorder (->) (Canonical Double)
 
-instance (c ~ (->), ElementaryTopos c, Preorder c a, Ob c (Additive a)) =>
+instance {-# incoherent #-}
+         (c ~ (->), ElementaryTopos c, Preorder c a, Ob c (Additive a)) =>
          Preorder c (Additive a)
 
-instance (c ~ (->), ElementaryTopos c, Preorder c a, Ob c (Multiplicative a)) =>
+instance {-# incoherent #-}
+         (c ~ (->), ElementaryTopos c, Preorder c a, Ob c (Multiplicative a)) =>
          Preorder c (Multiplicative a)

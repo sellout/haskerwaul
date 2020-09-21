@@ -15,26 +15,19 @@
 --   Then you should be able to test that by doing something like 
 module Haskerwaul.Semigroup.Laws where
 
-import           Data.Constraint ((\\))
-
 import Haskerwaul.Law
 import Haskerwaul.Law.Associativity
-import Haskerwaul.Object
-import Haskerwaul.Relation.Binary
+import Haskerwaul.Relation.Equality
 import Haskerwaul.Topos.Elementary
 
 data SemigroupLaws c t a =
   SemigroupLaws
-    { associative :: (t (t a a) a) `c` Class c
+    { associative :: Law c EqualityRelation (t (t a a) a) a
     }
 
 semigroupLaws
-  :: forall c t a
-   . (ElementaryTopos c, Ob c a, SemigroupalCategory c t, Semigroup c t a)
-  => BinaryRelation c a a -> SemigroupLaws c t a
-semigroupLaws eq =
+  :: (SemigroupalCategory c t, Semigroup c t a) => SemigroupLaws c t a
+semigroupLaws =
   SemigroupLaws
-    { associative = checkLaw (associativity op) eq
+    { associative = associativity op
     }
-  \\ inT @(Ob c) @t @(t a a) @a
-  \\ inT @(Ob c) @t @a @a

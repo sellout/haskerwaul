@@ -10,6 +10,7 @@ module Haskerwaul.Category.Monoidal
 
 import qualified Control.Category as Base
 import           Data.Constraint ((:-), (&&&), cls, ins, refl, trans, top, weaken1, weaken2)
+import           Data.Constraint.Deferrable ((:~:)(..))
 import           Data.Either (Either(..))
 import qualified Data.Either as Base
 import           Data.Functor.Const (Const(..))
@@ -56,6 +57,10 @@ instance (d ~ (->), MonoidalCategory d dt) =>
    where
     p :: Proxy d
     p = Proxy
+
+instance MonoidalCategory (DinaturalTransformation (->)) Procompose where
+  leftIdentity = Iso (DT (\(Procompose Refl a) -> a)) (DT (Procompose Refl))
+  rightIdentity = Iso (DT (\(Procompose a Refl) -> a)) (DT (\a -> Procompose a Refl))
 
 instance (c ~ (->), MonoidalCategory c t) =>
          MonoidalCategory (DinaturalTransformation c) (BTensor t) where

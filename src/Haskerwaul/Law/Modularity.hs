@@ -10,7 +10,7 @@ import Haskerwaul.Bifunctor
 import Haskerwaul.Isomorphism
 import Haskerwaul.Law
 import Haskerwaul.Object
-import Haskerwaul.Relation.Equivalence
+import Haskerwaul.Relation.Equality
 import Haskerwaul.Topos.Elementary
 
 -- | [nLab](https://ncatlab.org/nlab/show/modular+lattice)
@@ -22,7 +22,7 @@ modularity
      , ElementaryTopos c, Ob c a, Ob c b, Preorder c a, EquivalenceRelation c b)
   => Prod c a b `c` b
   -> Prod c b a `c` b
-  -> Law c (Prod c (Prod c a b) a) (Class c)
+  -> Law c EqualityRelation (Prod c (Prod c a b) a) (Class c)
 modularity join' meet' =
   Law
   (true . (!))

@@ -10,11 +10,12 @@ import Haskerwaul.Category.Monoidal.Cartesian
 import Haskerwaul.Isomorphism
 import Haskerwaul.Law
 import Haskerwaul.Object
+import Haskerwaul.Relation.Equality
 
 -- | [nLab](https://ncatlab.org/nlab/show/alternative+algebra)
 flexibility
   :: forall c a. (CartesianMonoidalCategory c, Ob c a)
-  => Prod c a a `c` a -> Law c (Prod c a a) a
+  => Prod c a a `c` a -> Law c EqualityRelation (Prod c a a) a
 flexibility op' =
   Law
   (op'

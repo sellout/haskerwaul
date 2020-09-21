@@ -46,6 +46,7 @@ library
                     , Haskerwaul.Category.Functor
                     , Haskerwaul.Category.Hypergraph
                     , Haskerwaul.Category.Kleisli
+                    , Haskerwaul.Category.Laws
                     , Haskerwaul.Category.Monoidal
                     , Haskerwaul.Category.Monoidal.Balanced
                     , Haskerwaul.Category.Monoidal.Braided
@@ -69,6 +70,7 @@ library
                     , Haskerwaul.Category.Rig.ColaxDistributive.Left
                     , Haskerwaul.Category.Rig.ColaxDistributive.Right
                     , Haskerwaul.Category.Semigroupal
+                    , Haskerwaul.Category.Semigroupal.Laws
                     , Haskerwaul.Category.Terminal
                     , Haskerwaul.Category.Under
                     , Haskerwaul.Cocone
@@ -218,6 +220,7 @@ library
                     , Haskerwaul.Semilattice
                     , Haskerwaul.Semilattice.Bounded
                     , Haskerwaul.Semigroupoid
+                    , Haskerwaul.Semigroupoid.Laws
                     , Haskerwaul.Semiring
                     , Haskerwaul.Semiring.Idempotent
                     , Haskerwaul.Semiring.MaxPlus

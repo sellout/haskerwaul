@@ -23,14 +23,18 @@ class HomogeneousRelation c a => PartialEquivalenceRelation c a
 equiv :: PartialEquivalenceRelation c a => BinaryRelation c a a
 equiv = rel
 
-instance (c ~ (->), ElementaryTopos c, PartialEquivalenceRelation c a, Ob c (Meet a)) =>
+instance {-# incoherent #-}
+         (c ~ (->), ElementaryTopos c, PartialEquivalenceRelation c a, Ob c (Meet a)) =>
          PartialEquivalenceRelation c (Meet a)
 
-instance (c ~ (->), ElementaryTopos c, PartialEquivalenceRelation c a, Ob c (Join a)) =>
+instance {-# incoherent #-}
+         (c ~ (->), ElementaryTopos c, PartialEquivalenceRelation c a, Ob c (Join a)) =>
          PartialEquivalenceRelation c (Join a)
 
-instance (c ~ (->), ElementaryTopos c, PartialEquivalenceRelation c a, Ob c (Additive a)) =>
+instance {-# incoherent #-}
+         (c ~ (->), ElementaryTopos c, PartialEquivalenceRelation c a, Ob c (Additive a)) =>
          PartialEquivalenceRelation c (Additive a)
 
-instance (c ~ (->), ElementaryTopos c, PartialEquivalenceRelation c a, Ob c (Multiplicative a)) =>
+instance {-# incoherent #-}
+         (c ~ (->), ElementaryTopos c, PartialEquivalenceRelation c a, Ob c (Multiplicative a)) =>
          PartialEquivalenceRelation c (Multiplicative a)

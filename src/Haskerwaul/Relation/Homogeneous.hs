@@ -127,18 +127,22 @@ instance HomogeneousRelation (->) (Canonical Float) where
 instance HomogeneousRelation (->) (Canonical Double) where
   rel = from curry (Base.<=) . bimap decanonicalize decanonicalize
 
-instance (c ~ (->), ElementaryTopos c, HomogeneousRelation c a, Ob c (Meet a)) =>
+instance {-# incoherent #-}
+         (c ~ (->), ElementaryTopos c, HomogeneousRelation c a, Ob c (Meet a)) =>
          HomogeneousRelation c (Meet a) where
   rel = rel . bimap getMeet getMeet
 
-instance (c ~ (->), ElementaryTopos c, HomogeneousRelation c a, Ob c (Join a)) =>
+instance {-# incoherent #-}
+         (c ~ (->), ElementaryTopos c, HomogeneousRelation c a, Ob c (Join a)) =>
          HomogeneousRelation c (Join a) where
   rel = rel . bimap getJoin getJoin
 
-instance (c ~ (->), ElementaryTopos c, HomogeneousRelation c a, Ob c (Additive a)) =>
+instance {-# incoherent #-}
+         (c ~ (->), ElementaryTopos c, HomogeneousRelation c a, Ob c (Additive a)) =>
          HomogeneousRelation c (Additive a) where
   rel = rel . bimap sum sum
 
-instance (c ~ (->), ElementaryTopos c, HomogeneousRelation c a, Ob c (Multiplicative a)) =>
+instance {-# incoherent #-}
+         (c ~ (->), ElementaryTopos c, HomogeneousRelation c a, Ob c (Multiplicative a)) =>
          HomogeneousRelation c (Multiplicative a) where
   rel = rel . bimap product product

@@ -18,26 +18,25 @@ module Haskerwaul.Magma.Unital.Laws where
 import           Data.Constraint ((\\))
 import           Data.Proxy (Proxy(..))
 
+import Haskerwaul.Category.Monoidal
 import Haskerwaul.Law
 import Haskerwaul.Law.Identity.Left
 import Haskerwaul.Law.Identity.Right
 import Haskerwaul.Object
-import Haskerwaul.Relation.Binary
-import Haskerwaul.Topos.Elementary
+import Haskerwaul.Relation.Equality
 
 data UnitalMagmaLaws c t a =
   UnitalMagmaLaws
-    { leftIdentity :: (t (Unit c t) a) `c` Class c
-    , rightIdentity :: (t a (Unit c t)) `c` Class c
+    { leftIdentity :: Law c EqualityRelation (t (Unit c t) a) a
+    , rightIdentity :: Law c EqualityRelation (t a (Unit c t)) a
     }
 
 unitalMagmaLaws
-  :: forall c t a. (ElementaryTopos c, MonoidalCategory c t, UnitalMagma c t a)
-  => BinaryRelation c a a -> UnitalMagmaLaws c t a
-unitalMagmaLaws eq =
+  :: forall c t a. (MonoidalCategory c t, UnitalMagma c t a) => UnitalMagmaLaws c t a
+unitalMagmaLaws =
   UnitalMagmaLaws
-    { leftIdentity = checkLaw (leftIdentityLaw op (unit p)) eq
-    , rightIdentity = checkLaw (rightIdentityLaw op (unit p)) eq
+    { leftIdentity = leftIdentityLaw op (unit p)
+    , rightIdentity = rightIdentityLaw op (unit p)
     }
   \\ inT @(Ob c) @t @(Unit c t) @a
   \\ inT @(Ob c) @t @a @(Unit c t)
