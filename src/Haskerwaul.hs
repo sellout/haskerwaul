@@ -37,12 +37,18 @@ module Haskerwaul
   , module Haskerwaul.Category.Closed.Compact
   -- ** monoidal categories
   , module Haskerwaul.Category.Monoidal
+  , module Haskerwaul.Category.Monoidal.Balanced
   , module Haskerwaul.Category.Monoidal.Braided
   , module Haskerwaul.Category.Monoidal.Cartesian
+  , module Haskerwaul.Category.Monoidal.Cartesian.Traced
   , module Haskerwaul.Category.Monoidal.Closed
   , module Haskerwaul.Category.Monoidal.Cocartesian
   , module Haskerwaul.Category.Monoidal.Distributive
+  , module Haskerwaul.Category.Monoidal.Rigid
+  , module Haskerwaul.Category.Monoidal.Rigid.Left
+  , module Haskerwaul.Category.Monoidal.Rigid.Right
   , module Haskerwaul.Category.Monoidal.Symmetric
+  , module Haskerwaul.Category.Monoidal.Traced
   , module Haskerwaul.Category.Monoidal'
   -- * cones
   , module Haskerwaul.Cocone
@@ -260,12 +266,18 @@ import Haskerwaul.Category.Duoidal.Normal
 import Haskerwaul.Category.Hypergraph
 import Haskerwaul.Category.Kleisli
 import Haskerwaul.Category.Monoidal
+import Haskerwaul.Category.Monoidal.Balanced
 import Haskerwaul.Category.Monoidal.Braided
 import Haskerwaul.Category.Monoidal.Cartesian
+import Haskerwaul.Category.Monoidal.Cartesian.Traced
 import Haskerwaul.Category.Monoidal.Closed
 import Haskerwaul.Category.Monoidal.Cocartesian
 import Haskerwaul.Category.Monoidal.Distributive
+import Haskerwaul.Category.Monoidal.Rigid
+import Haskerwaul.Category.Monoidal.Rigid.Left
+import Haskerwaul.Category.Monoidal.Rigid.Right
 import Haskerwaul.Category.Monoidal.Symmetric
+import Haskerwaul.Category.Monoidal.Traced
 import Haskerwaul.Category.Monoidal'
 import Haskerwaul.Category.Opposite
 import Haskerwaul.Category.Over

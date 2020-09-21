@@ -164,6 +164,10 @@ instance BraidedMonoidalCategory c t =>
          BraidedMonoidalCategory (Opposite c) t where
   braid = Opposite braid
 
+instance BalancedMonoidalCategory c t =>
+         BalancedMonoidalCategory (Opposite c) t where
+  balance t = Opposite (balance t)
+
 instance SymmetricMonoidalCategory c t =>
          SymmetricMonoidalCategory (Opposite c) t
 

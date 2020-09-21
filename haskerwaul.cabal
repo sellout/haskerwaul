@@ -46,12 +46,18 @@ library
                     , Haskerwaul.Category.Hypergraph
                     , Haskerwaul.Category.Kleisli
                     , Haskerwaul.Category.Monoidal
+                    , Haskerwaul.Category.Monoidal.Balanced
                     , Haskerwaul.Category.Monoidal.Braided
                     , Haskerwaul.Category.Monoidal.Cartesian
+                    , Haskerwaul.Category.Monoidal.Cartesian.Traced
                     , Haskerwaul.Category.Monoidal.Closed
                     , Haskerwaul.Category.Monoidal.Cocartesian
                     , Haskerwaul.Category.Monoidal.Distributive
+                    , Haskerwaul.Category.Monoidal.Rigid
+                    , Haskerwaul.Category.Monoidal.Rigid.Left
+                    , Haskerwaul.Category.Monoidal.Rigid.Right
                     , Haskerwaul.Category.Monoidal.Symmetric
+                    , Haskerwaul.Category.Monoidal.Traced
                     , Haskerwaul.Category.Monoidal'
                     , Haskerwaul.Category.Opposite
                     , Haskerwaul.Category.Over
