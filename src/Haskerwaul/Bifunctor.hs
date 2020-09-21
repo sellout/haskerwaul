@@ -4,7 +4,7 @@
 module Haskerwaul.Bifunctor where
 
 import qualified Data.Bifunctor as Base
-import           Data.Constraint ((:-)(..), (:=>)(..), (***), Class(..), trans)
+import           Data.Constraint ((\\), (:-)(..), (:=>)(..), (***), Class(..), trans)
 import           Data.Functor.Const (Const (..))
 import           Data.Proxy (Proxy(..))
 
@@ -38,13 +38,28 @@ instance Base.Bifunctor f => Bifunctor (->) (->) (->) f where
 instance Bifunctor (->) c (->) Const where
   bimap f _ = Const . f . getConst
 
-instance (Ob c1 ~ All, Ob c2 ~ All, d ~ (->), Semigroupoid d, Bifunctor c1 c2 d t) =>
+instance (d ~ (->), Semigroupoid d, Bifunctor c1 c2 d t) =>
          Bifunctor
-         (NaturalTransformation c1)
-         (NaturalTransformation c2)
-         (NaturalTransformation d)
+         (NaturalTransformation c' c1)
+         (NaturalTransformation c' c2)
+         (NaturalTransformation c' d)
          (FTensor t) where
-  bimap f g = NT (FTensor . bimap (runNT f) (runNT g) . lowerFTensor)
+  bimap
+    :: forall a1 a2 b1 b2
+     . ( Ob (NaturalTransformation c' c1) a1
+       , Ob (NaturalTransformation c' c1) b1
+       , Ob (NaturalTransformation c' c2) a2
+       , Ob (NaturalTransformation c' c2) b2)
+    => NaturalTransformation c' c1 a1 b1
+    -> NaturalTransformation c' c2 a2 b2
+    -> NaturalTransformation c' d (FTensor t a1 a2) (FTensor t b1 b2)
+  bimap (NT f) (NT g) =
+    NT (\(x :: FTensor t a1 a2 x) ->
+          FTensor (bimap f g (lowerFTensor x))
+          \\ inF @(Ob c') @(Ob c1) @a1 @x
+          \\ inF @(Ob c') @(Ob c1) @b1 @x
+          \\ inF @(Ob c') @(Ob c2) @a2 @x
+          \\ inF @(Ob c') @(Ob c2) @b2 @x)
 
 instance (Ob c1 ~ All, Ob c2 ~ All, d ~ (->), Semigroupoid d, Bifunctor c1 c2 d t) =>
          Bifunctor
@@ -66,9 +81,9 @@ instance Bifunctor (:-) (:-) (:-) Combine where
   bimap f g = trans ins (trans (f *** g) cls)
 
 instance Bifunctor
-         (NaturalTransformation (:-))
-         (NaturalTransformation (:-))
-         (NaturalTransformation (:-))
+         (NaturalTransformation c (:-))
+         (NaturalTransformation c (:-))
+         (NaturalTransformation c (:-))
          CFProd where
   bimap f g = NT (trans (trans ins (runNT f *** runNT g)) cls)
 

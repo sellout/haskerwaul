@@ -31,8 +31,8 @@ class (ClosedCategory c, MonoidalCategory c t) =>
 instance ClosedMonoidalCategory (->) (,) where
   apply = Base.uncurry (Base.$)
 
-instance (d ~ (->), ClosedMonoidalCategory d t) =>
-         ClosedMonoidalCategory (NaturalTransformation d) (FTensor t) where
+instance (d ~ (->), ClosedMonoidalCategory d dt) =>
+         ClosedMonoidalCategory (NaturalTransformation c d) (FTensor dt) where
   apply = NT (apply . first (Proxy :: Proxy d) runET . lowerFTensor)
 
 instance {-# overlappable #-}

@@ -66,18 +66,18 @@ instance {-# overlappable #-} Base.Category c =>
                               UnitalMagma (DinaturalTransformation (->)) Procompose c where
   unit Proxy = DT (\Refl -> Base.id)
 
--- | If /C/ is a `Semigroupoid`, then so are /C/-valued functors.
-instance Magma (DinaturalTransformation (->)) Procompose c =>
-         Magma (DinaturalTransformation (->)) Procompose (NaturalTransformation c) where
+-- | If /D/ is a `Semigroupoid`, then so are /D/-valued functors.
+instance Magma (DinaturalTransformation (->)) Procompose d =>
+         Magma (DinaturalTransformation (->)) Procompose (NaturalTransformation c d) where
   op = DT (\(Procompose (NT f) (NT g)) -> NT (f . g))
 
--- | If /C/ is a `Semigroupoid`, then so are /C/-valued functors.
-instance Semigroup (DinaturalTransformation (->)) Procompose c =>
-         Semigroup (DinaturalTransformation (->)) Procompose (NaturalTransformation c)
+-- | If /D/ is a `Semigroupoid`, then so are /D/-valued functors.
+instance Semigroup (DinaturalTransformation (->)) Procompose d =>
+         Semigroup (DinaturalTransformation (->)) Procompose (NaturalTransformation c d)
 
--- | If /C/ is a `Category`, then so are /C/-valued functors.
-instance UnitalMagma (DinaturalTransformation (->)) Procompose c =>
-         UnitalMagma (DinaturalTransformation (->)) Procompose (NaturalTransformation c) where
+-- | If /D/ is a `Category`, then so are /D/-valued functors.
+instance UnitalMagma (DinaturalTransformation (->)) Procompose d =>
+         UnitalMagma (DinaturalTransformation (->)) Procompose (NaturalTransformation c d) where
   unit Proxy = DT (\Refl -> NT id)
 
 -- | If /C/ is a `Semigroupoid`, then so are /C/-valud bifunctors.

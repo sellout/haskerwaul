@@ -28,12 +28,12 @@ instance BraidedMonoidalCategory (->) Either where
     Left a -> Right a
     Right b -> Left b
 
-instance (c ~ (->), BraidedMonoidalCategory c t) =>
-         BraidedMonoidalCategory (NaturalTransformation c) (FTensor t) where
+instance (d ~ (->), BraidedMonoidalCategory d dt) =>
+         BraidedMonoidalCategory (NaturalTransformation c d) (FTensor dt) where
   braid = NT (FTensor . braid . lowerFTensor)
 
 instance BraidedMonoidalCategory (:-) Combine where
   braid = Sub Dict
 
-instance BraidedMonoidalCategory (NaturalTransformation (:-)) CFProd where
+instance BraidedMonoidalCategory (NaturalTransformation c (:-)) CFProd where
   braid = NT (Sub Dict)

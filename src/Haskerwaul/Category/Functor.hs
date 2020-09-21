@@ -7,4 +7,4 @@ module Haskerwaul.Category.Functor
 import Haskerwaul.Category
 import Haskerwaul.Transformation.Natural
 
-type FunctorCategory c d = Category (NaturalTransformation d)
+type FunctorCategory c d = Category (NaturalTransformation c d)

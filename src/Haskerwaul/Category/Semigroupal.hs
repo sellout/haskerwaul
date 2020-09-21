@@ -40,14 +40,14 @@ instance SemigroupalCategory (->) Either where
 
 -- | Every functor category is additionally semigroupal in all the ways that the
 --   destination category is.
-instance (c ~ (->), SemigroupalCategory c t) =>
-         SemigroupalCategory (NaturalTransformation c) (FTensor t) where
+instance (d ~ (->), SemigroupalCategory d dt) =>
+         SemigroupalCategory (NaturalTransformation c d) (FTensor dt) where
   assoc =
     Iso
     (NT (FTensor . first p FTensor . to assoc . second p lowerFTensor . lowerFTensor))
     (NT (FTensor . second p FTensor . from assoc . first p lowerFTensor . lowerFTensor))
    where
-    p :: Proxy c
+    p :: Proxy d
     p = Proxy
 
 instance (c ~ (->), SemigroupalCategory c t) =>
@@ -66,7 +66,7 @@ instance SemigroupalCategory (:-) Combine where
     (trans ins (trans (ins *** refl) (trans (Sub Dict) (trans (refl *** cls) cls))))
     (trans ins (trans (refl *** ins) (trans (Sub Dict) (trans (cls *** refl) cls))))
 
-instance SemigroupalCategory (NaturalTransformation (:-)) CFProd where
+instance SemigroupalCategory (NaturalTransformation c (:-)) CFProd where
   assoc = Iso (NT (Sub Dict)) (NT (Sub Dict))
 
 instance SemigroupalCategory (DinaturalTransformation (->)) Procompose where

@@ -40,7 +40,7 @@ unitIso di st =
 --          Should be able to generalize this.
 instance (c ~ (->), ct ~ (,)) =>
          NormalDuoidalCategory
-         (FullSubcategory (Endofunctor c) (NaturalTransformation c))
+         (FullSubcategory (Endofunctor c) (NaturalTransformation c c))
          (Day c ct ct)
          Compose where
   backUnit Proxy Proxy = FS (NT (\u () -> runIdentity u))

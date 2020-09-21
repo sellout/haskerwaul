@@ -12,4 +12,4 @@ import Haskerwaul.Extension.Kan.Right
 --
 -- - [nLab](https://ncatlab.org/nlab/show/Yoneda+embedding)
 -- - [Wikipedia](https://en.wikipedia.org/wiki/Yoneda_lemma)
-type Yoneda c = RightKanExtension c Identity
+type Yoneda c = RightKanExtension c c Identity

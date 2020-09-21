@@ -40,21 +40,21 @@ instance MonoidalCategory (->) Either where
   leftIdentity = Iso (Base.either Base.absurd Base.id) Right
   rightIdentity = Iso (Base.either Base.id Base.absurd) Left
 
-instance (c ~ (->), MonoidalCategory c t) =>
-         MonoidalCategory (NaturalTransformation c) (FTensor t) where
+instance (d ~ (->), MonoidalCategory d dt) =>
+         MonoidalCategory (NaturalTransformation c d) (FTensor dt) where
   leftIdentity =
     Iso
     (NT (to leftIdentity . first p getConst . lowerFTensor))
     (NT (FTensor . first p Const . from leftIdentity))
    where
-    p :: Proxy c
+    p :: Proxy d
     p = Proxy
   rightIdentity =
     Iso
     (NT (to rightIdentity . second p getConst . lowerFTensor))
     (NT (FTensor . second p Const . from rightIdentity))
    where
-    p :: Proxy c
+    p :: Proxy d
     p = Proxy
 
 instance (c ~ (->), MonoidalCategory c t) =>
@@ -78,7 +78,7 @@ instance MonoidalCategory (:-) Combine where
   leftIdentity = Iso (trans weaken2 cls) (trans ins (top &&& refl))
   rightIdentity = Iso (trans weaken1 cls) (trans ins (refl &&& top))
 
-instance MonoidalCategory (NaturalTransformation (:-)) CFProd where
+instance MonoidalCategory (NaturalTransformation c (:-)) CFProd where
   leftIdentity =
     Iso
     (NT (trans weaken2 cls))

@@ -17,7 +17,7 @@ import Haskerwaul.Functor
 import Haskerwaul.Transformation.Natural
 
 instance (c ~ (->), d ~ (->), Adjunction c d l r) =>
-         Magma (NaturalTransformation c) Compose (Compose r l) where
+         Magma (NaturalTransformation d c) Compose (Compose r l) where
   op =
     NT (Compose
         . map @d (Adj.epsilon (Proxy :: Proxy c))
@@ -26,7 +26,7 @@ instance (c ~ (->), d ~ (->), Adjunction c d l r) =>
         . getCompose)
 
 instance (c ~ (->), d ~ (->), Adjunction c d l r) =>
-         Magma (Opposite (NaturalTransformation d)) Compose (Compose l r) where
+         Magma (Opposite (NaturalTransformation d c)) Compose (Compose l r) where
   op =
     Opposite (NT (Compose
                   . map @_ @c Compose
@@ -35,11 +35,11 @@ instance (c ~ (->), d ~ (->), Adjunction c d l r) =>
                   . getCompose))
 
 -- instance {-# overlapping #-} (c ~ (->), d ~ (->), Adjunction c d l r) =>
---          UnitalMagma (NaturalTransformation c) Compose (Compose r l) where
+--          UnitalMagma (NaturalTransformation d c) Compose (Compose r l) where
 --   unit Proxy = NT (Compose . eta (Proxy :: Proxy d) . runIdentity)
 
 instance (c ~ (->), d ~ (->), Adjunction c d l r) =>
-         UnitalMagma (Opposite (NaturalTransformation d)) Compose (Compose l r) where
+         UnitalMagma (Opposite (NaturalTransformation c d)) Compose (Compose l r) where
   unit Proxy = Opposite (NT (Identity . Adj.epsilon (Proxy :: Proxy c) . getCompose))
 
 -- -- * Every object in a `CartesianMonoidalCategory` is a `Comonoid` in a unique way.

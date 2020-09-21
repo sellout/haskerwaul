@@ -1,4 +1,5 @@
-{-# language UndecidableInstances #-}
+{-# language TypeApplications
+           , UndecidableInstances #-}
 
 module Haskerwaul.Category.Opposite where
 
@@ -61,8 +62,8 @@ instance HasTerminalObject (Opposite (:-)) where
   type TerminalObject (Opposite (:-)) = Bottom
   (!) = Opposite bottom
 
-instance HasTerminalObject (Opposite (NaturalTransformation (:-))) where
-  type TerminalObject (Opposite (NaturalTransformation (:-))) = None
+instance HasTerminalObject (Opposite (NaturalTransformation c (:-))) where
+  type TerminalObject (Opposite (NaturalTransformation c (:-))) = None
   (!) = Opposite (NT none)
 
 instance HasTerminalObject (Isomorphism c) =>
@@ -137,8 +138,8 @@ instance Semigroupoid c => Bifunctor (Opposite c) c (->) c where
 --   bimap f g = trans g (trans ins (opposite f))
 
 instance {-# OVERLAPPABLE #-} Monad' (Opposite (->)) m => Monad (Opposite (->)) m where
-  pure = runNT (unit (Proxy :: Proxy Compose)) . Opposite runIdentity
-  flatten = runNT op . Opposite getCompose
+  pure = runNT @_ @(Opposite (->)) (unit (Proxy :: Proxy Compose)) . Opposite runIdentity
+  flatten = runNT @_ @(Opposite (->)) op . Opposite getCompose
 
 -- | Every semigroupal structure is semigroupal in the opposite category.
 instance SemigroupalCategory c t => SemigroupalCategory (Opposite c) t where

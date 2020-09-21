@@ -95,7 +95,7 @@ instance (Semigroupoid c, Bifunctor (Opposite c) d e t, BOb cOb dOb eOb t) =>
 
 instance (c ~ (->)) =>
          SemigroupalCategory
-         (FullSubcategory (Endofunctor c) (NaturalTransformation c))
+         (FullSubcategory (Endofunctor c) (NaturalTransformation c c))
          Compose where
   assoc =
     Iso
@@ -103,7 +103,7 @@ instance (c ~ (->)) =>
     (FS (NT (Compose . map Compose . getCompose . getCompose)))
 
 instance MonoidalCategory
-         (FullSubcategory (Endofunctor (->)) (NaturalTransformation (->)))
+         (FullSubcategory (Endofunctor (->)) (NaturalTransformation (->) (->)))
          Compose where
   leftIdentity =
     Iso (FS (NT (runIdentity . getCompose))) (FS (NT (Compose . Identity)))
@@ -114,9 +114,9 @@ instance MonoidalCategory
 
 instance (c ~ (->)) =>
          Bifunctor
-         (FullSubcategory (Endofunctor c) (NaturalTransformation c))
-         (FullSubcategory (Endofunctor c) (NaturalTransformation c))
-         (FullSubcategory (Endofunctor c) (NaturalTransformation c))
+         (FullSubcategory (Endofunctor c) (NaturalTransformation c c))
+         (FullSubcategory (Endofunctor c) (NaturalTransformation c c))
+         (FullSubcategory (Endofunctor c) (NaturalTransformation c c))
          Compose where
   bimap (FS f) (FS g) = FS (NT (Compose . runNT f . map (runNT g) . getCompose))
 

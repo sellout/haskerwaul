@@ -33,18 +33,20 @@ class (Category c, TOb (Ob c) (Exp c)) => ClosedCategory c where
 instance ClosedCategory (->) where
   type Exp (->) = (->)
 
+-- | This is a natural transformation as an exponential object in a category
+--   whose arrows are `NaturalTransformation`.
 data ExpTransformation (c :: Type -> Type -> Type) f g a =
   ET { runET :: f a `c` g a }
 
-instance ClosedCategory d =>
-         ClosedCategory (NaturalTransformation (d :: Type -> Type -> Type)) where
-  type Exp (NaturalTransformation d) = ExpTransformation (Exp d)
+instance (ClosedCategory d, BOb (FOb (Ob c) (Ob d)) (FOb (Ob c) (Ob d)) (FOb (Ob c) (Ob d)) (ExpTransformation (Exp d))) =>
+         ClosedCategory (NaturalTransformation c (d :: Type -> Type -> Type)) where
+  type Exp (NaturalTransformation c d) = ExpTransformation (Exp d)
 
 instance ClosedCategory (:-) where
   type Exp (:-) = (:=>)
 
-instance ClosedCategory (NaturalTransformation (:-)) where
-  type Exp (NaturalTransformation (:-)) = ConstraintTransformation (:-)
+instance ClosedCategory (NaturalTransformation c (:-)) where
+  type Exp (NaturalTransformation c (:-)) = ConstraintTransformation (:-)
 
 instance (ClosedCategory c, TOb (Ob c) (Opposite (Exp c))) =>
          ClosedCategory (Opposite c) where

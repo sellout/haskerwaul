@@ -9,4 +9,4 @@ import Haskerwaul.Isomorphism
 import Haskerwaul.Transformation.Natural
 
 -- | [nLab](https://ncatlab.org/nlab/show/natural+isomorphism)
-type NaturalIsomorphism c = Isomorphism (NaturalTransformation c)
+type NaturalIsomorphism c d = Isomorphism (NaturalTransformation c d)

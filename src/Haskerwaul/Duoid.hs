@@ -1,4 +1,5 @@
-{-# language UndecidableInstances
+{-# language TypeApplications
+           , UndecidableInstances
            , UndecidableSuperClasses #-}
 
 module Haskerwaul.Duoid
@@ -16,8 +17,7 @@ import Haskerwaul.Duoid.Components
 import Haskerwaul.Monoid
 import Haskerwaul.Transformation.Natural
 
--- | [nLab](https://ncatlab.org/nlab/show/duoidal+category#definition)
---
+-- |
 -- = laws
 --   (see `Haskerwaul.Category.Duoidal.DuoidalCategory`)
 --
@@ -25,22 +25,30 @@ import Haskerwaul.Transformation.Natural
 --   [duplicate unit]: @I → I ⋆ I@
 --   [combine unit]: @J ⋄ J → J@
 --   [forward unit]: @I →≅ (J ⋆ I) ⋄ (I ⋆ J) → (J ⋄ I) ⋆ (I ⋄ J) →≅ J@ (implied by the other laws)
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/duoidal+category#definition)
 class (Monoid c t (Diamond a), Monoid c t (Star a)) => Duoid c t a
 
 instance (Monoid c t (Diamond a), Monoid c t (Star a)) => Duoid c t a
 
-diamondU :: (c ~ NaturalTransformation (->), MonoidalCategory c t, Duoid c t a)
+diamondU :: forall c c' t a
+          . (c ~ NaturalTransformation c' (->), MonoidalCategory c t, Duoid c t a)
          => Proxy t -> Unit c t `c` a
-diamondU t = NT getDiamond . unit t
+diamondU t = NT getDiamond . unit @_ @_ @(Diamond a) t
 
-starU :: (c ~ NaturalTransformation (->), MonoidalCategory c t, Duoid c t a)
+starU :: forall c c' t a
+       . (c ~ NaturalTransformation c' (->), MonoidalCategory c t, Duoid c t a)
       => Proxy t -> Unit c t `c` a
-starU t = NT getStar . unit t
+starU t = NT getStar . unit @_ @_ @(Star a) t
 
-diamondT :: (c ~ NaturalTransformation (->), SemigroupalCategory c t, Duoid c t a)
+diamondT :: forall c c' t a
+          . (c ~ NaturalTransformation c' (->), SemigroupalCategory c t, Duoid c t a)
          => t a a `c` a
-diamondT = NT getDiamond . op . bimap (NT Diamond) (NT Diamond)
+diamondT = NT getDiamond . op @_ @_ @(Diamond a) . bimap (NT @c' @(->) Diamond) (NT @c' @(->) Diamond)
 
-starT :: (c ~ NaturalTransformation (->), SemigroupalCategory c t, Duoid c t a)
+starT :: forall c c' t a
+       . (c ~ NaturalTransformation c' (->), SemigroupalCategory c t, Duoid c t a)
       => t a a `c` a
-starT = NT getStar . op . bimap (NT Star) (NT Star)
+starT = NT getStar . op @_ @_ @(Star a) . bimap (NT @c' @(->) Star) (NT @c' @(->) Star)

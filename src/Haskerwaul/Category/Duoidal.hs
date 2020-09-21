@@ -50,7 +50,7 @@ foreUnit Proxy Proxy =
 --          Should be able to generalize this.
 instance (c ~ (->), ct ~ (,)) =>
          DuoidalCategory
-         (FullSubcategory (Endofunctor c) (NaturalTransformation c))
+         (FullSubcategory (Endofunctor c) (NaturalTransformation c c))
          (Day c ct ct)
          Compose where
   switch =

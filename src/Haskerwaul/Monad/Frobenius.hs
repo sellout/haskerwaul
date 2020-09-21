@@ -9,4 +9,4 @@ import Haskerwaul.Monoid.Frobenius
 import Haskerwaul.Transformation.Natural
 
 -- | [nLab](https://ncatlab.org/nlab/show/Frobenius+monad)
-type FrobeniusMonad c = FrobeniusMonoid (NaturalTransformation c) Compose
+type FrobeniusMonad c = FrobeniusMonoid (NaturalTransformation c c) Compose

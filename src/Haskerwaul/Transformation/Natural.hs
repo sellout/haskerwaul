@@ -1,3 +1,5 @@
+{-# language TypeApplications #-}
+
 module Haskerwaul.Transformation.Natural where
 
 import qualified Control.Applicative as Base
@@ -15,61 +17,61 @@ import Haskerwaul.Monoid
 import Haskerwaul.Object
 
 -- | [nLab](https://ncatlab.org/nlab/show/natural+transformation)
-newtype NaturalTransformation d f g = NT { runNT :: forall a. f a `d` g a }
+newtype NaturalTransformation c d f g =
+  NT { runNT :: forall a. Ob c a => f a `d` g a }
 
--- | __FIXME__: This should maintain the @`Ob` c@ constraint somehow. E.g.,
---             @`FOb` (`Ob` c) (`Ob` d)@.
-type instance Ob (NaturalTransformation d) = All
+type instance Ob (NaturalTransformation c d) = FOb (Ob c) (Ob d)
 
-instance MonoidalCategory' (NaturalTransformation c) Compose where
-  type Unit (NaturalTransformation c) Compose = Identity
+instance Ob c ~ All => MonoidalCategory' (NaturalTransformation c c) Compose where
+  type Unit (NaturalTransformation c c) Compose = Identity
 
-instance MonoidalCategory' (NaturalTransformation (:-)) CFProd where
-  type Unit (NaturalTransformation (:-)) CFProd = All
+instance MonoidalCategory' (NaturalTransformation c (:-)) CFProd where
+  type Unit (NaturalTransformation c (:-)) CFProd = All
 
 -- | Tensor product for monoidal structures lifted from the destination
 --   category.
 newtype FTensor t f g a = FTensor { lowerFTensor :: (t (f a) (g a)) }
 
-instance MonoidalCategory' c t =>
-         MonoidalCategory' (NaturalTransformation c) (FTensor t) where
-  type Unit (NaturalTransformation c) (FTensor t) = Const (Unit c t)
+instance (Ob d ~ All, MonoidalCategory' d dt) =>
+         MonoidalCategory' (NaturalTransformation c d) (FTensor dt) where
+  type Unit (NaturalTransformation c d) (FTensor dt) = Const (Unit d dt)
 
 -- `Haskerwaul.Monad.Monad` instances
 
 instance {-# overlappable #-} Base.Monad f =>
-                              Magma (NaturalTransformation (->)) Compose f where
+                              Magma (NaturalTransformation (->) (->)) Compose f where
   op = NT (Base.join Base.. getCompose)
 
 instance {-# overlappable #-} Base.Monad f =>
-                              Semigroup (NaturalTransformation (->)) Compose f
+                              Semigroup (NaturalTransformation (->) (->)) Compose f
 
 instance {-# overlappable #-} Base.Monad f =>
-                              UnitalMagma (NaturalTransformation (->)) Compose f where
+                              UnitalMagma (NaturalTransformation (->) (->)) Compose f where
   unit Proxy = NT (Base.pure Base.. runIdentity)
 
 -- `Base.Alternative` instances
 
 -- | This lowers a `Magma` in a functor category to one in the target category.
 lowerOp
-  :: (c ~ (->), Magma (NaturalTransformation c) (FTensor t) f)
-  => t (f a) (f a) `c` f a
-lowerOp = runNT op Base.. FTensor
+  :: forall c d dt f a
+   . (d ~ (->), Magma (NaturalTransformation c d) (FTensor dt) f, Ob c a)
+  => Proxy c -> dt (f a) (f a) `d` f a
+lowerOp Proxy = runNT @_ @c op Base.. FTensor
 
 -- | This lowers a `UnitalMagma` in a functor category to one in the target category.
 lowerUnit
-  :: forall c t f a
-   . (c ~ (->), UnitalMagma (NaturalTransformation c) (FTensor t) f)
-  => Proxy t -> Unit c t `c` f a
-lowerUnit Proxy = runNT (unit (Proxy :: Proxy (FTensor t))) Base.. Const
+  :: forall c d dt f a
+   . (d ~ (->), UnitalMagma (NaturalTransformation c d) (FTensor dt) f, Ob c a)
+  => Proxy c -> Proxy dt -> Unit d dt `d` f a
+lowerUnit Proxy Proxy = runNT @_ @c (unit (Proxy :: Proxy (FTensor dt))) Base.. Const
 
 instance {-# overlappable #-} Base.Alternative f =>
-                              Magma (NaturalTransformation (->)) (FTensor (,)) f where
+                              Magma (NaturalTransformation (->) (->)) (FTensor (,)) f where
   op = NT (\(FTensor (a, b)) -> a Base.<|> b)
 
 instance {-# overlappable #-} Base.Alternative f =>
-                              Semigroup (NaturalTransformation (->)) (FTensor (,)) f
+                              Semigroup (NaturalTransformation (->) (->)) (FTensor (,)) f
 
 instance {-# overlappable #-} Base.Alternative f =>
-                              UnitalMagma (NaturalTransformation (->)) (FTensor (,)) f where
+                              UnitalMagma (NaturalTransformation (->) (->)) (FTensor (,)) f where
   unit Proxy = NT (\(Const ()) -> Base.empty)

@@ -1,5 +1,6 @@
-{-# language UndecidableInstances
-           , UndecidableSuperClasses#-}
+{-# language TypeApplications
+           , UndecidableInstances
+           , UndecidableSuperClasses #-}
 
 module Haskerwaul.Monad
   ( module Haskerwaul.Monad
@@ -17,9 +18,9 @@ import Haskerwaul.Semigroupoid
 import Haskerwaul.Transformation.Natural
 
 -- | [nLab](https://ncatlab.org/nlab/show/monad)
-class (Monoid (NaturalTransformation c) Compose m, Endofunctor c m) => Monad' c m
+class (Monoid (NaturalTransformation c c) Compose m, Endofunctor c m) => Monad' c m
 
-instance (Monoid (NaturalTransformation c) Compose m, Endofunctor c m) =>
+instance (Monoid (NaturalTransformation c c) Compose m, Endofunctor c m) =>
          Monad' c m
 
 -- | The `Monad` class above is constrained to @(->)@, because it relies on
@@ -31,5 +32,5 @@ class Endofunctor c m => Monad c m where
   flatten :: m (m a) `c` m a
 
 instance {-# OVERLAPPABLE #-} Monad' (->) m => Monad (->) m where
-  pure = runNT (unit (Proxy :: Proxy Compose)) . Identity
-  flatten = runNT op . Compose
+  pure = runNT @_ @(->) (unit (Proxy :: Proxy Compose)) . Identity
+  flatten = runNT @_ @(->) op . Compose

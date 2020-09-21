@@ -8,6 +8,7 @@ module Haskerwaul.Category.Monoidal.Cocartesian
 
 import Haskerwaul.Category.Monoidal.Cartesian
 import Haskerwaul.Category.Opposite
+import Haskerwaul.Object
 
 -- | We provide an unwrapped version of `diagonal` as `codiagonal`, but the
 --   [coprojections](https://ncatlab.org/nlab/show/coprojection) generally have
@@ -26,5 +27,5 @@ type Coprod c = Prod (Opposite c)
 -- = references
 --
 -- - [nLab](https://ncatlab.org/nlab/show/codiagonal)
-codiagonal :: (CocartesianMonodialCategory c, Ob c a) => Prod c a a `c` a
+codiagonal :: (CocartesianMonoidalCategory c, Ob c a) => Coprod c a a `c` a
 codiagonal = opposite diagonal

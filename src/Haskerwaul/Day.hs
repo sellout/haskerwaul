@@ -17,14 +17,14 @@ import Haskerwaul.Subcategory.Full
 import Haskerwaul.Transformation.Natural
 
 -- | [nLab](https://ncatlab.org/nlab/show/Day+convolution)
-data Day c ct dt f g a = forall x y. Day (dt (f x) (g y)) (ct x y `c` a)
+data Day c ct dt f g a = forall x y. (Ob c x, Ob c y) => Day (dt (f x) (g y)) (ct x y `c` a)
 
 -- | Functor categories have `Day` as a monoidal tensor.
 --
 --  __NB__: This is overspecialized.
 instance (c ~ (->), ct ~ (,), d ~ (->), dt ~ (,)) =>
          SemigroupalCategory
-         (FullSubcategory (Functor c d) (NaturalTransformation d))
+         (FullSubcategory (Functor c d) (NaturalTransformation c d))
          (Day c ct dt) where
   assoc =
     Iso
@@ -33,16 +33,16 @@ instance (c ~ (->), ct ~ (,), d ~ (->), dt ~ (,)) =>
     (FS (NT (\(Day (Day (fa, gb) ifn, hc) ofn) ->
                 Day (fa, Day (gb, hc) (\(b, c) -> \a -> ofn (ifn (a, b), c))) (\(a, fn) -> fn a))))
 
-instance MonoidalCategory' c ct =>
-         MonoidalCategory' (NaturalTransformation d) (Day c ct dt) where
-  type Unit (NaturalTransformation d) (Day c ct dt) = c (Unit c ct)
+instance (MonoidalCategory' c ct, FOb (Ob c) (Ob d) (c (Unit c ct))) =>
+         MonoidalCategory' (NaturalTransformation c d) (Day c ct dt) where
+  type Unit (NaturalTransformation c d) (Day c ct dt) = c (Unit c ct)
 
 -- | Functor categories have `Day` as a monoidal tensor.
 --
 --  __NB__: Super over-specialized.
 instance (c ~ (->), ct ~ (,), d ~ (->), dt ~ (,), MonoidalCategory d dt) =>
          MonoidalCategory
-         (FullSubcategory (Functor c d) (NaturalTransformation d))
+         (FullSubcategory (Functor c d) (NaturalTransformation c d))
          (Day c ct dt) where
   leftIdentity =
     Iso
@@ -54,17 +54,17 @@ instance (c ~ (->), ct ~ (,), d ~ (->), dt ~ (,), MonoidalCategory d dt) =>
     (FS (NT (\fa -> Day (fa, \x -> x) (\(a, _) -> a))))
 
 instance (c ~ (->), d ~ (->), LaxMonoidalFunctor c ct d dt f) =>
-         Magma (NaturalTransformation d) (Day c ct dt) f where
+         Magma (NaturalTransformation c d) (Day c ct dt) f where
   op = NT (\(Day t fn) -> map fn (mu (Proxy :: Proxy c) t))
 
 -- instance (c ~ (->), d ~ (->), LaxMonoidalFunctor c ct d dt f) =>
---          UnitalMagma (NaturalTransformation d) (Day c ct dt) f where
+--          UnitalMagma (NaturalTransformation c d) (Day c ct dt) f where
 --   unit :: Proxy (Day c ct dt)
---        -> NaturalTransformation d (Unit (NaturalTransformation d) (Day c ct dt)) f
+--        -> NaturalTransformation c d (Unit (NaturalTransformation c d) (Day c ct dt)) f
 --   unit Proxy = NT (epsilon (Proxy :: Proxy c) (Proxy :: Proxy ct) (Proxy :: Proxy dt))
 
 instance (c ~ (->), d ~ (->), LaxMonoidalFunctor c ct d dt f) =>
-         Semigroup (NaturalTransformation d) (Day c ct dt) f
+         Semigroup (NaturalTransformation c d) (Day c ct dt) f
 
 instance (d ~ (->), Semigroupoid c, Functor c d f, Functor c d g) =>
          Functor c d (Day c ct dt f g) where
@@ -76,15 +76,15 @@ instance (d ~ (->), Semigroupoid c) =>
 
 instance (d ~ (->), Category c, Bifunctor d d d dt) =>
          Bifunctor
-         (FullSubcategory (Functor c d) (NaturalTransformation d))
-         (FullSubcategory (Functor c d) (NaturalTransformation d))
-         (FullSubcategory (Functor c d) (NaturalTransformation d))
+         (FullSubcategory (Functor c d) (NaturalTransformation c d))
+         (FullSubcategory (Functor c d) (NaturalTransformation c d))
+         (FullSubcategory (Functor c d) (NaturalTransformation c d))
          (Day c ct dt) where
   bimap f g =
-    FS (NT (\(Day t fn) -> Day (bimap @d @d (runNT (inclusion f)) (runNT (inclusion g)) t) fn))
+    FS (NT (\(Day t fn) -> Day (bimap @d @d (runNT @_ @c (inclusion f)) (runNT @_ @c (inclusion g)) t) fn))
 
 instance Semigroup (->) (,) a =>
-         Magma (NaturalTransformation (->)) (Day (->) (,) (,)) (Diamond (Either a)) where
+         Magma (NaturalTransformation (->) (->)) (Day (->) (,) (,)) (Diamond (Either a)) where
   op = NT (\(Day (Diamond fa, Diamond gb) fn) -> Diamond (case (fa, gb) of
               (Left a,  Left a')  -> Left (op (a, a'))
               (Left a,  Right _)  -> Left a
@@ -94,5 +94,5 @@ instance Semigroup (->) (,) a =>
 -- | The `Semigroup` constraint here is redundant, but we should only have a
 --  `Star` instance when we have a `Diamond` instance.
 instance Semigroup (->) (,) a =>
-         Magma (NaturalTransformation (->)) (Day (->) (,) (,)) (Star (Either a)) where
-  op = NT (\(Day (Star fa, Star gb) fn) -> Star (runNT op (Day (fa, gb) fn)))
+         Magma (NaturalTransformation (->) (->)) (Day (->) (,) (,)) (Star (Either a)) where
+  op = NT (\(Day (Star fa, Star gb) fn) -> Star (runNT @_ @(->) op (Day (fa, gb) fn)))

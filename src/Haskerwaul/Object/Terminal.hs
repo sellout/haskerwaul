@@ -29,13 +29,13 @@ instance HasTerminalObject (:-) where
   type TerminalObject (:-) = ()
   (!) = Sub Dict
 
-instance HasTerminalObject (NaturalTransformation (:-)) where
-  type TerminalObject (NaturalTransformation (:-)) = All
+instance HasTerminalObject (NaturalTransformation c (:-)) where
+  type TerminalObject (NaturalTransformation c (:-)) = All
   (!) = NT (Sub Dict)
 
-instance (c ~ (->), HasTerminalObject c) =>
-         HasTerminalObject (NaturalTransformation c) where
-  type TerminalObject (NaturalTransformation c) = Const (TerminalObject c)
+instance (d ~ (->), HasTerminalObject d) =>
+         HasTerminalObject (NaturalTransformation c d) where
+  type TerminalObject (NaturalTransformation c d) = Const (TerminalObject d)
   -- TODO: Replace this with `NT (first (!))`, but it currently causes an import
   --       cycle.
   (!) = NT (Const . (!))

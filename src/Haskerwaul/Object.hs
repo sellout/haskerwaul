@@ -50,6 +50,12 @@ class BOb cOb dOb eOb b where
 instance BOb cOb dOb All t where
   inB = Sub Dict
 
+instance BOb (FOb cOb dOb) (FOb eOb fOb) (FOb gOb All) t where
+  inB = Sub Dict
+
+instance BOb (BOb cOb dOb eOb) (BOb fOb gOb hOb) (BOb iOb jOb All) t where
+  inB = Sub Dict
+
 instance (BOb cOb dOb eOb b, BOb cOb' dOb' eOb' b) =>
          BOb (CFProd cOb cOb') (CFProd dOb dOb') (CFProd eOb eOb') b where
   inB :: forall x y. (CFProd cOb cOb' x, CFProd dOb dOb' y) :- CFProd eOb eOb' (b x y)

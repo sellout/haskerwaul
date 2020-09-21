@@ -39,8 +39,8 @@ instance CartesianMonoidalCategory (->) where
   diagonal x = (x, x)
 
 instance (d ~ (->), CartesianMonoidalCategory d) =>
-         CartesianMonoidalCategory (NaturalTransformation d) where
-  type Prod (NaturalTransformation d) = FTensor (Prod d)
+         CartesianMonoidalCategory (NaturalTransformation c d) where
+  type Prod (NaturalTransformation c d) = FTensor (Prod d)
   exl = NT (exl . lowerFTensor)
   exr = NT (exr . lowerFTensor)
   diagonal = NT (FTensor . diagonal)
@@ -51,8 +51,8 @@ instance CartesianMonoidalCategory (:-) where
   exr = trans weaken2 cls
   diagonal = Sub Dict
 
-instance CartesianMonoidalCategory (NaturalTransformation (:-)) where
-  type Prod (NaturalTransformation (:-)) = CFProd
+instance CartesianMonoidalCategory (NaturalTransformation c (:-)) where
+  type Prod (NaturalTransformation c (:-)) = CFProd
   exl = NT (trans weaken1 cls)
   exr = NT (trans weaken2 cls)
   diagonal = NT (Sub Dict)

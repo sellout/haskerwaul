@@ -28,9 +28,9 @@ instance SymmetricMonoidalCategory (->) (,)
 
 instance SymmetricMonoidalCategory (->) Either
 
-instance (c ~ (->), SymmetricMonoidalCategory c t) =>
-         SymmetricMonoidalCategory (NaturalTransformation c) (FTensor t)
+instance (d ~ (->), SymmetricMonoidalCategory d dt) =>
+         SymmetricMonoidalCategory (NaturalTransformation c d) (FTensor dt)
 
 instance SymmetricMonoidalCategory (:-) Combine
 
-instance SymmetricMonoidalCategory (NaturalTransformation (:-)) CFProd
+instance SymmetricMonoidalCategory (NaturalTransformation c (:-)) CFProd
