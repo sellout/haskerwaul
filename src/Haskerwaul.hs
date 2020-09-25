@@ -27,6 +27,9 @@ module Haskerwaul
   , module Haskerwaul.Category.Pointed
   , module Haskerwaul.Category.Product
   , module Haskerwaul.Category.Rig
+  , module Haskerwaul.Category.Rig.ColaxDistributive
+  , module Haskerwaul.Category.Rig.ColaxDistributive.Left
+  , module Haskerwaul.Category.Rig.ColaxDistributive.Right
   , module Haskerwaul.Category.Semigroupal
   , module Haskerwaul.Category.Terminal
   , module Haskerwaul.Category.Under
@@ -284,6 +287,9 @@ import Haskerwaul.Category.Over
 import Haskerwaul.Category.Pointed
 import Haskerwaul.Category.Product
 import Haskerwaul.Category.Rig
+import Haskerwaul.Category.Rig.ColaxDistributive
+import Haskerwaul.Category.Rig.ColaxDistributive.Left
+import Haskerwaul.Category.Rig.ColaxDistributive.Right
 import Haskerwaul.Category.Semigroupal
 import Haskerwaul.Category.Terminal
 import Haskerwaul.Category.Under

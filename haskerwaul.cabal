@@ -64,6 +64,9 @@ library
                     , Haskerwaul.Category.Pointed
                     , Haskerwaul.Category.Product
                     , Haskerwaul.Category.Rig
+                    , Haskerwaul.Category.Rig.ColaxDistributive
+                    , Haskerwaul.Category.Rig.ColaxDistributive.Left
+                    , Haskerwaul.Category.Rig.ColaxDistributive.Right
                     , Haskerwaul.Category.Semigroupal
                     , Haskerwaul.Category.Terminal
                     , Haskerwaul.Category.Under
