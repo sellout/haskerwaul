@@ -9,5 +9,10 @@ module Haskerwaul.Profunctor
 import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Opposite
 
--- | [nLab](https://ncatlab.org/nlab/show/profunctor)
+-- | Simply a synonym for certain bifunctors.
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/profunctor)
+-- - [Wikipedia](https://en.wikipedia.org/wiki/Profunctor)
 type Profunctor c d = Bifunctor (Op d) c (->)
