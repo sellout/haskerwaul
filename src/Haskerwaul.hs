@@ -18,6 +18,7 @@ module Haskerwaul
   , module Haskerwaul.Category.CoKleisli
   , module Haskerwaul.Category.Concrete
   , module Haskerwaul.Category.Distributive
+  , module Haskerwaul.Category.Distributive.Linearly
   , module Haskerwaul.Category.Duoidal
   , module Haskerwaul.Category.Duoidal.Normal
   , module Haskerwaul.Category.Hypergraph
@@ -264,6 +265,7 @@ import Haskerwaul.Category.Closed.Compact
 import Haskerwaul.Category.CoKleisli
 import Haskerwaul.Category.Concrete
 import Haskerwaul.Category.Distributive
+import Haskerwaul.Category.Distributive.Linearly
 import Haskerwaul.Category.Duoidal
 import Haskerwaul.Category.Duoidal.Normal
 import Haskerwaul.Category.Hypergraph

@@ -39,6 +39,7 @@ library
                     , Haskerwaul.Category.CoKleisli
                     , Haskerwaul.Category.Concrete
                     , Haskerwaul.Category.Distributive
+                    , Haskerwaul.Category.Distributive.Linearly
                     , Haskerwaul.Category.Duoidal
                     , Haskerwaul.Category.Duoidal.Normal
                     , Haskerwaul.Category.Empty
