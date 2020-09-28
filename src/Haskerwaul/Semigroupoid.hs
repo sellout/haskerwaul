@@ -55,7 +55,7 @@ instance MonoidalCategory' (DinaturalTransformation (->)) Procompose where
 -- | All `Base.Category` instances are also `Semigroupoid` instances.
 instance {-# overlappable #-} Base.Category c =>
                               Magma (DinaturalTransformation (->)) Procompose c where
-  op = DT (\(Procompose f g) -> f . g)
+  op = DT (\(Procompose f g) -> f Base.. g)
 
 -- | All `Base.Category` instances are also `Semigroupoid` instances.
 instance {-# overlappable #-} Base.Category c =>
