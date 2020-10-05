@@ -167,7 +167,7 @@ This adds a handful of the concepts defined in Haskerwaul, and those it includes
 
 ### [concat](https://github.com/conal/concat)
 
-The primary component of this is a compiler plugin for category-based rewriting. However, it needs a category hierarchy to perform the rewrites on, so it provides one of its own. The hierarchy is pretty small, restricts objects to kind `Type`, also has a single definition for products, coproducts, exponentials, etc., which reduces the flexibility a lot. Finally concat has some naming conventions (and hierarchy) that perhaps better serves Haskell programmers understanding the mechanism than modeling categorical concepts.
+The primary component of this is a compiler plugin for category-based rewriting. However, it needs a category hierarchy to perform the rewrites on, so it provides one of its own. The hierarchy is pretty small, restricts objects to kind `Type`, also has a single definition for products, coproducts, exponentials, etc., which reduces the flexibility a lot. Finally, concat has some naming conventions (and hierarchy) that perhaps better serves Haskell programmers understanding the mechanism than modeling categorical concepts.
 
 ### [HaskellForMaths](http://hackage.haskell.org/package/HaskellForMaths)
 

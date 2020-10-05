@@ -39,6 +39,7 @@ module Haskerwaul
   , module Haskerwaul.Category.Closed.Bicartesian
   , module Haskerwaul.Category.Closed.Cartesian
   , module Haskerwaul.Category.Closed.Compact
+  , module Haskerwaul.Category.Closed.Symmetric
   -- ** monoidal categories
   , module Haskerwaul.Category.Monoidal
   , module Haskerwaul.Category.Monoidal.Balanced
@@ -46,6 +47,7 @@ module Haskerwaul
   , module Haskerwaul.Category.Monoidal.Cartesian
   , module Haskerwaul.Category.Monoidal.Cartesian.Traced
   , module Haskerwaul.Category.Monoidal.Closed
+  , module Haskerwaul.Category.Monoidal.Closed.Cartesian
   , module Haskerwaul.Category.Monoidal.Cocartesian
   , module Haskerwaul.Category.Monoidal.Distributive
   , module Haskerwaul.Category.Monoidal.Rigid
@@ -170,6 +172,7 @@ module Haskerwaul
   , module Haskerwaul.Monoid.Hopf
   -- * objects
   , module Haskerwaul.Object
+  , module Haskerwaul.Object.Exponential
   , module Haskerwaul.Object.Free
   , module Haskerwaul.Object.Initial
   , module Haskerwaul.Object.NaturalNumbers
@@ -205,6 +208,10 @@ module Haskerwaul
   , module Haskerwaul.Relation.Nullary
   , module Haskerwaul.Relation.Tolerance
   , module Haskerwaul.Relation.Unary
+  -- * residuals
+  , module Haskerwaul.Residual
+  , module Haskerwaul.Residual.Left
+  , module Haskerwaul.Residual.Right
   -- * rigs
   , module Haskerwaul.Rig
   , module Haskerwaul.Rig.Idempotent
@@ -262,6 +269,7 @@ import Haskerwaul.Category.Closed
 import Haskerwaul.Category.Closed.Bicartesian
 import Haskerwaul.Category.Closed.Cartesian
 import Haskerwaul.Category.Closed.Compact
+import Haskerwaul.Category.Closed.Symmetric
 import Haskerwaul.Category.CoKleisli
 import Haskerwaul.Category.Concrete
 import Haskerwaul.Category.Distributive
@@ -276,6 +284,7 @@ import Haskerwaul.Category.Monoidal.Braided
 import Haskerwaul.Category.Monoidal.Cartesian
 import Haskerwaul.Category.Monoidal.Cartesian.Traced
 import Haskerwaul.Category.Monoidal.Closed
+import Haskerwaul.Category.Monoidal.Closed.Cartesian
 import Haskerwaul.Category.Monoidal.Cocartesian
 import Haskerwaul.Category.Monoidal.Distributive
 import Haskerwaul.Category.Monoidal.Rigid
@@ -388,6 +397,7 @@ import Haskerwaul.Monoid.Frobenius.Special
 import Haskerwaul.Monoid.Hopf
 import Haskerwaul.Negation
 import Haskerwaul.Object
+import Haskerwaul.Object.Exponential
 import Haskerwaul.Object.Free
 import Haskerwaul.Object.Initial
 import Haskerwaul.Object.NaturalNumbers
@@ -419,6 +429,9 @@ import Haskerwaul.Relation.Inequality.Tight
 import Haskerwaul.Relation.Nullary
 import Haskerwaul.Relation.Tolerance
 import Haskerwaul.Relation.Unary
+import Haskerwaul.Residual
+import Haskerwaul.Residual.Left
+import Haskerwaul.Residual.Right
 import Haskerwaul.Rig
 import Haskerwaul.Rig.Idempotent
 import Haskerwaul.Rig.Monus

@@ -137,7 +137,7 @@ instance Semigroupoid c => Bifunctor (Opposite c) c (->) c where
 --   -- bimap :: b :- a -> c :- d -> (a :=> c) :- (b :=> d)
 --   bimap f g = trans g (trans ins (opposite f))
 
-instance {-# OVERLAPPABLE #-} Monad' (Opposite (->)) m => Monad (Opposite (->)) m where
+instance {-# overlappable #-} Monad' (Opposite (->)) m => Monad (Opposite (->)) m where
   pure = runNT @_ @(Opposite (->)) (unit (Proxy :: Proxy Compose)) . Opposite runIdentity
   flatten = runNT @_ @(Opposite (->)) op . Opposite getCompose
 

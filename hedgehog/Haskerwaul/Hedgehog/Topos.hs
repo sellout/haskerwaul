@@ -61,13 +61,17 @@ instance CartesianMonoidalCategory HH where
   diagonal = HH diagonal
 
 instance ClosedCategory HH where
-  type Exp HH = (->)
+  type InternalHom HH = (->)
 
 instance ClosedMonoidalCategory (->) t => ClosedMonoidalCategory HH t where
   apply = HH apply
+  curry (HH f) = HH (curry f)
 
 instance CartesianClosedCategory HH where
-  curry = Iso (HH . to curry . runHH) (HH . from curry . runHH)
+  const = HH const
+  t = HH t
+
+instance CartesianClosedMonoidalCategory HH where
   tuple = HH tuple
 
 instance ElementaryTopos HH where
@@ -88,7 +92,7 @@ instance UnitalMagma (->) t a => UnitalMagma HH t a where
 -- | The relation hierarchy in Haskerwaul is odd. But, for now, all we care
 --   about in the `HH` topos is equivalence, so we push everything through that.
 instance (Eq a, Show a) => HomogeneousRelation HH a where
-  rel = HH (from curry (===))
+  rel = HH (uncurry (===))
 
 instance (Eq a, Show a) => Preorder HH a
 

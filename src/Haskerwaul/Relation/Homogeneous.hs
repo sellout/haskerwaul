@@ -16,7 +16,6 @@ import           Numeric.Natural (Natural)
 import           Prelude (Double, Float, Integer)
 
 import Haskerwaul.Bifunctor
-import Haskerwaul.Isomorphism
 import Haskerwaul.Lattice.Components
 import Haskerwaul.Object
 import Haskerwaul.Order.Canonical
@@ -38,94 +37,94 @@ instance HomogeneousRelation (->) () where
   rel ((), ()) = False
 
 instance HomogeneousRelation (->) Bool where
-  rel = from curry (Base./=)
+  rel = uncurry (Base./=)
 
 instance HomogeneousRelation (->) Natural where
-  rel = from curry (Base./=)
+  rel = uncurry (Base./=)
 
 instance HomogeneousRelation (->) Int where
-  rel = from curry (Base./=)
+  rel = uncurry (Base./=)
 
 instance HomogeneousRelation (->) Int8 where
-  rel = from curry (Base./=)
+  rel = uncurry (Base./=)
 
 instance HomogeneousRelation (->) Int16 where
-  rel = from curry (Base./=)
+  rel = uncurry (Base./=)
 
 instance HomogeneousRelation (->) Int32 where
-  rel = from curry (Base./=)
+  rel = uncurry (Base./=)
 
 instance HomogeneousRelation (->) Int64 where
-  rel = from curry (Base./=)
+  rel = uncurry (Base./=)
 
 instance HomogeneousRelation (->) Integer where
-  rel = from curry (Base./=)
+  rel = uncurry (Base./=)
 
 instance HomogeneousRelation (->) Word where
-  rel = from curry (Base./=)
+  rel = uncurry (Base./=)
 
 instance HomogeneousRelation (->) Word8 where
-  rel = from curry (Base./=)
+  rel = uncurry (Base./=)
 
 instance HomogeneousRelation (->) Word16 where
-  rel = from curry (Base./=)
+  rel = uncurry (Base./=)
 
 instance HomogeneousRelation (->) Word32 where
-  rel = from curry (Base./=)
+  rel = uncurry (Base./=)
 
 instance HomogeneousRelation (->) Word64 where
-  rel = from curry (Base./=)
+  rel = uncurry (Base./=)
 
 instance HomogeneousRelation (->) Float where
-  rel = from curry (Base./=)
+  rel = uncurry (Base./=)
 
 instance HomogeneousRelation (->) Double where
-  rel = from curry (Base./=)
+  rel = uncurry (Base./=)
 
 instance HomogeneousRelation (->) (Canonical Bool) where
-  rel = from curry (Base.<=) . bimap decanonicalize decanonicalize
+  rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
 
 instance HomogeneousRelation (->) (Canonical Natural) where
-  rel = from curry (Base.<=) . bimap decanonicalize decanonicalize
+  rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
 
 instance HomogeneousRelation (->) (Canonical Int) where
-  rel = from curry (Base.<=) . bimap decanonicalize decanonicalize
+  rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
 
 instance HomogeneousRelation (->) (Canonical Int8) where
-  rel = from curry (Base.<=) . bimap decanonicalize decanonicalize
+  rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
 
 instance HomogeneousRelation (->) (Canonical Int16) where
-  rel = from curry (Base.<=) . bimap decanonicalize decanonicalize
+  rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
 
 instance HomogeneousRelation (->) (Canonical Int32) where
-  rel = from curry (Base.<=) . bimap decanonicalize decanonicalize
+  rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
 
 instance HomogeneousRelation (->) (Canonical Int64) where
-  rel = from curry (Base.<=) . bimap decanonicalize decanonicalize
+  rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
 
 instance HomogeneousRelation (->) (Canonical Integer) where
-  rel = from curry (Base.<=) . bimap decanonicalize decanonicalize
+  rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
 
 instance HomogeneousRelation (->) (Canonical Word) where
-  rel = from curry (Base.<=) . bimap decanonicalize decanonicalize
+  rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
 
 instance HomogeneousRelation (->) (Canonical Word8) where
-  rel = from curry (Base.<=) . bimap decanonicalize decanonicalize
+  rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
 
 instance HomogeneousRelation (->) (Canonical Word16) where
-  rel = from curry (Base.<=) . bimap decanonicalize decanonicalize
+  rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
 
 instance HomogeneousRelation (->) (Canonical Word32) where
-  rel = from curry (Base.<=) . bimap decanonicalize decanonicalize
+  rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
 
 instance HomogeneousRelation (->) (Canonical Word64) where
-  rel = from curry (Base.<=) . bimap decanonicalize decanonicalize
+  rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
 
 instance HomogeneousRelation (->) (Canonical Float) where
-  rel = from curry (Base.<=) . bimap decanonicalize decanonicalize
+  rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
 
 instance HomogeneousRelation (->) (Canonical Double) where
-  rel = from curry (Base.<=) . bimap decanonicalize decanonicalize
+  rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
 
 instance {-# incoherent #-}
          (c ~ (->), ElementaryTopos c, HomogeneousRelation c a, Ob c (Meet a)) =>

@@ -22,48 +22,51 @@ import Haskerwaul.Transformation.Natural
 -- | [nLab](https://ncatlab.org/nlab/show/closed+category)
 --
 --  __TODO__: This should have a
---           @`Haskerwaul.Bifunctor.Bifunctor` (`Opposite` c) c c (`Exp` c)@
+--           @`Haskerwaul.Bifunctor.Bifunctor` (`Opposite` c) c c (`InternalHom` c)@
 --            constraint, but it's been troublesome making an instance for
 --            `(:=>)`, so we skip the constraint here and add it on the
 --            instances that make use of it.
-class (Category c, TOb (Ob c) (Exp c)) => ClosedCategory c where
-  -- | [nLab](https://ncatlab.org/nlab/show/exponential+object)
-  type Exp c :: ok -> ok -> ok
+class (Category c, TOb (Ob c) (InternalHom c)) => ClosedCategory c where
+  -- |
+  -- = references
+  --
+  -- - [nLab](https://ncatlab.org/nlab/show/internal+hom)
+  type InternalHom c :: ok -> ok -> ok
 
 instance ClosedCategory (->) where
-  type Exp (->) = (->)
+  type InternalHom (->) = (->)
 
 -- | This is a natural transformation as an exponential object in a category
 --   whose arrows are `NaturalTransformation`.
 data ExpTransformation (c :: Type -> Type -> Type) f g a =
   ET { runET :: f a `c` g a }
 
-instance (ClosedCategory d, BOb (FOb (Ob c) (Ob d)) (FOb (Ob c) (Ob d)) (FOb (Ob c) (Ob d)) (ExpTransformation (Exp d))) =>
+instance (ClosedCategory d, BOb (FOb (Ob c) (Ob d)) (FOb (Ob c) (Ob d)) (FOb (Ob c) (Ob d)) (ExpTransformation (InternalHom d))) =>
          ClosedCategory (NaturalTransformation c (d :: Type -> Type -> Type)) where
-  type Exp (NaturalTransformation c d) = ExpTransformation (Exp d)
+  type InternalHom (NaturalTransformation c d) = ExpTransformation (InternalHom d)
 
 instance ClosedCategory (:-) where
-  type Exp (:-) = (:=>)
+  type InternalHom (:-) = (:=>)
 
 instance ClosedCategory (NaturalTransformation c (:-)) where
-  type Exp (NaturalTransformation c (:-)) = ConstraintTransformation (:-)
+  type InternalHom (NaturalTransformation c (:-)) = ConstraintTransformation (:-)
 
-instance (ClosedCategory c, TOb (Ob c) (Opposite (Exp c))) =>
+instance (ClosedCategory c, TOb (Ob c) (Opposite (InternalHom c))) =>
          ClosedCategory (Opposite c) where
-  type Exp (Opposite c) = Opposite (Exp c)
+  type InternalHom (Opposite c) = Opposite (InternalHom c)
   
 instance (ClosedCategory c, TOb (Ob c) (Isomorphism c)) =>
          ClosedCategory (Isomorphism c) where
-  type Exp (Isomorphism c) = Isomorphism c
+  type InternalHom (Isomorphism c) = Isomorphism c
 
 -- This instance can't be provided generically, I don't think. It does exist for
 -- specific underlying categories, though (see the instance below).
 -- instance (ClosedCategory c, Monad c m) => ClosedCategory (Kleisli c m) where
---   type Exp (Kleisli c m) = Kleisli (Exp c) m
+--   type InternalHom (Kleisli c m) = Kleisli (InternalHom c) m
 
 instance {-# overlappable #-}
          ( Ob c ~ All
          , ClosedCategory c, Monad c m
-         , BOb (Ob c) (Ob c) (Ob c) (Kleisli (Exp c) m)) =>
+         , BOb (Ob c) (Ob c) (Ob c) (Kleisli (InternalHom c) m)) =>
          ClosedCategory (Kleisli (c :: Type -> Type -> Type) m) where
-  type Exp (Kleisli c m) = Kleisli (Exp c) m
+  type InternalHom (Kleisli c m) = Kleisli (InternalHom c) m

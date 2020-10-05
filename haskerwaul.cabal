@@ -36,6 +36,7 @@ library
                     , Haskerwaul.Category.Closed.Bicartesian
                     , Haskerwaul.Category.Closed.Cartesian
                     , Haskerwaul.Category.Closed.Compact
+                    , Haskerwaul.Category.Closed.Symmetric
                     , Haskerwaul.Category.CoKleisli
                     , Haskerwaul.Category.Concrete
                     , Haskerwaul.Category.Distributive
@@ -53,6 +54,7 @@ library
                     , Haskerwaul.Category.Monoidal.Cartesian
                     , Haskerwaul.Category.Monoidal.Cartesian.Traced
                     , Haskerwaul.Category.Monoidal.Closed
+                    , Haskerwaul.Category.Monoidal.Closed.Cartesian
                     , Haskerwaul.Category.Monoidal.Cocartesian
                     , Haskerwaul.Category.Monoidal.Distributive
                     , Haskerwaul.Category.Monoidal.Rigid
@@ -171,6 +173,7 @@ library
                     , Haskerwaul.Monoid.Laws
                     , Haskerwaul.Negation
                     , Haskerwaul.Object
+                    , Haskerwaul.Object.Exponential
                     , Haskerwaul.Object.Free
                     , Haskerwaul.Object.Initial
                     , Haskerwaul.Object.NaturalNumbers
@@ -204,6 +207,9 @@ library
                     , Haskerwaul.Relation.Nullary
                     , Haskerwaul.Relation.Tolerance
                     , Haskerwaul.Relation.Unary
+                    , Haskerwaul.Residual
+                    , Haskerwaul.Residual.Left
+                    , Haskerwaul.Residual.Right
                     , Haskerwaul.Rig
                     , Haskerwaul.Rig.Idempotent
                     , Haskerwaul.Rig.Monus

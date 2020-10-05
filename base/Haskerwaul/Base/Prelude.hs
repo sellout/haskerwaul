@@ -1,3 +1,5 @@
+{-# language TypeApplications #-}
+
 -- | This is intended to be a /mostly/ drop-in replacement for "Prelude", but
 --   with all the definitions in terms of things from Haskerwaul to improve
 --   compatibility.
@@ -17,12 +19,14 @@ import           Data.Proxy (Proxy (..))
 import qualified Haskerwaul as H
 
 -- | Generalization of `Prelude.&&`.
-(&&) :: (c ~ (->), H.CartesianClosedCategory c, H.Lattice c (H.Prod c) a) => a `c` H.Exp c a a
-(&&) = H.to H.curry H.meet
+(&&) :: forall c a. (c ~ (->), H.CartesianClosedMonoidalCategory c, H.Lattice c (H.Prod c) a)
+     => a `c` H.Exp c a a
+(&&) = H.curry @_ @(H.Prod c) H.meet
 
 -- | Generalization of `Prelude.||`.
-(||) :: (c ~ (->), H.CartesianClosedCategory c, H.Lattice c (H.Prod c) a) => a `c` H.Exp c a a
-(||) = H.to H.curry H.join
+(||) :: forall c a. (c ~ (->), H.CartesianClosedMonoidalCategory c, H.Lattice c (H.Prod c) a)
+     => a `c` H.Exp c a a
+(||) = H.curry @_ @(H.Prod c) H.join
 
 -- | Generalization of `Prelude.not`.
 not :: (H.UniquelyComplementedLattice c (,) a, H.Ob c a) => a `c` a
@@ -46,15 +50,16 @@ snd :: (H.CartesianMonoidalCategory c, H.Ob c a, H.Ob c b) => H.Prod c a b `c` b
 snd = H.exr
 
 -- | Generalization of `Prelude.curry`.
-curry :: (H.CartesianClosedCategory c, H.Ob c x, H.Ob c y, H.Ob c z)
-      => H.Prod c x y `c` z -> x `c` H.Exp c y z
-curry = H.to H.curry
+curry :: (H.ClosedMonoidalCategory c t, H.Ob c x, H.Ob c y, H.Ob c z)
+      => t x y `c` z -> x `c` H.InternalHom c y z
+curry = H.curry
 
 -- | Generalization of `Prelude.uncurry`.
-uncurry :: (H.CartesianClosedCategory c, H.Ob c x, H.Ob c y, H.Ob c z)
-        => x `c` H.Exp c y z -> H.Prod c x y `c` z
-uncurry = H.from H.curry
+uncurry :: (H.ClosedMonoidalCategory c t, H.Ob c x, H.Ob c y, H.Ob c z)
+        => x `c` H.InternalHom c y z -> t x y `c` z
+uncurry = H.uncurry
 
 -- | Generalization of `Prelude.subtract`.
-subtract :: (c ~ (->), H.CartesianClosedCategory c, H.Ring c (H.Prod c) a) => a `c` H.Exp c a a
-subtract = H.to H.curry H.subtract
+subtract :: (c ~ (->), H.CartesianClosedMonoidalCategory c, H.Ring c (H.Prod c) a)
+         => a `c` H.Exp c a a
+subtract = (H.-)

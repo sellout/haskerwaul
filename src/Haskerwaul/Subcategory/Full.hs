@@ -19,8 +19,6 @@ import qualified Data.Tuple as Base
 import Haskerwaul.Algebra.Heyting
 import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Opposite
-import Haskerwaul.Category.Monoidal.Cartesian
-import Haskerwaul.Category.Monoidal.Closed
 import Haskerwaul.Constraint
 import Haskerwaul.Endofunctor
 import Haskerwaul.Isomorphism
@@ -29,6 +27,7 @@ import Haskerwaul.Object
 import Haskerwaul.Quasigroup.Left
 import Haskerwaul.Quasigroup.Right
 import Haskerwaul.Subcategory
+import Haskerwaul.Topos.Elementary
 import Haskerwaul.Transformation.Dinatural
 import Haskerwaul.Transformation.Natural
 
@@ -203,12 +202,34 @@ instance (CartesianMonoidalCategory c, TOb ob (Prod c), ob (TerminalObject c)) =
 
 -- | If @c@ is closed and the requisite objects are in the subcategory then the
 --   subcategory is also closed monoidal.
-instance (ClosedCategory c, TOb ob (Exp c)) =>
+instance (ClosedCategory c, TOb ob (InternalHom c)) =>
          ClosedCategory (FullSubcategory ob c) where
-  type Exp (FullSubcategory ob c) = Exp c
+  type InternalHom (FullSubcategory ob c) = InternalHom c
 
 -- | If @c@ is closed monoidal and the requisite objects are in the subcategory
 --   then the subcategory is also closed monoidal.
-instance (ClosedMonoidalCategory c t, TOb ob t, ob (Unit c t), TOb ob (Exp c)) =>
+instance (ClosedMonoidalCategory c t, TOb ob t, ob (Unit c t), TOb ob (InternalHom c)) =>
          ClosedMonoidalCategory (FullSubcategory ob c) t where
   apply = FS apply
+  curry (FS f) = FS (curry f)
+
+instance (CartesianClosedCategory c, TOb ob (Prod c), ob (Unit c (Prod c)), TOb ob (InternalHom c)) =>
+         CartesianClosedCategory (FullSubcategory ob c) where
+  const = FS const
+  t = FS t
+
+instance ( CartesianClosedMonoidalCategory c
+         , TOb ob (Prod c), ob (TerminalObject c), TOb ob (InternalHom c)) =>
+         CartesianClosedMonoidalCategory (FullSubcategory ob c) where
+  tuple = FS tuple
+
+instance ( ElementaryTopos c
+         , TOb ob (Prod c)
+         , ob (TerminalObject c)
+         , TOb ob (InternalHom c)
+         , ob (Class c)
+         , ob (Meet (Class c))
+         , ob (Join (Class c))) =>
+         ElementaryTopos (FullSubcategory ob c) where
+  type Class (FullSubcategory ob c) = Class c
+  true = FS true

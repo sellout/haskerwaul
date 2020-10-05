@@ -14,7 +14,7 @@ import Haskerwaul.Functor
 -- | [nLab](https://ncatlab.org/nlab/show/closed+functor)
 class (ClosedCategory c, ClosedCategory d, Functor c d f) =>
       LaxClosedFunctor c d f where
-  fHat :: Proxy c -> f (Exp c x y) `d` Exp d (f x) (f y)
+  fHat :: Proxy c -> f (InternalHom c x y) `d` InternalHom d (f x) (f y)
 
 -- -- | Every `LaxMonoidalFunctor` between `ClosedMonoidalCategories` gives rise to
 -- --   a `LaxClosedFunctor`.

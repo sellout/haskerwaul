@@ -13,10 +13,9 @@ import           Data.Either (Either(..))
 import           Data.Proxy (Proxy(..))
 import qualified Data.Void as Base
 
-import Haskerwaul.Category.Closed.Cartesian
+import Haskerwaul.Category.Monoidal.Closed
 import Haskerwaul.Endofunctor
 import Haskerwaul.Functor
-import Haskerwaul.Isomorphism
 import Haskerwaul.Object
 
 -- | [nLab](https://ncatlab.org/nlab/show/monoidal+functor)
@@ -29,7 +28,7 @@ class (MonoidalCategory c ct, MonoidalCategory d dt, Functor c d f) =>
 --   product in __Hask__.
 instance Base.Applicative f => LaxMonoidalFunctor (->) (,) (->) (,) f where
   epsilon Proxy Proxy Proxy = Base.pure
-  mu Proxy = from curry (Base.liftA2 (,))
+  mu Proxy = uncurry (Base.liftA2 (,))
 
 -- | `LaxMonoidalFunctors` on `Either` in __Hask__ are trivial.
 instance Endofunctor (->) f => LaxMonoidalFunctor (->) Either (->) Either f where
