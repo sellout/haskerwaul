@@ -89,6 +89,7 @@ library
                     , Haskerwaul.Duoid.Normal
                     , Haskerwaul.Embedding.Yoneda
                     , Haskerwaul.Endofunctor
+                    , Haskerwaul.Endomorphism
                     , Haskerwaul.Extension.Kan.Left
                     , Haskerwaul.Extension.Kan.Right
                     , Haskerwaul.Field

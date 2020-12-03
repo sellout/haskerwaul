@@ -105,10 +105,6 @@ module Haskerwaul
   -- * hemirings
   , module Haskerwaul.Hemiring
   , module Haskerwaul.Hemiring.Near
-  -- * isomorphisms
-  , module Haskerwaul.Automorphism
-  , module Haskerwaul.Isomorphism
-  , module Haskerwaul.Isomorphism.Natural
   -- * lattices
   , module Haskerwaul.Lattice
   , module Haskerwaul.Lattice.Bounded
@@ -171,6 +167,11 @@ module Haskerwaul
   , module Haskerwaul.Monoid.Frobenius.Commutative.Special
   , module Haskerwaul.Monoid.Frobenius.Special
   , module Haskerwaul.Monoid.Hopf
+  -- * morphisms
+  , module Haskerwaul.Automorphism
+  , module Haskerwaul.Endomorphism
+  , module Haskerwaul.Isomorphism
+  , module Haskerwaul.Isomorphism.Natural
   -- * objects
   , module Haskerwaul.Object
   , module Haskerwaul.Object.Dualizable
@@ -322,6 +323,7 @@ import Haskerwaul.Duoid
 import Haskerwaul.Duoid.Normal
 import Haskerwaul.Embedding.Yoneda
 import Haskerwaul.Endofunctor
+import Haskerwaul.Endomorphism
 import Haskerwaul.Extension.Kan.Left
 import Haskerwaul.Extension.Kan.Right
 import Haskerwaul.Field
