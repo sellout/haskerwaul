@@ -19,7 +19,6 @@ import Haskerwaul.Quasigroup.Left
 import Haskerwaul.Quasigroup.Right
 import Haskerwaul.Semigroup
 import Haskerwaul.Transformation.Dinatural
-import Haskerwaul.Transformation.Natural
 
 -- | Composition of profunctors, a tensor in profunctor categories.
 --
@@ -31,6 +30,7 @@ data Procompose c d a b = forall z. Procompose (z `c` b) (a `d` z)
 -- |
 -- = references
 --
+-- - [nLab](https://ncatlab.org/nlab/show/semicategory)
 -- - [Wikipedia](https://en.wikipedia.org/wiki/Semigroupoid)
 --
 --  __TODO__: This should have a @`Haskerwaul.Profunctor.Profunctor` c c c@
@@ -66,30 +66,16 @@ instance {-# overlappable #-} Base.Category c =>
                               UnitalMagma (DinaturalTransformation (->)) Procompose c where
   unit Proxy = DT (\Refl -> Base.id)
 
--- | If /D/ is a `Semigroupoid`, then so are /D/-valued functors.
-instance Magma (DinaturalTransformation (->)) Procompose d =>
-         Magma (DinaturalTransformation (->)) Procompose (NaturalTransformation c d) where
-  op = DT (\(Procompose (NT f) (NT g)) -> NT (f . g))
-
--- | If /D/ is a `Semigroupoid`, then so are /D/-valued functors.
-instance Semigroup (DinaturalTransformation (->)) Procompose d =>
-         Semigroup (DinaturalTransformation (->)) Procompose (NaturalTransformation c d)
-
--- | If /D/ is a `Category`, then so are /D/-valued functors.
-instance UnitalMagma (DinaturalTransformation (->)) Procompose d =>
-         UnitalMagma (DinaturalTransformation (->)) Procompose (NaturalTransformation c d) where
-  unit Proxy = DT (\Refl -> NT id)
-
--- | If /C/ is a `Semigroupoid`, then so are /C/-valud bifunctors.
+-- | If /C/ is a `Semigroupoid`, then so are /C/-valued bifunctors.
 instance Magma (DinaturalTransformation (->)) Procompose c =>
          Magma (DinaturalTransformation (->)) Procompose (DinaturalTransformation c) where
   op = DT (\(Procompose (DT f) (DT g)) -> DT (f . g))
 
--- | If /C/ is a `Semigroupoid`, then so are /C/-valud bifunctors.
+-- | If /C/ is a `Semigroupoid`, then so are /C/-valued bifunctors.
 instance Semigroup (DinaturalTransformation (->)) Procompose c =>
          Semigroup (DinaturalTransformation (->)) Procompose (DinaturalTransformation c)
 
--- | If /C/ is a `Category`, then so are /C/-valud bifunctors.
+-- | If /C/ is a `Category`, then so are /C/-valued bifunctors.
 instance UnitalMagma (DinaturalTransformation (->)) Procompose c =>
          UnitalMagma (DinaturalTransformation (->)) Procompose (DinaturalTransformation c) where
   unit Proxy = DT (\Refl -> DT id)

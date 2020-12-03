@@ -1,4 +1,5 @@
-{-# language UndecidableSuperClasses #-}
+{-# language UndecidableInstances
+           , UndecidableSuperClasses #-}
 
 module Haskerwaul.Category.Monoidal.Rigid.Right
   ( module Haskerwaul.Category.Monoidal.Rigid.Right
@@ -9,8 +10,18 @@ module Haskerwaul.Category.Monoidal.Rigid.Right
 import           Data.Kind (Type)
 
 import Haskerwaul.Category.Monoidal
+import Haskerwaul.Object
+import Haskerwaul.Object.Dualizable.Right
 
-class MonoidalCategory c t => RightRigidMonoidalCategory (c :: ok -> ok -> Type) t where
-  type RightDual c t :: ok -> ok
-  rightEta :: Unit c t `c` t (RightDual c t a) a
-  rightEpsilon :: t a (RightDual c t a) `c` Unit c t
+-- |
+-- * references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/rigid+monoidal+category)
+-- - [Wikipedia](https://en.wikipedia.org/wiki/Rigid_category)
+--
+-- __NB__: Instances for this are automatically coalesced.
+class (forall a. Ob c a => RightDualizable c t a) =>
+      RightRigidMonoidalCategory (c :: ok -> ok -> Type) t
+
+instance (forall a. Ob c a => RightDualizable c t a) =>
+         RightRigidMonoidalCategory (c :: ok -> ok -> Type) t

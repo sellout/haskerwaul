@@ -4,11 +4,11 @@
 module Haskerwaul.Category.Monoidal.Traced
   ( module Haskerwaul.Category.Monoidal.Traced
   -- * extended modules
-  , module Haskerwaul.Category.Monoidal.Symmetric
+  , module Haskerwaul.Category.Monoidal.Balanced
   ) where
 
 import Haskerwaul.Category.Monoidal'
-import Haskerwaul.Category.Monoidal.Symmetric
+import Haskerwaul.Category.Monoidal.Balanced
 import Haskerwaul.Object
 
 -- |
@@ -23,7 +23,7 @@ import Haskerwaul.Object
 -- - [nLab](https://ncatlab.org/nlab/show/traced+monoidal+category)
 -- - [primary source](https://pdfs.semanticscholar.org/c232/37a187d026b8130d98c09187b8ba4f611c40.pdf)
 -- - [Wikipedia](https://en.wikipedia.org/wiki/Traced_monoidal_category) 
-class SymmetricMonoidalCategory c t => TracedMonoidalCategory c t where
+class BalancedMonoidalCategory c t => TracedMonoidalCategory c t where
   -- |
   -- * references
   --

@@ -1,4 +1,5 @@
-{-# language UndecidableSuperClasses #-}
+{-# language UndecidableInstances
+           , UndecidableSuperClasses #-}
 
 module Haskerwaul.Category.Monoidal.Rigid.Left
   ( module Haskerwaul.Category.Monoidal.Rigid.Left
@@ -9,8 +10,18 @@ module Haskerwaul.Category.Monoidal.Rigid.Left
 import           Data.Kind (Type)
 
 import Haskerwaul.Category.Monoidal
+import Haskerwaul.Object
+import Haskerwaul.Object.Dualizable.Left
 
-class MonoidalCategory c t => LeftRigidMonoidalCategory (c :: ok -> ok -> Type) t where
-  type LeftDual c t :: ok -> ok
-  leftEta :: Unit c t `c` t a (LeftDual c t a)
-  leftEpsilon :: t (LeftDual c t a) a `c` Unit c t
+-- |
+-- * references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/rigid+monoidal+category)
+-- - [Wikipedia](https://en.wikipedia.org/wiki/Rigid_category)
+--
+-- __NB__: Instances for this are automatically coalesced.
+class (forall a. Ob c a => LeftDualizable c t a) =>
+      LeftRigidMonoidalCategory (c :: ok -> ok -> Type) t
+
+instance (forall a. Ob c a => LeftDualizable c t a) =>
+         LeftRigidMonoidalCategory (c :: ok -> ok -> Type) t

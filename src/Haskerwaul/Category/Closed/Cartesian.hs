@@ -21,8 +21,8 @@ import Haskerwaul.Object
 -- - [nLab](https://ncatlab.org/nlab/show/closed+category#symmetric_and_cartesian_versions)
 class ClosedCategory c => CartesianClosedCategory c where
   const :: (Ob c a, Ob c b) => b `c` InternalHom c a b
-  t :: (Ob c a, Ob c b) => InternalHom c a (InternalHom c a b) `c` InternalHom c a b
+  flattenHom :: (Ob c a, Ob c b) => InternalHom c a (InternalHom c a b) `c` InternalHom c a b
 
 instance CartesianClosedCategory (->) where
   const = Base.const
-  t = Base.join
+  flattenHom = Base.join

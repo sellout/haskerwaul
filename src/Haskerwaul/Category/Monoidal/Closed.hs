@@ -10,7 +10,6 @@ module Haskerwaul.Category.Monoidal.Closed
   ) where
 
 import           Data.Constraint ((\\))
-import qualified Data.Function as Base hiding ((.), id)
 import           Data.Kind (Type)
 import           Data.Proxy (Proxy (..))
 import qualified Data.Tuple as Base
@@ -26,17 +25,22 @@ import Haskerwaul.Transformation.Natural
 -- | [nLab](https://ncatlab.org/nlab/show/closed+monoidal+category)
 class (ClosedCategory c, MonoidalCategory c t) =>
       ClosedMonoidalCategory c t where
-  apply :: (Ob c a, Ob c b) => t (InternalHom c a b) a `c` b
+  -- | [nLab](https://ncatlab.org/nlab/show/evaluation+map)
+  apply :: forall a b. (Ob c a, Ob c b) => t (InternalHom c a b) a `c` b
+  apply = uncurry id \\ inT @(Ob c) @(InternalHom c) @a @b
+  -- | [nLab](https://ncatlab.org/nlab/show/currying)
   curry :: (Ob c x, Ob c y, Ob c z) => t x y `c` z -> x `c` InternalHom c y z
-
--- | This forms at least an adjunction with curry -- maybe an isomorphism, even.
-uncurry :: forall c t x y z. (ClosedMonoidalCategory c t, Ob c x, Ob c y, Ob c z)
-        => x `c` InternalHom c y z -> t x y `c` z
-uncurry f = apply . first (Proxy :: Proxy c) f \\ inT @(Ob c) @(InternalHom c) @y @z
+  -- | This forms at least an adjunction with curry -- maybe an isomorphism,
+  --   even.
+  uncurry :: forall x y z. (Ob c x, Ob c y, Ob c z)
+          => x `c` InternalHom c y z -> t x y `c` z
+  uncurry f =
+    apply . first (Proxy :: Proxy c) f \\ inT @(Ob c) @(InternalHom c) @y @z
+  {-# minimal curry, (apply | uncurry) #-}
 
 instance ClosedMonoidalCategory (->) (,) where
-  apply = Base.uncurry (Base.$)
   curry = Base.curry
+  uncurry = Base.uncurry
 
 instance (d ~ (->), ClosedMonoidalCategory d dt) =>
          ClosedMonoidalCategory (NaturalTransformation c d) (FTensor dt) where

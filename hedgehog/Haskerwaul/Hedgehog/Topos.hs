@@ -69,7 +69,7 @@ instance ClosedMonoidalCategory (->) t => ClosedMonoidalCategory HH t where
 
 instance CartesianClosedCategory HH where
   const = HH const
-  t = HH t
+  flattenHom = HH flattenHom
 
 instance CartesianClosedMonoidalCategory HH where
   tuple = HH tuple

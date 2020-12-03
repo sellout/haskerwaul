@@ -15,6 +15,7 @@ import qualified Data.Tuple as Base
 import qualified Data.Void as Base
 
 import Haskerwaul.Bifunctor
+import Haskerwaul.Category.Monoidal.Balanced
 import Haskerwaul.Category.Monoidal.Cartesian
 import Haskerwaul.Constraint
 import Haskerwaul.Functor

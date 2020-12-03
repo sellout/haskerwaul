@@ -27,6 +27,7 @@ module Haskerwaul
   , module Haskerwaul.Category.Over
   , module Haskerwaul.Category.Pointed
   , module Haskerwaul.Category.Product
+  , module Haskerwaul.Category.Ribbon
   , module Haskerwaul.Category.Rig
   , module Haskerwaul.Category.Rig.ColaxDistributive
   , module Haskerwaul.Category.Rig.ColaxDistributive.Left
@@ -172,9 +173,13 @@ module Haskerwaul
   , module Haskerwaul.Monoid.Hopf
   -- * objects
   , module Haskerwaul.Object
+  , module Haskerwaul.Object.Dualizable
+  , module Haskerwaul.Object.Dualizable.Left
+  , module Haskerwaul.Object.Dualizable.Right
   , module Haskerwaul.Object.Exponential
   , module Haskerwaul.Object.Free
   , module Haskerwaul.Object.Initial
+  , module Haskerwaul.Object.Invertible
   , module Haskerwaul.Object.NaturalNumbers
   , module Haskerwaul.Object.Terminal
   -- * orders
@@ -297,6 +302,7 @@ import Haskerwaul.Category.Opposite
 import Haskerwaul.Category.Over
 import Haskerwaul.Category.Pointed
 import Haskerwaul.Category.Product
+import Haskerwaul.Category.Ribbon
 import Haskerwaul.Category.Rig
 import Haskerwaul.Category.Rig.ColaxDistributive
 import Haskerwaul.Category.Rig.ColaxDistributive.Left
@@ -397,9 +403,13 @@ import Haskerwaul.Monoid.Frobenius.Special
 import Haskerwaul.Monoid.Hopf
 import Haskerwaul.Negation
 import Haskerwaul.Object
+import Haskerwaul.Object.Dualizable
+import Haskerwaul.Object.Dualizable.Left
+import Haskerwaul.Object.Dualizable.Right
 import Haskerwaul.Object.Exponential
 import Haskerwaul.Object.Free
 import Haskerwaul.Object.Initial
+import Haskerwaul.Object.Invertible
 import Haskerwaul.Object.NaturalNumbers
 import Haskerwaul.Object.Terminal
 import Haskerwaul.Order.Canonical

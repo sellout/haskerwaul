@@ -67,6 +67,7 @@ library
                     , Haskerwaul.Category.Over
                     , Haskerwaul.Category.Pointed
                     , Haskerwaul.Category.Product
+                    , Haskerwaul.Category.Ribbon
                     , Haskerwaul.Category.Rig
                     , Haskerwaul.Category.Rig.ColaxDistributive
                     , Haskerwaul.Category.Rig.ColaxDistributive.Left
@@ -173,9 +174,13 @@ library
                     , Haskerwaul.Monoid.Laws
                     , Haskerwaul.Negation
                     , Haskerwaul.Object
+                    , Haskerwaul.Object.Dualizable
+                    , Haskerwaul.Object.Dualizable.Left
+                    , Haskerwaul.Object.Dualizable.Right
                     , Haskerwaul.Object.Exponential
                     , Haskerwaul.Object.Free
                     , Haskerwaul.Object.Initial
+                    , Haskerwaul.Object.Invertible
                     , Haskerwaul.Object.NaturalNumbers
                     , Haskerwaul.Object.Terminal
                     , Haskerwaul.Order.Canonical

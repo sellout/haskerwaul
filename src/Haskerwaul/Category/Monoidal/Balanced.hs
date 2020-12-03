@@ -13,6 +13,7 @@ import           Data.Proxy (Proxy(..))
 
 import Haskerwaul.Category.Monoidal'
 import Haskerwaul.Category.Monoidal.Braided
+import Haskerwaul.Category.Monoidal.Symmetric
 import Haskerwaul.Constraint
 import Haskerwaul.Object
 import Haskerwaul.Transformation.Natural
@@ -36,4 +37,10 @@ instance BalancedMonoidalCategory (:-) Combine where
   balance Proxy = id
 
 instance BalancedMonoidalCategory (NaturalTransformation c (:-)) CFProd where
+  balance Proxy = id
+
+-- | "Every symmetric monoidal category is balanced in a canonical way ..."
+--   ⸻[nLab](https://ncatlab.org/nlab/show/balanced+monoidal+category#properties)
+instance {-# overlappable #-} (BraidedMonoidalCategory c t, SymmetricMonoidalCategory c t) =>
+                              BalancedMonoidalCategory c t where
   balance Proxy = id

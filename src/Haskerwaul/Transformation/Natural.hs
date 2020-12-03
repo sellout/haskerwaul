@@ -5,7 +5,8 @@ module Haskerwaul.Transformation.Natural where
 import qualified Control.Applicative as Base
 import qualified Control.Category as Base
 import qualified Control.Monad as Base
-import           Data.Constraint ((:-))
+import           Data.Constraint ((\\), (:-))
+import           Data.Constraint.Deferrable ((:~:)(..))
 import           Data.Functor.Compose (Compose(..))
 import           Data.Functor.Const (Const (..))
 import           Data.Functor.Identity (Identity(..))
@@ -13,12 +14,49 @@ import           Data.Proxy (Proxy(..))
 
 import Haskerwaul.Category.Monoidal'
 import Haskerwaul.Constraint
+import Haskerwaul.Functor
 import Haskerwaul.Monoid
 import Haskerwaul.Object
+import Haskerwaul.Semigroupoid
+import Haskerwaul.Transformation.Dinatural
 
 -- | [nLab](https://ncatlab.org/nlab/show/natural+transformation)
 newtype NaturalTransformation c d f g =
   NT { runNT :: forall a. Ob c a => f a `d` g a }
+
+-- |
+-- * references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/whiskering)
+whisker
+  :: forall c d e f g h
+   . ( e ~ (->)
+     , Functor d e h
+     , Ob (NaturalTransformation c d) f
+     , Ob (NaturalTransformation c d) g)
+  => Proxy h
+  -> NaturalTransformation c d f g
+  -> NaturalTransformation c e (Compose h f) (Compose h g)
+whisker Proxy (NT fn) =
+  NT (\(x :: Compose h f a) ->
+        Compose (map fn (getCompose x))
+        \\ inF @(Ob c) @(Ob d) @f @a
+        \\ inF @(Ob c) @(Ob d) @g @a)
+
+-- |
+-- * references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/whiskering)
+whisker'
+  :: forall c d e f g h
+   . (e ~ (->), Ob (NaturalTransformation c d) f)
+  => NaturalTransformation d e g h
+  -> Proxy f
+  -> NaturalTransformation c e (Compose g f) (Compose h f)
+whisker' (NT fn) Proxy =
+  NT (\(x :: Compose g f a) ->
+        Compose (fn (getCompose x))
+        \\ inF @(Ob c) @(Ob d) @f @a)
 
 type instance Ob (NaturalTransformation c d) = FOb (Ob c) (Ob d)
 
@@ -30,11 +68,28 @@ instance MonoidalCategory' (NaturalTransformation c (:-)) CFProd where
 
 -- | Tensor product for monoidal structures lifted from the destination
 --   category.
+--
+-- - @`FTensor` (,) ~ `Data.Functor.Product.Product`@
+-- - @`FTensor` `Either` ~ `Data.Functor.Sum.Sum`@
 newtype FTensor t f g a = FTensor { lowerFTensor :: (t (f a) (g a)) }
 
 instance (Ob d ~ All, MonoidalCategory' d dt) =>
          MonoidalCategory' (NaturalTransformation c d) (FTensor dt) where
   type Unit (NaturalTransformation c d) (FTensor dt) = Const (Unit d dt)
+
+-- | If /D/ is a `Semigroupoid`, then so are /D/-valued functors.
+instance Magma (DinaturalTransformation (->)) Procompose d =>
+         Magma (DinaturalTransformation (->)) Procompose (NaturalTransformation c d) where
+  op = DT (\(Procompose (NT f) (NT g)) -> NT (f . g))
+
+-- | If /D/ is a `Semigroupoid`, then so are /D/-valued functors.
+instance Semigroup (DinaturalTransformation (->)) Procompose d =>
+         Semigroup (DinaturalTransformation (->)) Procompose (NaturalTransformation c d)
+
+-- | If /D/ is a `Category`, then so are /D/-valued functors.
+instance UnitalMagma (DinaturalTransformation (->)) Procompose d =>
+         UnitalMagma (DinaturalTransformation (->)) Procompose (NaturalTransformation c d) where
+  unit Proxy = DT (\Refl -> NT id)
 
 -- `Haskerwaul.Monad.Monad` instances
 

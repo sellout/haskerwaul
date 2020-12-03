@@ -216,7 +216,7 @@ instance (ClosedMonoidalCategory c t, TOb ob t, ob (Unit c t), TOb ob (InternalH
 instance (CartesianClosedCategory c, TOb ob (Prod c), ob (Unit c (Prod c)), TOb ob (InternalHom c)) =>
          CartesianClosedCategory (FullSubcategory ob c) where
   const = FS const
-  t = FS t
+  flattenHom = FS flattenHom
 
 instance ( CartesianClosedMonoidalCategory c
          , TOb ob (Prod c), ob (TerminalObject c), TOb ob (InternalHom c)) =>
