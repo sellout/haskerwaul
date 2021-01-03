@@ -15,6 +15,7 @@ import Haskerwaul.Category.Monoidal.Braided
 import Haskerwaul.Constraint
 import Haskerwaul.Isomorphism
 import Haskerwaul.Object
+import Haskerwaul.Transformation.Dinatural
 import Haskerwaul.Transformation.Natural
 
 -- | [nLab](https://ncatlab.org/nlab/show/symmetric+monoidal+category)
@@ -34,3 +35,6 @@ instance (d ~ (->), SymmetricMonoidalCategory d dt) =>
 instance SymmetricMonoidalCategory (:-) Combine
 
 instance SymmetricMonoidalCategory (NaturalTransformation c (:-)) CFProd
+
+instance (d ~ (->), SymmetricMonoidalCategory d dt) =>
+         SymmetricMonoidalCategory (DinaturalTransformation d) (BTensor dt)

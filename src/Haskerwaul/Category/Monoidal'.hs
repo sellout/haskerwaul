@@ -6,7 +6,7 @@ module Haskerwaul.Category.Monoidal' where
 
 import           Data.Constraint ((:-))
 import           Data.Either (Either(..))
-import           Data.Kind (Type)
+import           Data.Kind (Constraint, Type)
 import           Data.Void (Void)
 
 import Haskerwaul.Constraint
@@ -25,4 +25,4 @@ instance MonoidalCategory' (->) Either where
   type Unit (->) Either = Void
 
 instance MonoidalCategory' (:-) Combine where
-  type Unit (:-) Combine = ()
+  type Unit (:-) Combine = (() :: Constraint)

@@ -22,7 +22,7 @@ type instance Ob (DinaturalTransformation d) = All
 --  __NB__: With this definition, `d ~ (->)`, but that doesn't imply `dt ~ (,)`.
 data BTensor dt f g a b = BTensor { lowerBTensor :: dt (f a b) (g a b) }
 
-instance (Ob d ~ All, MonoidalCategory' d dt) =>
+instance (MonoidalCategory' d dt) =>
          MonoidalCategory' (DinaturalTransformation d) (BTensor dt) where
   type Unit (DinaturalTransformation d) (BTensor dt) = BConst (Unit d dt)
 

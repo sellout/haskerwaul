@@ -16,6 +16,7 @@ import Haskerwaul.Category.Monoidal.Symmetric
 import Haskerwaul.Constraint
 import Haskerwaul.Object
 import Haskerwaul.Object.Terminal
+import Haskerwaul.Transformation.Dinatural
 import Haskerwaul.Transformation.Natural
 
 -- | [nLab](https://ncatlab.org/nlab/show/cartesian+monoidal+category)
@@ -56,3 +57,10 @@ instance CartesianMonoidalCategory (NaturalTransformation c (:-)) where
   exl = NT (trans weaken1 cls)
   exr = NT (trans weaken2 cls)
   diagonal = NT (Sub Dict)
+
+instance (d ~ (->), CartesianMonoidalCategory d) =>
+         CartesianMonoidalCategory (DinaturalTransformation d) where
+  type Prod (DinaturalTransformation d) = BTensor (Prod d)
+  exl = DT (exl . lowerBTensor)
+  exr = DT (exr . lowerBTensor)
+  diagonal = DT (BTensor . diagonal)

@@ -9,7 +9,13 @@ module Haskerwaul.Category.Concrete
 import Haskerwaul.Category
 import Haskerwaul.Functor.Faithful
 
--- | [nLab](https://ncatlab.org/nlab/show/concrete+category)
+-- |
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/concrete+category) --
+--   [remark 2.3](https://ncatlab.org/nlab/show/concrete+category#definition)
+--   generalizes this from __Set__ to any category /X/, and we do that here, so
+--   the less general notion would be represented as @`ConcreteCategory` (->)@.
 class (Category c, FaithfulFunctor c x f) => ConcreteCategory x f c where
 
 -- -- assuming  `Hom_2` is `hom(-, 2)`,`a @`Functor` (`Op` (->)) (->)@

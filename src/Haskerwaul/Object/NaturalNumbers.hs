@@ -6,10 +6,12 @@ import           Prelude (succ)
 import Haskerwaul.Object.Terminal
 
 -- | [nLab](https://ncatlab.org/nlab/show/natural+numbers+object)
-class NaturalNumbersObject c n where
-  z :: TerminalObject c `c` n
-  s :: n `c` n
+class NaturalNumbersObject c where
+  type NNO c
+  z :: TerminalObject c `c` NNO c
+  s :: NNO c `c` NNO c
 
-instance NaturalNumbersObject (->) Natural where
+instance NaturalNumbersObject (->) where
+  type NNO (->) = Natural
   z () = 0
   s = succ

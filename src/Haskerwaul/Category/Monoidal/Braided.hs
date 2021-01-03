@@ -14,6 +14,7 @@ import qualified Data.Tuple as Base
 import Haskerwaul.Category.Monoidal
 import Haskerwaul.Constraint
 import Haskerwaul.Object
+import Haskerwaul.Transformation.Dinatural
 import Haskerwaul.Transformation.Natural
 
 -- | [nLab](https://ncatlab.org/nlab/show/braided+monoidal+category)
@@ -37,3 +38,7 @@ instance BraidedMonoidalCategory (:-) Combine where
 
 instance BraidedMonoidalCategory (NaturalTransformation c (:-)) CFProd where
   braid = NT (Sub Dict)
+
+instance (d ~ (->), BraidedMonoidalCategory d dt) =>
+         BraidedMonoidalCategory (DinaturalTransformation d) (BTensor dt) where
+  braid = DT (BTensor . braid . lowerBTensor)

@@ -71,7 +71,7 @@ instance MonoidalCategory' (NaturalTransformation c (:-)) CFProd where
 --
 -- - @`FTensor` (,) ~ `Data.Functor.Product.Product`@
 -- - @`FTensor` `Either` ~ `Data.Functor.Sum.Sum`@
-newtype FTensor t f g a = FTensor { lowerFTensor :: (t (f a) (g a)) }
+newtype FTensor t f g a = FTensor { lowerFTensor :: t (f a) (g a) }
 
 instance (Ob d ~ All, MonoidalCategory' d dt) =>
          MonoidalCategory' (NaturalTransformation c d) (FTensor dt) where
