@@ -130,6 +130,7 @@ module Haskerwaul
   , module Haskerwaul.Law.Idempotency
   , module Haskerwaul.Law.Identity.Left
   , module Haskerwaul.Law.Identity.Right
+  , module Haskerwaul.Law.Interchange
   , module Haskerwaul.Law.Modularity
   , module Haskerwaul.Law.Quotient.Left
   , module Haskerwaul.Law.Quotient.Right
@@ -375,6 +376,7 @@ import Haskerwaul.Law.Homomorphism.Magma
 import Haskerwaul.Law.Idempotency
 import Haskerwaul.Law.Identity.Left
 import Haskerwaul.Law.Identity.Right
+import Haskerwaul.Law.Interchange
 import Haskerwaul.Law.Modularity
 import Haskerwaul.Law.Quotient.Left
 import Haskerwaul.Law.Quotient.Right

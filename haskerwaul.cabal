@@ -143,6 +143,7 @@ library
                     , Haskerwaul.Law.Idempotency
                     , Haskerwaul.Law.Identity.Left
                     , Haskerwaul.Law.Identity.Right
+                    , Haskerwaul.Law.Interchange
                     , Haskerwaul.Law.Modularity
                     , Haskerwaul.Law.Quotient.Left
                     , Haskerwaul.Law.Quotient.Right
