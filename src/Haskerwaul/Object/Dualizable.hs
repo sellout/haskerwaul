@@ -49,7 +49,7 @@ psi g = second @c @c Proxy g . leftCounit
 trace'
   :: forall c t x. (BraidedMonoidalCategory c t, LeftDualizable c t x)
   => Proxy t -> x `c` x -> Unit c t `c` Unit c t
-trace' Proxy f = leftUnit . braid @c @t . psi f
+trace' Proxy f = leftUnit . to (braid @c @t) . psi f
 
 dimension
   :: forall c t x. (BraidedMonoidalCategory c t, LeftDualizable c t x)

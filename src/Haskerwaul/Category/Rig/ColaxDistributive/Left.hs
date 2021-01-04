@@ -47,7 +47,7 @@ instance {-# overlappable #-}
                  => t x (t y z) `c` t (t x y) (t x z)
   leftDistribute =
     from assoc
-    . first (Proxy :: Proxy c) (braid @c . from assoc)
+    . first (Proxy :: Proxy c) (from (assoc . braid @c))
     . to assoc
     . first (Proxy :: Proxy c) (diagonal @c)
     \\ inT @(Ob c) @t @(t x y) @x

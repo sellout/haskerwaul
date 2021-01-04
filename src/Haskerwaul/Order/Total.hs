@@ -14,6 +14,7 @@ import           Numeric.Natural (Natural)
 import           Prelude (Integer)
 
 import Haskerwaul.Algebra.Boolean
+import Haskerwaul.Isomorphism
 import Haskerwaul.Order.Canonical
 import Haskerwaul.Order.Prefix
 import Haskerwaul.Topos.Elementary
@@ -25,7 +26,7 @@ import Haskerwaul.Topos.Elementary
 class PrefixOrder c a => TotalOrder c a
 
 ge :: (ElementaryTopos c, TotalOrder c a) => BinaryRelation c a a
-ge = le . braid
+ge = le . to braid
 
 gt :: forall c a. (ElementaryTopos c, BooleanAlgebra c (Prod c) (Class c), TotalOrder c a)
    => BinaryRelation c a a
@@ -33,7 +34,7 @@ gt = complement (Proxy :: Proxy (Prod c)) . le
 
 lt :: (ElementaryTopos c, BooleanAlgebra c (Prod c) (Class c), TotalOrder c a)
    => BinaryRelation c a a
-lt = gt . braid
+lt = gt . to braid
 
 instance TotalOrder (->) (Canonical Bool)
 

@@ -20,11 +20,10 @@ flexibility op' =
   Law
   (op'
    . first p op'
-   . to assoc
-   . second @_ @c p braid
-   . from assoc
+   . to (assoc . second @_ @(Isomorphism c) i braid . reverse assoc)
    . first @c p diagonal)
-  (op' . second p (op' . braid) . from assoc . first @c p diagonal)
+  (op' . second p (op' . to braid) . from assoc . first @c p diagonal)
   \\ inT @(Ob c) @(Prod c) @a @a
   where
+    i = Proxy :: Proxy (Isomorphism c)
     p = Proxy :: Proxy c

@@ -46,7 +46,10 @@ instance MonoidalCategory (->) t => MonoidalCategory HH t where
   rightIdentity = Iso (HH (to rightIdentity)) (HH (from rightIdentity))
 
 instance BraidedMonoidalCategory (->) t => BraidedMonoidalCategory HH t where
-  braid = HH braid
+  braid = Iso (HH (to braid)) (HH (from braid))
+
+instance BalancedMonoidalCategory (->) t => BalancedMonoidalCategory HH t where
+  balance = HH . balance
 
 instance SymmetricMonoidalCategory (->) t => SymmetricMonoidalCategory HH t
 

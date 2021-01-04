@@ -21,14 +21,16 @@ leftDistributiveLaw multiply add =
   -- __TODO__: This rewrite seems overcomplicated.
   (add
    . bimap multiply multiply
-   . from assoc
-   . first p (braid @c)
-   . to assoc
-   . second p (to (assoc @c))
-   . from assoc
+   . to
+     (reverse assoc
+      . first i (braid @c)
+      . assoc
+      . second i (assoc @c)
+      . reverse assoc)
    . first @c p (diagonal @c))
   \\ inT @(Ob c) @(Prod c) @(Prod c a a) @a
   \\ inT @(Ob c) @(Prod c) @a @(Prod c a a)
   \\ inT @(Ob c) @(Prod c) @a @a
   where
+    i = Proxy :: Proxy (Isomorphism c)
     p = Proxy :: Proxy c

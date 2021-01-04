@@ -7,6 +7,7 @@ import           Data.Proxy (Proxy(..))
 
 import Haskerwaul.Algebra.Boolean
 import Haskerwaul.Bifunctor
+import Haskerwaul.Isomorphism
 import Haskerwaul.Law
 import Haskerwaul.Object
 import Haskerwaul.Relation.Equality
@@ -19,5 +20,7 @@ asymmetry
 asymmetry op' =
   Law
   (true . (!))
-  (implies . bimap op' (complement (Proxy :: Proxy (Prod c)) . op' . braid) . diagonal)
+  (implies
+   . bimap op' (complement (Proxy :: Proxy (Prod c)) . op' . to braid)
+   . diagonal)
   \\ inT @(Ob c) @(Prod c) @a @a

@@ -198,7 +198,11 @@ instance (MonoidalCategory (FullSubcategory ob c) t, ob a, ob (Meet a), ob (Join
 
 instance (BraidedMonoidalCategory c t, TOb ob t, ob (Unit c t)) =>
          BraidedMonoidalCategory (FullSubcategory ob c) t where
-  braid = FS braid
+  braid = Iso (FS (to braid)) (FS (from braid))
+
+instance (BalancedMonoidalCategory c t, TOb ob t, ob (Unit c t)) =>
+         BalancedMonoidalCategory (FullSubcategory ob c) t where
+  balance = FS . balance
 
 instance (SymmetricMonoidalCategory c t, TOb ob t, ob (Unit c t)) =>
          SymmetricMonoidalCategory (FullSubcategory ob c) t

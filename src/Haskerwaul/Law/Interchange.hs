@@ -24,10 +24,11 @@ interchangeLaw di st =
   (di . bimap st st)
   (st
    . bimap di di
-   . to assoc
-   . second @_ @c p (from assoc . first @c p braid . to assoc)
-   . from assoc)
+   . to
+     (assoc
+      . second @_ @(Isomorphism c) p (reverse assoc . first @(Isomorphism c) p braid . assoc)
+      . reverse assoc))
   \\ inT @(Ob c) @t @a @(t a a)
   \\ inT @(Ob c) @t @a @a
   where
-    p = Proxy :: Proxy c
+    p = Proxy :: Proxy (Isomorphism c)

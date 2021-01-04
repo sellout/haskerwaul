@@ -7,6 +7,7 @@ module Haskerwaul.Residual.Left
   ) where
 
 import Haskerwaul.Category.Monoidal.Symmetric
+import Haskerwaul.Isomorphism
 import Haskerwaul.Object
 import Haskerwaul.Residual.Right
 
@@ -28,5 +29,5 @@ instance {-# overlappable #-} ( SymmetricMonoidalCategory c t
                               , Ob c (RightRes c t x y)) =>
                               LeftResidual c t x y where 
   type LeftRes c t x y = RightRes c t x y
-  lev = rev . braid
-  lcur f = rcur (f . braid)
+  lev = rev . to braid
+  lcur f = rcur (f . to braid)

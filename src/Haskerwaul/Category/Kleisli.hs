@@ -64,7 +64,14 @@ instance ( Ob c ~ All
          , Bifunctor (Kleisli c m) (Kleisli c m) (Kleisli c m) t
          , Monad c m) =>
          BraidedMonoidalCategory (Kleisli c m) t where
-  braid = Kleisli (pure . braid)
+  braid = Iso (Kleisli (pure . to braid)) (Kleisli (pure . from braid))
+
+instance ( Ob c ~ All
+         , BalancedMonoidalCategory c t
+         , Bifunctor (Kleisli c m) (Kleisli c m) (Kleisli c m) t
+         , Monad c m) =>
+         BalancedMonoidalCategory (Kleisli c m) t where
+  balance t = Kleisli (pure . balance t)
 
 instance ( Ob c ~ All
          , SymmetricMonoidalCategory c t

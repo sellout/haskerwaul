@@ -79,6 +79,10 @@ instance (c ~ (->), MonoidalCategory c t) =>
     p :: Proxy c
     p = Proxy
 
+instance MonoidalCategory c t => MonoidalCategory (Isomorphism c) t where
+  leftIdentity = Iso leftIdentity (reverse leftIdentity)
+  rightIdentity = Iso rightIdentity (reverse rightIdentity)
+
 instance MonoidalCategory (:-) Combine where
   leftIdentity = Iso (trans weaken2 cls) (trans ins (top &&& refl))
   rightIdentity = Iso (trans weaken1 cls) (trans ins (refl &&& top))

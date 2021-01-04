@@ -163,7 +163,7 @@ instance CartesianMonoidalCategory (Opposite (->)) where
 
 instance BraidedMonoidalCategory c t =>
          BraidedMonoidalCategory (Opposite c) t where
-  braid = Opposite braid
+  braid = Iso (Opposite (to braid)) (Opposite (from braid))
 
 instance BalancedMonoidalCategory c t =>
          BalancedMonoidalCategory (Opposite c) t where

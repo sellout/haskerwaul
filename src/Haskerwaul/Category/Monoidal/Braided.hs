@@ -13,32 +13,43 @@ import qualified Data.Tuple as Base
 
 import Haskerwaul.Category.Monoidal
 import Haskerwaul.Constraint
+import Haskerwaul.Isomorphism
 import Haskerwaul.Object
 import Haskerwaul.Transformation.Dinatural
 import Haskerwaul.Transformation.Natural
 
 -- | [nLab](https://ncatlab.org/nlab/show/braided+monoidal+category)
 class MonoidalCategory c t => BraidedMonoidalCategory c t where
-  braid :: (Ob c a, Ob c b) => t a b `c` t b a
+  braid :: (Ob c a, Ob c b) => Isomorphism c (t a b) (t b a)
 
 instance BraidedMonoidalCategory (->) (,) where
-  braid = Base.swap
+  braid = Iso Base.swap Base.swap
 
 instance BraidedMonoidalCategory (->) Either where
-  braid = \case
-    Left a -> Right a
-    Right b -> Left b
+  braid = Iso
+    (\case
+        Left a -> Right a
+        Right b -> Left b)
+    (\case
+        Left a -> Right a
+        Right b -> Left b)
 
 instance (d ~ (->), BraidedMonoidalCategory d dt) =>
          BraidedMonoidalCategory (NaturalTransformation c d) (FTensor dt) where
-  braid = NT (FTensor . braid . lowerFTensor)
+  braid =
+    Iso
+    (NT (FTensor . to braid . lowerFTensor))
+    (NT (FTensor . from braid . lowerFTensor))
 
 instance BraidedMonoidalCategory (:-) Combine where
-  braid = Sub Dict
+  braid = Iso (Sub Dict) (Sub Dict)
 
 instance BraidedMonoidalCategory (NaturalTransformation c (:-)) CFProd where
-  braid = NT (Sub Dict)
+  braid = Iso (NT (Sub Dict)) (NT (Sub Dict))
 
 instance (d ~ (->), BraidedMonoidalCategory d dt) =>
          BraidedMonoidalCategory (DinaturalTransformation d) (BTensor dt) where
-  braid = DT (BTensor . braid . lowerBTensor)
+  braid =
+    Iso
+    (DT (BTensor . to braid . lowerBTensor))
+    (DT (BTensor . from braid . lowerBTensor))

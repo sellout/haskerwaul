@@ -15,6 +15,7 @@ import           Numeric.Natural (Natural)
 import           Prelude (Double, Float, Integer)
 
 import Haskerwaul.Bifunctor
+import Haskerwaul.Isomorphism
 import Haskerwaul.Lattice
 import Haskerwaul.Object
 import Haskerwaul.Preorder
@@ -33,7 +34,7 @@ class Preorder c a => PartialOrder c a
 --   to be used as a default implementation when possible.
 defaultEquivalence :: forall c a. (c ~ (->), ElementaryTopos c, PartialOrder c a)
                    => BinaryRelation c a a
-defaultEquivalence = meet . bimap (le @c) (le @c . braid) . diagonal
+defaultEquivalence = meet . bimap (le @c) (le @c . to braid) . diagonal
 
 instance PartialOrder (->) (Canonical Bool)
 

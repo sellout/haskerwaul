@@ -60,6 +60,9 @@ instance (c ~ (->), SemigroupalCategory c t) =>
     p :: Proxy c
     p = Proxy
 
+instance SemigroupalCategory c t => SemigroupalCategory (Isomorphism c) t where
+  assoc = Iso assoc (reverse assoc)
+
 instance SemigroupalCategory (:-) Combine where
   assoc =
     Iso
