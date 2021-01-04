@@ -8,7 +8,8 @@ import           Data.Either (Either(..))
 import           Data.Proxy (Proxy(..))
 
 import Haskerwaul.Bifunctor
-import Haskerwaul.Category.Monoidal
+import Haskerwaul.Category.Closed.Cartesian
+import Haskerwaul.Category.Monoidal.Closed
 import Haskerwaul.Duoid.Components
 import Haskerwaul.Functor.Monoidal.Lax
 import Haskerwaul.Isomorphism
@@ -23,15 +24,13 @@ data Day c ct dt f g a = forall x y. (Ob c x, Ob c y) => Day (dt (f x) (g y)) (c
 --
 --  __NB__: This is overspecialized.
 instance (c ~ (->), ct ~ (,), d ~ (->), dt ~ (,)) =>
-         SemigroupalCategory
-         (FullSubcategory (Functor c d) (NaturalTransformation c d))
-         (Day c ct dt) where
+         SemigroupalCategory (NaturalTransformation c d) (Day c ct dt) where
   assoc =
     Iso
-    (FS (NT (\(Day (fa, Day (gb, hc) ifn) ofn) ->
-                Day (Day (fa, gb) (\(a, b) -> \c -> ofn (a, ifn (b, c))), hc) (\(fn, c) -> fn c))))
-    (FS (NT (\(Day (Day (fa, gb) ifn, hc) ofn) ->
-                Day (fa, Day (gb, hc) (\(b, c) -> \a -> ofn (ifn (a, b), c))) (\(a, fn) -> fn a))))
+    (NT (\(Day (fa, Day (gb, hc) ifn) ofn) ->
+                Day (Day (fa, gb) (\(a, b) -> \c -> ofn (a, ifn (b, c))), hc) (\(fn, c) -> fn c)))
+    (NT (\(Day (Day (fa, gb) ifn, hc) ofn) ->
+                Day (fa, Day (gb, hc) (\(b, c) -> \a -> ofn (ifn (a, b), c))) (\(a, fn) -> fn a)))
 
 instance (MonoidalCategory' c ct, FOb (Ob c) (Ob d) (c (Unit c ct))) =>
          MonoidalCategory' (NaturalTransformation c d) (Day c ct dt) where
@@ -57,11 +56,10 @@ instance (c ~ (->), d ~ (->), LaxMonoidalFunctor c ct d dt f) =>
          Magma (NaturalTransformation c d) (Day c ct dt) f where
   op = NT (\(Day t fn) -> map fn (mu (Proxy :: Proxy c) t))
 
--- instance (c ~ (->), d ~ (->), LaxMonoidalFunctor c ct d dt f) =>
---          UnitalMagma (NaturalTransformation c d) (Day c ct dt) f where
---   unit :: Proxy (Day c ct dt)
---        -> NaturalTransformation c d (Unit (NaturalTransformation c d) (Day c ct dt)) f
---   unit Proxy = NT (epsilon (Proxy :: Proxy c) (Proxy :: Proxy ct) (Proxy :: Proxy dt))
+instance (c ~ (->), ct ~ (,), d ~ (->), dt ~ (,), LaxMonoidalFunctor c ct d dt f) =>
+         UnitalMagma (NaturalTransformation c d) (Day c ct dt) f where
+  unit Proxy =
+    NT (\fn -> map (const (fn ())) (epsilon (Proxy :: Proxy c) (Proxy :: Proxy ct) (Proxy :: Proxy dt) ()))
 
 instance (c ~ (->), d ~ (->), LaxMonoidalFunctor c ct d dt f) =>
          Semigroup (NaturalTransformation c d) (Day c ct dt) f
@@ -76,12 +74,12 @@ instance (d ~ (->), Semigroupoid c) =>
 
 instance (d ~ (->), Category c, Bifunctor d d d dt) =>
          Bifunctor
-         (FullSubcategory (Functor c d) (NaturalTransformation c d))
-         (FullSubcategory (Functor c d) (NaturalTransformation c d))
-         (FullSubcategory (Functor c d) (NaturalTransformation c d))
+         (NaturalTransformation c d)
+         (NaturalTransformation c d)
+         (NaturalTransformation c d)
          (Day c ct dt) where
   bimap f g =
-    FS (NT (\(Day t fn) -> Day (bimap @d @d (runNT @_ @c (inclusion f)) (runNT @_ @c (inclusion g)) t) fn))
+    NT (\(Day t fn) -> Day (bimap @d @d (runNT @_ @c f) (runNT @_ @c g) t) fn)
 
 instance Semigroup (->) (,) a =>
          Magma (NaturalTransformation (->) (->)) (Day (->) (,) (,)) (Diamond (Either a)) where

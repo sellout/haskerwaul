@@ -21,13 +21,13 @@ import Haskerwaul.Subcategory.Full
 import Haskerwaul.Transformation.Natural
 
 class DuoidalCategory c di st => NormalDuoidalCategory c di st where
-  -- | This must form a lawful isomorphism with `foreUnit`.
-  backUnit :: Proxy di -> Proxy st -> Unit c st `c` Unit c di
+  -- | This must form a lawful isomorphism with `unit`.
+  counit :: Proxy di -> Proxy st -> Unit c st `c` Unit c di
 
 unitIso :: forall c di st. (NormalDuoidalCategory c di st)
         => Proxy di -> Proxy st -> Isomorphism c (Unit c di) (Unit c st)
 unitIso di st =
-  Iso (foreUnit di st) (backUnit di st)
+  Iso (unit di) (counit di st)
   \\ inT @(Ob c) @di @(Unit c st) @(Unit c di)
   \\ inT @(Ob c) @di @(Unit c di) @(Unit c st)
   \\ inT @(Ob c) @st @(Unit c st) @(Unit c di)
@@ -43,4 +43,4 @@ instance (c ~ (->), ct ~ (,)) =>
          (FullSubcategory (Endofunctor c) (NaturalTransformation c c))
          (Day c ct ct)
          Compose where
-  backUnit Proxy Proxy = FS (NT (\u () -> runIdentity u))
+  counit Proxy Proxy = FS (NT (\u () -> runIdentity u))

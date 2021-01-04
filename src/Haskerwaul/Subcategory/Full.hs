@@ -149,18 +149,35 @@ instance (SemigroupalCategory (FullSubcategory ob c) t, ob a, Magma c t a) =>
          Magma (FullSubcategory ob c) t a where
   op = FS op
 
+instance (SemigroupalCategory (FullSubcategory ob c) t, ob a, Magma (Opposite c) t a) =>
+         Magma (Opposite (FullSubcategory ob c)) t a where
+  op = Opposite (FS (opposite op))
+
 instance (SemigroupalCategory (FullSubcategory ob c) t, ob a, CommutativeMagma c t a) =>
          CommutativeMagma (FullSubcategory ob c) t a
+
+instance (SemigroupalCategory (FullSubcategory ob c) t, ob a, CommutativeMagma (Opposite c) t a) =>
+         CommutativeMagma (Opposite (FullSubcategory ob c)) t a
 
 instance (SemigroupalCategory (FullSubcategory ob c) t, ob a, IdempotentMagma c t a) =>
          IdempotentMagma (FullSubcategory ob c) t a
 
+instance (SemigroupalCategory (FullSubcategory ob c) t, ob a, IdempotentMagma (Opposite c) t a) =>
+         IdempotentMagma (Opposite (FullSubcategory ob c)) t a
+
 instance (SemigroupalCategory (FullSubcategory ob c) t, ob a, Semigroup c t a) =>
          Semigroup (FullSubcategory ob c) t a
+
+instance (SemigroupalCategory (FullSubcategory ob c) t, ob a, Semigroup (Opposite c) t a) =>
+         Semigroup (Opposite (FullSubcategory ob c)) t a
 
 instance (MonoidalCategory (FullSubcategory ob c) t, ob a, ob (Unit c t), UnitalMagma c t a) =>
          UnitalMagma (FullSubcategory ob c) t a where
   unit t = FS (unit t)
+
+instance (MonoidalCategory (FullSubcategory ob c) t, ob a, ob (Unit c t), UnitalMagma (Opposite c) t a) =>
+         UnitalMagma (Opposite (FullSubcategory ob c)) t a where
+  unit t = Opposite (FS (opposite (unit t)))
 
 instance (MonoidalCategory (FullSubcategory ob c) t, ob a, ob (Meet a), ob (Join a), ComplementedLattice c t a) =>
          ComplementedLattice (FullSubcategory ob c) t a

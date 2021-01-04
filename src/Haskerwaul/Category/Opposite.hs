@@ -193,3 +193,14 @@ instance SymmetricMonoidalCategory c t =>
 -- --    comonoid in a unique way."
 -- --   ⸻[nLab](https://ncatlab.org/nlab/show/comonoid#examples)
 -- instance CartesianMonoidalCategory c => Monoid (Op c) (Prod c) a
+
+instance (c ~ (->), ct ~ (,), MonoidalCategory c ct, u ~ Unit c ct) =>
+         Magma (Opposite (NaturalTransformation c c)) Compose (c u) where
+  op = Opposite (NT (\const -> Compose (\_ -> const)))
+
+instance (c ~ (->), ct ~ (,), MonoidalCategory c ct, u ~ Unit c ct) =>
+         Semigroup (Opposite (NaturalTransformation c c)) Compose (c u)
+
+instance (c ~ (->), ct ~ (,), MonoidalCategory c ct, u ~ Unit c ct) =>
+         UnitalMagma (Opposite (NaturalTransformation c c)) Compose (c u) where
+  unit Proxy = Opposite (NT (\fn -> Identity (fn ())))
