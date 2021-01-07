@@ -7,6 +7,7 @@ import           Data.Kind (Constraint, Type)
 import qualified Data.Ord as Base
 import qualified Data.Set as Set
 import           Data.Type.Equality ((:~:))
+import           Prelude (Either, Eq, Show)
 
 import Haskerwaul.Constraint
 
@@ -66,3 +67,18 @@ type TOb cOb = BOb cOb cOb cOb
 
 inT :: TOb cOb t => (cOb x, cOb y) :- cOb (t x y)
 inT = inB
+
+-- Instances that would be orphan anywhere else, but are only needed for
+-- testing, since Hedgehog requires them.
+
+instance BOb Eq Eq Eq (,) where
+  inB = Sub Dict
+
+instance BOb Eq Eq Eq Either where
+  inB = Sub Dict
+
+instance BOb Show Show Show (,) where
+  inB = Sub Dict
+
+instance BOb Show Show Show Either where
+  inB = Sub Dict
