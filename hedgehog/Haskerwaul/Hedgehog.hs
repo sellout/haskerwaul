@@ -29,16 +29,22 @@ import Data.Eq (Eq)
 import Data.Proxy (Proxy (..))
 import Data.String (String, fromString)
 import Data.Typeable (Typeable, typeRep)
+import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Laws
 import Haskerwaul.Category.Semigroupal.Laws as Semigroupal
 import Haskerwaul.Hedgehog.Topos
 import Haskerwaul.Isomorphism.Laws
 import Haskerwaul.Law
+import Haskerwaul.Magma.Commutative.Laws
 import Haskerwaul.Magma.Unital.Laws
+import Haskerwaul.Monoid.Commutative.Laws as CommutativeMonoid
 import Haskerwaul.Monoid.Laws
 import Haskerwaul.Object
+import Haskerwaul.Profunctor
+import Haskerwaul.Rig.Laws as Rig
 import Haskerwaul.Semigroup.Laws as Semigroup
 import Haskerwaul.Semigroupoid.Laws
+import Haskerwaul.Semiring
 import Haskerwaul.Topos.Elementary hiding (leftIdentity, rightIdentity)
 import Haskerwaul.Transformation.Dinatural
 import Hedgehog hiding (label)
@@ -58,6 +64,19 @@ semigroup_laws
 semigroup_laws label law translate display genX =
   [( "associative (" <> label <> ")"
    , property (runHH (checkLaw translate (Semigroup.associative law)) =<< forAllWith display genX))
+  ]
+
+commutativeMagma_laws
+  :: forall c t a x y. (Typeable c, Eq y, Show y)
+  => PropertyName
+  -> CommutativeMagmaLaws c t a
+  -> (t a a `c` a -> x `HH` y)
+  -> (x -> String)
+  -> Gen x
+  -> [(PropertyName, Property)]
+commutativeMagma_laws label law translate display genX =
+  [( "commutative (" <> label <> ")"
+   , property (runHH (checkLaw translate (commutative law)) =<< forAllWith display genX))
   ]
 
 unitalMagma_laws
@@ -95,6 +114,66 @@ monoid_laws
 monoid_laws label law trans transL transR display dispL dispR genX genX1 genX2 =
   semigroup_laws label (semigroup law) trans display genX
   <> unitalMagma_laws label (unitalMagma law) transL transR dispL dispR genX1 genX2
+
+commutativeMonoid_laws
+  :: (Typeable c, Eq y, Show y)
+  => PropertyName
+  -> CommutativeMonoidLaws c t a
+  -> (t a a `c` a -> x `HH` y)
+  -> (t (t a a) a `c` a -> x0 `HH` y)
+  -> (t (Unit c t) a `c` a -> x1 `HH` y)
+  -> (t a (Unit c t) `c` a -> x2 `HH` y)
+  -> (x -> String)
+  -> (x0 -> String)
+  -> (x1 -> String)
+  -> (x2 -> String)
+  -> Gen x
+  -> Gen x0
+  -> Gen x1
+  -> Gen x2
+  -> [(PropertyName, Property)]
+commutativeMonoid_laws label law trans transA transL transR display dispA dispL dispR genX genX0 genX1 genX2 =
+  commutativeMagma_laws label (commutativeMagma law) trans display genX
+  <> monoid_laws label (CommutativeMonoid.monoid law) transA transL transR dispA dispL dispR genX0 genX1 genX2
+
+-- |
+--  __TODO__: Missing a lot of intermediate types here.
+rig_laws 
+  :: forall c t a x x0 x1 x2 y
+   . (c ~ (->), BraidedMonoidalCategory c t, Typeable c, Eq y, Show y)
+  => PropertyName
+  -> RigLaws c t a
+  -> (t a a `c` a -> x `HH` y)
+  -> (t (t a a) a `c` a -> x0 `HH` y)
+  -> (t (Unit c t) a `c` a -> x1 `HH` y)
+  -> (t a (Unit c t) `c` a -> x2 `HH` y)
+  -> (x -> String)
+  -> (x0 -> String)
+  -> (x1 -> String)
+  -> (x2 -> String)
+  -> Gen x
+  -> Gen x0
+  -> Gen x1
+  -> Gen x2
+  -> [(PropertyName, Property)]
+rig_laws label law trans transA transL transR display dispA dispL dispR genX genX0 genX1 genX2 =
+  commutativeMonoid_laws
+    label
+    (commutativeMonoid law)
+    (trans . promap @c @c (bimap Add Add) sum)
+    (transA . promap @c @c (bimap @c @c @c (bimap Add Add) Add) sum)
+    (transL . promap @c @c (bimap @c id Add) sum)
+    (transR . promap @c @c (bimap @_ @c Add id) sum)
+    display dispA dispL dispR
+    genX genX0 genX1 genX2
+  <> monoid_laws
+     label
+     (Rig.monoid law)
+     (transA . promap @c @c (bimap @c @c @c (bimap Multiply Multiply) Multiply) product)
+     (transL . promap @c @c (bimap @c id Multiply) product)
+     (transR . promap @c @c (bimap @_ @c Multiply id) product)
+     dispA dispL dispR
+     genX0 genX1 genX2
 
 semigroupoid_laws
   :: forall ok (c :: ok -> ok -> *) (a :: ok) (b :: ok) y

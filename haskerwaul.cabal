@@ -152,6 +152,7 @@ library
                     , Haskerwaul.Loop
                     , Haskerwaul.Magma
                     , Haskerwaul.Magma.Commutative
+                    , Haskerwaul.Magma.Commutative.Laws
                     , Haskerwaul.Magma.Idempotent
                     , Haskerwaul.Magma.Unital
                     , Haskerwaul.Magma.Unital.Laws
@@ -167,6 +168,7 @@ library
                     , Haskerwaul.Monad.Frobenius
                     , Haskerwaul.Monoid
                     , Haskerwaul.Monoid.Commutative
+                    , Haskerwaul.Monoid.Commutative.Laws
                     , Haskerwaul.Monoid.Commutative.Monus
                     , Haskerwaul.Monoid.Frobenius
                     , Haskerwaul.Monoid.Frobenius.Commutative
@@ -219,6 +221,7 @@ library
                     , Haskerwaul.Residual.Right
                     , Haskerwaul.Rig
                     , Haskerwaul.Rig.Idempotent
+                    , Haskerwaul.Rig.Laws
                     , Haskerwaul.Rig.Monus
                     , Haskerwaul.Rig.Near
                     , Haskerwaul.Ring

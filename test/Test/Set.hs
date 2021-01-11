@@ -2,16 +2,14 @@
 
 module Test.Set where
 
-import Control.Applicative
-import Data.Bool (Bool)
 import Data.List (concat)
-import Data.Int (Int, Int8)
-import Data.Monoid (Sum)
 import Hedgehog
 import qualified Hedgehog.Gen as Gen
-import Prelude (Char)
+import qualified Hedgehog.Range as Range
+import Numeric.Natural (Natural)
+import Prelude (Integer)
 
-import Haskerwaul hiding (pure)
+import Haskerwaul
 import Haskerwaul.Hedgehog.Applied.Set
 
 setProperties :: [Hedgehog.Group]
@@ -22,12 +20,31 @@ setProperties =
       [ semigroupalCategory_lawsFn "product" genTuple
       , semigroupalCategory_lawsFn "coproduct" genEither
       ])
+  , Group "monoids under (->) (,)"
+    (monoid_lawsTup "String" (Gen.string (Range.linear 0 9999) Gen.unicodeAll))
   , Group
-    "Int8 forms a semiring under (->) (,)"
-    (monoid_lawsTup "(,)" (pure <$> Gen.enumBounded :: Gen (Sum Int8)))
+    "Integral numbers form a rig under (->) (,)"
+    ( concat
+      [ rig_lawsTup "()" (pure ())
+      , rig_lawsTup "Int" (Gen.int Range.linearBounded)
+      , rig_lawsTup "Int8" (Gen.int8 Range.linearBounded)
+      , rig_lawsTup "Int16" (Gen.int16 Range.linearBounded)
+      , rig_lawsTup "Int32" (Gen.int32 Range.linearBounded)
+      , rig_lawsTup "Int64" (Gen.int64 Range.linearBounded)
+      , rig_lawsTup "Integer" (Gen.integral_ (Range.linear (-99999999999) 99999999999) :: Gen Integer)
+      , rig_lawsTup "Natural" (Gen.integral (Range.linear 0 99999999999) :: Gen Natural)
+      -- , rig_lawsTup "Join Natural" (map pure (Gen.integral (Range.linear 0 99999999999)) :: Gen (Join Natural))
+      , rig_lawsTup "Word" (Gen.word Range.linearBounded)
+      , rig_lawsTup "Word8" (Gen.word8 Range.linearBounded)
+      , rig_lawsTup "Word16" (Gen.word16 Range.linearBounded)
+      , rig_lawsTup "Word32" (Gen.word32 Range.linearBounded)
+      , rig_lawsTup "Word64" (Gen.word64 Range.linearBounded)
+      ])
   , Group
-    "all types are monoids under (->) Either"
-    (monoid_lawsEither "Int" (Gen.enumBounded :: Gen Int)
-     <> monoid_lawsEither "Bool" (Gen.enumBounded :: Gen Bool) 
-     <> monoid_lawsEither "Char" (Gen.enumBounded :: Gen Char))
+    "all types are commutative monoids under (->) Either"
+    ( concat
+      [ commutativeMonoid_lawsEither "Int" (Gen.int Range.linearBounded)
+      , commutativeMonoid_lawsEither "Bool" Gen.bool
+      , commutativeMonoid_lawsEither "Char" Gen.unicodeAll
+      ])
   ]

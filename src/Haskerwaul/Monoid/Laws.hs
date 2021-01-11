@@ -24,10 +24,9 @@ data MonoidLaws c t a =
     , unitalMagma :: UnitalMagmaLaws c t a
     }
 
--- | The constraints here should be simply @(`ElementaryTopos` c, `Monoid` c t
---   a)@, the `MonoidalCategory` should be included in the `Monoid` (but that
---   last bit causes a cycle currently). And I have no idea why it's failing to
---   resolve all the `Ob`s correctly.
+-- | The constraints here should be simply @`Monoid` c t a@, the
+--  `MonoidalCategory` should be included in the `Monoid` (but that last bit
+--   causes a cycle currently).
 monoidLaws :: (MonoidalCategory c t, Monoid c t a) => MonoidLaws c t a
 monoidLaws =
   MonoidLaws

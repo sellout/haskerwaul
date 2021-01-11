@@ -13,7 +13,9 @@ import Haskerwaul hiding (pure, ($))
 import Haskerwaul.Category.Semigroupal.Laws
 import Haskerwaul.Hedgehog
 import Haskerwaul.Hedgehog.Topos
+import Haskerwaul.Monoid.Commutative.Laws
 import Haskerwaul.Monoid.Laws
+import Haskerwaul.Rig.Laws
 import Hedgehog
 import qualified Hedgehog.Function as Fn
 import qualified Hedgehog.Gen as Gen
@@ -73,4 +75,35 @@ monoid_lawsEither = monoid_lawsFn genEither Gen.discard
 monoid_lawsTup
   :: (Monoid (->) (,) x, Eq x, Show x)
   => PropertyName -> Gen x -> [(PropertyName, Property)]
-monoid_lawsTup = monoid_lawsFn  genTuple (pure ())
+monoid_lawsTup = monoid_lawsFn genTuple (pure ())
+
+commutativeMonoid_lawsFn :: forall t x. (BraidedMonoidalCategory (->) t, CommutativeMonoid (->) t x, Eq x, Show x, Show (Unit (->) t), TOb Show t) => (forall a b. Gen a -> Gen b -> Gen (t a b)) -> Gen (Unit (->) t) -> PropertyName -> Gen x -> [(PropertyName, Property)]
+commutativeMonoid_lawsFn genT genU labl gen =
+  commutativeMonoid_laws labl commutativeMonoidLaws HH HH HH HH show show show show (genT gen gen) (genT (genT gen gen) gen) (genT genU gen) (genT gen genU)
+  \\ inT @Show @t @(t x x) @x
+  \\ inT @Show @t @x @x
+  \\ inT @Show @t @(Unit (->) t) @x
+  \\ inT @Show @t @x @(Unit (->) t)
+
+commutativeMonoid_lawsEither
+  :: (CommutativeMonoid (->) Either x, Eq x, Show x)
+  => PropertyName -> Gen x -> [(PropertyName, Property)]
+commutativeMonoid_lawsEither = commutativeMonoid_lawsFn genEither Gen.discard
+
+commutativeMonoid_lawsTup
+  :: (CommutativeMonoid (->) (,) x, Eq x, Show x)
+  => PropertyName -> Gen x -> [(PropertyName, Property)]
+commutativeMonoid_lawsTup = commutativeMonoid_lawsFn genTuple (pure ())
+
+rig_lawsFn :: forall t x. (BraidedMonoidalCategory (->) t, Rig (->) t x, Eq x, Show x, Show (Unit (->) t), TOb Show t) => (forall a b. Gen a -> Gen b -> Gen (t a b)) -> Gen (Unit (->) t) -> PropertyName -> Gen x -> [(PropertyName, Property)]
+rig_lawsFn genT genU labl gen =
+  rig_laws labl rigLaws HH HH HH HH show show show show (genT gen gen) (genT (genT gen gen) gen) (genT genU gen) (genT gen genU)
+  \\ inT @Show @t @(t x x) @x
+  \\ inT @Show @t @x @x
+  \\ inT @Show @t @(Unit (->) t) @x
+  \\ inT @Show @t @x @(Unit (->) t)
+
+rig_lawsTup
+  :: (Rig (->) (,) x, Eq x, Show x)
+  => PropertyName -> Gen x -> [(PropertyName, Property)]
+rig_lawsTup = rig_lawsFn genTuple (pure ())

@@ -6,11 +6,12 @@ module Haskerwaul.Magma.Commutative
   , module Haskerwaul.Magma
   ) where
 
-import           Prelude (Integer)
 import           Data.Bool (Bool)
+import           Data.Either (Either)
 import           Data.Int (Int, Int8, Int16, Int32, Int64)
 import           Data.Word (Word, Word8, Word16, Word32, Word64)
 import           Numeric.Natural (Natural)
+import           Prelude (Integer)
 
 import Haskerwaul.Lattice.Components
 import Haskerwaul.Magma
@@ -21,6 +22,8 @@ import Haskerwaul.Semiring.Components
 -- = laws
 --   [`Haskerwaul.Law.Commutativity.commutativity`]: @`op` x y == `op` y x@
 class Magma c t a => CommutativeMagma c t a
+
+instance CommutativeMagma (->) Either a
 
 instance CommutativeMagma (->) (,) (Join Bool)
 instance CommutativeMagma (->) (,) (Meet Bool)
