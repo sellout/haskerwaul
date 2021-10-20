@@ -66,7 +66,6 @@ module Haskerwaul
   , module Haskerwaul.Dioid.Commutative
   -- * duoids
   , module Haskerwaul.Duoid
-  , module Haskerwaul.Duoid.Normal
   -- * embeddings
   , module Haskerwaul.Embedding.Yoneda
   -- * extensions
@@ -321,7 +320,6 @@ import Haskerwaul.Day
 import Haskerwaul.Dioid
 import Haskerwaul.Dioid.Commutative
 import Haskerwaul.Duoid
-import Haskerwaul.Duoid.Normal
 import Haskerwaul.Embedding.Yoneda
 import Haskerwaul.Endofunctor
 import Haskerwaul.Endomorphism

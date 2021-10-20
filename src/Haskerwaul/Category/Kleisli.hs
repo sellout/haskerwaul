@@ -3,6 +3,7 @@
 
 module Haskerwaul.Category.Kleisli where
 
+import           Data.Constraint ((\\))
 import           Data.Constraint.Deferrable ((:~:)(..))
 import           Data.Kind (Type)
 import           Data.Proxy (Proxy(..))
@@ -59,6 +60,15 @@ instance ( Ob c ~ All
     (Kleisli (pure . to rightIdentity))
     (Kleisli (pure . from rightIdentity))
 
+instance (Category c, Monad c m, Magma c t a) => Magma (Kleisli c m) t a where
+  op = Kleisli (pure . op)
+
+instance (Category c, Monad c m, Semigroup c t a) => Semigroup (Kleisli c m) t a
+
+instance (Category c, Monad c m, UnitalMagma c t a) =>
+         UnitalMagma (Kleisli c m) t a where
+  unit p = Kleisli (pure . unit p)
+
 instance ( Ob c ~ All
          , BraidedMonoidalCategory c t
          , Bifunctor (Kleisli c m) (Kleisli c m) (Kleisli c m) t
@@ -97,5 +107,7 @@ instance ( Ob c ~ All
 -- | A monad in a Kleisli category is basically a traversable monad.
 instance (Semigroupoid c, Monad c n, Functor (Kleisli c n) (Kleisli c n) m, Monad c m) =>
          Monad (Kleisli c n) m where
-  pure = Kleisli (pure . pure) 
-  flatten = Kleisli (pure . flatten)
+  pure :: forall a. Ob c a => Kleisli c n a (m a)
+  pure = Kleisli (pure . pure) \\ inF @(Ob c) @(Ob c) @m @a
+  flatten :: forall a. Ob c a => Kleisli c n (m (m a)) (m a)
+  flatten = Kleisli (pure . flatten) \\ inF @(Ob c) @(Ob c) @m @a

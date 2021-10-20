@@ -9,13 +9,9 @@ module Haskerwaul.Duoid
   , module Haskerwaul.Monoid
   ) where
 
-import           Data.Proxy (Proxy)
-
-import Haskerwaul.Bifunctor
-import Haskerwaul.Category.Monoidal
+import Haskerwaul.Category.Duoidal
 import Haskerwaul.Duoid.Components
 import Haskerwaul.Monoid
-import Haskerwaul.Transformation.Natural
 
 -- |
 -- = laws
@@ -29,26 +25,10 @@ import Haskerwaul.Transformation.Natural
 -- = references
 --
 -- - [nLab](https://ncatlab.org/nlab/show/duoidal+category#definition)
-class (Monoid c t (Diamond a), Monoid c t (Star a)) => Duoid c t a
+--
+--  __NB__: Instances for this are automatically coalesced.
+class (DuoidalCategory c di st, Monoid c di a, Monoid c st a) =>
+      Duoid c di st a
 
-instance (Monoid c t (Diamond a), Monoid c t (Star a)) => Duoid c t a
-
-diamondU :: forall c c' t a
-          . (c ~ NaturalTransformation c' (->), MonoidalCategory c t, Duoid c t a)
-         => Proxy t -> Unit c t `c` a
-diamondU t = NT getDiamond . unit @_ @_ @(Diamond a) t
-
-starU :: forall c c' t a
-       . (c ~ NaturalTransformation c' (->), MonoidalCategory c t, Duoid c t a)
-      => Proxy t -> Unit c t `c` a
-starU t = NT getStar . unit @_ @_ @(Star a) t
-
-diamondT :: forall c c' t a
-          . (c ~ NaturalTransformation c' (->), SemigroupalCategory c t, Duoid c t a)
-         => t a a `c` a
-diamondT = NT getDiamond . op @_ @_ @(Diamond a) . bimap (NT @c' @(->) Diamond) (NT @c' @(->) Diamond)
-
-starT :: forall c c' t a
-       . (c ~ NaturalTransformation c' (->), SemigroupalCategory c t, Duoid c t a)
-      => t a a `c` a
-starT = NT getStar . op @_ @_ @(Star a) . bimap (NT @c' @(->) Star) (NT @c' @(->) Star)
+instance (DuoidalCategory c di st, Monoid c di a, Monoid c st a) =>
+         Duoid c di st a

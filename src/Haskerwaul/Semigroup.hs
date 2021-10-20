@@ -10,11 +10,13 @@ import           Data.Bool (Bool)
 import           Data.Constraint ((:-)(..), Dict(..))
 import           Data.Either (Either)
 import           Data.Int (Int, Int8, Int16, Int32, Int64)
+import           Data.Kind (Constraint)
 import qualified Data.Semigroup as Base
 import           Data.Word (Word, Word8, Word16, Word32, Word64)
 import           Numeric.Natural (Natural)
 import           Prelude (Integer)
 
+import Haskerwaul.Constraint
 import Haskerwaul.Lattice.Components
 import Haskerwaul.Magma
 import Haskerwaul.Object
@@ -78,3 +80,5 @@ instance Semigroup (->) (,) (Meet Word32)
 
 instance Semigroup (->) (,) (Join Word64)
 instance Semigroup (->) (,) (Meet Word64)
+
+instance Semigroup (:-) Combine (() :: Constraint)

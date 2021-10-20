@@ -8,4 +8,4 @@ import Haskerwaul.Category.Opposite
 import Haskerwaul.Monoid
 
 -- | [nLab](https://ncatlab.org/nlab/show/comonoid)
-type Comonoid c = Monoid (Op c)
+type Comonoid c = Monoid (Opposite c)

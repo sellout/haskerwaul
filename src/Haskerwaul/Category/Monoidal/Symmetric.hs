@@ -39,7 +39,7 @@ instance SymmetricMonoidalCategory (->) (,)
 
 instance SymmetricMonoidalCategory (->) Either
 
-instance (d ~ (->), SymmetricMonoidalCategory d dt) =>
+instance (d ~ (->), dt ~ (,), SymmetricMonoidalCategory d dt) =>
          SymmetricMonoidalCategory (NaturalTransformation c d) (FTensor dt)
 
 instance SymmetricMonoidalCategory (:-) Combine

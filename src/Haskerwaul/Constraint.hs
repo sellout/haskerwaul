@@ -59,7 +59,7 @@ none = Sub (getCompose nope)
 -- | Because `(,)` is handled oddly, we can't use it in
 --  @`Haskerwaul.Category.Semigroupal.SemigroupalCategory` `(:-)` `(,)`@. This
 --   is our workaround.
-class (a, b) => Combine a b where
+class (a, b) => Combine a b
 
 instance (a, b) => Combine a b
 

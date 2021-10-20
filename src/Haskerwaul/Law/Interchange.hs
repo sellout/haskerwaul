@@ -3,11 +3,9 @@
 module Haskerwaul.Law.Interchange where
 
 import           Data.Constraint ((\\))
-import           Data.Proxy (Proxy(..))
 
 import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Monoidal.Braided
-import Haskerwaul.Isomorphism
 import Haskerwaul.Law
 import Haskerwaul.Object
 import Haskerwaul.Relation.Equality
@@ -17,18 +15,11 @@ import Haskerwaul.Relation.Equality
 --
 -- - [/Monoidal Functors, Species and Hopf Algebras/ §6](http://pi.math.cornell.edu/~maguiar/a.pdf)
 interchangeLaw
-  :: forall c t a. (BraidedMonoidalCategory c t, Ob c a)
-  => t a a `c` a -> t a a `c` a -> Law c PartialOrder (t (t a a) (t a a)) a
-interchangeLaw di st =
-  Law
-  (di . bimap st st)
-  (st
-   . bimap di di
-   . to
-     (assoc
-      . second @_ @(Isomorphism c) p (reverse assoc . first @(Isomorphism c) p braid . assoc)
-      . reverse assoc))
-  \\ inT @(Ob c) @t @a @(t a a)
-  \\ inT @(Ob c) @t @a @a
-  where
-    p = Proxy :: Proxy (Isomorphism c)
+  :: forall c di st a
+   . (MonoidalCategory c di, MonoidalCategory c st, Monoid c di a, Monoid c st a)
+  => (di (st a a) (st a a) `c` st (di a a) (di a a))
+  -> Law c EqualityRelation (di (st a a) (st a a)) a
+interchangeLaw inter =
+  Law (op . bimap (op @c) (op @c)) (op . bimap (op @c) (op @c) . inter)
+  \\ inT @(Ob c) @di @a @a
+  \\ inT @(Ob c) @st @a @a

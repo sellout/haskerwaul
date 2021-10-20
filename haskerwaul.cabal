@@ -86,7 +86,7 @@ library
                     , Haskerwaul.Dioid
                     , Haskerwaul.Dioid.Commutative
                     , Haskerwaul.Duoid
-                    , Haskerwaul.Duoid.Normal
+                    , Haskerwaul.Duoid.Laws
                     , Haskerwaul.Embedding.Yoneda
                     , Haskerwaul.Endofunctor
                     , Haskerwaul.Endomorphism

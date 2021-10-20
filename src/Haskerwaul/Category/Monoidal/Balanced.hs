@@ -35,7 +35,7 @@ instance BalancedMonoidalCategory (->) (,) where
 instance BalancedMonoidalCategory (->) Either where
   balance Proxy = id
 
-instance (d ~ (->), BalancedMonoidalCategory d dt) =>
+instance (d ~ (->), dt ~ (,), BalancedMonoidalCategory d dt) =>
          BalancedMonoidalCategory (NaturalTransformation c d) (FTensor dt) where
   balance Proxy = NT (balance (Proxy :: Proxy dt))
 

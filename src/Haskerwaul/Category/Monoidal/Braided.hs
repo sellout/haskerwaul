@@ -18,7 +18,11 @@ import Haskerwaul.Object
 import Haskerwaul.Transformation.Dinatural
 import Haskerwaul.Transformation.Natural
 
--- | [nLab](https://ncatlab.org/nlab/show/braided+monoidal+category)
+-- |
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/braided+monoidal+category)
+--
 class MonoidalCategory c t => BraidedMonoidalCategory c t where
   braid :: (Ob c a, Ob c b) => Isomorphism c (t a b) (t b a)
 
@@ -34,7 +38,7 @@ instance BraidedMonoidalCategory (->) Either where
         Left a -> Right a
         Right b -> Left b)
 
-instance (d ~ (->), BraidedMonoidalCategory d dt) =>
+instance (d ~ (->), dt ~ (,), BraidedMonoidalCategory d dt) =>
          BraidedMonoidalCategory (NaturalTransformation c d) (FTensor dt) where
   braid =
     Iso

@@ -6,9 +6,10 @@ module Haskerwaul.Magma where
 import qualified Control.Category as Base
 import qualified Data.Bifunctor as Base
 import           Data.Bool (Bool)
-import           Data.Constraint ((:-)(..), Dict(..))
+import           Data.Constraint ((:-)(..), Dict(..), top)
 import           Data.Either (Either(..))
 import           Data.Int (Int, Int8, Int16, Int32, Int64)
+import           Data.Kind (Constraint)
 import qualified Data.Monoid as Base
 import qualified Data.Ord as Base
 import qualified Data.Semigroup as Base
@@ -17,6 +18,7 @@ import           Data.Word (Word, Word8, Word16, Word32, Word64)
 import           Numeric.Natural (Natural)
 import           Prelude (Integer)
 
+import Haskerwaul.Constraint
 import Haskerwaul.Lattice.Components
 import Haskerwaul.Object
 
@@ -130,3 +132,6 @@ instance Magma (->) (,) (Join Word64) where
 
 instance Magma (->) (,) (Meet Word64) where
   op = Meet Base.. Base.uncurry Base.min Base.. Base.bimap getMeet getMeet
+
+instance Magma (:-) Combine (() :: Constraint) where
+  op = top

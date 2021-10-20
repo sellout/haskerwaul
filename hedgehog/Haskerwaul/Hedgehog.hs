@@ -32,6 +32,7 @@ import Data.Typeable (Typeable, typeRep)
 import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Laws
 import Haskerwaul.Category.Semigroupal.Laws as Semigroupal
+import Haskerwaul.Duoid.Laws
 import Haskerwaul.Hedgehog.Topos
 import Haskerwaul.Isomorphism.Laws
 import Haskerwaul.Law
@@ -136,9 +137,58 @@ commutativeMonoid_laws label law trans transA transL transR display dispA dispL 
   commutativeMagma_laws label (commutativeMagma law) trans display genX
   <> monoid_laws label (CommutativeMonoid.monoid law) transA transL transR dispA dispL dispR genX0 genX1 genX2
 
+duoid_laws
+  :: (Typeable c, Eq y, Show y)
+  => PropertyName
+  -> DuoidLaws c di st a
+  -> (di (di a a) a `c` a -> x `HH` y)
+  -> (di (Unit c di) a `c` a -> x1 `HH` y)
+  -> (di a (Unit c di) `c` a -> x2 `HH` y)
+  -> (st (st a a) a `c` a -> x' `HH` y)
+  -> (st (Unit c st) a `c` a -> x1' `HH` y)
+  -> (st a (Unit c st) `c` a -> x2' `HH` y)
+  -> (di (st a a) (st a a) `c` a -> x'' `HH` y)
+  -> (Unit c di `c` a -> x1'' `HH` y)
+  -> (di (Unit c st) (Unit c st) `c` a -> x2'' `HH` y)
+  -> (x -> String)
+  -> (x1 -> String)
+  -> (x2 -> String)
+  -> (x' -> String)
+  -> (x1' -> String)
+  -> (x2' -> String)
+  -> (x'' -> String)
+  -> (x1'' -> String)
+  -> (x2'' -> String)
+  -> Gen x
+  -> Gen x1
+  -> Gen x2
+  -> Gen x'
+  -> Gen x1'
+  -> Gen x2'
+  -> Gen x''
+  -> Gen x1''
+  -> Gen x2''
+  -> [(PropertyName, Property)]
+duoid_laws
+  label law
+  trans transL transR trans' transL' transR' trans'' transD transS
+  display dispL dispR display' dispL' dispR' display'' dispD dispS
+  genX genX1 genX2 genX' genX1' genX2' genX'' genX1'' genX2'' =
+  monoid_laws label (diamond law) trans transL transR display dispL dispR genX genX1 genX2
+  <> monoid_laws label (star law) trans' transL' transR' display' dispL' dispR' genX' genX1' genX2'
+  <> [ ( "interchange (" <> label <> ")"
+       , property (runHH (checkLaw trans'' (interchange' law)) =<< forAllWith display'' $ genX''))
+     , ( "diamond unit (" <> label <> ")"
+       , property (runHH (checkLaw transD (diamondUnit law)) =<< forAllWith dispD $ genX1''))
+     , ( "star unit (" <> label <> ")"
+       , property (runHH (checkLaw transS (starUnit law)) =<< forAllWith dispS $ genX2''))
+     , ( "unit (" <> label <> ")"
+       , property (runHH (checkLaw transD (unit' law)) =<< forAllWith dispD $ genX1''))
+     ]
+
 -- |
 --  __TODO__: Missing a lot of intermediate types here.
-rig_laws 
+rig_laws
   :: forall c t a x x0 x1 x2 y
    . (c ~ (->), BraidedMonoidalCategory c t, Typeable c, Eq y, Show y)
   => PropertyName

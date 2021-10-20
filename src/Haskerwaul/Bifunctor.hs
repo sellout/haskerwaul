@@ -89,3 +89,62 @@ instance Bifunctor
 
 instance Bifunctor c1 c2 (->) (BConst a) where
   bimap _ _ (BConst a) = BConst a
+
+-- make these not orphans
+
+instance (c ~ (->), Bifunctor c c c t, Magma c t a) =>
+         Magma c t (Const a b) where
+  op = Const . op . bimap getConst getConst
+
+instance (c ~ (->), Bifunctor c c c t, Semigroup c t a) =>
+         Semigroup c t (Const a b)
+
+instance (c ~ (->), Bifunctor c c c t, UnitalMagma c t a) =>
+         UnitalMagma c t (Const a b) where
+  unit p = Const . unit p
+
+instance (d ~ (->),
+          MonoidalCategory' d dt, Bifunctor d d d dt,
+          u ~ Unit d dt, Magma d dt u) =>
+         Magma (NaturalTransformation c d) (FTensor dt) (Const u) where
+  op = NT (op . lowerFTensor)
+
+instance (d ~ (->),
+          MonoidalCategory' d dt, Bifunctor d d d dt,
+          u ~ Unit d dt, Semigroup d dt u) =>
+         Semigroup (NaturalTransformation c d) (FTensor dt) (Const u)
+
+instance (d ~ (->),
+          MonoidalCategory' d dt,
+          Bifunctor d d d dt,
+          u ~ Unit d dt, Magma d dt u) =>
+         UnitalMagma (NaturalTransformation c d) (FTensor dt) (Const u) where
+  unit Proxy = NT id
+
+instance (c ~ (->), Bifunctor c c c t, Magma c t a) =>
+         Magma c t (BConst a b d) where
+  op = BConst . op . bimap getBConst getBConst
+
+instance (c ~ (->), Bifunctor c c c t, Semigroup c t a) =>
+         Semigroup c t (BConst a b d)
+
+instance (c ~ (->), Bifunctor c c c t, UnitalMagma c t a) =>
+         UnitalMagma c t (BConst a b d) where
+  unit p = BConst . unit p
+
+instance (d ~ (->),
+          MonoidalCategory' d dt, Bifunctor d d d dt,
+          u ~ Unit d dt, Magma d dt u) =>
+         Magma (DinaturalTransformation d) (BTensor dt) (BConst u) where
+  op = DT (op . lowerBTensor)
+
+instance (d ~ (->),
+          MonoidalCategory' d dt, Bifunctor d d d dt,
+          u ~ Unit d dt, Semigroup d dt u) =>
+         Semigroup (DinaturalTransformation d) (BTensor dt) (BConst u) where
+
+instance (d ~ (->),
+          MonoidalCategory' d dt, Bifunctor d d d dt,
+          u ~ Unit d dt, Magma d dt u) =>
+         UnitalMagma (DinaturalTransformation d) (BTensor dt) (BConst u) where
+  unit Proxy = DT id

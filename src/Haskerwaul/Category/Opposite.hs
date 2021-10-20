@@ -161,6 +161,17 @@ instance CartesianMonoidalCategory (Opposite (->)) where
                  Left x -> x
                  Right x -> x)
 
+instance {-# overlappable #-} (MonoidalCategory c t, u ~ Unit c t) =>
+                              Magma (Opposite c) t u where
+  op = Opposite (from rightIdentity)
+
+instance {-# overlappable #-} (MonoidalCategory c t, u ~ Unit c t) =>
+                              Semigroup (Opposite c) t u
+
+instance {-# overlappable #-} (MonoidalCategory c t, u ~ Unit c t) =>
+                              UnitalMagma (Opposite c) t u where
+  unit Proxy = Opposite id
+
 instance BraidedMonoidalCategory c t =>
          BraidedMonoidalCategory (Opposite c) t where
   braid = Iso (Opposite (to braid)) (Opposite (from braid))

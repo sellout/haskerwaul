@@ -9,9 +9,10 @@ module Haskerwaul.Magma.Unital
   ) where
 
 import           Data.Bool (Bool (..))
-import           Data.Constraint ((:-)(..), Dict(..))
+import           Data.Constraint ((:-)(..), Dict(..), refl)
 import           Data.Either (Either)
 import           Data.Int (Int, Int8, Int16, Int32, Int64)
+import           Data.Kind (Constraint)
 import qualified Data.Monoid as Base
 import           Data.Proxy (Proxy(..))
 import qualified Data.Void as Base
@@ -20,6 +21,7 @@ import           Numeric.Natural (Natural)
 import           Prelude (Bounded (..), Integer)
 
 import Haskerwaul.Category.Monoidal'
+import Haskerwaul.Constraint
 import Haskerwaul.Lattice.Components
 import Haskerwaul.Magma
 import Haskerwaul.Object
@@ -207,3 +209,6 @@ instance UnitalMagma (->) (,) (Meet           Word64) where
 
 instance UnitalMagma (->) (,) (Multiplicative Word64) where
   unit Proxy () = Multiply 1
+
+instance UnitalMagma (:-) Combine (() :: Constraint) where
+  unit Proxy = refl

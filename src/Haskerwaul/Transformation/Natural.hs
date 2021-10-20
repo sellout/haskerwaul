@@ -5,7 +5,7 @@ module Haskerwaul.Transformation.Natural where
 import qualified Control.Applicative as Base
 import qualified Control.Category as Base
 import qualified Control.Monad as Base
-import           Data.Constraint ((\\), (:-))
+import           Data.Constraint ((\\), (:-)(..), Dict(..), refl)
 import           Data.Constraint.Deferrable ((:~:)(..))
 import           Data.Functor.Compose (Compose(..))
 import           Data.Functor.Const (Const (..))
@@ -25,7 +25,7 @@ newtype NaturalTransformation c d f g =
   NT { runNT :: forall a. Ob c a => f a `d` g a }
 
 -- |
--- * references
+-- = references
 --
 -- - [nLab](https://ncatlab.org/nlab/show/whiskering)
 whisker
@@ -44,7 +44,7 @@ whisker Proxy (NT fn) =
         \\ inF @(Ob c) @(Ob d) @g @a)
 
 -- |
--- * references
+-- = references
 --
 -- - [nLab](https://ncatlab.org/nlab/show/whiskering)
 whisker'
@@ -130,3 +130,11 @@ instance {-# overlappable #-} Base.Alternative f =>
 instance {-# overlappable #-} Base.Alternative f =>
                               UnitalMagma (NaturalTransformation (->) (->)) (FTensor (,)) f where
   unit Proxy = NT (\(Const ()) -> Base.empty)
+
+instance Magma (NaturalTransformation c (:-)) CFProd All where
+  op = NT (Sub Dict)
+
+instance Semigroup (NaturalTransformation c (:-)) CFProd All
+
+instance UnitalMagma (NaturalTransformation c (:-)) CFProd All where
+  unit Proxy = NT refl

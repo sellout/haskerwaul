@@ -1,4 +1,5 @@
 {-# language TypeApplications
+           , UndecidableInstances
            , UndecidableSuperClasses #-}
 
 module Haskerwaul.Category.Duoidal.Normal
@@ -12,7 +13,9 @@ import           Data.Functor.Compose (Compose)
 import           Data.Functor.Identity (Identity(..))
 import           Data.Proxy (Proxy(..))
 
+import Haskerwaul.Bimonoid
 import Haskerwaul.Category.Duoidal
+import Haskerwaul.Category.Monoidal.Braided
 import Haskerwaul.Day
 import Haskerwaul.Endofunctor
 import Haskerwaul.Isomorphism
@@ -32,6 +35,12 @@ unitIso di st =
   \\ inT @(Ob c) @di @(Unit c di) @(Unit c st)
   \\ inT @(Ob c) @st @(Unit c st) @(Unit c di)
   \\ inT @(Ob c) @st @(Unit c di) @(Unit c st)
+
+instance
+  {-# overlappable #-}
+  (BraidedMonoidalCategory c t, Bimonoid c t (Unit c t)) =>
+  NormalDuoidalCategory c t t where
+  counit Proxy Proxy = id
 
 -- | `Endofunctor` categories are normal duoidal with respect to `Day` and
 --   `Compose`.
