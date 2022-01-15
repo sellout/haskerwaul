@@ -9,6 +9,7 @@ module Haskerwaul.Comonad
 import Haskerwaul.Semigroupoid
 import Haskerwaul.Category.Opposite
 import Haskerwaul.Monad
+import Haskerwaul.Object
 
 -- | [nLab](https://ncatlab.org/nlab/show/comonad)
 type Comonad' c ob = Monad' (Op c) ob
@@ -17,9 +18,9 @@ type Comonad' c ob = Monad' (Op c) ob
 --
 --  __NB__: Instances for this are automatically coalesced.
 class Monad (Opposite c) w => Comonad c w where
-  copure :: w a `c` a
+  copure :: Ob c a => w a `c` a
   copure = opposite pure
-  duplicate :: w a `c` w (w a)
+  duplicate :: Ob c a => w a `c` w (w a)
   duplicate = opposite flatten
 
 instance Monad (Opposite c) a => Comonad c a

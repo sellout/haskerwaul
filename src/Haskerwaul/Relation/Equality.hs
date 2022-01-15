@@ -10,6 +10,7 @@ module Haskerwaul.Relation.Equality
 
 import Haskerwaul.Order.Partial
 import Haskerwaul.Relation.Equivalence
+import Haskerwaul.Topos.Elementary
 
 -- | [nLab](https://ncatlab.org/nlab/show/equality#in_set_theory)
 --
@@ -20,3 +21,8 @@ eq :: EqualityRelation c a => BinaryRelation c a a
 eq = equiv
 
 instance (EquivalenceRelation c a, PartialOrder c a) => EqualityRelation c a
+
+-- * operators
+
+(==) :: (ElementaryTopos c, EqualityRelation c a) => a `c` Exp c a (Class c)
+(==) = curry eq

@@ -2,8 +2,6 @@
 
 module Haskerwaul.Category.Monoidal.Cocartesian
   ( module Haskerwaul.Category.Monoidal.Cocartesian
-  -- * extended modules
-  , module Haskerwaul.Category.Monoidal.Cartesian
   ) where
 
 import Haskerwaul.Category.Monoidal.Cartesian
@@ -19,11 +17,23 @@ import Haskerwaul.Object
 -- = references
 --
 -- - [nLab](https://ncatlab.org/nlab/show/cocartesian+monoidal+category)
-type CocartesianMonoidalCategory c = CartesianMonoidalCategory (Opposite c)
-
-type Coprod c = Prod (Opposite c)
+type CocartesianMonoidalCategory c = (CartesianMonoidalCategory (Opposite c))
 
 -- |
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/coproduct)
+type Coprod c = Prod (Opposite c)
+
+inl :: (CocartesianMonoidalCategory c, Ob c a, Ob c b) => a `c` Coprod c a b
+inl = opposite exl
+
+inr :: (CocartesianMonoidalCategory c, Ob c a, Ob c b) => b `c` Coprod c a b
+inr = opposite exr
+
+-- |
+--
 -- = references
 --
 -- - [nLab](https://ncatlab.org/nlab/show/codiagonal)

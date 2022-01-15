@@ -8,12 +8,13 @@ module Haskerwaul.Order.Total
 
 import           Data.Bool (Bool)
 import           Data.Int (Int, Int8, Int16, Int32, Int64)
-import           Data.Proxy (Proxy(..))
+import           Data.Ratio (Ratio)
+import           Data.Void (Void)
 import           Data.Word (Word, Word8, Word16, Word32, Word64)
+import qualified GHC.Real as Base
 import           Numeric.Natural (Natural)
 import           Prelude (Integer)
 
-import Haskerwaul.Algebra.Boolean
 import Haskerwaul.Isomorphism
 import Haskerwaul.Order.Canonical
 import Haskerwaul.Order.Prefix
@@ -28,13 +29,9 @@ class PrefixOrder c a => TotalOrder c a
 ge :: (ElementaryTopos c, TotalOrder c a) => BinaryRelation c a a
 ge = le . to braid
 
-gt :: forall c a. (ElementaryTopos c, BooleanAlgebra c (Prod c) (Class c), TotalOrder c a)
-   => BinaryRelation c a a
-gt = complement (Proxy :: Proxy (Prod c)) . le
+instance TotalOrder (->) ()
 
-lt :: (ElementaryTopos c, BooleanAlgebra c (Prod c) (Class c), TotalOrder c a)
-   => BinaryRelation c a a
-lt = gt . to braid
+instance TotalOrder (->) Void
 
 instance TotalOrder (->) (Canonical Bool)
 
@@ -61,3 +58,10 @@ instance TotalOrder (->) (Canonical Word16)
 instance TotalOrder (->) (Canonical Word32)
 
 instance TotalOrder (->) (Canonical Word64)
+
+instance Base.Integral a => TotalOrder (->) (Canonical (Ratio a))
+
+-- * operators
+
+(>=) :: (ElementaryTopos c, TotalOrder c a) => a `c` Exp c a (Class c)
+(>=) = curry ge

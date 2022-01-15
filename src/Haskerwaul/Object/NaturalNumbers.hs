@@ -9,9 +9,10 @@ import Haskerwaul.Object.Terminal
 class NaturalNumbersObject c where
   type NNO c
   z :: TerminalObject c `c` NNO c
-  s :: NNO c `c` NNO c
+  -- | https://ncatlab.org/nlab/show/successor
+  successor :: NNO c `c` NNO c
 
 instance NaturalNumbersObject (->) where
   type NNO (->) = Natural
   z () = 0
-  s = succ
+  successor = succ

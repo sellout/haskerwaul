@@ -10,7 +10,10 @@ module Haskerwaul.Order.Partial
 
 import           Data.Bool (Bool)
 import           Data.Int (Int, Int8, Int16, Int32, Int64)
+import           Data.Ratio (Ratio)
+import           Data.Void (Void)
 import           Data.Word (Word, Word8, Word16, Word32, Word64)
+import qualified GHC.Real as Base
 import           Numeric.Natural (Natural)
 import           Prelude (Double, Float, Integer)
 
@@ -35,6 +38,10 @@ class Preorder c a => PartialOrder c a
 defaultEquivalence :: forall c a. (c ~ (->), ElementaryTopos c, PartialOrder c a)
                    => BinaryRelation c a a
 defaultEquivalence = meet . bimap (le @c) (le @c . to braid) . diagonal
+
+instance PartialOrder (->) ()
+
+instance PartialOrder (->) Void
 
 instance PartialOrder (->) (Canonical Bool)
 
@@ -65,6 +72,8 @@ instance PartialOrder (->) (Canonical Word64)
 instance PartialOrder (->) (Canonical Float)
 
 instance PartialOrder (->) (Canonical Double)
+
+instance Base.Integral a => PartialOrder (->) (Canonical (Ratio a))
 
 instance {-# incoherent #-}
          (c ~ (->), ElementaryTopos c, PartialOrder c a, Ob c (Additive a)) =>

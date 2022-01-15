@@ -8,9 +8,11 @@ module Haskerwaul.Quasigroup.Left
 
 import           Prelude (Integer)
 import qualified Prelude as Base (Num(..))
-import           Data.Either (Either, either)
+import           Data.Either (Either)
+import qualified Data.Either as Base
 import           Data.Int (Int)
-import           Data.Void (Void, absurd)
+import           Data.Void (Void)
+import qualified Data.Void as Base
 
 import Haskerwaul.Magma
 import Haskerwaul.Semiring.Components
@@ -24,7 +26,7 @@ class Magma c t a => LeftQuasigroup c t a where
   leftQuotient :: t a a `c` a
 
 instance LeftQuasigroup (->) Either Void where
-  leftQuotient = either absurd absurd
+  leftQuotient = Base.either Base.absurd Base.absurd
 
 instance LeftQuasigroup (->) (,) () where
   leftQuotient ((), ()) = ()

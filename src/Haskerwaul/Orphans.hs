@@ -10,13 +10,13 @@ import           Data.Functor.Compose (Compose(..))
 import           Data.Functor.Identity (Identity(..))
 import           Data.Proxy (Proxy(..))
 
-import Haskerwaul.Adjunction as Adj
 import Haskerwaul.Category.Monoidal.Cartesian
 import Haskerwaul.Category.Opposite
 import Haskerwaul.Functor
+import Haskerwaul.Functor.Adjoint as Adj
 import Haskerwaul.Transformation.Natural
 
-instance (c ~ (->), d ~ (->), Adjunction c d l r) =>
+instance (c ~ (->), d ~ (->), AdjointFunctor c d l r) =>
          Magma (NaturalTransformation d c) Compose (Compose r l) where
   op =
     NT (Compose
@@ -25,7 +25,7 @@ instance (c ~ (->), d ~ (->), Adjunction c d l r) =>
         . map @_ @d getCompose
         . getCompose)
 
-instance (c ~ (->), d ~ (->), Adjunction c d l r) =>
+instance (c ~ (->), d ~ (->), AdjointFunctor c d l r) =>
          Magma (Opposite (NaturalTransformation d c)) Compose (Compose l r) where
   op =
     Opposite (NT (Compose
@@ -34,11 +34,11 @@ instance (c ~ (->), d ~ (->), Adjunction c d l r) =>
                   . map @c (eta (Proxy :: Proxy d))
                   . getCompose))
 
--- instance {-# overlapping #-} (c ~ (->), d ~ (->), Adjunction c d l r) =>
+-- instance {-# overlapping #-} (c ~ (->), d ~ (->), AdjointFunctor c d l r) =>
 --          UnitalMagma (NaturalTransformation d c) Compose (Compose r l) where
 --   unit Proxy = NT (Compose . eta (Proxy :: Proxy d) . runIdentity)
 
-instance (c ~ (->), d ~ (->), Adjunction c d l r) =>
+instance (c ~ (->), d ~ (->), AdjointFunctor c d l r) =>
          UnitalMagma (Opposite (NaturalTransformation c d)) Compose (Compose l r) where
   unit Proxy = Opposite (NT (Identity . Adj.epsilon (Proxy :: Proxy c) . getCompose))
 

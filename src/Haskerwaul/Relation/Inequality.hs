@@ -1,55 +1,80 @@
+{-# language UndecidableInstances #-}
 {-# language UndecidableSuperClasses #-}
 
-module Haskerwaul.Relation.Inequality
-  ( module Haskerwaul.Relation.Inequality
-  -- * extended modules
-  , module Haskerwaul.Relation.Homogeneous
-  ) where
+module Haskerwaul.Relation.Inequality where
 
 import           Data.Bool (Bool)
 import           Data.Int (Int, Int8, Int16, Int32, Int64)
+import           Data.Void (Void)
 import           Data.Word (Word, Word8, Word16, Word32, Word64)
 import           Numeric.Natural (Natural)
 import           Prelude (Double, Float, Integer)
+import qualified Prelude as Base
 
-import Haskerwaul.Relation.Binary
+import Haskerwaul.Object
 import Haskerwaul.Relation.Homogeneous
+import Haskerwaul.Topos.Elementary
 
 -- | [nLab](https://ncatlab.org/nlab/show/inequality+relation)
 --
 -- = laws
 --   [irreflexive]: @x `/=` x == false@
 --   [symmetric]: @x `/=` y ==> y `/=` x@
-class HomogeneousRelation c a => InequalityRelation c a
+class Ob c a => InequalityRelation c a where
+  ne :: HomogeneousRelation c a
 
-instance InequalityRelation (->) ()
+instance InequalityRelation (->) () where
+  ne ((), ()) = Base.False
 
-instance InequalityRelation (->) Bool
+instance InequalityRelation (->) Void where
+  ne = uncurry $ \case
 
-instance InequalityRelation (->) Natural
+instance InequalityRelation (->) Bool where
+  ne = uncurry (Base./=)
 
-instance InequalityRelation (->) Int
+instance InequalityRelation (->) Natural where
+  ne = uncurry (Base./=)
 
-instance InequalityRelation (->) Int8
+instance InequalityRelation (->) Int where
+  ne = uncurry (Base./=)
 
-instance InequalityRelation (->) Int16
+instance InequalityRelation (->) Int8 where
+  ne = uncurry (Base./=)
 
-instance InequalityRelation (->) Int32
+instance InequalityRelation (->) Int16 where
+  ne = uncurry (Base./=)
 
-instance InequalityRelation (->) Int64
+instance InequalityRelation (->) Int32 where
+  ne = uncurry (Base./=)
 
-instance InequalityRelation (->) Integer
+instance InequalityRelation (->) Int64 where
+  ne = uncurry (Base./=)
 
-instance InequalityRelation (->) Word
+instance InequalityRelation (->) Integer where
+  ne = uncurry (Base./=)
 
-instance InequalityRelation (->) Word8
+instance InequalityRelation (->) Word where
+  ne = uncurry (Base./=)
 
-instance InequalityRelation (->) Word16
+instance InequalityRelation (->) Word8 where
+  ne = uncurry (Base./=)
 
-instance InequalityRelation (->) Word32
+instance InequalityRelation (->) Word16 where
+  ne = uncurry (Base./=)
 
-instance InequalityRelation (->) Word64
+instance InequalityRelation (->) Word32 where
+  ne = uncurry (Base./=)
 
-instance InequalityRelation (->) Float
+instance InequalityRelation (->) Word64 where
+  ne = uncurry (Base./=)
 
-instance InequalityRelation (->) Double
+instance InequalityRelation (->) Float where
+  ne = uncurry (Base./=)
+
+instance InequalityRelation (->) Double where
+  ne = uncurry (Base./=)
+
+-- * operators
+
+(/=) :: (ElementaryTopos c, InequalityRelation c a) => a `c` Exp c a (Class c)
+(/=) = curry ne

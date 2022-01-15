@@ -14,6 +14,7 @@ import           Data.Proxy (Proxy (..))
 
 import Haskerwaul.Endofunctor
 import Haskerwaul.Monoid
+import Haskerwaul.Object
 import Haskerwaul.Semigroupoid
 import Haskerwaul.Transformation.Natural
 
@@ -28,8 +29,8 @@ instance (Monoid (NaturalTransformation c c) Compose m, Endofunctor c m) =>
 --   the instances of the above class given for free, plus the potential to
 --   define more general instances.
 class Endofunctor c m => Monad c m where
-  pure :: a `c` m a
-  flatten :: m (m a) `c` m a
+  pure :: Ob c a => a `c` m a
+  flatten :: Ob c a => m (m a) `c` m a
 
 instance {-# OVERLAPPABLE #-} Monad' (->) m => Monad (->) m where
   pure = runNT @_ @(->) (unit (Proxy :: Proxy Compose)) . Identity

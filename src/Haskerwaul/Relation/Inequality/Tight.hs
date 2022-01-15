@@ -12,7 +12,6 @@ import           Data.Word (Word, Word8, Word16, Word32, Word64)
 import           Numeric.Natural (Natural)
 import           Prelude (Double, Float, Integer)
 
-import Haskerwaul.Relation.Binary
 import Haskerwaul.Relation.Inequality
 
 -- | [nLab](https://ncatlab.org/nlab/show/inequality+relation)

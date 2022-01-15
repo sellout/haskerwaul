@@ -15,8 +15,8 @@ import Haskerwaul.Topos.Elementary
 newtype Negate a = Negate { negation :: a }
 
 instance (c ~ (->), ElementaryTopos c, ApartnessRelation c a, Ob c (Negate a)) =>
-         HomogeneousRelation c (Negate a) where
-  rel = rel . bimap negation negation
+         HomogeneousRelation' c (Negate a) where
+  rel = ne . bimap negation negation
 
 -- | [nLab](https://ncatlab.org/nlab/show/apartness+relation#related_notions)
 instance (c ~ (->), ElementaryTopos c, ApartnessRelation c a) => Preorder c (Negate a)

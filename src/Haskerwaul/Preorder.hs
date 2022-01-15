@@ -9,7 +9,10 @@ module Haskerwaul.Preorder
 
 import           Data.Bool (Bool)
 import           Data.Int (Int, Int8, Int16, Int32, Int64)
+import           Data.Ratio (Ratio)
+import           Data.Void (Void)
 import           Data.Word (Word, Word8, Word16, Word32, Word64)
+import qualified GHC.Real as Base
 import           Numeric.Natural (Natural)
 import           Prelude (Double, Float, Integer)
 
@@ -29,10 +32,14 @@ import Haskerwaul.Topos.Elementary
 -- = laws
 --   [`Haskerwaul.Law.Reflexivity.reflexivity`]: @`le` (x, x) == `true` ()@
 --   [transitivity]: @`le` (x, y) && `le (y, z)` ==> `le` (x, z)@
-class HomogeneousRelation c a => Preorder c a
+class HomogeneousRelation' c a => Preorder c a
 
 le :: Preorder c a => BinaryRelation c a a
 le = rel
+
+instance Preorder (->) ()
+
+instance Preorder (->) Void
 
 instance Preorder (->) (Canonical Bool)
 
@@ -64,6 +71,8 @@ instance Preorder (->) (Canonical Float)
 
 instance Preorder (->) (Canonical Double)
 
+instance Base.Integral a => Preorder (->) (Canonical (Ratio a))
+
 instance {-# incoherent #-}
          (c ~ (->), ElementaryTopos c, Preorder c a, Ob c (Additive a)) =>
          Preorder c (Additive a)
@@ -71,3 +80,8 @@ instance {-# incoherent #-}
 instance {-# incoherent #-}
          (c ~ (->), ElementaryTopos c, Preorder c a, Ob c (Multiplicative a)) =>
          Preorder c (Multiplicative a)
+
+-- * Operators
+
+(<=) :: (ElementaryTopos c, Preorder c a) => a `c` Exp c a (Class c)
+(<=) = curry le

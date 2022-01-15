@@ -23,7 +23,6 @@ source-repository head
 
 library
   exposed-modules:    Haskerwaul
-                    , Haskerwaul.Adjunction
                     , Haskerwaul.Algebra.Boolean
                     , Haskerwaul.Algebra.Heyting
                     , Haskerwaul.Algebra.Heyting.Complete
@@ -32,12 +31,15 @@ library
                     , Haskerwaul.Bimonoid
                     , Haskerwaul.Category
                     , Haskerwaul.Category.Bicartesian
+                    , Haskerwaul.Category.Boolean
                     , Haskerwaul.Category.Closed
                     , Haskerwaul.Category.Closed.Bicartesian
                     , Haskerwaul.Category.Closed.Cartesian
                     , Haskerwaul.Category.Closed.Compact
                     , Haskerwaul.Category.Closed.Symmetric
+                    , Haskerwaul.Category.Coherent
                     , Haskerwaul.Category.CoKleisli
+                    , Haskerwaul.Category.Complete.Finitely
                     , Haskerwaul.Category.Concrete
                     , Haskerwaul.Category.Distributive
                     , Haskerwaul.Category.Distributive.Linearly
@@ -45,9 +47,11 @@ library
                     , Haskerwaul.Category.Duoidal.Normal
                     , Haskerwaul.Category.Empty
                     , Haskerwaul.Category.Functor
+                    , Haskerwaul.Category.Heyting
                     , Haskerwaul.Category.Hypergraph
                     , Haskerwaul.Category.Kleisli
                     , Haskerwaul.Category.Laws
+                    , Haskerwaul.Category.LocallyCartesian
                     , Haskerwaul.Category.Monoidal
                     , Haskerwaul.Category.Monoidal.Balanced
                     , Haskerwaul.Category.Monoidal.Braided
@@ -67,6 +71,7 @@ library
                     , Haskerwaul.Category.Over
                     , Haskerwaul.Category.Pointed
                     , Haskerwaul.Category.Product
+                    , Haskerwaul.Category.Regular
                     , Haskerwaul.Category.Ribbon
                     , Haskerwaul.Category.Rig
                     , Haskerwaul.Category.Rig.ColaxDistributive
@@ -74,12 +79,14 @@ library
                     , Haskerwaul.Category.Rig.ColaxDistributive.Right
                     , Haskerwaul.Category.Semigroupal
                     , Haskerwaul.Category.Semigroupal.Laws
+                    , Haskerwaul.Category.Small.Locally
                     , Haskerwaul.Category.Terminal
                     , Haskerwaul.Category.Under
                     , Haskerwaul.Cocone
-                    , Haskerwaul.Cone
                     , Haskerwaul.Comonad
                     , Haskerwaul.Comonoid
+                    , Haskerwaul.Cone
+                    , Haskerwaul.Congruence
                     , Haskerwaul.Constraint
                     , Haskerwaul.Cospan
                     , Haskerwaul.Day
@@ -97,10 +104,12 @@ library
                     , Haskerwaul.Field.Totalized.One
                     , Haskerwaul.Field.Totalized.Zero
                     , Haskerwaul.Functor
+                    , Haskerwaul.Functor.Adjoint
                     , Haskerwaul.Functor.Closed.Cartesian
                     , Haskerwaul.Functor.Closed.Lax
                     , Haskerwaul.Functor.Closed.Strong
                     , Haskerwaul.Functor.Contravariant
+                    , Haskerwaul.Functor.Diagonal
                     , Haskerwaul.Functor.Faithful
                     , Haskerwaul.Functor.Faithful.Full
                     , Haskerwaul.Functor.Full
@@ -111,6 +120,7 @@ library
                     , Haskerwaul.Functor.Monoidal.Oplax
                     , Haskerwaul.Functor.Monoidal.Strong
                     , Haskerwaul.Functor.Strong
+                    , Haskerwaul.GaloisConnection
                     , Haskerwaul.Group
                     , Haskerwaul.Group.Abelian
                     , Haskerwaul.Groupoid
@@ -137,6 +147,8 @@ library
                     , Haskerwaul.Law.Commutativity
                     , Haskerwaul.Law.Distributive.Left
                     , Haskerwaul.Law.Distributive.Right
+                    , Haskerwaul.Law.Distributive.Self.Left
+                    , Haskerwaul.Law.Distributive.Self.Right
                     , Haskerwaul.Law.Flexibility
                     , Haskerwaul.Law.Homomorphism.Identity
                     , Haskerwaul.Law.Homomorphism.Magma
@@ -184,10 +196,12 @@ library
                     , Haskerwaul.Object.Exponential
                     , Haskerwaul.Object.Free
                     , Haskerwaul.Object.Initial
+                    , Haskerwaul.Object.Integers
                     , Haskerwaul.Object.Invertible
                     , Haskerwaul.Object.NaturalNumbers
                     , Haskerwaul.Object.Terminal
                     , Haskerwaul.Order.Canonical
+                    , Haskerwaul.Order.Linear
                     , Haskerwaul.Order.Partial
                     , Haskerwaul.Order.Prefix
                     , Haskerwaul.Order.Total
@@ -197,9 +211,13 @@ library
                     , Haskerwaul.Profunctor
                     , Haskerwaul.Pullback
                     , Haskerwaul.Pushout
+                    , Haskerwaul.Quandle
                     , Haskerwaul.Quasigroup
                     , Haskerwaul.Quasigroup.Left
                     , Haskerwaul.Quasigroup.Right
+                    , Haskerwaul.Quasiorder
+                    , Haskerwaul.Rack
+                    -- , Haskerwaul.RebindableSyntax
                     , Haskerwaul.Relation.Apartness
                     , Haskerwaul.Relation.Apartness.Tight
                     , Haskerwaul.Relation.Binary
@@ -245,6 +263,9 @@ library
                     , Haskerwaul.Semiring.Pre
                     , Haskerwaul.Semiring.Pre.Near
                     , Haskerwaul.Semiring.Tropical
+                    , Haskerwaul.Shelf
+                    , Haskerwaul.Shelf.Left
+                    , Haskerwaul.Shelf.Right
                     , Haskerwaul.Skewfield
                     , Haskerwaul.Span
                     , Haskerwaul.Subcategory

@@ -94,7 +94,7 @@ instance UnitalMagma (->) t a => UnitalMagma HH t a where
 
 -- | The relation hierarchy in Haskerwaul is odd. But, for now, all we care
 --   about in the `HH` topos is equivalence, so we push everything through that.
-instance (Eq a, Show a) => HomogeneousRelation HH a where
+instance (Eq a, Show a) => HomogeneousRelation' HH a where
   rel = HH (uncurry (===))
 
 instance (Eq a, Show a) => Preorder HH a

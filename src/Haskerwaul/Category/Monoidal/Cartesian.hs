@@ -19,18 +19,38 @@ import Haskerwaul.Object.Terminal
 import Haskerwaul.Transformation.Dinatural
 import Haskerwaul.Transformation.Natural
 
--- | [nLab](https://ncatlab.org/nlab/show/cartesian+monoidal+category)
+-- |
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/cartesian+monoidal+category)
 class ( SymmetricMonoidalCategory c (Prod c)
       , HasTerminalObject c
       , Unit c (Prod c) ~ TerminalObject c) =>
       CartesianMonoidalCategory c where
-  -- | [nLab](https://ncatlab.org/nlab/show/cartesian+product)
+  -- |
+  --
+  -- = references
+  --
+  -- - [nLab](https://ncatlab.org/nlab/show/cartesian+product)
   type Prod c :: ok -> ok -> ok
-  -- | [nLab](https://ncatlab.org/nlab/show/projection)
+  -- |
+  --
+  -- = references
+  --
+  -- - [nLab](https://ncatlab.org/nlab/show/projection)
   exl :: (Ob c a, Ob c b) => Prod c a b `c` a
-  -- | [nLab](https://ncatlab.org/nlab/show/projection)
+  -- |
+  --
+  -- = references
+  --
+  -- - [nLab](https://ncatlab.org/nlab/show/projection)
   exr :: (Ob c a, Ob c b) => Prod c a b `c` b
-  -- | [nLab](https://ncatlab.org/nlab/show/diagonal+morphism)
+  -- |
+  --
+  -- = references
+  --
+  -- - [nLab](https://ncatlab.org/nlab/show/diagonal+morphism)
   diagonal :: Ob c a => a `c` Prod c a a
 
 instance CartesianMonoidalCategory (->) where

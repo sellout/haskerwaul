@@ -8,21 +8,26 @@ module Haskerwaul.Order.Prefix
 
 import           Data.Bool (Bool)
 import           Data.Int (Int, Int8, Int16, Int32, Int64)
+import           Data.Ratio (Ratio)
+import           Data.Void (Void)
 import           Data.Word (Word, Word8, Word16, Word32, Word64)
+import qualified GHC.Real as Base
 import           Numeric.Natural (Natural)
 import           Prelude (Double, Float, Integer)
 
-import Haskerwaul.Negation
 import Haskerwaul.Order.Canonical
 import Haskerwaul.Order.Partial
 
 -- | [nLab](https://ncatlab.org/nlab/show/prefix+order)
 --
 -- = laws
---   [downward totality]: @`le` (x, z) && `le` (y, z) ==> `le` (x, y) || `le` (y, x)@
+--
+-- - [downward totality]: @`le` (x, z) && `le` (y, z) ==> `le` (x, y) || `le` (y, x)@
 class PartialOrder c a => PrefixOrder c a
 
-instance PrefixOrder (->) (Negate ())
+instance PrefixOrder (->) ()
+
+instance PrefixOrder (->) Void
 
 instance PrefixOrder (->) (Canonical Bool)
 
@@ -50,12 +55,14 @@ instance PrefixOrder (->) (Canonical Word32)
 
 instance PrefixOrder (->) (Canonical Word64)
 
+instance Base.Integral a => PrefixOrder (->) (Canonical (Ratio a))
+
 -- | `Float` doesn't have a stronger ordering than this because of NaNs. NaNs
 --   are incomparable to anything.
 --
 --  __NB__: There are tradeoffs between this approach and one that fits NaNs
 --          between -Inf +Inf (e.g., the other approach allows for a
---         `Haskerwaul.Lattice.Bounded.BoundedLattice` instance. We should
+--         `Haskerwaul.Lattice.Bounded.BoundedLattice` instance). We should
 --          probably provide distinct @newtype@ wrappers so we can offer both.
 instance PrefixOrder (->) (Canonical Float)
 
@@ -64,6 +71,6 @@ instance PrefixOrder (->) (Canonical Float)
 --
 --  __NB__: There are tradeoffs between this approach and one that fits NaNs
 --          between -Inf +Inf (e.g., the other approach allows for a
---         `Haskerwaul.Lattice.Bounded.BoundedLattice` instance. We should
+--         `Haskerwaul.Lattice.Bounded.BoundedLattice` instance). We should
 --          probably provide distinct @newtype@ wrappers so we can offer both.
 instance PrefixOrder (->) (Canonical Double)

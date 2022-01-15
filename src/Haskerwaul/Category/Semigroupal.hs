@@ -19,8 +19,7 @@ import Haskerwaul.Object
 import Haskerwaul.Transformation.Dinatural
 import Haskerwaul.Transformation.Natural
 
-class (Category c, Bifunctor c c c t) =>
-      SemigroupalCategory c t where
+class (Category c, Bifunctor c c c t) => SemigroupalCategory c t where
   assoc :: (Ob c x, Ob c y, Ob c z) => Isomorphism c (t x (t y z)) (t (t x y) z)
 
 instance SemigroupalCategory (->) (,) where

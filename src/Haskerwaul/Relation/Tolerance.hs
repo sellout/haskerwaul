@@ -7,6 +7,8 @@ module Haskerwaul.Relation.Tolerance
   , module Haskerwaul.Relation.Homogeneous
   ) where
 
+import            Data.Void (Void)
+
 import Haskerwaul.Lattice.Components
 import Haskerwaul.Object
 import Haskerwaul.Relation.Homogeneous
@@ -16,9 +18,14 @@ import Haskerwaul.Topos.Elementary
 -- | [Wikipedia](https://en.wikipedia.org/wiki/Tolerance_relation)
 --
 -- = laws
---   [`Haskerwaul.Law.Reflexivity.reflexivity`]: @`rel` x x = `true`@
---   [`Haskerwaul.Law.Symmetry.symmetry`]: @`rel` x y ==> `rel` y x@
-class HomogeneousRelation c a => ToleranceRelation c a
+--
+-- - [`Haskerwaul.Law.Reflexivity.reflexivity`]: @`rel` x x = `true`@
+-- - [`Haskerwaul.Law.Symmetry.symmetry`]: @`rel` x y ==> `rel` y x@
+class HomogeneousRelation' c a => ToleranceRelation c a
+
+instance ToleranceRelation (->) ()
+
+instance ToleranceRelation (->) Void
 
 instance {-# incoherent #-}
          (c ~ (->), ElementaryTopos c, ToleranceRelation c a, Ob c (Meet a)) =>

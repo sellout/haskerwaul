@@ -9,9 +9,14 @@ module Haskerwaul.Relation.Homogeneous
 
 import           Data.Bool (Bool (..))
 import qualified Data.Eq as Base
+import           Data.Functor.Const (Const (..))
+import           Data.Functor.Identity (Identity (..))
 import           Data.Int (Int, Int8, Int16, Int32, Int64)
 import qualified Data.Ord as Base
+import           Data.Ratio (Ratio)
+import           Data.Void (Void)
 import           Data.Word (Word, Word8, Word16, Word32, Word64)
+import qualified GHC.Real as Base
 import           Numeric.Natural (Natural)
 import           Prelude (Double, Float, Integer)
 
@@ -24,124 +29,144 @@ import Haskerwaul.Semiring.Components
 import Haskerwaul.Topos.Elementary
 
 -- | [nLab](https://ncatlab.org/nlab/show/relation)
+type HomogeneousRelation c a = BinaryRelation c a a
+
+-- | This is not a real thing, but exists to facilitate the interconnectedness
+--   of the subclasses, much like `Magma` (which /is/ real) does on the
+--   algebraic side.
 --
---  __NB__: There are like a billion of these for any type. This is a type class
---          to give a common super-class for orders and other relations that are
---          at least a _bit_ more constrained. However, since most types have an
---         `Haskerwaul.Relation.Equality.EqualityRelation` instance, it means
---          that everything else is going to be newtyped. It doesn't seem ideal.
-class Ob c a => HomogeneousRelation c a where
-  rel :: BinaryRelation c a a
+--   Each instance has at least two of the following three properties:
+-- - commutative
+-- - reflexive
+-- - transitive
+class Ob c a => HomogeneousRelation' c a where
+  rel :: HomogeneousRelation c a
 
-instance HomogeneousRelation (->) () where
-  rel ((), ()) = False
+instance HomogeneousRelation' (->) () where
+  rel ((), ()) = True
 
-instance HomogeneousRelation (->) Bool where
-  rel = uncurry (Base./=)
+instance HomogeneousRelation' (->) Void where
+  rel = uncurry $ \case
 
-instance HomogeneousRelation (->) Natural where
-  rel = uncurry (Base./=)
+instance HomogeneousRelation' (->) Bool where
+  rel = uncurry (Base.==)
 
-instance HomogeneousRelation (->) Int where
-  rel = uncurry (Base./=)
+instance HomogeneousRelation' (->) Natural where
+  rel = uncurry (Base.==)
 
-instance HomogeneousRelation (->) Int8 where
-  rel = uncurry (Base./=)
+instance HomogeneousRelation' (->) Int where
+  rel = uncurry (Base.==)
 
-instance HomogeneousRelation (->) Int16 where
-  rel = uncurry (Base./=)
+instance HomogeneousRelation' (->) Int8 where
+  rel = uncurry (Base.==)
 
-instance HomogeneousRelation (->) Int32 where
-  rel = uncurry (Base./=)
+instance HomogeneousRelation' (->) Int16 where
+  rel = uncurry (Base.==)
 
-instance HomogeneousRelation (->) Int64 where
-  rel = uncurry (Base./=)
+instance HomogeneousRelation' (->) Int32 where
+  rel = uncurry (Base.==)
 
-instance HomogeneousRelation (->) Integer where
-  rel = uncurry (Base./=)
+instance HomogeneousRelation' (->) Int64 where
+  rel = uncurry (Base.==)
 
-instance HomogeneousRelation (->) Word where
-  rel = uncurry (Base./=)
+instance HomogeneousRelation' (->) Integer where
+  rel = uncurry (Base.==)
 
-instance HomogeneousRelation (->) Word8 where
-  rel = uncurry (Base./=)
+instance HomogeneousRelation' (->) Word where
+  rel = uncurry (Base.==)
 
-instance HomogeneousRelation (->) Word16 where
-  rel = uncurry (Base./=)
+instance HomogeneousRelation' (->) Word8 where
+  rel = uncurry (Base.==)
 
-instance HomogeneousRelation (->) Word32 where
-  rel = uncurry (Base./=)
+instance HomogeneousRelation' (->) Word16 where
+  rel = uncurry (Base.==)
 
-instance HomogeneousRelation (->) Word64 where
-  rel = uncurry (Base./=)
+instance HomogeneousRelation' (->) Word32 where
+  rel = uncurry (Base.==)
 
-instance HomogeneousRelation (->) Float where
-  rel = uncurry (Base./=)
+instance HomogeneousRelation' (->) Word64 where
+  rel = uncurry (Base.==)
 
-instance HomogeneousRelation (->) Double where
-  rel = uncurry (Base./=)
+instance HomogeneousRelation' (->) Float where
+  rel = uncurry (Base.==)
 
-instance HomogeneousRelation (->) (Canonical Bool) where
+instance HomogeneousRelation' (->) Double where
+  rel = uncurry (Base.==)
+
+instance HomogeneousRelation' (->) (Canonical Bool) where
   rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
 
-instance HomogeneousRelation (->) (Canonical Natural) where
+instance HomogeneousRelation' (->) (Canonical Natural) where
   rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
 
-instance HomogeneousRelation (->) (Canonical Int) where
+instance HomogeneousRelation' (->) (Canonical Int) where
   rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
 
-instance HomogeneousRelation (->) (Canonical Int8) where
+instance HomogeneousRelation' (->) (Canonical Int8) where
   rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
 
-instance HomogeneousRelation (->) (Canonical Int16) where
+instance HomogeneousRelation' (->) (Canonical Int16) where
   rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
 
-instance HomogeneousRelation (->) (Canonical Int32) where
+instance HomogeneousRelation' (->) (Canonical Int32) where
   rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
 
-instance HomogeneousRelation (->) (Canonical Int64) where
+instance HomogeneousRelation' (->) (Canonical Int64) where
   rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
 
-instance HomogeneousRelation (->) (Canonical Integer) where
+instance HomogeneousRelation' (->) (Canonical Integer) where
   rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
 
-instance HomogeneousRelation (->) (Canonical Word) where
+instance HomogeneousRelation' (->) (Canonical Word) where
   rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
 
-instance HomogeneousRelation (->) (Canonical Word8) where
+instance HomogeneousRelation' (->) (Canonical Word8) where
   rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
 
-instance HomogeneousRelation (->) (Canonical Word16) where
+instance HomogeneousRelation' (->) (Canonical Word16) where
   rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
 
-instance HomogeneousRelation (->) (Canonical Word32) where
+instance HomogeneousRelation' (->) (Canonical Word32) where
   rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
 
-instance HomogeneousRelation (->) (Canonical Word64) where
+instance HomogeneousRelation' (->) (Canonical Word64) where
   rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
 
-instance HomogeneousRelation (->) (Canonical Float) where
+instance HomogeneousRelation' (->) (Canonical Float) where
   rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
 
-instance HomogeneousRelation (->) (Canonical Double) where
+instance HomogeneousRelation' (->) (Canonical Double) where
+  rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
+
+instance Base.Integral a => HomogeneousRelation' (->) (Canonical (Ratio a)) where
   rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
 
 instance {-# incoherent #-}
-         (c ~ (->), ElementaryTopos c, HomogeneousRelation c a, Ob c (Meet a)) =>
-         HomogeneousRelation c (Meet a) where
+         (c ~ (->), ElementaryTopos c, HomogeneousRelation' c a, Ob c (Const a b)) =>
+         HomogeneousRelation' c (Const a b) where
+  rel = rel . bimap getConst getConst
+
+instance {-# incoherent #-}
+         (c ~ (->), ElementaryTopos c, HomogeneousRelation' c a, Ob c (Identity a)) =>
+         HomogeneousRelation' c (Identity a) where
+  rel = rel . bimap runIdentity runIdentity
+
+instance {-# incoherent #-}
+         (c ~ (->), ElementaryTopos c, HomogeneousRelation' c a, Ob c (Meet a)) =>
+         HomogeneousRelation' c (Meet a) where
   rel = rel . bimap getMeet getMeet
 
 instance {-# incoherent #-}
-         (c ~ (->), ElementaryTopos c, HomogeneousRelation c a, Ob c (Join a)) =>
-         HomogeneousRelation c (Join a) where
+         (c ~ (->), ElementaryTopos c, HomogeneousRelation' c a, Ob c (Join a)) =>
+         HomogeneousRelation' c (Join a) where
   rel = rel . bimap getJoin getJoin
 
 instance {-# incoherent #-}
-         (c ~ (->), ElementaryTopos c, HomogeneousRelation c a, Ob c (Additive a)) =>
-         HomogeneousRelation c (Additive a) where
+         (c ~ (->), ElementaryTopos c, HomogeneousRelation' c a, Ob c (Additive a)) =>
+         HomogeneousRelation' c (Additive a) where
   rel = rel . bimap sum sum
 
 instance {-# incoherent #-}
-         (c ~ (->), ElementaryTopos c, HomogeneousRelation c a, Ob c (Multiplicative a)) =>
-         HomogeneousRelation c (Multiplicative a) where
+         (c ~ (->), ElementaryTopos c, HomogeneousRelation' c a, Ob c (Multiplicative a)) =>
+         HomogeneousRelation' c (Multiplicative a) where
   rel = rel . bimap product product

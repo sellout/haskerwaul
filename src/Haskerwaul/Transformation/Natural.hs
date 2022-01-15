@@ -60,8 +60,8 @@ whisker' (NT fn) Proxy =
 
 type instance Ob (NaturalTransformation c d) = FOb (Ob c) (Ob d)
 
-instance Ob c ~ All => MonoidalCategory' (NaturalTransformation c c) Compose where
-  type Unit (NaturalTransformation c c) Compose = Identity
+instance Ob d ~ All => MonoidalCategory' (NaturalTransformation c d) Compose where
+  type Unit (NaturalTransformation c d) Compose = Identity
 
 instance MonoidalCategory' (NaturalTransformation c (:-)) CFProd where
   type Unit (NaturalTransformation c (:-)) CFProd = All
