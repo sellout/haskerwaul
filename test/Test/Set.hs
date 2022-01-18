@@ -23,6 +23,24 @@ setProperties =
   , Group "monoids under (->) (,)"
     (monoid_lawsTup "String" (Gen.string (Range.linear 0 9999) Gen.unicodeAll))
   , Group
+    "various lattices"
+    ( concat
+      [ boundedLattice_lawsTup "()" (pure ())
+      , boundedLattice_lawsTup "Bool" Gen.bool
+      , boundedLattice_lawsTup "Int" (Gen.int Range.linearBounded)
+      , boundedLattice_lawsTup "Int8" (Gen.int8 Range.linearBounded)
+      , boundedLattice_lawsTup "Int16" (Gen.int16 Range.linearBounded)
+      , boundedLattice_lawsTup "Int32" (Gen.int32 Range.linearBounded)
+      , boundedLattice_lawsTup "Int64" (Gen.int64 Range.linearBounded)
+      , lattice_lawsTup "Integer" (Gen.integral_ (Range.linear (-99999999999) 99999999999) :: Gen Integer)
+      , lattice_lawsTup "Natural" (Gen.integral (Range.linear 0 99999999999) :: Gen Natural)
+      , boundedLattice_lawsTup "Word" (Gen.word Range.linearBounded)
+      , boundedLattice_lawsTup "Word8" (Gen.word8 Range.linearBounded)
+      , boundedLattice_lawsTup "Word16" (Gen.word16 Range.linearBounded)
+      , boundedLattice_lawsTup "Word32" (Gen.word32 Range.linearBounded)
+      , boundedLattice_lawsTup "Word64" (Gen.word64 Range.linearBounded)
+      ])
+  , Group
     "Integral numbers form a rig under (->) (,)"
     ( concat
       [ rig_lawsTup "()" (pure ())

@@ -15,4 +15,4 @@ import Haskerwaul.Relation.Equality
 leftSelfDistributiveLaw
   :: forall c a. (CartesianMonoidalCategory c, Ob c a)
   => Prod c a a `c` a -> Law c EqualityRelation (Prod c a (Prod c a a)) a
-leftSelfDistributiveLaw op = leftDistributiveLaw op op
+leftSelfDistributiveLaw op' = leftDistributiveLaw op' op'

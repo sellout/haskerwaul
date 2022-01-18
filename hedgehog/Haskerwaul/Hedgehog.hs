@@ -29,23 +29,34 @@ import Data.Eq (Eq)
 import Data.Proxy (Proxy (..))
 import Data.String (String, fromString)
 import Data.Typeable (Typeable, typeRep)
+import Haskerwaul.Band.Laws as Band
+import Haskerwaul.Band.LeftRegular.Laws as LeftRegularBand
 import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Laws
 import Haskerwaul.Category.Semigroupal.Laws as Semigroupal
 import Haskerwaul.Duoid.Laws
 import Haskerwaul.Hedgehog.Topos
 import Haskerwaul.Isomorphism.Laws
+import Haskerwaul.Lattice
+import Haskerwaul.Lattice.Bounded.Laws as BoundedLattice
+import Haskerwaul.Lattice.Laws as Lattice
 import Haskerwaul.Law
 import Haskerwaul.Magma.Commutative.Laws
 import Haskerwaul.Magma.Unital.Laws
 import Haskerwaul.Monoid.Commutative.Laws as CommutativeMonoid
-import Haskerwaul.Monoid.Laws
+import Haskerwaul.Monoid.Graphic.Laws as GraphicMonoid
+import Haskerwaul.Monoid.Laws as Monoid
 import Haskerwaul.Object
 import Haskerwaul.Profunctor
 import Haskerwaul.Rig.Laws as Rig
+import Haskerwaul.Semigroup.Commutative.Laws as CommutativeSemigroup
 import Haskerwaul.Semigroup.Laws as Semigroup
 import Haskerwaul.Semigroupoid.Laws
+import Haskerwaul.Semilattice.Laws as Semilattice
+import Haskerwaul.Semilattice.Bounded.Laws as BoundedSemilattice
 import Haskerwaul.Semiring
+import Haskerwaul.Shelf.Left.Laws
+import Haskerwaul.Shelf.Right.Laws
 import Haskerwaul.Topos.Elementary hiding (leftIdentity, rightIdentity)
 import Haskerwaul.Transformation.Dinatural
 import Hedgehog hiding (label)
@@ -98,6 +109,21 @@ unitalMagma_laws label law transL transR dispL dispR genX1 genX2 =
     , property (runHH (checkLaw transR (rightIdentity law)) =<< forAllWith dispR $ genX2))
   ]
 
+band_laws
+  :: (Typeable c, Eq y, Show y)
+  => PropertyName
+  -> BandLaws c a
+  -> (Prod c (Prod c a a) a `c` a -> x `HH` y)
+  -> (a `c` a -> y `HH` y)
+  -> (x -> String)
+  -> Gen x
+  -> Gen y
+  -> [(PropertyName, Property)]
+band_laws label law transA transI dispA genX genY =
+  semigroup_laws label (Band.semigroup law) transA dispA genX
+    <> [ ( "idempotency (" <> label <> ")"
+         , property (runHH (checkLaw transI (idempotent law)) =<< forAll genY))]
+
 monoid_laws
   :: (Typeable c, Eq y, Show y)
   => PropertyName
@@ -113,8 +139,23 @@ monoid_laws
   -> Gen x2
   -> [(PropertyName, Property)]
 monoid_laws label law trans transL transR display dispL dispR genX genX1 genX2 =
-  semigroup_laws label (semigroup law) trans display genX
+  semigroup_laws label (Monoid.semigroup law) trans display genX
   <> unitalMagma_laws label (unitalMagma law) transL transR dispL dispR genX1 genX2
+
+commutativeSemigroup_laws
+  :: (Typeable c, Eq y, Show y)
+  => PropertyName
+  -> CommutativeSemigroupLaws c t a
+  -> (t a a `c` a -> x `HH` y)
+  -> (t (t a a) a `c` a -> x0 `HH` y)
+  -> (x -> String)
+  -> (x0 -> String)
+  -> Gen x
+  -> Gen x0
+  -> [(PropertyName, Property)]
+commutativeSemigroup_laws label law trans transA display dispA genX genX0 =
+  commutativeMagma_laws label (commutativeMagma law) trans display genX
+  <> semigroup_laws label (CommutativeSemigroup.semigroup law) transA dispA genX0
 
 commutativeMonoid_laws
   :: (Typeable c, Eq y, Show y)
@@ -134,8 +175,121 @@ commutativeMonoid_laws
   -> Gen x2
   -> [(PropertyName, Property)]
 commutativeMonoid_laws label law trans transA transL transR display dispA dispL dispR genX genX0 genX1 genX2 =
-  commutativeMagma_laws label (commutativeMagma law) trans display genX
+  commutativeSemigroup_laws label (CommutativeMonoid.commutativeSemigroup law) trans transA display dispA genX genX0
   <> monoid_laws label (CommutativeMonoid.monoid law) transA transL transR dispA dispL dispR genX0 genX1 genX2
+
+leftRegularBand_laws
+  :: (Typeable c, Eq y, Show y)
+  => PropertyName
+  -> LeftRegularBandLaws c a
+  -> (Prod c (Prod c a a) a `c` a -> x `HH` y)
+  -> (Prod c a a `c` a -> x0 `HH` y)
+  -> (a `c` a -> y `HH` y)
+  -> (x -> String)
+  -> (x0 -> String)
+  -> Gen x
+  -> Gen x0
+  -> Gen y
+  -> [(PropertyName, Property)]
+leftRegularBand_laws label law transA transG transI dispA dispG genX genX0 genY =
+  band_laws label (LeftRegularBand.band law) transA transI dispA genX genY
+  <> [ ( "graphic identity (" <> label <> ")"
+       , property (runHH (checkLaw transG (graphicIdentity law)) =<< forAllWith dispG $ genX0))]
+
+leftShelf_laws
+  :: (Eq y, Show y)
+  => PropertyName
+  -> LeftShelfLaws c a
+  -> (Prod c a (Prod c a a) `c` a -> x `HH` y)
+  -> (x -> String)
+  -> Gen x
+  -> [(PropertyName, Property)]
+leftShelf_laws label law trans display gen =
+  [ ( "left self-distributive (" <> label <> ")"
+    , property (runHH (checkLaw trans (leftSelfDistributive law)) =<< forAllWith display $ gen))]
+
+rightShelf_laws
+  :: (Eq y, Show y)
+  => PropertyName
+  -> RightShelfLaws c a
+  -> (Prod c (Prod c a a) a `c` a -> x `HH` y)
+  -> (x -> String)
+  -> Gen x
+  -> [(PropertyName, Property)]
+rightShelf_laws label law trans display gen =
+  [ ( "right self-distributive (" <> label <> ")"
+    , property (runHH (checkLaw trans (rightSelfDistributive law)) =<< forAllWith display $ gen))]
+
+graphicMonoid_laws
+  :: (Typeable c, Eq y, Show y)
+  => PropertyName
+  -> GraphicMonoidLaws c a
+  -> (Prod c (Prod c a a) a `c` a -> x `HH` y)
+  -> (Prod c a a `c` a -> x0 `HH` y)
+  -> (a `c` a -> y `HH` y)
+  -> (Prod c a (Prod c a a) `c` a -> xx `HH` y)
+  -> (Prod c (Unit c (Prod c)) a `c` a -> x1 `HH` y)
+  -> (Prod c a (Unit c (Prod c)) `c` a -> x2 `HH` y)
+  -> (x -> String)
+  -> (x0 -> String)
+  -> (xx -> String)
+  -> (x1 -> String)
+  -> (x2 -> String)
+  -> Gen x
+  -> Gen x0
+  -> Gen xx
+  -> Gen x1
+  -> Gen x2
+  -> Gen y
+  -> [(PropertyName, Property)]
+graphicMonoid_laws label law transA transG transI trans transL transR dispA dispG disp dispL dispR genX genX0 genXX genX1 genX2 genY =
+  leftRegularBand_laws label (leftRegularBand law) transA transG transI dispA dispG genX genX0 genY
+  <> leftShelf_laws label (leftShelf law) trans disp genXX
+  <> monoid_laws label (GraphicMonoid.monoid law) transA transL transR dispA dispL dispR genX genX1 genX2
+
+semilattice_laws
+  :: (Typeable c, Eq y, Show y)
+  => PropertyName
+  -> SemilatticeLaws c a
+  -> (Prod c a a `c` a -> x `HH` y)
+  -> (Prod c (Prod c a a) a `c` a -> x0 `HH` y)
+  -> (a `c` a -> y `HH` y)
+  -> (x -> String)
+  -> (x0 -> String)
+  -> Gen x
+  -> Gen x0
+  -> Gen y
+  -> [(PropertyName, Property)]
+semilattice_laws label law trans transA transY display dispA genX genX0 genY =
+  commutativeSemigroup_laws label (Semilattice.commutativeSemigroup law) trans transA display dispA genX genX0
+  <> band_laws label (Semilattice.band law) transA transY dispA genX0 genY
+
+boundedSemilattice_laws
+  :: (Typeable c, Eq y, Show y)
+  => PropertyName
+  -> BoundedSemilatticeLaws c a
+  -> (Prod c a a `c` a -> x `HH` y)
+  -> (Prod c (Prod c a a) a `c` a -> x0 `HH` y)
+  -> (Prod c (Unit c (Prod c)) a `c` a -> x1 `HH` y)
+  -> (Prod c a (Unit c (Prod c)) `c` a -> x2 `HH` y)
+  -> (a `c` a -> y `HH` y)
+  -> (Prod c a (Prod c a a) `c` a -> xx `HH` y)
+  -> (x -> String)
+  -> (x0 -> String)
+  -> (x1 -> String)
+  -> (x2 -> String)
+  -> (xx -> String)
+  -> Gen x
+  -> Gen x0
+  -> Gen x1
+  -> Gen x2
+  -> Gen xx
+  -> Gen y
+  -> [(PropertyName, Property)]
+boundedSemilattice_laws label law trans transA transL transR transI transG display dispA dispL dispR dispG genX genX0 genX1 genX2 genXX genY =
+  commutativeMonoid_laws label (BoundedSemilattice.commutativeMonoid law) trans transA transL transR display dispA dispL dispR genX genX0 genX1 genX2
+  <> graphicMonoid_laws label (graphicMonoid law) transA trans transI transG transL transR dispA display dispG dispL dispR genX0 genX genXX genX1 genX2 genY
+  <> semilattice_laws label (semilattice law) trans transA transI display dispA genX genX0 genY
 
 duoid_laws
   :: (Typeable c, Eq y, Show y)
@@ -186,6 +340,110 @@ duoid_laws
        , property (runHH (checkLaw transD (unit' law)) =<< forAllWith dispD $ genX1''))
      ]
 
+lattice_laws
+  :: forall c a x x0 y
+   . (c ~ (->), Eq y, Show y)
+  => PropertyName
+  -> LatticeLaws c a
+  -> (Prod c a a `c` a -> x `HH` y)
+  -> (Prod c (Prod c a a) a `c` a -> x0 `HH` y)
+  -> (a `c` a -> y `HH` y)
+  -> (x -> String)
+  -> (x0 -> String)
+  -> Gen x
+  -> Gen x0
+  -> Gen y
+  -> [(PropertyName, Property)]
+lattice_laws label law trans transA transY display dispA genX genX0 genY =
+  semilattice_laws
+    ("meet " <> label)
+    (Lattice.meetSemilattice law)
+    (trans . promap @c @c (bimap Meet Meet) getMeet)
+    (transA . promap @c @c (bimap @c @c @c (bimap Meet Meet) Meet) getMeet)
+    (transY . promap @c @c Meet getMeet)
+    display
+    dispA
+    genX
+    genX0
+    genY
+  <> semilattice_laws
+     ("join " <> label)
+     (Lattice.joinSemilattice law)
+     (trans . promap @c @c (bimap Join Join) getJoin)
+     (transA . promap @c @c (bimap @c @c @c (bimap Join Join) Join) getJoin)
+     (transY . promap @c @c Join getJoin)
+     display
+     dispA
+     genX
+     genX0
+     genY
+
+boundedLattice_laws
+  :: forall c a x x0 x1 x2 xx y
+   . (c ~ (->), Eq y, Show y)
+  => PropertyName
+  -> BoundedLatticeLaws c a
+  -> (Prod c a a `c` a -> x `HH` y)
+  -> (Prod c (Prod c a a) a `c` a -> x0 `HH` y)
+  -> (a `c` a -> y `HH` y)
+  -> (Prod c (Unit c (Prod c)) a `c` a -> x1 `HH` y)
+  -> (Prod c a (Unit c (Prod c)) `c` a -> x2 `HH` y)
+  -> (Prod c a (Prod c a a) `c` a -> xx `HH` y)
+  -> (x -> String)
+  -> (x0 -> String)
+  -> (x1 -> String)
+  -> (x2 -> String)
+  -> (xx -> String)
+  -> Gen x
+  -> Gen x0
+  -> Gen x1
+  -> Gen x2
+  -> Gen xx
+  -> Gen y
+  -> [(PropertyName, Property)]
+boundedLattice_laws label law trans transA transI transL transR transG display dispA dispL dispR dispG genX genX0 genX1 genX2 genXX genY =
+  lattice_laws label (lattice law) trans transA transI display dispA genX genX0 genY
+  <> boundedSemilattice_laws
+     ("meet " <> label)
+     (BoundedLattice.meetSemilattice law)
+     (trans . promap @c @c (bimap Meet Meet) getMeet)
+     (transA . promap @c @c (bimap @c @c @c (bimap Meet Meet) Meet) getMeet)
+     (transL . promap @c @c (bimap @c id Meet) getMeet)
+     (transR . promap @c @c (bimap @_ @c Meet id) getMeet)
+     (transI . promap @c @c Meet getMeet)
+     (transG . promap @c @c (bimap @c @c @c Meet (bimap Meet Meet)) getMeet)
+     display
+     dispA
+     dispL
+     dispR
+     dispG
+     genX
+     genX0
+     genX1
+     genX2
+     genXX
+     genY
+  <> boundedSemilattice_laws
+     ("join " <> label)
+     (BoundedLattice.joinSemilattice law)
+     (trans . promap @c @c (bimap Join Join) getJoin)
+     (transA . promap @c @c (bimap @c @c @c (bimap Join Join) Join) getJoin)
+     (transL . promap @c @c (bimap @c id Join) getJoin)
+     (transR . promap @c @c (bimap @_ @c Join id) getJoin)
+     (transI . promap @c @c Join getJoin)
+     (transG . promap @c @c (bimap @c @c @c Join (bimap Join Join)) getJoin)
+     display
+     dispA
+     dispL
+     dispR
+     dispG
+     genX
+     genX0
+     genX1
+     genX2
+     genXX
+     genY
+
 -- |
 --  __TODO__: Missing a lot of intermediate types here.
 rig_laws
@@ -208,8 +466,8 @@ rig_laws
   -> [(PropertyName, Property)]
 rig_laws label law trans transA transL transR display dispA dispL dispR genX genX0 genX1 genX2 =
   commutativeMonoid_laws
-    label
-    (commutativeMonoid law)
+    ("additive " <> label)
+    (Rig.commutativeMonoid law)
     (trans . promap @c @c (bimap Add Add) sum)
     (transA . promap @c @c (bimap @c @c @c (bimap Add Add) Add) sum)
     (transL . promap @c @c (bimap @c id Add) sum)
@@ -217,7 +475,7 @@ rig_laws label law trans transA transL transR display dispA dispL dispR genX gen
     display dispA dispL dispR
     genX genX0 genX1 genX2
   <> monoid_laws
-     label
+     ("multiplicative " <> label)
      (Rig.monoid law)
      (transA . promap @c @c (bimap @c @c @c (bimap Multiply Multiply) Multiply) product)
      (transL . promap @c @c (bimap @c id Multiply) product)

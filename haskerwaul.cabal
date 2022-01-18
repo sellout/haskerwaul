@@ -28,7 +28,9 @@ library
                     , Haskerwaul.Algebra.Heyting.Complete
                     , Haskerwaul.Automorphism
                     , Haskerwaul.Band
+                    , Haskerwaul.Band.Laws
                     , Haskerwaul.Band.LeftRegular
+                    , Haskerwaul.Band.LeftRegular.Laws
                     , Haskerwaul.Band.Rectangular
                     , Haskerwaul.Bifunctor
                     , Haskerwaul.Bimonoid
@@ -134,11 +136,13 @@ library
                     , Haskerwaul.Isomorphism.Natural
                     , Haskerwaul.Lattice
                     , Haskerwaul.Lattice.Bounded
+                    , Haskerwaul.Lattice.Bounded.Laws
                     , Haskerwaul.Lattice.Complemented
                     , Haskerwaul.Lattice.Complemented.Uniquely
                     , Haskerwaul.Lattice.Complete
                     , Haskerwaul.Lattice.Distributive
                     , Haskerwaul.Lattice.Distributive.Bounded
+                    , Haskerwaul.Lattice.Laws
                     , Haskerwaul.Lattice.Modular
                     , Haskerwaul.Lattice.Orthocomplemented
                     , Haskerwaul.Lattice.Orthomodular
@@ -156,6 +160,7 @@ library
                     , Haskerwaul.Law.Homomorphism.Identity
                     , Haskerwaul.Law.Homomorphism.Magma
                     , Haskerwaul.Law.Idempotency
+                    , Haskerwaul.Law.Identity.Graphic
                     , Haskerwaul.Law.Identity.Left
                     , Haskerwaul.Law.Identity.Right
                     , Haskerwaul.Law.Interchange
@@ -194,6 +199,7 @@ library
                     , Haskerwaul.Monoid.Frobenius.Commutative.Special
                     , Haskerwaul.Monoid.Frobenius.Special
                     , Haskerwaul.Monoid.Graphic
+                    , Haskerwaul.Monoid.Graphic.Laws
                     , Haskerwaul.Monoid.Hopf
                     , Haskerwaul.Monoid.Laws
                     , Haskerwaul.Negation
@@ -259,10 +265,13 @@ library
                     , Haskerwaul.Ring.Nonunital
                     , Haskerwaul.Semigroup
                     , Haskerwaul.Semigroup.Commutative
+                    , Haskerwaul.Semigroup.Commutative.Laws
                     , Haskerwaul.Semigroup.Inverse
                     , Haskerwaul.Semigroup.Laws
                     , Haskerwaul.Semilattice
                     , Haskerwaul.Semilattice.Bounded
+                    , Haskerwaul.Semilattice.Bounded.Laws
+                    , Haskerwaul.Semilattice.Laws
                     , Haskerwaul.Semigroupoid
                     , Haskerwaul.Semigroupoid.Laws
                     , Haskerwaul.Semiring
@@ -275,7 +284,9 @@ library
                     , Haskerwaul.Semiring.Tropical
                     , Haskerwaul.Shelf
                     , Haskerwaul.Shelf.Left
+                    , Haskerwaul.Shelf.Left.Laws
                     , Haskerwaul.Shelf.Right
+                    , Haskerwaul.Shelf.Right.Laws
                     , Haskerwaul.Skewfield
                     , Haskerwaul.Span
                     , Haskerwaul.Subcategory
