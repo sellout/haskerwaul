@@ -27,6 +27,9 @@ library
                     , Haskerwaul.Algebra.Heyting
                     , Haskerwaul.Algebra.Heyting.Complete
                     , Haskerwaul.Automorphism
+                    , Haskerwaul.Band
+                    , Haskerwaul.Band.LeftRegular
+                    , Haskerwaul.Band.Rectangular
                     , Haskerwaul.Bifunctor
                     , Haskerwaul.Bimonoid
                     , Haskerwaul.Category
@@ -162,10 +165,14 @@ library
                     , Haskerwaul.Law.Reflexivity
                     , Haskerwaul.Law.Symmetry
                     , Haskerwaul.Loop
+                    , Haskerwaul.Loop.Commutative
                     , Haskerwaul.Magma
                     , Haskerwaul.Magma.Commutative
                     , Haskerwaul.Magma.Commutative.Laws
-                    , Haskerwaul.Magma.Idempotent
+                    , Haskerwaul.Magma.Invertible
+                    , Haskerwaul.Magma.Invertible.Commutative
+                    , Haskerwaul.Magma.Invertible.Left
+                    , Haskerwaul.Magma.Invertible.Right
                     , Haskerwaul.Magma.Unital
                     , Haskerwaul.Magma.Unital.Laws
                     , Haskerwaul.Meadow
@@ -186,6 +193,7 @@ library
                     , Haskerwaul.Monoid.Frobenius.Commutative
                     , Haskerwaul.Monoid.Frobenius.Commutative.Special
                     , Haskerwaul.Monoid.Frobenius.Special
+                    , Haskerwaul.Monoid.Graphic
                     , Haskerwaul.Monoid.Hopf
                     , Haskerwaul.Monoid.Laws
                     , Haskerwaul.Negation
@@ -213,6 +221,9 @@ library
                     , Haskerwaul.Pushout
                     , Haskerwaul.Quandle
                     , Haskerwaul.Quasigroup
+                    , Haskerwaul.Quasigroup.Commutative
+                    , Haskerwaul.Quasigroup.Invertible
+                    , Haskerwaul.Quasigroup.Invertible.Commutative
                     , Haskerwaul.Quasigroup.Left
                     , Haskerwaul.Quasigroup.Right
                     , Haskerwaul.Quasiorder
@@ -248,7 +259,6 @@ library
                     , Haskerwaul.Ring.Nonunital
                     , Haskerwaul.Semigroup
                     , Haskerwaul.Semigroup.Commutative
-                    , Haskerwaul.Semigroup.Idempotent
                     , Haskerwaul.Semigroup.Inverse
                     , Haskerwaul.Semigroup.Laws
                     , Haskerwaul.Semilattice

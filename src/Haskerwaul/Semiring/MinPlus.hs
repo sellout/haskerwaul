@@ -27,8 +27,8 @@ instance (c ~ (->), SemigroupalCategory c t, Hemiring c t a, Lattice c t a) =>
 instance (c ~ (->), SemigroupalCategory c t, Hemiring c t a, Lattice c t a) =>
          CommutativeMagma c t (Additive (Meet a))
 
-instance (c ~ (->), SemigroupalCategory c t, Hemiring c t a, Lattice c t a) =>
-         IdempotentMagma c t (Additive (Meet a))
+-- instance (c ~ (->), SemigroupalCategory c t, Hemiring c t a, Lattice c t a) =>
+--          IdempotentMagma c t (Additive (Meet a))
 
 -- | With a `BoundedLattice`, we actually end up with an `IdempotentRig`.
 instance (c ~ (->), MonoidalCategory c t, Hemiring c t a, BoundedLattice c t a) =>

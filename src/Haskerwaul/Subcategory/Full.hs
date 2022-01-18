@@ -159,11 +159,23 @@ instance (SemigroupalCategory (FullSubcategory ob c) t, ob a, CommutativeMagma c
 instance (SemigroupalCategory (FullSubcategory ob c) t, ob a, CommutativeMagma (Opposite c) t a) =>
          CommutativeMagma (Opposite (FullSubcategory ob c)) t a
 
-instance (SemigroupalCategory (FullSubcategory ob c) t, ob a, IdempotentMagma c t a) =>
-         IdempotentMagma (FullSubcategory ob c) t a
+instance (SemigroupalCategory (FullSubcategory ob c) t, ob a, LeftShelf c t a) =>
+         LeftShelf (FullSubcategory ob c) t a
 
-instance (SemigroupalCategory (FullSubcategory ob c) t, ob a, IdempotentMagma (Opposite c) t a) =>
-         IdempotentMagma (Opposite (FullSubcategory ob c)) t a
+instance (SemigroupalCategory (FullSubcategory ob c) t, ob a, LeftShelf (Opposite c) t a) =>
+         LeftShelf (Opposite (FullSubcategory ob c)) t a
+
+instance (SemigroupalCategory (FullSubcategory ob c) t, ob a, Band c t a) =>
+         Band (FullSubcategory ob c) t a
+
+instance (SemigroupalCategory (FullSubcategory ob c) t, ob a, Band (Opposite c) t a) =>
+         Band (Opposite (FullSubcategory ob c)) t a
+
+instance (SemigroupalCategory (FullSubcategory ob c) t, ob a, LeftRegularBand c t a) =>
+         LeftRegularBand (FullSubcategory ob c) t a
+
+instance (SemigroupalCategory (FullSubcategory ob c) t, ob a, LeftRegularBand (Opposite c) t a) =>
+         LeftRegularBand (Opposite (FullSubcategory ob c)) t a
 
 instance (SemigroupalCategory (FullSubcategory ob c) t, ob a, Semigroup c t a) =>
          Semigroup (FullSubcategory ob c) t a

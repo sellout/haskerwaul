@@ -8,9 +8,16 @@ module Haskerwaul.Group.Abelian
   ) where
 
 import Haskerwaul.Group
+import Haskerwaul.Loop.Commutative
 import Haskerwaul.Monoid.Commutative
 
--- | [nLab](https://ncatlab.org/nlab/show/abelian+group)
-class (CommutativeMonoid c t a, Group c t a) => AbelianGroup c t a
+-- |
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/abelian+group)
+--
+--  __NB__: Instances for this are automatically coalesced.
+class (CommutativeLoop c t a, CommutativeMonoid c t a, Group c t a) => AbelianGroup c t a
 
-instance (CommutativeMonoid c t a, Group c t a) => AbelianGroup c t a
+instance (CommutativeLoop c t a, CommutativeMonoid c t a, Group c t a) => AbelianGroup c t a
