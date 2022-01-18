@@ -425,6 +425,7 @@ test-suite haskerwaul-test
                      , TypeOperators
   build-depends:       base >= 4.12 && < 5
                      , constraints
+                     , containers
                      , haskerwaul
                      , haskerwaul-hedgehog
                      , hedgehog

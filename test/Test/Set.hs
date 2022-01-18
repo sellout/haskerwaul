@@ -2,12 +2,13 @@
 
 module Test.Set where
 
+import Data.Containers.ListUtils
 import Data.List (concat)
 import Hedgehog
 import qualified Hedgehog.Gen as Gen
 import qualified Hedgehog.Range as Range
 import Numeric.Natural (Natural)
-import Prelude (Integer)
+import Prelude (Integer, fst, (<$>))
 
 import Haskerwaul
 import Haskerwaul.Hedgehog.Applied.Set
@@ -16,15 +17,15 @@ setProperties :: [Hedgehog.Group]
 setProperties =
   [ Group
     "(->) -- topos under (,), distributive under (,) Either, colax-distributive under (,) (,)"
-    ( concat
+    ( nubOrdOn fst $ concat
       [ semigroupalCategory_lawsFn "product" genTuple
       , semigroupalCategory_lawsFn "coproduct" genEither
       ])
   , Group "monoids under (->) (,)"
-    (monoid_lawsTup "String" (Gen.string (Range.linear 0 9999) Gen.unicodeAll))
+    (nubOrdOn fst $ monoid_lawsTup "String" (Gen.string (Range.linear 0 9999) Gen.unicodeAll))
   , Group
     "various lattices"
-    ( concat
+    ( nubOrdOn fst $ concat
       [ boundedLattice_lawsTup "()" (pure ())
       , boundedLattice_lawsTup "Bool" Gen.bool
       , boundedLattice_lawsTup "Int" (Gen.int Range.linearBounded)
@@ -42,7 +43,7 @@ setProperties =
       ])
   , Group
     "Integral numbers form a rig under (->) (,)"
-    ( concat
+    ( nubOrdOn fst $ concat
       [ rig_lawsTup "()" (pure ())
       , rig_lawsTup "Int" (Gen.int Range.linearBounded)
       , rig_lawsTup "Int8" (Gen.int8 Range.linearBounded)
@@ -60,7 +61,7 @@ setProperties =
       ])
   , Group
     "all types are commutative monoids under (->) Either"
-    ( concat
+    ( nubOrdOn fst $ concat
       [ commutativeMonoid_lawsEither "Int" (Gen.int Range.linearBounded)
       , commutativeMonoid_lawsEither "Bool" Gen.bool
       , commutativeMonoid_lawsEither "Char" Gen.unicodeAll
