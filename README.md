@@ -155,19 +155,21 @@ As a result, at various places in the code we find ourselves stuck dealing with 
 
 ## comparisons
 
-There are a number of libraries that attempt to encode categories in various ways. I try to explain how Haskerwaul compares to each of them, to make it easier to decide what you want to use for your own project. I would be very happy to get additional input for this section from people who have used these other libraries (even if it's just "how does Haskerwaul's approach to X compare to SubHask, which does Y?").
+There are a number of libraries that attempt to encode categories in various ways. I try to explain how Haskerwaul compares to each of them, to make it easier to decide what you want to use for your own project. I would be very happy to get additional input for this section from people who have used these other libraries (even if it's just to ask a question, like "how does Haskerwaul's approach to X compare to SubHask, which does Y?").
 
-In general, Haskerwaul is much more fine-grained than other libraries. It also has many small modules with minimal dependencies between them.
+In general, Haskerwaul is much more fine-grained than other libraries. It also has many small modules with minimal dependencies between them. Haskerwaul is also not quite as ergonomic as other libraries in many situations. E.g., `Magma`'s `op` is the least meaninful name possible and it occurs _everywhere_ in polymorphic functions, meaning anything from function composition to addition, meet, join, etc. And there are currently plenty of places where (thanks to `newtype`s) the category ends up constrained to `->`, which is a very frustrating limitation.
 
 ### [algebra](http://hackage.haskell.org/package/algebra)
 
 ### [categories](http://hackage.haskell.org/package/categories)
 
-This adds a handful of the concepts defined in Haskerwaul, and those it includes are designed to be compatible with the existing `Category` type class in `base`. Haskerwaul's `Category` is generalized and fits into a much larger framework of categorical concepts.
+This adds a handful of the concepts defined in Haskerwaul, and those it includes are designed to be compatible with the existing `Category` type class in `base`. E.g., the categories are not constrained. Haskerwaul's `Category` is generalized and fits into a much larger framework of categorical concepts.
 
 ### [concat](https://github.com/conal/concat)
 
-The primary component of this is a compiler plugin for category-based rewriting. However, it needs a category hierarchy to perform the rewrites on, so it provides one of its own. The hierarchy is pretty small, restricts objects to kind `Type`, also has a single definition for products, coproducts, exponentials, etc., which reduces the flexibility a lot. Finally, concat has some naming conventions (and hierarchy) that perhaps better serves Haskell programmers understanding the mechanism than modeling categorical concepts.
+The primary component of this is a compiler plugin for category-based rewriting. However, it needs a category hierarchy to perform the rewrites on, so it provides one of its own. The hierarchy is pretty small, restricts objects to kind `Type`, also has a single definition for products, coproducts, exponentials, etc., which reduces the flexibility a lot. Finally, concat has some naming conventions (and hierarchy) that perhaps better serves Haskell programmers understanding the mechanism than modeling categorical concepts. I.e., it uses names like `NumCat`, which is a `Category`-polymorphic `Num` class rather than a name like `Ring` that ties it more to category theory (or at least abstract algebra).
+
+### [constrained-categories](https://hackage.haskell.org/package/constrained-categories)
 
 ### [HaskellForMaths](http://hackage.haskell.org/package/HaskellForMaths)
 
