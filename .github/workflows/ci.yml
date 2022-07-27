@@ -17,7 +17,7 @@ jobs:
           #     versions prior to 8.6 won't work.
           - "8.6.1"
           - "8.8.1"
-          # - "8.10.1" # Hedgehog problem
+          - "8.10.1"
           # - "9.0.1" # NT problem
           # - "9.2.1" #  "
     env:

@@ -48,7 +48,7 @@ canonicalOrderFromSemilattice
    . (ElementaryTopos c, Ob c a, EquivalenceRelation c a, Semilattice c (Prod c) a)
   => BinaryRelation c a a
 canonicalOrderFromSemilattice =
-  equiv . first @c p op . to assoc . second p (diagonal @c)
+  equiv . first @c p op . to assoc . second p (diagonal @_ @c)
   \\ inT @(Ob c) @(Prod c) @a @a
   where
     p = Proxy :: Proxy c
@@ -74,7 +74,7 @@ canonicalOrderFromLattice =
   equiv
   . bimap (getJoin . op) getJoin
   . to assoc
-  . second p (diagonal @c)
+  . second p (diagonal @_ @c)
   . bimap Join Join
   where
     p = Proxy :: Proxy c

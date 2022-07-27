@@ -49,7 +49,7 @@ instance {-# overlappable #-}
     to assoc
     . second (Proxy :: Proxy c) (to (braid @c . assoc))
     . from assoc
-    . second (Proxy :: Proxy c) (diagonal @c)
+    . second (Proxy :: Proxy c) (diagonal @_ @c)
     \\ inT @(Ob c) @t @z @(t y z)
     \\ inT @(Ob c) @t @y @(t z z)
     \\ inT @(Ob c) @t @x @y
