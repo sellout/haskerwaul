@@ -1,0 +1,56 @@
+name: haskerwaul
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types:
+      - opened
+      - synchronize
+jobs:
+  cabal-build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ghc:
+          # NB: Haskerwaul relies heavily on `QuantifiedConstraints`, so GHC
+          #     versions prior to 8.6 won't work.
+          - "8.6.1"
+          - "8.8.1"
+          # - "8.10.1" # Hedgehog problem
+          # - "9.0.1" # NT problem
+          # - "9.2.1" #  "
+    env:
+      CONFIG: "--enable-tests --enable-benchmarks"
+    steps:
+      - uses: actions/checkout@v2
+      - uses: haskell/actions/setup@v1
+        id: setup-haskell-cabal
+        with:
+          ghc-version: ${{ matrix.ghc }}
+          cabal-version: "3.6.0.0"
+      - run: cabal v2-update
+      - run: cabal v2-freeze $CONFIG
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ${{ steps.setup-haskell-cabal.outputs.cabal-store }}
+            dist-newstyle
+          key: ${{ runner.os }}-${{ matrix.ghc }}-${{ hashFiles('cabal.project.freeze') }}
+      - run: cabal v2-test all $CONFIG
+  # format:
+  #   runs-on: ubuntu-20.04
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: mrkkrp/ormolu-action@v5
+  # hlint:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: rwe/actions-hlint-setup@v1
+  #       with:
+  #         version: '3.3.6'
+  #     - uses: rwe/actions-hlint-run@v2
+  #       with:
+  #         path: '["./"]'
+  #         fail-on: status
