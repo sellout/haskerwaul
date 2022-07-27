@@ -10,6 +10,7 @@ import           Data.Constraint.Deferrable ((:~:)(..))
 import           Data.Functor.Compose (Compose(..))
 import           Data.Functor.Const (Const (..))
 import           Data.Functor.Identity (Identity(..))
+import           Data.Kind (Type)
 import           Data.Proxy (Proxy(..))
 
 import Haskerwaul.Category.Monoidal'
@@ -21,7 +22,7 @@ import Haskerwaul.Semigroupoid
 import Haskerwaul.Transformation.Dinatural
 
 -- | [nLab](https://ncatlab.org/nlab/show/natural+transformation)
-newtype NaturalTransformation c d f g =
+newtype NaturalTransformation (c :: ok -> ok -> Type) d f g =
   NT { runNT :: forall a. Ob c a => f a `d` g a }
 
 -- |
@@ -111,14 +112,14 @@ lowerOp
   :: forall c d dt f a
    . (d ~ (->), Magma (NaturalTransformation c d) (FTensor dt) f, Ob c a)
   => Proxy c -> dt (f a) (f a) `d` f a
-lowerOp Proxy = runNT @_ @c op Base.. FTensor
+lowerOp Proxy = runNT @_ @c op . FTensor
 
 -- | This lowers a `UnitalMagma` in a functor category to one in the target category.
 lowerUnit
   :: forall c d dt f a
    . (d ~ (->), UnitalMagma (NaturalTransformation c d) (FTensor dt) f, Ob c a)
   => Proxy c -> Proxy dt -> Unit d dt `d` f a
-lowerUnit Proxy Proxy = runNT @_ @c (unit (Proxy :: Proxy (FTensor dt))) Base.. Const
+lowerUnit Proxy Proxy = runNT @_ @c (unit (Proxy :: Proxy (FTensor dt))) . Const
 
 instance {-# overlappable #-} Base.Alternative f =>
                               Magma (NaturalTransformation (->) (->)) (FTensor (,)) f where
