@@ -191,10 +191,10 @@ instance (MonoidalCategory (FullSubcategory ob c) t, ob a, ob (Unit c t), Unital
          UnitalMagma (Opposite (FullSubcategory ob c)) t a where
   unit t = Opposite (FS (opposite (unit t)))
 
-instance (MonoidalCategory (FullSubcategory ob c) t, ob a, ob (Meet a), ob (Join a), ComplementedLattice c t a) =>
+instance (MonoidalCategory (FullSubcategory ob c) t, ob a, ob (Meet a), ob (Join a), ob (Unit c t), ComplementedLattice c t a) =>
          ComplementedLattice (FullSubcategory ob c) t a
 
-instance (MonoidalCategory (FullSubcategory ob c) t, ob a, ob (Meet a), ob (Join a), UniquelyComplementedLattice c t a) =>
+instance (MonoidalCategory (FullSubcategory ob c) t, ob a, ob (Meet a), ob (Join a), ob (Unit c t), UniquelyComplementedLattice c t a) =>
          UniquelyComplementedLattice (FullSubcategory ob c) t a where
   complement p = FS (complement p)
 
@@ -204,7 +204,7 @@ instance (MonoidalCategory (FullSubcategory ob c) t, ob a, ob (Meet a), ob (Join
 instance (MonoidalCategory (FullSubcategory ob c) t, ob a, ob (Meet a), ob (Join a), DistributiveLattice c t a) =>
          DistributiveLattice (FullSubcategory ob c) t a
 
-instance (MonoidalCategory (FullSubcategory ob c) t, ob a, ob (Meet a), ob (Join a), HeytingAlgebra c t a) =>
+instance (MonoidalCategory (FullSubcategory ob c) t, ob a, ob (Meet a), ob (Join a), ob (Unit c t), HeytingAlgebra c t a) =>
          HeytingAlgebra (FullSubcategory ob c) t a where
   implies = FS implies
 

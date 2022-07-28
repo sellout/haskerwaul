@@ -27,7 +27,7 @@ leftDistributiveLaw multiply add =
       . assoc
       . second i (assoc @c)
       . reverse assoc)
-   . first @c p (diagonal @c))
+   . first @c p (diagonal @_ @c))
   \\ inT @(Ob c) @(Prod c) @(Prod c a a) @a
   \\ inT @(Ob c) @(Prod c) @a @(Prod c a a)
   \\ inT @(Ob c) @(Prod c) @a @a

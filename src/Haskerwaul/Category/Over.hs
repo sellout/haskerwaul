@@ -3,6 +3,7 @@
 module Haskerwaul.Category.Over where
 
 import           Data.Constraint.Deferrable ((:~:)(..))
+import           Data.Kind (Type)
 import           Data.Proxy (Proxy (..))
 
 import Haskerwaul.Bifunctor
@@ -19,7 +20,7 @@ import Haskerwaul.Transformation.Dinatural
 --
 -- - [nLab](https://ncatlab.org/nlab/show/over+category)
 -- - [Wikipedia](https://en.wikipedia.org/wiki/Comma_category#Slice_category)
-newtype Over (c :: ok -> ok -> *) (x :: ok) a b = Over (a `c` x -> b `c` x)
+newtype Over (c :: ok -> ok -> Type) (x :: ok) a b = Over (a `c` x -> b `c` x)
 
 type instance Ob (Over c x) = Ob c
 

@@ -10,6 +10,7 @@ module Haskerwaul.Category.Monoidal.Cartesian
 
 import           Data.Constraint
   ((:-)(..), Dict(..), cls, trans, weaken1, weaken2)
+import           Data.Kind (Type)
 import qualified Data.Tuple as Base
 
 import Haskerwaul.Category.Monoidal.Symmetric
@@ -27,7 +28,7 @@ import Haskerwaul.Transformation.Natural
 class ( SymmetricMonoidalCategory c (Prod c)
       , HasTerminalObject c
       , Unit c (Prod c) ~ TerminalObject c) =>
-      CartesianMonoidalCategory c where
+      CartesianMonoidalCategory (c :: ok -> ok -> Type) where
   -- |
   --
   -- = references

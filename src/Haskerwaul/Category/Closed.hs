@@ -26,7 +26,7 @@ import Haskerwaul.Transformation.Natural
 --            constraint, but it's been troublesome making an instance for
 --            `(:=>)`, so we skip the constraint here and add it on the
 --            instances that make use of it.
-class (Category c, TOb (Ob c) (InternalHom c)) => ClosedCategory c where
+class (Category c, TOb (Ob c) (InternalHom c)) => ClosedCategory (c :: ok -> ok -> Type) where
   -- |
   -- = references
   --

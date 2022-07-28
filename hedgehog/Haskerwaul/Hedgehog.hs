@@ -26,6 +26,7 @@ module Haskerwaul.Hedgehog where
 import Control.Monad ((=<<))
 import Data.Constraint.Deferrable ((:~:)(..))
 import Data.Eq (Eq)
+import Data.Kind (Type)
 import Data.Proxy (Proxy (..))
 import Data.String (String, fromString)
 import Data.Typeable (Typeable, typeRep)
@@ -483,8 +484,12 @@ rig_laws label law trans transA transL transR display dispA dispL dispR genX gen
      dispA dispL dispR
      genX0 genX1 genX2
 
+-- | Converts a profunctor category to `HH` for testing.
+lowerDT :: (a `c` b -> y) -> DinaturalTransformation (->) f c -> f a b `HH` y
+lowerDT post morphism = HH (post . runDT morphism)
+
 semigroupoid_laws
-  :: forall ok (c :: ok -> ok -> *) (a :: ok) (b :: ok) y
+  :: forall ok (c :: ok -> ok -> Type) (a :: ok) (b :: ok) y
    . (Typeable ok, Eq y, Show y)
   => PropertyName
   -> SemigroupoidLaws c
@@ -492,10 +497,11 @@ semigroupoid_laws
   -> (Procompose (Procompose c c) c a b -> String)
   -> Gen (Procompose (Procompose c c) c a b)
   -> [(PropertyName, Property)]
-semigroupoid_laws label law post = semigroup_laws label law (HH . (post .) . runDT)
+semigroupoid_laws label law post =
+  semigroup_laws label law (lowerDT post)
 
 category_laws
-  :: forall ok (c :: ok -> ok -> *) (a :: ok) (b :: ok) y
+  :: forall ok (c :: ok -> ok -> Type) (a :: ok) (b :: ok) y
    . (Typeable ok, Eq y, Show y)
   => PropertyName
   -> CategoryLaws c
@@ -508,10 +514,10 @@ category_laws
   -> Gen (Procompose c (:~:) a b)
   -> [(PropertyName, Property)]
 category_laws label law post =
-  monoid_laws label law (HH . (post .) . runDT) (HH . (post .) . runDT) (HH . (post .) . runDT)
+  monoid_laws label law (lowerDT post) (lowerDT post) (lowerDT post)
 
 semigroupalCategory_laws
-  :: forall ok (c :: ok -> ok -> *) (t :: ok -> ok -> ok) (a :: ok) (b :: ok) m n o x3 x4 y
+  :: forall ok (c :: ok -> ok -> Type) (t :: ok -> ok -> ok) (a :: ok) (b :: ok) m n o x3 x4 y
    . (Typeable ok, Ob c m, Ob c n, Ob c o, Eq y, Show y, Eq x3, Show x3, Eq x4, Show x4)
   => PropertyName
   -> SemigroupalCategoryLaws c t
