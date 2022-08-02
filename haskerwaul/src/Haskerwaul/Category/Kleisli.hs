@@ -32,14 +32,14 @@ newtype Kleisli (c :: ok -> ok -> Type) m a b = Kleisli {runKleisli :: a `c` m b
 type instance Ob (Kleisli c _) = Ob c
 
 instance
-  (Ob c ~ All, Semigroupoid c, Monad c m) =>
+  (Ob c ~ All, Semicategory c, Monad c m) =>
   Magma (DinaturalTransformation (->)) Procompose (Kleisli c m)
   where
   op =
     DT (\(Procompose (Kleisli f) (Kleisli g)) -> Kleisli (flatten . map f . g))
 
 instance
-  (Ob c ~ All, Semigroupoid c, Monad c m) =>
+  (Ob c ~ All, Semicategory c, Monad c m) =>
   Semigroup (DinaturalTransformation (->)) Procompose (Kleisli c m)
 
 instance
@@ -137,7 +137,7 @@ instance
 
 -- | A monad in a Kleisli category is basically a traversable monad.
 instance
-  (Semigroupoid c, Monad c n, Functor (Kleisli c n) (Kleisli c n) m, Monad c m) =>
+  (Semicategory c, Monad c n, Functor (Kleisli c n) (Kleisli c n) m, Monad c m) =>
   Monad (Kleisli c n) m
   where
   pure :: forall a. (Ob c a) => Kleisli c n a (m a)

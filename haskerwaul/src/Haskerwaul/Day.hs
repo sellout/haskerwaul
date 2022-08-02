@@ -23,7 +23,8 @@ import Haskerwaul.Subcategory.Full
 import Haskerwaul.Transformation.Natural
 
 -- | [nLab](https://ncatlab.org/nlab/show/Day+convolution)
-data Day c ct dt f g a = forall x y. (Ob c x, Ob c y) => Day (dt (f x) (g y)) (ct x y `c` a)
+data Day c ct dt f g a
+  = forall x y. (Ob c x, Ob c y) => Day (dt (f x) (g y)) (ct x y `c` a)
 
 -- | Functor categories have `Day` as a monoidal tensor.
 --
@@ -86,11 +87,11 @@ instance
   (c ~ (->), d ~ (->), LaxMonoidalFunctor c ct d dt f) =>
   Semigroup (NaturalTransformation c d) (Day c ct dt) f
 
-instance (d ~ (->), Semigroupoid c) => Functor c d (Day c ct dt f g) where
+instance (d ~ (->), Semicategory c) => Functor c d (Day c ct dt f g) where
   map f (Day t fn) = Day t (f . fn)
 
 instance
-  (d ~ (->), Semigroupoid c) =>
+  (d ~ (->), Semicategory c) =>
   BOb (Functor c d) (Functor c d) (Functor c d) (Day c ct dt)
   where
   inB = Sub Dict

@@ -51,14 +51,14 @@ type instance Ob (Opposite c) = Ob c
 --   inB :: forall x y. (cOb x, dOb y, BOb cOb dOb eOb (c x y)) :- BOb dOb cOb eOb (Op c x y)
 --   inB = Sub (Dict \\ inB @cOb @dOb @eOb @c @x @y)
 
--- | If /C/ is a `Semigroupoid`, then so is /C^op/.
+-- | If /C/ is a `Semicategory`, then so is /C^op/.
 instance
   (Magma (DinaturalTransformation (->)) Procompose c) =>
   Magma (DinaturalTransformation (->)) Procompose (Opposite c)
   where
   op = DT (\(Procompose (Opposite f) (Opposite g)) -> Opposite (g . f))
 
--- | If /C/ is a `Semigroupoid`, then so is /C^op/.
+-- | If /C/ is a `Semicategory`, then so is /C^op/.
 instance
   (Semigroup (DinaturalTransformation (->)) Procompose c) =>
   Semigroup (DinaturalTransformation (->)) Procompose (Opposite c)
@@ -155,13 +155,13 @@ instance
   map (Opposite f) = Opposite (map f)
 
 instance
-  (Semigroupoid c1, Bifunctor c1 c2 d t) =>
+  (Semicategory c1, Bifunctor c1 c2 d t) =>
   Bifunctor (Opposite c1) (Opposite c2) (Opposite d) t
   where
   bimap f g = Opposite (bimap (opposite f) (opposite g))
 
--- | The arrow of every `Semigroupoid` is a `Haskerwaul.Profunctor.Profunctor`.
-instance (Semigroupoid c) => Bifunctor (Opposite c) c (->) c where
+-- | The arrow of every `Semicategory` is a `Haskerwaul.Profunctor.Profunctor`.
+instance (Semicategory c) => Bifunctor (Opposite c) c (->) c where
   bimap f g fn = g . fn . opposite f
 
 -- instance Bifunctor (Opposite (:-)) (:-) (:-) (:=>) where

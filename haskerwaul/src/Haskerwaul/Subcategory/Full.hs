@@ -128,13 +128,13 @@ instance
 
 instance
   {-# OVERLAPPABLE #-}
-  (Semigroupoid c, Bifunctor c d e t, BOb cOb dOb eOb t) =>
+  (Semicategory c, Bifunctor c d e t, BOb cOb dOb eOb t) =>
   Bifunctor (FullSubcategory cOb c) (FullSubcategory dOb d) (FullSubcategory eOb e) t
   where
   bimap (FS f) (FS g) = FS (bimap f g)
 
 instance
-  (Semigroupoid c, Bifunctor (Opposite c) d e t, BOb cOb dOb eOb t) =>
+  (Semicategory c, Bifunctor (Opposite c) d e t, BOb cOb dOb eOb t) =>
   Bifunctor (Opposite (FullSubcategory cOb c)) (FullSubcategory dOb d) (FullSubcategory eOb e) t
   where
   bimap (Opposite (FS f)) (FS g) = FS (bimap (Opposite f) g)

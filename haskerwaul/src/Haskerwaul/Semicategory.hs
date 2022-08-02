@@ -7,8 +7,8 @@
 --         "Haskerwaul.Category" and "Haskerwaul.Groupoid", respectively)
 --          because it avoids them being orphan instances, since `Procompose` is
 --          defined here.
-module Haskerwaul.Semigroupoid
-  ( module Haskerwaul.Semigroupoid,
+module Haskerwaul.Semicategory
+  ( module Haskerwaul.Semicategory,
 
     -- * extended modules
     module Haskerwaul.Semigroup,
@@ -40,7 +40,7 @@ data Procompose c d a b = forall z. Procompose (z `c` b) (a `d` z)
 --  __TODO__: This should have a @`Haskerwaul.Profunctor.Profunctor` c c c@
 --            constraint, but there are troublesome instances, so we skip the
 --            constraint here and add it on the instances that make use of it.
-type Semigroupoid = Semigroup (DinaturalTransformation (->)) Procompose
+type Semicategory = Semigroup (DinaturalTransformation (->)) Procompose
 
 -- | Just a bit of sugar over `op`, when it's used categorcally.
 (.) ::
@@ -59,7 +59,7 @@ id = runDT (unit (Proxy :: Proxy Procompose)) Refl
 instance MonoidalCategory' (DinaturalTransformation (->)) Procompose where
   type Unit (DinaturalTransformation (->)) Procompose = (:~:)
 
--- | All `Base.Category` instances are also `Semigroupoid` instances.
+-- | All `Base.Category` instances are also `Semicategory` instances.
 instance
   {-# OVERLAPPABLE #-}
   (Base.Category c) =>
@@ -67,7 +67,7 @@ instance
   where
   op = DT (\(Procompose f g) -> f Base.. g)
 
--- | All `Base.Category` instances are also `Semigroupoid` instances.
+-- | All `Base.Category` instances are also `Semicategory` instances.
 instance
   {-# OVERLAPPABLE #-}
   (Base.Category c) =>
@@ -81,14 +81,14 @@ instance
   where
   unit Proxy = DT (\Refl -> Base.id)
 
--- | If /C/ is a `Semigroupoid`, then so are /C/-valued bifunctors.
+-- | If /C/ is a `Semicategory`, then so are /C/-valued bifunctors.
 instance
   (Magma (DinaturalTransformation (->)) Procompose c) =>
   Magma (DinaturalTransformation (->)) Procompose (DinaturalTransformation c)
   where
   op = DT (\(Procompose (DT f) (DT g)) -> DT (f . g))
 
--- | If /C/ is a `Semigroupoid`, then so are /C/-valued bifunctors.
+-- | If /C/ is a `Semicategory`, then so are /C/-valued bifunctors.
 instance
   (Semigroup (DinaturalTransformation (->)) Procompose c) =>
   Semigroup (DinaturalTransformation (->)) Procompose (DinaturalTransformation c)
@@ -139,13 +139,13 @@ instance LeftQuasigroup (DinaturalTransformation (->)) Procompose (:~:) where
 instance RightQuasigroup (DinaturalTransformation (->)) Procompose (:~:) where
   rightQuotient = DT (\(Procompose Refl Refl) -> Refl)
 
--- -- | If /C/ and /C'/ are `Semigroupoid` instances, then so is their product.
+-- -- | If /C/ and /C'/ are `Semicategory` instances, then so is their product.
 -- instance ( Magma (DinaturalTransformation (->)) Procompose c
 --          , Magma (DinaturalTransformation (->)) Procompose c') =>
 --          Magma (DinaturalTransformation (->)) Procompose (c :**: c') where
 --   op = DT (\(Procompose (NT (ProdC f)) (NT (ProdC g))) -> NT (f . g))
 
--- -- | If /C/ and /C'/ are `Semigroupoid` instances, then so is their product.
+-- -- | If /C/ and /C'/ are `Semicategory` instances, then so is their product.
 -- instance ( Semigroup (DinaturalTransformation (->)) Procompose c
 --          , Semigroup (DinaturalTransformation (->)) Procompose c') =>
 --          Semigroup (DinaturalTransformation (->)) Procompose (c :**: c')

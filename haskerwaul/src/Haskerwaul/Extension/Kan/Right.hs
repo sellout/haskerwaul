@@ -15,7 +15,7 @@ import Data.Type.Equality (type (~))
 #endif
 import Haskerwaul.Functor
 import Haskerwaul.Object
-import Haskerwaul.Semigroupoid
+import Haskerwaul.Semicategory
 
 -- |
 -- = references
@@ -26,7 +26,7 @@ newtype RightKanExtension c c' p f a
   = Ran (forall b. (Ob c b) => a `c'` p b -> f b)
 
 instance
-  (d ~ (->), Semigroupoid c', FOb (Ob c) (Ob c') p) =>
+  (d ~ (->), Semicategory c', FOb (Ob c) (Ob c') p) =>
   Functor c' d (RightKanExtension c c' p f)
   where
   map f (Ran g) =

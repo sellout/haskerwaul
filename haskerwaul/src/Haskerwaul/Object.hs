@@ -18,7 +18,7 @@ import Prelude (Either, Eq, Show)
 --   parameter (as in `Haskerwaul.Subcategory.Full.FullSubcategory`).
 --
 -- __NB__: Ideally this would be an associated type on
---        `Haskerwaul.Semigroupoid.Semigroupoid`, but [type families can't
+--        `Haskerwaul.Semicategory.Semicategory`, but [type families can't
 --         overlap](https://gitlab.haskell.org/ghc/ghc/issues/4259), so we
 --         extract it here and remove the @overlappable@ case in favor of more
 --         specific ones.

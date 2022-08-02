@@ -24,7 +24,7 @@ import Haskerwaul.Constraint
 import Haskerwaul.Functor
 import Haskerwaul.Monoid
 import Haskerwaul.Object
-import Haskerwaul.Semigroupoid
+import Haskerwaul.Semicategory
 import Haskerwaul.Transformation.Dinatural
 
 -- | [nLab](https://ncatlab.org/nlab/show/natural+transformation)
@@ -90,14 +90,14 @@ instance
   where
   type Unit (NaturalTransformation c d) (FTensor dt) = Const (Unit d dt)
 
--- | If /D/ is a `Semigroupoid`, then so are /D/-valued functors.
+-- | If /D/ is a `Semicategory`, then so are /D/-valued functors.
 instance
   (Magma (DinaturalTransformation (->)) Procompose d) =>
   Magma (DinaturalTransformation (->)) Procompose (NaturalTransformation c d)
   where
   op = DT (\(Procompose (NT f) (NT g)) -> NT (f . g))
 
--- | If /D/ is a `Semigroupoid`, then so are /D/-valued functors.
+-- | If /D/ is a `Semicategory`, then so are /D/-valued functors.
 instance
   (Semigroup (DinaturalTransformation (->)) Procompose d) =>
   Semigroup (DinaturalTransformation (->)) Procompose (NaturalTransformation c d)

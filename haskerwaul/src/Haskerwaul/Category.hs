@@ -7,12 +7,12 @@ module Haskerwaul.Category
 
     -- * extended modules
     module Haskerwaul.Monoid,
-    module Haskerwaul.Semigroupoid,
+    module Haskerwaul.Semicategory,
   )
 where
 
 import Haskerwaul.Monoid
-import Haskerwaul.Semigroupoid
+import Haskerwaul.Semicategory
 import Haskerwaul.Transformation.Dinatural
 
 -- |

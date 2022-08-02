@@ -297,6 +297,7 @@ module Haskerwaul
     module Haskerwaul.Ring.Nonunital,
 
     -- * semigroups
+    module Haskerwaul.Semicategory,
     module Haskerwaul.Semigroup,
     module Haskerwaul.Semigroup.Commutative,
     module Haskerwaul.Semigroup.Inverse,
@@ -304,7 +305,6 @@ module Haskerwaul
     -- * semilattices
     module Haskerwaul.Semilattice,
     module Haskerwaul.Semilattice.Bounded,
-    module Haskerwaul.Semigroupoid,
 
     -- * semirings
     module Haskerwaul.Semiring,
@@ -555,10 +555,10 @@ import Haskerwaul.Ring
 import Haskerwaul.Ring.Boolean
 import Haskerwaul.Ring.Commutative
 import Haskerwaul.Ring.Nonunital
+import Haskerwaul.Semicategory
 import Haskerwaul.Semigroup
 import Haskerwaul.Semigroup.Commutative
 import Haskerwaul.Semigroup.Inverse
-import Haskerwaul.Semigroupoid
 import Haskerwaul.Semilattice
 import Haskerwaul.Semilattice.Bounded
 import Haskerwaul.Semiring

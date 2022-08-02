@@ -9,7 +9,7 @@ import Haskerwaul.Bifunctor
 import Haskerwaul.Category.MonoidalUnit
 import Haskerwaul.Magma.Unital
 import Haskerwaul.Object
-import Haskerwaul.Semigroupoid
+import Haskerwaul.Semicategory
 import Haskerwaul.Transformation.Dinatural
 
 -- | [nLab](https://ncatlab.org/nlab/show/isomorphism)

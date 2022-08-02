@@ -416,6 +416,8 @@ library
     Haskerwaul.Ring.Boolean
     Haskerwaul.Ring.Commutative
     Haskerwaul.Ring.Nonunital
+    Haskerwaul.Semicategory
+    Haskerwaul.Semicategory.Laws
     Haskerwaul.Semigroup
     Haskerwaul.Semigroup.Commutative
     Haskerwaul.Semigroup.Commutative.Laws
@@ -425,8 +427,6 @@ library
     Haskerwaul.Semilattice.Bounded
     Haskerwaul.Semilattice.Bounded.Laws
     Haskerwaul.Semilattice.Laws
-    Haskerwaul.Semigroupoid
-    Haskerwaul.Semigroupoid.Laws
     Haskerwaul.Semiring
     Haskerwaul.Semiring.Idempotent
     Haskerwaul.Semiring.MaxPlus

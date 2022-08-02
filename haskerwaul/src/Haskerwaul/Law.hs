@@ -16,8 +16,8 @@ import Haskerwaul.Topos.Elementary
 -- | A law is a pair of morphisms with a relation constraint.
 --
 --   The relation is managed at the type level because we define laws in
---   arbitrary categories (or even semigroupoids), but can only validate them in
---   a topos. When a law is defined, we don't know which topos(es) it may be
+--   arbitrary categories (or even semicategories), but can only validate them
+--   in a topos. When a law is defined, we don't know which topos(es) it may be
 --   tested in, so the constraint allows us to concretize the comparison after
 --   we've chosen a topos for testing.
 --

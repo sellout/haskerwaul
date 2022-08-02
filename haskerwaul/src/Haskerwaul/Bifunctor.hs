@@ -54,7 +54,7 @@ instance Bifunctor (->) c (->) Const where
   bimap f _ = Const . f . getConst
 
 instance
-  (d ~ (->), Semigroupoid d, Bifunctor c1 c2 d t) =>
+  (d ~ (->), Semicategory d, Bifunctor c1 c2 d t) =>
   Bifunctor
     (NaturalTransformation c' c1)
     (NaturalTransformation c' c2)
@@ -82,7 +82,7 @@ instance
       )
 
 instance
-  (Ob c1 ~ All, Ob c2 ~ All, d ~ (->), Semigroupoid d, Bifunctor c1 c2 d t) =>
+  (Ob c1 ~ All, Ob c2 ~ All, d ~ (->), Semicategory d, Bifunctor c1 c2 d t) =>
   Bifunctor
     (DinaturalTransformation c1)
     (DinaturalTransformation c2)

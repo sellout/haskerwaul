@@ -21,7 +21,7 @@ import Data.Functor.Const (Const (..))
 import Data.Type.Equality (type (~))
 #endif
 import Haskerwaul.Object
-import Haskerwaul.Semigroupoid
+import Haskerwaul.Semicategory
 
 -- | [nLab](https://ncatlab.org/nlab/show/functor)
 class (FOb (Ob c) (Ob d) f) => Functor c d f where
@@ -34,7 +34,7 @@ class (FOb (Ob c) (Ob d) f) => Functor c d f where
 --          fixable with something like defining our own `Compose` that carries
 --          the "middle" category around.
 instance
-  (b ~ (->), c ~ (->), Semigroupoid c, Functor b c f, Functor a b g) =>
+  (b ~ (->), c ~ (->), Semicategory c, Functor b c f, Functor a b g) =>
   Functor a c (Compose f g)
   where
   map f = Compose . map @b (map @_ @b f) . getCompose
@@ -52,7 +52,7 @@ instance
 -- | This encodes that a composition of functors is always a functor, and has a
 --   similar restriction to the @`Functor` (`Compose` f g)@ instance.
 instance
-  (b ~ (->), c ~ (->), Semigroupoid c) =>
+  (b ~ (->), c ~ (->), Semicategory c) =>
   BOb (Functor b c) (Functor a b) (Functor a c) Compose
   where
   inB = Sub Dict

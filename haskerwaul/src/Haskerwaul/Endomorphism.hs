@@ -5,7 +5,7 @@ module Haskerwaul.Endomorphism where
 
 import Data.Proxy (Proxy (..))
 import Haskerwaul.Group
-import Haskerwaul.Semigroupoid
+import Haskerwaul.Semicategory
 import Haskerwaul.Transformation.Dinatural
 
 -- |
