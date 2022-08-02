@@ -14,9 +14,9 @@ import Data.Constraint ((\\))
 #if MIN_VERSION_base(4, 17, 0)
 import Data.Type.Equality (type (~))
 #endif
+import Haskerwaul.Category
 import Haskerwaul.Functor
 import Haskerwaul.Object
-import Haskerwaul.Semicategory
 
 -- |
 --  __NB__: This implementation, moreso than
@@ -41,6 +41,10 @@ data LeftKanExtension c c' p f a where
 
 instance
   (d ~ (->), Semicategory c', FOb (Ob c) (Ob c') p) =>
-  Functor c' d (LeftKanExtension c c' p f)
+  Semifunctor c' d (LeftKanExtension c c' p f)
   where
   map f (Lan (g :: p x `c'` a) h) = Lan (f . g \\ inF @(Ob c) @(Ob c') @p @x) h
+
+instance
+  (d ~ (->), Category c', FOb (Ob c) (Ob c') p) =>
+  Functor c' d (LeftKanExtension c c' p f)

@@ -146,13 +146,19 @@ isomorphismOp =
     (DT (Base.uncurry Iso . (Opposite . from &&& Opposite . to)))
     (DT (Base.uncurry Iso . (opposite . from &&& opposite . to)))
 
+-- | Semifunctors are self-dual.
+instance
+  {-# OVERLAPPABLE #-}
+  (Semifunctor c d f) =>
+  Semifunctor (Opposite c) (Opposite d) f
+  where
+  map (Opposite f) = Opposite (map f)
+
 -- | Functors are self-dual.
 instance
   {-# OVERLAPPABLE #-}
   (Functor c d f) =>
   Functor (Opposite c) (Opposite d) f
-  where
-  map (Opposite f) = Opposite (map f)
 
 instance
   (Semicategory c1, Bifunctor c1 c2 d t) =>

@@ -1,4 +1,5 @@
 {-# LANGUAGE Safe #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Functor.Faithful
   ( module Haskerwaul.Functor.Faithful,

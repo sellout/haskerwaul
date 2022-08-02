@@ -1,5 +1,6 @@
 {-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE UndecidableInstances #-}
 
 module Haskerwaul.Category.Terminal where
 
@@ -69,8 +70,11 @@ instance PointedCategory (TerminalCategory :: Type -> Type -> Type) where
   (!-) = TermId
 
 -- | There is a unique functor @c -> `TerminalCategory`@ for each category @c@.
-instance Functor c TerminalCategory f where
+instance (Semicategory c) => Semifunctor c TerminalCategory f where
   map _ = TermId
+
+-- | There is a unique functor @c -> `TerminalCategory`@ for each category @c@.
+instance (Category c) => Functor c TerminalCategory f
 
 instance Bifunctor c1 c2 TerminalCategory f where
   bimap _ _ = TermId

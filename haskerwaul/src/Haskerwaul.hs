@@ -120,6 +120,7 @@ module Haskerwaul
     module Haskerwaul.Functor.Hom.Internal,
     module Haskerwaul.Functor.Strong,
     module Haskerwaul.Profunctor,
+    module Haskerwaul.Semifunctor,
 
     -- ** monoidal functors
     module Haskerwaul.Functor.Monoidal.Closed,
@@ -556,6 +557,7 @@ import Haskerwaul.Ring.Boolean
 import Haskerwaul.Ring.Commutative
 import Haskerwaul.Ring.Nonunital
 import Haskerwaul.Semicategory
+import Haskerwaul.Semifunctor
 import Haskerwaul.Semigroup
 import Haskerwaul.Semigroup.Commutative
 import Haskerwaul.Semigroup.Inverse

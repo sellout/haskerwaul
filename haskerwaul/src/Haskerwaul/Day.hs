@@ -15,6 +15,7 @@ import Data.Type.Equality (type (~))
 import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Closed.Cartesian
 import Haskerwaul.Category.Monoidal.Cartesian
+import Haskerwaul.Constraint
 import Haskerwaul.Duoid.Components
 import Haskerwaul.Functor.Monoidal.Lax
 import Haskerwaul.Isomorphism
@@ -87,13 +88,18 @@ instance
   (c ~ (->), d ~ (->), LaxMonoidalFunctor c ct d dt f) =>
   Semigroup (NaturalTransformation c d) (Day c ct dt) f
 
-instance (d ~ (->), Semicategory c) => Functor c d (Day c ct dt f g) where
+instance (d ~ (->), Semicategory c) => Semifunctor c d (Day c ct dt f g) where
   map f (Day t fn) = Day t (f . fn)
+
+instance (d ~ (->), Category c) => Functor c d (Day c ct dt f g)
 
 instance
   (d ~ (->), Semicategory c) =>
-  BOb (Functor c d) (Functor c d) (Functor c d) (Day c ct dt)
+  BOb All All (Semifunctor c d) (Day c ct dt)
   where
+  inB = Sub Dict
+
+instance (d ~ (->), Category c) => BOb All All (Functor c d) (Day c ct dt) where
   inB = Sub Dict
 
 instance

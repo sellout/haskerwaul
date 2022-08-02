@@ -1,6 +1,7 @@
 {-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE UndecidableInstances #-}
 
 module Haskerwaul.Object where
 
@@ -59,6 +60,9 @@ instance BOb (FOb cOb dOb) (FOb eOb fOb) (FOb gOb All) t where
 
 instance BOb (BOb cOb dOb eOb) (BOb fOb gOb hOb) (BOb iOb jOb All) t where
   inB = Sub Dict
+
+instance {-# OVERLAPPABLE #-} (BOb All All eOb t) => BOb cOb dOb eOb t where
+  inB = inB
 
 instance
   (BOb cOb dOb eOb b, BOb cOb' dOb' eOb' b) =>

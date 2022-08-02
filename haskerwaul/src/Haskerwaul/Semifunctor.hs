@@ -1,5 +1,6 @@
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE Safe #-}
+{-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableInstances #-}
 {-# LANGUAGE UndecidableSuperClasses #-}
@@ -11,31 +12,27 @@
 --   functor from the subcategory, but has no type constructor to allow an
 --   instance of `Functor`. Likewise, `Control.Arrow.Arrow` has a functor
 --  `Control.Arrow.arr` from __Hask__ to the `Control.Arrow.Arrow` instance.
-module Haskerwaul.Functor
-  ( module Haskerwaul.Functor,
+module Haskerwaul.Semifunctor where
 
-    -- * extended modules
-    module Haskerwaul.Semifunctor,
-  )
-where
-
-import Data.Constraint (Dict (..), (:-) (..))
+import Data.Constraint (Dict (..), mapDict, (:-) (..))
 import qualified Data.Functor as Base
 import Data.Functor.Compose (Compose (..))
 import Data.Functor.Const (Const (..))
 #if MIN_VERSION_base(4, 17, 0)
 import Data.Type.Equality (type (~))
 #endif
-import Haskerwaul.Category
 import Haskerwaul.Object
-import Haskerwaul.Semifunctor
+import Haskerwaul.Semicategory
 
 -- |
---
 -- = references
 --
--- - [nLab](https://ncatlab.org/nlab/show/functor)
-class (Category c, Semifunctor c d f) => Functor c d f
+-- - [nLab](https://ncatlab.org/nlab/show/semifunctor)
+class
+  (Semicategory c, Semicategory d, FOb (Ob c) (Ob d) f) =>
+  Semifunctor c d f
+  where
+  map :: (Ob c a, Ob c b) => a `c` b -> f a `d` f b
 
 -- | The composition of two functors is always a functor.
 --
@@ -44,39 +41,48 @@ class (Category c, Semifunctor c d f) => Functor c d f
 --          fixable with something like defining our own `Compose` that carries
 --          the "middle" category around.
 instance
-  (b ~ (->), c ~ (->), Semicategory c, Functor b c f, Functor a b g) =>
-  Functor a c (Compose f g)
+  (b ~ (->), c ~ (->), Semicategory a, Semifunctor b c f, Semifunctor a b g) =>
+  Semifunctor a c (Compose f g)
+  where
+  map f = Compose . map @b (map @_ @b f) . getCompose
 
 -- | __NB__: This instance only exists to eliminate the ambiguity between the
 --          `Base.Functor` constrained instance and the above instance when
 --           trying to satisfy @`Functor` (->) (->) (`Compose` f g)@.
 instance
   {-# OVERLAPPING #-}
-  (Functor (->) (->) f, Functor (->) (->) g) =>
-  Functor (->) (->) (Compose f g)
+  (Semifunctor (->) (->) f, Semifunctor (->) (->) g) =>
+  Semifunctor (->) (->) (Compose f g)
+  where
+  map f = Compose . map @(->) (map @_ @(->) f) . getCompose
 
 -- | This encodes that a composition of functors is always a functor, and has a
 --   similar restriction to the @`Functor` (`Compose` f g)@ instance.
 instance
   (b ~ (->), c ~ (->), Semicategory c) =>
-  BOb (Functor b c) (Functor a b) (Functor a c) Compose
+  BOb (Semifunctor b c) (Semifunctor a b) (Semifunctor a c) Compose
   where
   inB = Sub Dict
 
 -- | `Dict` is a `Haskerwaul.Functor.Faithful.Full.FullFaithfulFunctor` between
 --   the category of constraints and __Hask__.
-instance Functor (:-) (->) Dict
+instance Semifunctor (:-) (->) Dict where
+  map = mapDict
 
 -- | This instance lifts all instances of `Base.Functor` to _our_ `Functor`. If
 --   you're trying to define an instance where the source and destination
 --   categories are both @(->)@, you should be instantiating `Base.Functor`
 --   directly, and allow this instance to lift it into Haskerwaul.
 --
---  __NB__: This instance can be @INCOHERENT@ with an instance like @`Functor` c
---          (->) Foo@, in which case we prefer the other instance.
-instance {-# INCOHERENT #-} (Base.Functor f) => Functor (->) (->) f
+--  __NB__: This instance can be @INCOHERENT@ with an instance like
+--          @`Semifunctor` c (->) Foo@, in which case we prefer the other
+--          instance.
+instance {-# INCOHERENT #-} (Base.Functor f) => Semifunctor (->) (->) f where
+  map = Base.fmap
 
 -- | The constant functor to a particular object in the target category.
 instance
-  (d ~ (->), Category c, FOb (Ob c) (Ob d) (Const dOb)) =>
-  Functor c d (Const dOb)
+  (d ~ (->), Semicategory c, FOb (Ob c) (Ob d) (Const dOb)) =>
+  Semifunctor c d (Const dOb)
+  where
+  map _ = Const . getConst

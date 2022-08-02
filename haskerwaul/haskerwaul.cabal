@@ -418,6 +418,7 @@ library
     Haskerwaul.Ring.Nonunital
     Haskerwaul.Semicategory
     Haskerwaul.Semicategory.Laws
+    Haskerwaul.Semifunctor
     Haskerwaul.Semigroup
     Haskerwaul.Semigroup.Commutative
     Haskerwaul.Semigroup.Commutative.Laws

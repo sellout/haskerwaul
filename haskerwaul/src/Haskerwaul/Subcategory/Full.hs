@@ -174,12 +174,19 @@ instance
 
 -- | See, `Set.Set` /is/ a `Functor`.
 instance
-  Functor
+  Semifunctor
     (FullSubcategory Base.Ord (->))
     (FullSubcategory Base.Ord (->))
     Set.Set
   where
   map = FS . Set.map . inclusion
+
+-- | See, `Set.Set` /is/ a `Functor`.
+instance
+  Functor
+    (FullSubcategory Base.Ord (->))
+    (FullSubcategory Base.Ord (->))
+    Set.Set
 
 -- | Like a `FullSubcategory`, this adds a constraint to a category, but it does
 --   it without the possibility of nesting `FullSubcategory` constructors. I.e.,
