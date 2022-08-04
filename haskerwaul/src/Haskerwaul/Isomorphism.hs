@@ -6,10 +6,8 @@ module Haskerwaul.Isomorphism where
 import Data.Proxy (Proxy (..))
 import Data.Type.Equality ((:~:) (..))
 import Haskerwaul.Bifunctor
-import Haskerwaul.Category.MonoidalUnit
-import Haskerwaul.Magma.Unital
+import Haskerwaul.Category
 import Haskerwaul.Object
-import Haskerwaul.Semicategory
 import Haskerwaul.Transformation.Dinatural
 
 -- | [nLab](https://ncatlab.org/nlab/show/isomorphism)
@@ -21,17 +19,17 @@ reverse iso = Iso (from iso) (to iso)
 type instance Ob (Isomorphism c) = Ob c
 
 instance
-  (Magma (DinaturalTransformation (->)) Procompose c) =>
+  (Magmoid c) =>
   Magma (DinaturalTransformation (->)) Procompose (Isomorphism c)
   where
   op = DT (\(Procompose f g) -> Iso (to f . to g) (from g . from f))
 
 instance
-  (Semigroup (DinaturalTransformation (->)) Procompose c) =>
+  (Semicategory c) =>
   Semigroup (DinaturalTransformation (->)) Procompose (Isomorphism c)
 
 instance
-  (UnitalMagma (DinaturalTransformation (->)) Procompose c) =>
+  (UnitalMagmoid c) =>
   UnitalMagma (DinaturalTransformation (->)) Procompose (Isomorphism c)
   where
   unit Proxy = DT (\Refl -> Iso id id)

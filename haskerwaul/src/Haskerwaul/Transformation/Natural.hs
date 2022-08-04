@@ -19,12 +19,10 @@ import Data.Type.Equality ((:~:) (..), type (~))
 #else
 import Data.Type.Equality ((:~:) (..))
 #endif
-import Haskerwaul.Category.MonoidalUnit
+import Haskerwaul.Category
 import Haskerwaul.Constraint
 import Haskerwaul.Functor
-import Haskerwaul.Monoid
 import Haskerwaul.Object
-import Haskerwaul.Semicategory
 import Haskerwaul.Transformation.Dinatural
 
 -- | [nLab](https://ncatlab.org/nlab/show/natural+transformation)
@@ -90,21 +88,21 @@ instance
   where
   type Unit (NaturalTransformation c d) (FTensor dt) = Const (Unit d dt)
 
--- | If /D/ is a `Semicategory`, then so are /D/-valued functors.
+-- | If /D/ is a `Magmoid`, then so are /D/-valued functors.
 instance
-  (Magma (DinaturalTransformation (->)) Procompose d) =>
+  (Magmoid d) =>
   Magma (DinaturalTransformation (->)) Procompose (NaturalTransformation c d)
   where
   op = DT (\(Procompose (NT f) (NT g)) -> NT (f . g))
 
 -- | If /D/ is a `Semicategory`, then so are /D/-valued functors.
 instance
-  (Semigroup (DinaturalTransformation (->)) Procompose d) =>
+  (Semicategory d) =>
   Semigroup (DinaturalTransformation (->)) Procompose (NaturalTransformation c d)
 
--- | If /D/ is a `Category`, then so are /D/-valued functors.
+-- | If /D/ is a `UnitalMagmoid`, then so are /D/-valued functors.
 instance
-  (UnitalMagma (DinaturalTransformation (->)) Procompose d) =>
+  (UnitalMagmoid d) =>
   UnitalMagma (DinaturalTransformation (->)) Procompose (NaturalTransformation c d)
   where
   unit Proxy = DT (\Refl -> NT id)

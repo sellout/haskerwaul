@@ -178,6 +178,7 @@ module Haskerwaul
 
     -- * loops
     module Haskerwaul.Loop,
+    module Haskerwaul.Loopoid,
 
     -- * magmas
     module Haskerwaul.Magma,
@@ -187,6 +188,8 @@ module Haskerwaul
     module Haskerwaul.Magma.Invertible.Left,
     module Haskerwaul.Magma.Invertible.Right,
     module Haskerwaul.Magma.Unital,
+    module Haskerwaul.Magmoid,
+    module Haskerwaul.Magmoid.Unital,
 
     -- * meadows
     module Haskerwaul.Meadow,
@@ -257,6 +260,7 @@ module Haskerwaul
     module Haskerwaul.Quasigroup.Invertible.Commutative,
     module Haskerwaul.Quasigroup.Left,
     module Haskerwaul.Quasigroup.Right,
+    module Haskerwaul.Quasigroupoid,
 
     -- * racks
     module Haskerwaul.Quandle,
@@ -479,6 +483,7 @@ import Haskerwaul.Law.Reflexivity
 import Haskerwaul.Law.Symmetry
 import Haskerwaul.Loop
 import Haskerwaul.Loop.Commutative
+import Haskerwaul.Loopoid
 import Haskerwaul.Magma
 import Haskerwaul.Magma.Commutative
 import Haskerwaul.Magma.Invertible
@@ -486,6 +491,8 @@ import Haskerwaul.Magma.Invertible.Commutative
 import Haskerwaul.Magma.Invertible.Left
 import Haskerwaul.Magma.Invertible.Right
 import Haskerwaul.Magma.Unital
+import Haskerwaul.Magmoid
+import Haskerwaul.Magmoid.Unital
 import Haskerwaul.Meadow
 import Haskerwaul.Meadow.Cancellation
 import Haskerwaul.Meadow.NonInvolutive
@@ -535,6 +542,7 @@ import Haskerwaul.Quasigroup.Invertible
 import Haskerwaul.Quasigroup.Invertible.Commutative
 import Haskerwaul.Quasigroup.Left
 import Haskerwaul.Quasigroup.Right
+import Haskerwaul.Quasigroupoid
 import Haskerwaul.Quasiorder
 import Haskerwaul.Rack
 import Haskerwaul.Relation.Apartness

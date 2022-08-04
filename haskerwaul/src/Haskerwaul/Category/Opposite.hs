@@ -53,19 +53,19 @@ type instance Ob (Opposite c) = Ob c
 
 -- | If /C/ is a `Semicategory`, then so is /C^op/.
 instance
-  (Magma (DinaturalTransformation (->)) Procompose c) =>
+  (Magmoid c) =>
   Magma (DinaturalTransformation (->)) Procompose (Opposite c)
   where
   op = DT (\(Procompose (Opposite f) (Opposite g)) -> Opposite (g . f))
 
 -- | If /C/ is a `Semicategory`, then so is /C^op/.
 instance
-  (Semigroup (DinaturalTransformation (->)) Procompose c) =>
+  (Semicategory c) =>
   Semigroup (DinaturalTransformation (->)) Procompose (Opposite c)
 
 -- | If /C/ is a `Category`, then so is /C^op/.
 instance
-  (UnitalMagma (DinaturalTransformation (->)) Procompose c) =>
+  (UnitalMagmoid c) =>
   UnitalMagma (DinaturalTransformation (->)) Procompose (Opposite c)
   where
   unit Proxy = DT (\Refl -> Opposite id)

@@ -63,13 +63,13 @@ instance Subcategory (FullSubcategory ob c) c where
   inclusion (FS f) = f
 
 instance
-  (Magma (DinaturalTransformation (->)) Procompose c) =>
+  (Magmoid c) =>
   Magma (DinaturalTransformation (->)) Procompose (FullSubcategory ob c)
   where
   op = DT (\(Procompose (FS f) (FS g)) -> FS (f . g))
 
 instance
-  (Semigroup (DinaturalTransformation (->)) Procompose c) =>
+  (Semicategory c) =>
   Semigroup (DinaturalTransformation (->)) Procompose (FullSubcategory ob c)
 
 instance
@@ -79,7 +79,7 @@ instance
   type Unit (FullSubcategory ob c) t = Unit c t
 
 instance
-  (UnitalMagma (DinaturalTransformation (->)) Procompose c) =>
+  (UnitalMagmoid c) =>
   UnitalMagma (DinaturalTransformation (->)) Procompose (FullSubcategory ob c)
   where
   unit Proxy = DT (\Refl -> FS id)

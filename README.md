@@ -62,6 +62,23 @@ There are a lot of one-character type parameters here, but we try to use them at
 - `a`, `b`, `x`, `y`, `z` -- objects in a category and/or elements of those objects (kind `ok`)
 - `t`, `t'`, `ct`, `dt` -- tensors (kind `ok -> ok -> ok`) in a category (`ct` and `dt` distinguish when we're talking about tensors in categories `c` and `d`)
 
+## [horizontal categorification](https://ncatlab.org/nlab/show/horizontal+categorification) / oidification
+
+Horizontally categorified concepts are generally defined via type synonyms.
+E.g., the most central concept in this library is `Category`, which is defined
+simply as
+
+```haskell
+type Category = Monoid (DinaturalTransformation (->)) Procompose
+```
+
+See [the
+examples](https://ncatlab.org/nlab/show/horizontal+categorification#examples)
+for a more comprehensive list.
+
+In cases where we can't simply use type synonyms, the Haddock should describe
+why.
+
 ## law checking
 
 Haskerwaul attempts to make it as easy and flexible as possible to test laws

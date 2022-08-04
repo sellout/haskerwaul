@@ -326,6 +326,7 @@ library
     Haskerwaul.Law.Symmetry
     Haskerwaul.Loop
     Haskerwaul.Loop.Commutative
+    Haskerwaul.Loopoid
     Haskerwaul.Magma
     Haskerwaul.Magma.Commutative
     Haskerwaul.Magma.Commutative.Laws
@@ -335,6 +336,8 @@ library
     Haskerwaul.Magma.Invertible.Right
     Haskerwaul.Magma.Unital
     Haskerwaul.Magma.Unital.Laws
+    Haskerwaul.Magmoid
+    Haskerwaul.Magmoid.Unital
     Haskerwaul.Meadow
     Haskerwaul.Meadow.Cancellation
     Haskerwaul.Meadow.NonInvolutive
@@ -388,6 +391,7 @@ library
     Haskerwaul.Quasigroup.Invertible.Commutative
     Haskerwaul.Quasigroup.Left
     Haskerwaul.Quasigroup.Right
+    Haskerwaul.Quasigroupoid
     Haskerwaul.Quasiorder
     Haskerwaul.Rack
     -- Haskerwaul.RebindableSyntax

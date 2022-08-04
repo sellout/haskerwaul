@@ -1,6 +1,4 @@
 {-# LANGUAGE Safe #-}
-{-# LANGUAGE UndecidableInstances #-}
-{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Groupoid
   ( module Haskerwaul.Groupoid,
@@ -15,9 +13,9 @@ import Haskerwaul.Category
 import Haskerwaul.Group
 import Haskerwaul.Transformation.Dinatural
 
--- | [nLab](https://ncatlab.org/nlab/show/groupoid)
+-- |
 --
---  __NB__: Instances for this are automatically coalesced.
-class (Group (DinaturalTransformation (->)) Procompose a, Category a) => Groupoid a
-
-instance (Group (DinaturalTransformation (->)) Procompose a, Category a) => Groupoid a
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/groupoid)
+type Groupoid = Group (DinaturalTransformation (->)) Procompose

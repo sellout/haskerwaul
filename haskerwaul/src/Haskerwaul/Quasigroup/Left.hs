@@ -33,7 +33,7 @@ instance LeftQuasigroup (->) Either Void where
 instance LeftQuasigroup (->) (,) () where
   leftQuotient ((), ()) = ()
 
--- instance Magma (DinaturalTransformation (->)) Procompose c =>
+-- instance Magmoid c =>
 --          LeftQuasigroup (DinaturalTransformation (->)) Procompose (Iso c) where
 --   inverse = DT (\(Iso f g) -> Iso g f)
 
