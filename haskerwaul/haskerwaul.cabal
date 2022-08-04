@@ -228,6 +228,7 @@ library
     Haskerwaul.Category.Opposite
     Haskerwaul.Category.Over
     Haskerwaul.Category.Pointed
+    Haskerwaul.Category.Presheaves
     Haskerwaul.Category.Product
     Haskerwaul.Category.Regular
     Haskerwaul.Category.Ribbon
@@ -237,6 +238,7 @@ library
     Haskerwaul.Category.Rig.ColaxDistributive.Right
     Haskerwaul.Category.Semigroupal
     Haskerwaul.Category.Semigroupal.Laws
+    Haskerwaul.Category.Small
     Haskerwaul.Category.Small.Locally
     Haskerwaul.Category.Terminal
     Haskerwaul.Category.Under
@@ -375,6 +377,7 @@ library
     -- __TODO__: eliminate the Orphans module
     Haskerwaul.Orphans
     Haskerwaul.Preorder
+    Haskerwaul.Presheaf
     Haskerwaul.Profunctor
     Haskerwaul.Pullback
     Haskerwaul.Pushout
@@ -428,6 +431,7 @@ library
     Haskerwaul.Semilattice.Bounded
     Haskerwaul.Semilattice.Bounded.Laws
     Haskerwaul.Semilattice.Laws
+    Haskerwaul.Semipresheaf
     Haskerwaul.Semiring
     Haskerwaul.Semiring.Idempotent
     Haskerwaul.Semiring.MaxPlus

@@ -42,6 +42,7 @@ module Haskerwaul
     module Haskerwaul.Category.Opposite,
     module Haskerwaul.Category.Over,
     module Haskerwaul.Category.Pointed,
+    module Haskerwaul.Category.Presheaves,
     module Haskerwaul.Category.Product,
     module Haskerwaul.Category.Regular,
     module Haskerwaul.Category.Ribbon,
@@ -50,6 +51,7 @@ module Haskerwaul
     module Haskerwaul.Category.Rig.ColaxDistributive.Left,
     module Haskerwaul.Category.Rig.ColaxDistributive.Right,
     module Haskerwaul.Category.Semigroupal,
+    module Haskerwaul.Category.Small,
     module Haskerwaul.Category.Small.Locally,
     module Haskerwaul.Category.Terminal,
     module Haskerwaul.Category.Under,
@@ -119,8 +121,10 @@ module Haskerwaul
     module Haskerwaul.Functor.Hom,
     module Haskerwaul.Functor.Hom.Internal,
     module Haskerwaul.Functor.Strong,
+    module Haskerwaul.Presheaf,
     module Haskerwaul.Profunctor,
     module Haskerwaul.Semifunctor,
+    module Haskerwaul.Semipresheaf,
 
     -- ** monoidal functors
     module Haskerwaul.Functor.Monoidal.Closed,
@@ -383,6 +387,7 @@ import Haskerwaul.Category.MonoidalUnit
 import Haskerwaul.Category.Opposite
 import Haskerwaul.Category.Over
 import Haskerwaul.Category.Pointed
+import Haskerwaul.Category.Presheaves
 import Haskerwaul.Category.Product
 import Haskerwaul.Category.Regular
 import Haskerwaul.Category.Ribbon
@@ -391,6 +396,7 @@ import Haskerwaul.Category.Rig.ColaxDistributive
 import Haskerwaul.Category.Rig.ColaxDistributive.Left
 import Haskerwaul.Category.Rig.ColaxDistributive.Right
 import Haskerwaul.Category.Semigroupal
+import Haskerwaul.Category.Small
 import Haskerwaul.Category.Small.Locally
 import Haskerwaul.Category.Terminal
 import Haskerwaul.Category.Under
@@ -518,6 +524,7 @@ import Haskerwaul.Order.Partial
 import Haskerwaul.Order.Prefix
 import Haskerwaul.Order.Total
 import Haskerwaul.Preorder
+import Haskerwaul.Presheaf
 import Haskerwaul.Profunctor
 import Haskerwaul.Pullback
 import Haskerwaul.Pushout
@@ -563,6 +570,7 @@ import Haskerwaul.Semigroup.Commutative
 import Haskerwaul.Semigroup.Inverse
 import Haskerwaul.Semilattice
 import Haskerwaul.Semilattice.Bounded
+import Haskerwaul.Semipresheaf
 import Haskerwaul.Semiring
 import Haskerwaul.Semiring.Idempotent
 import Haskerwaul.Semiring.MaxPlus
