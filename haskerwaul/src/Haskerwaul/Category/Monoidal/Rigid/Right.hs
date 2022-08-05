@@ -17,7 +17,8 @@ import Haskerwaul.Object
 import Haskerwaul.Object.Dualizable.Right
 
 -- |
--- * references
+--
+-- = references
 --
 -- - [nLab](https://ncatlab.org/nlab/show/rigid+monoidal+category)
 -- - [Wikipedia](https://en.wikipedia.org/wiki/Rigid_category)

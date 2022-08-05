@@ -14,7 +14,9 @@ import Haskerwaul.Category.Monoidal.Balanced
 import Haskerwaul.Object
 
 -- |
+--
 -- = laws
+--
 --   [superposing]:
 --     @`trace` (`to` `assoc` . (`id` *** f)) == `id` *** `trace` f@
 --   [vanishing]: @`trace` (`from` `assoc` f) == `trace` (`trace` f) @
@@ -27,7 +29,8 @@ import Haskerwaul.Object
 -- - [Wikipedia](https://en.wikipedia.org/wiki/Traced_monoidal_category)
 class (BalancedMonoidalCategory c t) => TracedMonoidalCategory c t where
   -- |
-  -- * references
+  --
+  -- = references
   --
   -- - [nLab](https://ncatlab.org/nlab/show/trace)
   trace :: (Ob c a, Ob c b, Ob c x) => t a x `c` t b x -> a `c` b
