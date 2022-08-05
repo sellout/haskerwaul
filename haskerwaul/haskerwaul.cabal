@@ -190,6 +190,7 @@ library
     Haskerwaul.Category
     Haskerwaul.Category.Bicartesian
     Haskerwaul.Category.Boolean
+    Haskerwaul.Category.Cancellative
     Haskerwaul.Category.Closed
     Haskerwaul.Category.Closed.Bicartesian
     Haskerwaul.Category.Closed.Cartesian
@@ -349,6 +350,7 @@ library
     Haskerwaul.Monad.Codensity
     Haskerwaul.Monad.Frobenius
     Haskerwaul.Monoid
+    Haskerwaul.Monoid.Cancellative
     Haskerwaul.Monoid.Commutative
     Haskerwaul.Monoid.Commutative.Laws
     Haskerwaul.Monoid.Commutative.Monus
@@ -386,12 +388,14 @@ library
     Haskerwaul.Pushout
     Haskerwaul.Quandle
     Haskerwaul.Quasigroup
+    Haskerwaul.Quasigroup.Associative
     Haskerwaul.Quasigroup.Commutative
     Haskerwaul.Quasigroup.Invertible
     Haskerwaul.Quasigroup.Invertible.Commutative
     Haskerwaul.Quasigroup.Left
     Haskerwaul.Quasigroup.Right
     Haskerwaul.Quasigroupoid
+    Haskerwaul.Quasigroupoid.Associative
     Haskerwaul.Quasiorder
     Haskerwaul.Rack
     -- Haskerwaul.RebindableSyntax

@@ -27,6 +27,7 @@ module Haskerwaul
     module Haskerwaul.Category,
     module Haskerwaul.Category.Bicartesian,
     module Haskerwaul.Category.Boolean,
+    module Haskerwaul.Category.Cancellative,
     module Haskerwaul.Category.Coherent,
     module Haskerwaul.Category.CoKleisli,
     module Haskerwaul.Category.Complete.Finitely,
@@ -212,6 +213,7 @@ module Haskerwaul
     module Haskerwaul.Bimonoid,
     module Haskerwaul.Comonoid,
     module Haskerwaul.Monoid,
+    module Haskerwaul.Monoid.Cancellative,
     module Haskerwaul.Monoid.Commutative,
     module Haskerwaul.Monoid.Commutative.Monus,
     module Haskerwaul.Monoid.Frobenius,
@@ -255,12 +257,14 @@ module Haskerwaul
 
     -- * quasigroups
     module Haskerwaul.Quasigroup,
+    module Haskerwaul.Quasigroup.Associative,
     module Haskerwaul.Quasigroup.Commutative,
     module Haskerwaul.Quasigroup.Invertible,
     module Haskerwaul.Quasigroup.Invertible.Commutative,
     module Haskerwaul.Quasigroup.Left,
     module Haskerwaul.Quasigroup.Right,
     module Haskerwaul.Quasigroupoid,
+    module Haskerwaul.Quasigroupoid.Associative,
 
     -- * racks
     module Haskerwaul.Quandle,
@@ -356,6 +360,7 @@ import Haskerwaul.Bimonoid
 import Haskerwaul.Category
 import Haskerwaul.Category.Bicartesian
 import Haskerwaul.Category.Boolean
+import Haskerwaul.Category.Cancellative
 import Haskerwaul.Category.Closed
 import Haskerwaul.Category.Closed.Bicartesian
 import Haskerwaul.Category.Closed.Cartesian
@@ -504,6 +509,7 @@ import Haskerwaul.Monad
 import Haskerwaul.Monad.Codensity
 import Haskerwaul.Monad.Frobenius
 import Haskerwaul.Monoid
+import Haskerwaul.Monoid.Cancellative
 import Haskerwaul.Monoid.Commutative
 import Haskerwaul.Monoid.Commutative.Monus
 import Haskerwaul.Monoid.Frobenius
@@ -537,12 +543,14 @@ import Haskerwaul.Pullback
 import Haskerwaul.Pushout
 import Haskerwaul.Quandle
 import Haskerwaul.Quasigroup
+import Haskerwaul.Quasigroup.Associative
 import Haskerwaul.Quasigroup.Commutative
 import Haskerwaul.Quasigroup.Invertible
 import Haskerwaul.Quasigroup.Invertible.Commutative
 import Haskerwaul.Quasigroup.Left
 import Haskerwaul.Quasigroup.Right
 import Haskerwaul.Quasigroupoid
+import Haskerwaul.Quasigroupoid.Associative
 import Haskerwaul.Quasiorder
 import Haskerwaul.Rack
 import Haskerwaul.Relation.Apartness
