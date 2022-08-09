@@ -69,6 +69,10 @@ instance
   op = DT (\(Procompose (FS f) (FS g)) -> FS (f . g))
 
 instance
+  (FlexibleMagmoid c) =>
+  FlexibleMagma (DinaturalTransformation (->)) Procompose (FullSubcategory ob c)
+
+instance
   (Semicategory c) =>
   Semigroup (DinaturalTransformation (->)) Procompose (FullSubcategory ob c)
 
@@ -230,6 +234,22 @@ instance
   Magma (Opposite (FullSubcategory ob c)) t a
   where
   op = Opposite (FS (opposite op))
+
+instance
+  ( SemigroupalCategory (FullSubcategory ob c) t,
+    ob a,
+    BOb ob ob ob t,
+    FlexibleMagma c t a
+  ) =>
+  FlexibleMagma (FullSubcategory ob c) t a
+
+instance
+  ( SemigroupalCategory (FullSubcategory ob c) t,
+    ob a,
+    BOb ob ob ob t,
+    FlexibleMagma (Opposite c) t a
+  ) =>
+  FlexibleMagma (Opposite (FullSubcategory ob c)) t a
 
 instance
   ( SemigroupalCategory (FullSubcategory ob c) t,

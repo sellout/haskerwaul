@@ -184,12 +184,14 @@ module Haskerwaul
     -- * magmas
     module Haskerwaul.Magma,
     module Haskerwaul.Magma.Commutative,
+    module Haskerwaul.Magma.Flexible,
     module Haskerwaul.Magma.Invertible,
     module Haskerwaul.Magma.Invertible.Commutative,
     module Haskerwaul.Magma.Invertible.Left,
     module Haskerwaul.Magma.Invertible.Right,
     module Haskerwaul.Magma.Unital,
     module Haskerwaul.Magmoid,
+    module Haskerwaul.Magmoid.Flexible,
     module Haskerwaul.Magmoid.Unital,
 
     -- * meadows
@@ -491,12 +493,14 @@ import Haskerwaul.Loop.Commutative
 import Haskerwaul.Loopoid
 import Haskerwaul.Magma
 import Haskerwaul.Magma.Commutative
+import Haskerwaul.Magma.Flexible
 import Haskerwaul.Magma.Invertible
 import Haskerwaul.Magma.Invertible.Commutative
 import Haskerwaul.Magma.Invertible.Left
 import Haskerwaul.Magma.Invertible.Right
 import Haskerwaul.Magma.Unital
 import Haskerwaul.Magmoid
+import Haskerwaul.Magmoid.Flexible
 import Haskerwaul.Magmoid.Unital
 import Haskerwaul.Meadow
 import Haskerwaul.Meadow.Cancellation

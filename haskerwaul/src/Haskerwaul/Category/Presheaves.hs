@@ -27,8 +27,15 @@ newtype PSh c f g = PSh (NaturalTransformation (Opposite c) (->) f g)
 
 type instance Ob (PSh c) = Presheaf c
 
-instance Magma (DinaturalTransformation (->)) Procompose (PSh c) where
+instance
+  (Magmoid c) =>
+  Magma (DinaturalTransformation (->)) Procompose (PSh c)
+  where
   op = DT (\(Procompose (PSh f) (PSh g)) -> PSh (f . g))
+
+instance
+  (FlexibleMagmoid c) =>
+  FlexibleMagma (DinaturalTransformation (->)) Procompose (PSh c)
 
 instance
   (Semicategory c) =>

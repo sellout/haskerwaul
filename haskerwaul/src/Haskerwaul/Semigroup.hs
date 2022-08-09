@@ -5,7 +5,7 @@ module Haskerwaul.Semigroup
   ( module Haskerwaul.Semigroup,
 
     -- * extended modules
-    module Haskerwaul.Magma,
+    module Haskerwaul.Magma.Flexible,
   )
 where
 
@@ -18,7 +18,7 @@ import qualified Data.Semigroup as Base
 import Data.Word (Word, Word16, Word32, Word64, Word8)
 import Haskerwaul.Constraint
 import Haskerwaul.Lattice.Components
-import Haskerwaul.Magma
+import Haskerwaul.Magma.Flexible
 import Haskerwaul.Object
 import Numeric.Natural (Natural)
 import Prelude (Integer)
@@ -27,7 +27,7 @@ import Prelude (Integer)
 --
 -- = laws
 --   [`Haskerwaul.Law.Associativity.associativity`]: @`op` x (`op` y z) == `op` (`op` x y) z
-class (Magma c t a) => Semigroup c t a
+class (FlexibleMagma c t a) => Semigroup c t a
 
 -- | Take advantage of this instance when possible. I.e., define your semigroup
 --   using `Base.Semigroup` whenever possible.

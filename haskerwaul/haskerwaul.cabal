@@ -331,6 +331,7 @@ library
     Haskerwaul.Magma
     Haskerwaul.Magma.Commutative
     Haskerwaul.Magma.Commutative.Laws
+    Haskerwaul.Magma.Flexible
     Haskerwaul.Magma.Invertible
     Haskerwaul.Magma.Invertible.Commutative
     Haskerwaul.Magma.Invertible.Left
@@ -338,6 +339,7 @@ library
     Haskerwaul.Magma.Unital
     Haskerwaul.Magma.Unital.Laws
     Haskerwaul.Magmoid
+    Haskerwaul.Magmoid.Flexible
     Haskerwaul.Magmoid.Unital
     Haskerwaul.Meadow
     Haskerwaul.Meadow.Cancellation

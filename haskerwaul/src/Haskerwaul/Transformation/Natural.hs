@@ -97,6 +97,11 @@ instance
 
 -- | If /D/ is a `Semicategory`, then so are /D/-valued functors.
 instance
+  (FlexibleMagmoid d) =>
+  FlexibleMagma (DinaturalTransformation (->)) Procompose (NaturalTransformation c d)
+
+-- | If /D/ is a `Semicategory`, then so are /D/-valued functors.
+instance
   (Semicategory d) =>
   Semigroup (DinaturalTransformation (->)) Procompose (NaturalTransformation c d)
 
@@ -115,6 +120,11 @@ instance
   Magma (NaturalTransformation (->) (->)) Compose f
   where
   op = NT (Base.join Base.. getCompose)
+
+instance
+  {-# OVERLAPPABLE #-}
+  (Base.Monad f) =>
+  FlexibleMagma (NaturalTransformation (->) (->)) Compose f
 
 instance
   {-# OVERLAPPABLE #-}
@@ -157,6 +167,11 @@ instance
 instance
   {-# OVERLAPPABLE #-}
   (Base.Alternative f) =>
+  FlexibleMagma (NaturalTransformation (->) (->)) (FTensor (,)) f
+
+instance
+  {-# OVERLAPPABLE #-}
+  (Base.Alternative f) =>
   Semigroup (NaturalTransformation (->) (->)) (FTensor (,)) f
 
 instance
@@ -168,6 +183,8 @@ instance
 
 instance Magma (NaturalTransformation c (:-)) CFProd All where
   op = NT (Sub Dict)
+
+instance FlexibleMagma (NaturalTransformation c (:-)) CFProd All
 
 instance Semigroup (NaturalTransformation c (:-)) CFProd All
 

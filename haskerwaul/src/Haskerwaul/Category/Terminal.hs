@@ -39,6 +39,8 @@ terminalIso = Iso TermId TermId
 instance Magma (DinaturalTransformation (->)) Procompose TerminalCategory where
   op = DT (\(Procompose _ _) -> TermId)
 
+instance FlexibleMagma (DinaturalTransformation (->)) Procompose TerminalCategory
+
 instance Semigroup (DinaturalTransformation (->)) Procompose TerminalCategory
 
 instance UnitalMagma (DinaturalTransformation (->)) Procompose TerminalCategory where

@@ -25,6 +25,10 @@ instance
   op = DT (\(Procompose f g) -> Iso (to f . to g) (from g . from f))
 
 instance
+  (FlexibleMagmoid c) =>
+  FlexibleMagma (DinaturalTransformation (->)) Procompose (Isomorphism c)
+
+instance
   (Semicategory c) =>
   Semigroup (DinaturalTransformation (->)) Procompose (Isomorphism c)
 

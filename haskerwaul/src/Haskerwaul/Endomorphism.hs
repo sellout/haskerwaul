@@ -22,6 +22,10 @@ instance (Magmoid c) => Magma (->) (,) (Endomorphism c x) where
 
 -- | `Endomorphism`s in any `Category`-like thing can be seen as "proper"
 --   versions of the same structure in the enriching Cartesian category.
+instance (FlexibleMagmoid c) => FlexibleMagma (->) (,) (Endomorphism c x)
+
+-- | `Endomorphism`s in any `Category`-like thing can be seen as "proper"
+--   versions of the same structure in the enriching Cartesian category.
 instance (Semicategory c) => Semigroup (->) (,) (Endomorphism c x)
 
 -- | `Endomorphism`s in any `Category`-like thing can be seen as "proper"

@@ -35,6 +35,10 @@ instance
 
 instance
   (c ~ (->), SemigroupalCategory c t, Hemiring c t a, Lattice c t a) =>
+  FlexibleMagma c t (Additive (Meet a))
+
+instance
+  (c ~ (->), SemigroupalCategory c t, Hemiring c t a, Lattice c t a) =>
   Semigroup c t (Additive (Meet a))
 
 instance
@@ -62,6 +66,10 @@ instance
   Magma c t (Multiplicative (Meet a))
   where
   op = Multiply . Meet . add . bimap (getMeet . product) (getMeet . product)
+
+instance
+  (c ~ (->), SemigroupalCategory c t, Hemiring c t a, Lattice c t a) =>
+  FlexibleMagma c t (Multiplicative (Meet a))
 
 instance
   (c ~ (->), SemigroupalCategory c t, Hemiring c t a, Lattice c t a) =>

@@ -86,6 +86,10 @@ instance
 
 instance
   (c ~ (->), d ~ (->), LaxMonoidalFunctor c ct d dt f) =>
+  FlexibleMagma (NaturalTransformation c d) (Day c ct dt) f
+
+instance
+  (c ~ (->), d ~ (->), LaxMonoidalFunctor c ct d dt f) =>
   Semigroup (NaturalTransformation c d) (Day c ct dt) f
 
 instance (d ~ (->), Semicategory c) => Semifunctor c d (Day c ct dt f g) where

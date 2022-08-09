@@ -4,12 +4,12 @@ module Haskerwaul.Semicategory
   ( module Haskerwaul.Semicategory,
 
     -- * extended modules
-    module Haskerwaul.Magmoid,
+    module Haskerwaul.Magmoid.Flexible,
     module Haskerwaul.Semigroup,
   )
 where
 
-import Haskerwaul.Magmoid
+import Haskerwaul.Magmoid.Flexible
 import Haskerwaul.Semigroup
 import Haskerwaul.Transformation.Dinatural
 

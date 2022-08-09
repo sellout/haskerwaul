@@ -58,6 +58,11 @@ instance
   where
   op = DT (\(Procompose (Opposite f) (Opposite g)) -> Opposite (g . f))
 
+-- | If /C/ is a `FlexibleMagmoid`, then so is /C^op/.
+instance
+  (FlexibleMagma (DinaturalTransformation (->)) Procompose c) =>
+  FlexibleMagma (DinaturalTransformation (->)) Procompose (Opposite c)
+
 -- | If /C/ is a `Semicategory`, then so is /C^op/.
 instance
   (Semicategory c) =>
@@ -215,6 +220,11 @@ instance
 instance
   {-# OVERLAPPABLE #-}
   (MonoidalCategory c t, u ~ Unit c t) =>
+  FlexibleMagma (Opposite c) t u
+
+instance
+  {-# OVERLAPPABLE #-}
+  (MonoidalCategory c t, u ~ Unit c t) =>
   Semigroup (Opposite c) t u
 
 instance
@@ -279,6 +289,10 @@ instance
   Magma (Opposite (NaturalTransformation c c)) Compose (c u)
   where
   op = Opposite (NT (Compose . const))
+
+instance
+  (c ~ (->), ct ~ (,), MonoidalCategory c ct, u ~ Unit c ct) =>
+  FlexibleMagma (Opposite (NaturalTransformation c c)) Compose (c u)
 
 instance
   (c ~ (->), ct ~ (,), MonoidalCategory c ct, u ~ Unit c ct) =>

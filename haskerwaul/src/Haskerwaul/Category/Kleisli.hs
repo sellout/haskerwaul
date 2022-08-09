@@ -32,11 +32,15 @@ newtype Kleisli (c :: ok -> ok -> Type) m a b = Kleisli {runKleisli :: a `c` m b
 type instance Ob (Kleisli c _) = Ob c
 
 instance
-  (Ob c ~ All, Semicategory c, Monad c m) =>
+  (Ob c ~ All, Magmoid c, Monad c m) =>
   Magma (DinaturalTransformation (->)) Procompose (Kleisli c m)
   where
   op =
     DT (\(Procompose (Kleisli f) (Kleisli g)) -> Kleisli (flatten . map f . g))
+
+instance
+  (Ob c ~ All, FlexibleMagmoid c, Monad c m) =>
+  FlexibleMagma (DinaturalTransformation (->)) Procompose (Kleisli c m)
 
 instance
   (Ob c ~ All, Semicategory c, Monad c m) =>
@@ -78,6 +82,10 @@ instance
 
 instance (Category c, Monad c m, Magma c t a) => Magma (Kleisli c m) t a where
   op = Kleisli (pure . op)
+
+instance
+  (Category c, Monad c m, FlexibleMagma c t a) =>
+  FlexibleMagma (Kleisli c m) t a
 
 instance (Category c, Monad c m, Semigroup c t a) => Semigroup (Kleisli c m) t a
 

@@ -61,6 +61,12 @@ instance
   where
   op = DT (\(Procompose f g) -> f Base.. g)
 
+-- | All `Base.Category` instances are also `FlexibleMagmoid` instances.
+instance
+  {-# OVERLAPPABLE #-}
+  (Base.Category c) =>
+  FlexibleMagma (DinaturalTransformation (->)) Procompose c
+
 -- | All `Base.Category` instances are also `Semicategory` instances.
 instance
   {-# OVERLAPPABLE #-}
@@ -82,6 +88,11 @@ instance
   where
   op = DT (\(Procompose (DT f) (DT g)) -> DT (f . g))
 
+-- | If /C/ is a `FlexibleMagmoid`, then so are /C/-valued bifunctors.
+instance
+  (FlexibleMagma (DinaturalTransformation (->)) Procompose c) =>
+  FlexibleMagma (DinaturalTransformation (->)) Procompose (DinaturalTransformation c)
+
 -- | If /C/ is a `Semicategory`, then so are /C/-valued bifunctors.
 instance
   (Semigroup (DinaturalTransformation (->)) Procompose c) =>
@@ -101,6 +112,13 @@ instance
 -- - [nLab](https://ncatlab.org/nlab/show/discrete+category)
 instance Magma (DinaturalTransformation (->)) Procompose (:~:) where
   op = DT (\(Procompose Refl Refl) -> Refl)
+
+-- | a discrete groupoid
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/discrete+category)
+instance FlexibleMagma (DinaturalTransformation (->)) Procompose (:~:)
 
 -- | a discrete groupoid
 --
