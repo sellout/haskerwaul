@@ -1,0 +1,41 @@
+cabal-version: 3.0
+
+name: haskerwaul-trample
+version: 0.1.0.0
+synopsis: ???
+description: This is like `haskerwaul-base`, except that it uses all the same
+             module names as actual `base`. So, all you need to do is switch the
+             dependency in your build file, and now you're using Haskerwaul. The
+             problem is if/when Haskerwaul's replacements don't match up 100%.
+             In that case, you can either do package-qualified imports using
+             this dependency /and/ base, or depend on haskerwaul-base /and/ base
+             and have non-conflicting module names.
+author: Greg Pfeil <greg@technomadic.org>
+maintainer: Greg Pfeil <greg@technomadic.org>
+copyright: 2020–2024 Greg Pfeil
+homepage: https://github.com/sellout/haskerwaul#readme
+bug-reports: https://github.com/sellout/haskerwaul/issues
+category: Control
+build-type: Simple
+license: AGPL-3.0-only
+license-files:
+  LICENSE
+extra-source-files:
+  README.md
+
+source-repository head
+  type:     git
+  location: git@github.com:sellout/haskerwaul.git
+
+-- This package should be able to be completely generated, since it just
+-- re-exports every module from haskerwaul-base without the @Haskerwaul.Base.@
+-- module prefix.
+library
+  exposed-modules: Prelude
+  hs-source-dirs:
+    src
+  build-depends:
+    haskerwaul-base,
+  default-language: Haskell2010
+  ghc-options:
+    -Wall
