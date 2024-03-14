@@ -26,13 +26,13 @@ freelyDiscard group =
   group
     { groupProperties =
         fmap
-          ( fmap
-              ( \prop ->
-                  prop
-                    { Hedgehog.propertyConfig =
-                        (Hedgehog.propertyConfig prop) {Hedgehog.propertyDiscardLimit = 1000}
-                    }
-              )
+          ( \prop ->
+              prop
+                { Hedgehog.propertyConfig =
+                    (Hedgehog.propertyConfig prop)
+                      { Hedgehog.propertyDiscardLimit = 1_000
+                      }
+                }
           )
-          $ groupProperties group
+          <$> groupProperties group
     }

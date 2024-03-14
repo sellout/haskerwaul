@@ -41,7 +41,7 @@ instance (con a, con' a) => CFProd con con' a
 instance Class (con a, con' a) (CFProd con con' a) where
   cls = Sub Dict
 
-instance (con a, con' a) :=> (CFProd con con' a) where
+instance (con a, con' a) :=> CFProd con con' a where
   ins = Sub Dict
 
 -- | An empty constraint of any kind.
@@ -49,7 +49,7 @@ class All a
 
 instance All a
 
-instance () :=> (All a) where
+instance () :=> All a where
   ins = Sub Dict
 
 -- | Like `Data.Constraint.Bottom, but for @k -> `Data.Kind.Constraint`@. It

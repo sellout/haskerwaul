@@ -11,9 +11,14 @@ where
 
 import Data.Bool (Bool (..))
 import Data.Proxy (Proxy (..))
+import Haskerwaul.Algebra.Heyting
 import Haskerwaul.Lattice.Orthocomplemented
 
--- | [nLab](https://ncatlab.org/nlab/show/complemented+lattice)
+-- |
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/complemented+lattice)
 class (OrthocomplementedLattice c t a) => OrthomodularLattice c t a
 
 -- | With a lawful instance, this should always return `True` when the provided
@@ -21,8 +26,9 @@ class (OrthocomplementedLattice c t a) => OrthomodularLattice c t a
 orthomodular ::
   (OrthomodularLattice (->) (,) a) => ((a, a) -> Bool) -> a -> a -> Bool
 orthomodular eq a c =
-  if a <= c
-    then eq (join (a, meet (complement (Proxy :: Proxy (,)) a, c)), c)
-    else True
+  implies
+    ( a <= c,
+      eq (join (a, meet (complement (Proxy :: Proxy (,)) a, c)), c)
+    )
   where
     x <= y = eq (meet (x, y), x)

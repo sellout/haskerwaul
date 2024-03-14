@@ -17,6 +17,7 @@ module Haskerwaul.Category.Opposite where
 import Control.Arrow ((&&&))
 import Data.Constraint (Bottom (..), bottom, (:-) (..))
 import Data.Either (Either (..))
+import Data.Function (const)
 import Data.Functor.Compose (Compose (..))
 import Data.Functor.Identity (Identity (..))
 import Data.Kind (Type)
@@ -271,7 +272,7 @@ instance
   (c ~ (->), ct ~ (,), MonoidalCategory c ct, u ~ Unit c ct) =>
   Magma (Opposite (NaturalTransformation c c)) Compose (c u)
   where
-  op = Opposite (NT (\const -> Compose (\_ -> const)))
+  op = Opposite (NT (Compose . const))
 
 instance
   (c ~ (->), ct ~ (,), MonoidalCategory c ct, u ~ Unit c ct) =>

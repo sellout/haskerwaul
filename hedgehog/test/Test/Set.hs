@@ -18,14 +18,12 @@ setProperties =
   [ Group
       "(->) -- topos under (,), distributive under (,) Either, colax-distributive under (,) (,)"
       ( nubOrdOn fst
-          $ concat
-            [ semigroupalCategory_lawsFn "product" genTuple,
-              semigroupalCategory_lawsFn "coproduct" genEither
-            ]
+          $ semigroupalCategory_lawsFn "product" genTuple
+          <> semigroupalCategory_lawsFn "coproduct" genEither
       ),
     Group
       "monoids under (->) (,)"
-      (nubOrdOn fst $ monoid_lawsTup "String" (Gen.string (Range.linear 0 9999) Gen.unicodeAll)),
+      (nubOrdOn fst $ monoid_lawsTup "String" (Gen.string (Range.linear 0 9_999) Gen.unicodeAll)),
     Group
       "various lattices"
       ( nubOrdOn fst
@@ -37,8 +35,8 @@ setProperties =
               boundedLattice_lawsTup "Int16" (Gen.int16 Range.linearBounded),
               boundedLattice_lawsTup "Int32" (Gen.int32 Range.linearBounded),
               boundedLattice_lawsTup "Int64" (Gen.int64 Range.linearBounded),
-              lattice_lawsTup "Integer" (Gen.integral_ (Range.linear (-99999999999) 99999999999) :: Gen Integer),
-              lattice_lawsTup "Natural" (Gen.integral (Range.linear 0 99999999999) :: Gen Natural),
+              lattice_lawsTup "Integer" (Gen.integral_ (Range.linear (-99_999_999_999) 99_999_999_999) :: Gen Integer),
+              lattice_lawsTup "Natural" (Gen.integral (Range.linear 0 99_999_999_999) :: Gen Natural),
               boundedLattice_lawsTup "Word" (Gen.word Range.linearBounded),
               boundedLattice_lawsTup "Word8" (Gen.word8 Range.linearBounded),
               boundedLattice_lawsTup "Word16" (Gen.word16 Range.linearBounded),
@@ -56,9 +54,9 @@ setProperties =
               rig_lawsTup "Int16" (Gen.int16 Range.linearBounded),
               rig_lawsTup "Int32" (Gen.int32 Range.linearBounded),
               rig_lawsTup "Int64" (Gen.int64 Range.linearBounded),
-              rig_lawsTup "Integer" (Gen.integral_ (Range.linear (-99999999999) 99999999999) :: Gen Integer),
-              rig_lawsTup "Natural" (Gen.integral (Range.linear 0 99999999999) :: Gen Natural),
-              -- , rig_lawsTup "Join Natural" (map pure (Gen.integral (Range.linear 0 99999999999)) :: Gen (Join Natural))
+              rig_lawsTup "Integer" (Gen.integral_ (Range.linear (-99_999_999_999) 99_999_999_999) :: Gen Integer),
+              rig_lawsTup "Natural" (Gen.integral (Range.linear 0 99_999_999_999) :: Gen Natural),
+              -- rig_lawsTup "Join Natural" (map pure (Gen.integral (Range.linear 0 99_999_999_999)) :: Gen (Join Natural))
               rig_lawsTup "Word" (Gen.word Range.linearBounded),
               rig_lawsTup "Word8" (Gen.word8 Range.linearBounded),
               rig_lawsTup "Word16" (Gen.word16 Range.linearBounded),

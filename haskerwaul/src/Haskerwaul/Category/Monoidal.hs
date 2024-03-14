@@ -72,7 +72,7 @@ instance
 
 instance MonoidalCategory (DinaturalTransformation (->)) Procompose where
   leftIdentity = Iso (DT (\(Procompose Refl a) -> a)) (DT (Procompose Refl))
-  rightIdentity = Iso (DT (\(Procompose a Refl) -> a)) (DT (\a -> Procompose a Refl))
+  rightIdentity = Iso (DT (\(Procompose a Refl) -> a)) (DT (`Procompose` Refl))
 
 instance
   (c ~ (->), MonoidalCategory c t) =>

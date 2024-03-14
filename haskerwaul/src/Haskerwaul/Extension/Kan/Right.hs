@@ -22,7 +22,8 @@ import Haskerwaul.Semigroupoid
 --
 -- - [nLab](https://ncatlab.org/nlab/show/Kan+extension)
 -- - [Wikipedia](https://en.wikipedia.org/wiki/Kan_extension)
-data RightKanExtension c c' p f a = Ran (forall b. (Ob c b) => a `c'` p b -> f b)
+newtype RightKanExtension c c' p f a
+  = Ran (forall b. (Ob c b) => a `c'` p b -> f b)
 
 instance
   (d ~ (->), Semigroupoid c', FOb (Ob c) (Ob c') p) =>

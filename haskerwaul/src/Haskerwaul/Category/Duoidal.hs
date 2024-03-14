@@ -83,6 +83,6 @@ instance
     FS
       ( NT
           ( \(Day t fn) ->
-              Compose (Day (bimap getCompose getCompose t) (\t' -> Day t' fn))
+              Compose (Day (bimap getCompose getCompose t) (`Day` fn))
           )
       )

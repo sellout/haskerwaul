@@ -1,5 +1,4 @@
 {-# LANGUAGE Safe #-}
-{-# LANGUAGE TypeApplications #-}
 
 module Haskerwaul.Law.Distributive.Self.Left where
 

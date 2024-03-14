@@ -7,7 +7,7 @@ import Haskerwaul.Law.Associativity
 import Haskerwaul.Relation.Equality
 import Haskerwaul.Topos.Elementary
 
-data SemigroupLaws c t a = SemigroupLaws
+newtype SemigroupLaws c t a = SemigroupLaws
   { associative :: Law c EqualityRelation (t (t a a) a) a
   }
 

@@ -1,4 +1,3 @@
-{-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE Safe #-}
 
 module Haskerwaul.Monoid.Laws where

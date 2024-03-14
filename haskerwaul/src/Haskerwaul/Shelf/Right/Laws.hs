@@ -8,7 +8,7 @@ import Haskerwaul.Law.Distributive.Self.Right
 import Haskerwaul.Relation.Equality
 import Haskerwaul.Shelf.Right
 
-data RightShelfLaws c a = RightShelfLaws
+newtype RightShelfLaws c a = RightShelfLaws
   { rightSelfDistributive :: Law c EqualityRelation (Prod c (Prod c a a) a) a
   }
 

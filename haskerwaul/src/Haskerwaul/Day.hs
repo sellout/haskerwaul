@@ -14,7 +14,7 @@ import Data.Type.Equality (type (~))
 #endif
 import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Closed.Cartesian
-import Haskerwaul.Category.Monoidal.Closed
+import Haskerwaul.Category.Monoidal.Cartesian
 import Haskerwaul.Duoid.Components
 import Haskerwaul.Functor.Monoidal.Lax
 import Haskerwaul.Isomorphism
@@ -36,12 +36,12 @@ instance
     Iso
       ( NT
           ( \(Day (fa, Day (gb, hc) ifn) ofn) ->
-              Day (Day (fa, gb) (\(a, b) -> \c -> ofn (a, ifn (b, c))), hc) (\(fn, c) -> fn c)
+              Day (Day (fa, gb) (\(a, b) c -> ofn (a, ifn (b, c))), hc) (\(fn, c) -> fn c)
           )
       )
       ( NT
           ( \(Day (Day (fa, gb) ifn, hc) ofn) ->
-              Day (fa, Day (gb, hc) (\(b, c) -> \a -> ofn (ifn (a, b), c))) (\(a, fn) -> fn a)
+              Day (fa, Day (gb, hc) (\(b, c) a -> ofn (ifn (a, b), c))) (\(a, fn) -> fn a)
           )
       )
 
@@ -63,11 +63,11 @@ instance
   leftIdentity =
     Iso
       (FS (NT (\(Day (fa, gb) fn) -> map (\b -> fn (fa (), b)) gb)))
-      (FS (NT (\fa -> Day (\x -> x, fa) (\(_, a) -> a))))
+      (FS (NT (\fa -> Day (id, fa) exr)))
   rightIdentity =
     Iso
       (FS (NT (\(Day (fa, gb) fn) -> map (\a -> fn (a, gb ())) fa)))
-      (FS (NT (\fa -> Day (fa, \x -> x) (\(a, _) -> a))))
+      (FS (NT (\fa -> Day (fa, id) exl)))
 
 instance
   (c ~ (->), d ~ (->), LaxMonoidalFunctor c ct d dt f) =>
@@ -87,7 +87,7 @@ instance
   Semigroup (NaturalTransformation c d) (Day c ct dt) f
 
 instance (d ~ (->), Semigroupoid c) => Functor c d (Day c ct dt f g) where
-  map f = \(Day t fn) -> Day t (f . fn)
+  map f (Day t fn) = Day t (f . fn)
 
 instance
   (d ~ (->), Semigroupoid c) =>

@@ -48,7 +48,7 @@ mapOp ::
   (LaxMonoidalFunctor c ct d dt f, Magma c ct a) =>
   Proxy c ->
   Proxy ct ->
-  dt (f a) (f a) `d` (f a)
+  dt (f a) (f a) `d` f a
 mapOp Proxy Proxy =
   map (op @c @ct) . mu (Proxy :: Proxy c) \\ inT @(Ob c) @ct @a @a
 
@@ -60,5 +60,5 @@ mapUnit ::
   Proxy c ->
   Proxy ct ->
   Proxy dt ->
-  Unit d dt `d` (f a)
+  Unit d dt `d` f a
 mapUnit c ct dt = map @c (unit ct) . epsilon c ct dt

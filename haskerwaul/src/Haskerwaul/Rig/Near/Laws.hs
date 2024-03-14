@@ -1,4 +1,3 @@
-{-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE Safe #-}
 
 module Haskerwaul.Rig.Near.Laws where

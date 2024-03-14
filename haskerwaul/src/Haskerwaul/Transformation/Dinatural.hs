@@ -1,5 +1,4 @@
 {-# LANGUAGE Safe #-}
-{-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeFamilies #-}
 
 module Haskerwaul.Transformation.Dinatural where
@@ -21,7 +20,7 @@ type instance Ob (DinaturalTransformation _) = All
 -- | Like `FTensor`, but lifted from the target category to a bifunctor.
 --
 --  __NB__: With this definition, `d ~ (->)`, but that doesn't imply `dt ~ (,)`.
-data BTensor dt f g a b = BTensor {lowerBTensor :: dt (f a b) (g a b)}
+newtype BTensor dt f g a b = BTensor {lowerBTensor :: dt (f a b) (g a b)}
 
 instance
   (MonoidalCategory' d dt) =>

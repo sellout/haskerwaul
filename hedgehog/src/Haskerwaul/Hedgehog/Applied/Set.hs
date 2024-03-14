@@ -7,7 +7,6 @@ import safe Control.Applicative
 import safe Data.Bool (Bool)
 import safe Data.Constraint ((\\))
 import safe Data.Either
-import safe Data.Functor (fmap)
 import safe Data.Int (Int16, Int32, Int8)
 import safe Data.Type.Equality ((:~:) (..))
 import safe Haskerwaul hiding (pure, ($))
@@ -44,16 +43,14 @@ semigroupalCategory_lawsFn name genT =
     (const "can't show")
     ( Procompose
         <$> ( Procompose
-                <$> (fmap Fn.apply $ Fn.fn @Int8 (Gen.enumBounded :: Gen Bool))
-                <*> (fmap Fn.apply $ Fn.fn @Int16 (Gen.enumBounded :: Gen Int8))
+                <$> (Fn.apply <$> Fn.fn @Int8 (Gen.enumBounded :: Gen Bool))
+                <*> (Fn.apply <$> Fn.fn @Int16 (Gen.enumBounded :: Gen Int8))
             )
-        <*> (fmap Fn.apply $ Fn.fn @Int32 (Gen.enumBounded :: Gen Int16))
+        <*> (Fn.apply <$> Fn.fn @Int32 (Gen.enumBounded :: Gen Int16))
     )
-    ( Procompose Refl
-        <$> (fmap Fn.apply $ Fn.fn @Int32 (Gen.enumBounded :: Gen Bool))
-    )
-    ( flip Procompose Refl
-        <$> (fmap Fn.apply $ Fn.fn @Int32 (Gen.enumBounded :: Gen Bool))
+    (Procompose Refl . Fn.apply <$> Fn.fn @Int32 (Gen.enumBounded :: Gen Bool))
+    ( flip Procompose Refl . Fn.apply
+        <$> Fn.fn @Int32 (Gen.enumBounded :: Gen Bool)
     )
     (genT (Gen.enumBounded :: Gen Int8) (genT (Gen.enumBounded :: Gen Bool) (pure ())))
     (genT (genT (Gen.enumBounded :: Gen Int8) (Gen.enumBounded :: Gen Bool)) (pure ()))

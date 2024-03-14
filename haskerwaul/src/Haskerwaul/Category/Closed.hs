@@ -45,7 +45,7 @@ instance ClosedCategory (->) where
 
 -- | This is a natural transformation as an exponential object in a category
 --   whose arrows are `NaturalTransformation`.
-data ExpTransformation (c :: Type -> Type -> Type) f g a = ET {runET :: f a `c` g a}
+newtype ExpTransformation (c :: Type -> Type -> Type) f g a = ET {runET :: f a `c` g a}
 
 #if MIN_VERSION_GLASGOW_HASKELL(9, 4, 0, 0)
 -- |

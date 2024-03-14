@@ -1,10 +1,9 @@
-{-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE Safe #-}
 
 module Haskerwaul.Rig.Laws where
 
 import Haskerwaul.Category.Monoidal.Braided
-import Haskerwaul.Monoid.Commutative.Laws
+import Haskerwaul.Monoid.Commutative.Laws hiding (monoid)
 import Haskerwaul.Monoid.Laws
 import Haskerwaul.Rig
 

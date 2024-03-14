@@ -4,7 +4,7 @@
   ...
 }: {
   ## Haskell linter
-  programs.treefmt.programs.hlint.enable = false;
+  programs.treefmt.programs.hlint.enable = true;
   ## TODO: Wrap this to find our generated hlint config in the store.
   project.devPackages = [pkgs.hlint];
   project.file.".hlint.yaml".text = lib.generators.toYAML {} [
@@ -30,6 +30,12 @@
     {ignore = {name = "Eta reduce";};}
     {ignore = {name = "Evaluate";};}
     {ignore = {name = "Reduce duplication";};}
+    ## TODO: Re-enable this one, and either adjust odd cases, or ignore this
+    ##       locally.
+    {ignore = {name = "Use camelCase";};}
+    ## NB: In this project, we define a `map` that is more generic than `fmap`,
+    ##     so this warning is misleading.
+    {ignore = {name = "Use fmap";};}
     {ignore = {name = "Use list comprehension";};}
     {ignore = {name = "Use section";};}
 
@@ -68,12 +74,6 @@
             warn = {
               lhs = "forM_";
               rhs = "for_";
-            };
-          }
-          {
-            warn = {
-              lhs = "map";
-              rhs = "fmap";
             };
           }
           {

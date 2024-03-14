@@ -1,4 +1,3 @@
-{-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeApplications #-}
 
@@ -14,13 +13,27 @@ import Haskerwaul.Law.Interchange
 import Haskerwaul.Monoid.Laws
 import Haskerwaul.Relation.Equality
 
-diamondUnitLaw :: forall c di st a. (Duoid c di st a) => Proxy di -> Proxy st -> Law c EqualityRelation (Unit c di) a
-diamondUnitLaw di Proxy = Law (unit di) (op @_ @st . bimap (unit @c di) (unit @c di) . opposite op)
+diamondUnitLaw ::
+  forall c di st a.
+  (Duoid c di st a) =>
+  Proxy di ->
+  Proxy st ->
+  Law c EqualityRelation (Unit c di) a
+diamondUnitLaw di Proxy =
+  Law (unit di) (op @_ @st . bimap (unit @c di) (unit @c di) . opposite op)
 
-starUnitLaw :: forall c di st a. (Duoid c di st a) => Proxy st -> Law c EqualityRelation (di (Unit c st) (Unit c st)) a
+starUnitLaw ::
+  forall c di st a.
+  (Duoid c di st a) =>
+  Proxy st ->
+  Law c EqualityRelation (di (Unit c st) (Unit c st)) a
 starUnitLaw st = Law (unit st . op) (op . bimap (unit @c st) (unit @c st))
 
-unitLaw :: (Duoid c di st a) => Proxy di -> Proxy st -> Law c EqualityRelation (Unit c di) a
+unitLaw ::
+  (Duoid c di st a) =>
+  Proxy di ->
+  Proxy st ->
+  Law c EqualityRelation (Unit c di) a
 unitLaw di st = Law (unit di) (unit st . unit di)
 
 data DuoidLaws c di st a = DuoidLaws

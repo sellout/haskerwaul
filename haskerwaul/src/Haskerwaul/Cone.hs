@@ -13,7 +13,7 @@ import Haskerwaul.Topos.Elementary
 --
 -- - [nLab](https://ncatlab.org/nlab/show/cone)
 -- - [Wikipedia](https://en.wikipedia.org/wiki/Cone_(category_theory))
-data Cone j c n f = Cone {runCone :: forall x. (Ob j x) => n `c` f x}
+newtype Cone j c n f = Cone {runCone :: forall x. (Ob j x) => n `c` f x}
 
 coneProperty ::
   (Ob j x, Ob j y, Functor j c f, ElementaryTopos c, Ob c n, EquivalenceRelation c (f y)) =>

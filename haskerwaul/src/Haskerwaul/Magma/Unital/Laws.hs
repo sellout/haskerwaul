@@ -1,4 +1,3 @@
-{-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeApplications #-}
 
@@ -6,7 +5,7 @@ module Haskerwaul.Magma.Unital.Laws where
 
 import Data.Constraint ((\\))
 import Data.Proxy (Proxy (..))
-import Haskerwaul.Category.Monoidal
+import Haskerwaul.Category.Monoidal hiding (leftIdentity, rightIdentity)
 import Haskerwaul.Law
 import Haskerwaul.Law.Identity.Left
 import Haskerwaul.Law.Identity.Right
