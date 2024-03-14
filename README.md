@@ -15,12 +15,16 @@ The structure is largely based on [nLab](https://ncatlab.org/nlab/show/HomePage)
 ## usage
 
 This library attempts to play well with the existing type classes in base. E.g., we promote instances from base with instances like this:
+
 ```haskell
-instance {-# overlappable #-}
-         Data.Functor.Functor f =>
-         Haskerwaul.Functor.Functor (->) (->) f where
+instance
+  {-# OVERLAPPABLE #-}
+  (Data.Functor.Functor f) =>
+  Haskerwaul.Functor.Functor (->) (->) f
+  where
   map = Data.Functor.fmap
 ```
+
 Which also means that if you're defining your own instances, you'd be well-served to implement them using the type classes from base whenever possible, getting a bunch of Haskerwaul instances for free (e.g., if you implement `Control.Category.Category`, I think you must get at least three separate Haskerwaul instances ([`Magma`](./src/Haskerwaul/Magma.hs), [`Semigroup`](./src/Haskerwaul/Semigroup.hs), and [`UnitalMagma`](./src/Haskerwaul/Magma/Unital.hs) -- things like [`Semigroupoid`](./src/Haskerwaul/Semigroupoid.hs) and [`Category`](./src/Haskerwaul/Category.hs) are either type synonyms or have universal instances already defined. Once you have the instance from base, you can implement richer classes like `CartesianClosedCategory` using Haskerwaul's classes.
 
 However, this library does not play well with `Prelude`, co-opting a bunch of the same names, so it's helpful to either enable `NoImplicitPrelude` or import Haskerwaul qualified. Unfortunately, [the `Haskerwaul` module](./src/Haskerwaul.hs) is not quite a custom Prelude and I've avoided expanding it into one, because there are a lot of points of contention when designing a Prelude. But perhaps it can be used as the basis of one.
@@ -112,17 +116,21 @@ are restricted to **Hask** means that we are often very overconstrained as a
 result (see `~ (->)` above).
 
 So, we try to avoid newtypes as much as possible. In `base`, you see things like
+
 ```haskell
 newtype Ap f a = Ap { getAp :: f a }
 instance (Applicative f, Monoid a) => Monoid (Ap f a) where
   ...
 ```
+
 but that forces `f :: k -> Type` (granted, `Applicative` already forces
 `f :: Type -> Type`, so it's no loss in `base`). However, we want to stay more
 kind-polymorphic, so we take a different tradeoff and write stuff like
+
 ```haskell
 instance (LaxMonoidalFunctor c ct d dt f, Monoid c ct a) => Monoid d dt (f a)
 ```
+
 (where `LaxMonoidalFunctor` is our equivalent of `Applicative`), which means we
 need `UndecidableInstances`, but it's worth it to be kind-polymorphic.
 
@@ -143,13 +151,17 @@ See "newtypes" above.
 In "plain" category theory, the Hom functor for a category **C** is a functor **C** x **C** -> **Set**. Enriched category theory generalizes that **Set** to some arbitrary monoidal category **V**. E.g., in the case of preorders, **V** may be **Set** (where the image is only singleton sets and the empty set) or it can be **Bool**, which more precisely models the exists-or-not nature of the relationship.
 
 One way to model this is to add a parameter `v` to `Category c`, like
+
 ```haskell
 class Monoid (DinaturalTransformation v) Procompose c => Category v c
 ```
+
 However, this means that the same category, enriched differently, has multiple instances. Modeling the enrichment separaetely, e.g.,
+
 ```haskell
 class (MonoidalCategory v, Category c) => EnrichedCategory v c
 ```
+
 seems good, but the Hom functor is fundamental to the definition of composition in `c`. Finally, perhaps we can encode some "primary" **V** existentially, and model other enrichments via functors from **V**.
 
 ### PolyKinds

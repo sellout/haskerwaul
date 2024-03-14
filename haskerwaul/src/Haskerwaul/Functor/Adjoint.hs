@@ -1,7 +1,6 @@
 module Haskerwaul.Functor.Adjoint where
 
-import           Data.Proxy (Proxy)
-
+import Data.Proxy (Proxy)
 import Haskerwaul.Functor
 
 -- | [nLab](https://ncatlab.org/nlab/show/adjunction)

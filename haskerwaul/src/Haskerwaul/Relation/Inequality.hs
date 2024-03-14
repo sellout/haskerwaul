@@ -1,33 +1,32 @@
-{-# language UndecidableInstances #-}
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Relation.Inequality where
 
-import           Data.Bool (Bool)
-import           Data.Int (Int, Int8, Int16, Int32, Int64)
-import           Data.Void (Void)
-import           Data.Word (Word, Word8, Word16, Word32, Word64)
-import           Numeric.Natural (Natural)
-import           Prelude (Double, Float, Integer)
-import qualified Prelude as Base
-
+import Data.Bool (Bool)
+import Data.Int (Int, Int16, Int32, Int64, Int8)
+import Data.Void (Void)
+import Data.Word (Word, Word16, Word32, Word64, Word8)
 import Haskerwaul.Object
 import Haskerwaul.Relation.Homogeneous
 import Haskerwaul.Topos.Elementary
+import Numeric.Natural (Natural)
+import Prelude (Double, Float, Integer)
+import qualified Prelude as Base
 
 -- | [nLab](https://ncatlab.org/nlab/show/inequality+relation)
 --
 -- = laws
 --   [irreflexive]: @x `/=` x == false@
 --   [symmetric]: @x `/=` y ==> y `/=` x@
-class Ob c a => InequalityRelation c a where
+class (Ob c a) => InequalityRelation c a where
   ne :: HomogeneousRelation c a
 
 instance InequalityRelation (->) () where
   ne ((), ()) = Base.False
 
 instance InequalityRelation (->) Void where
-  ne = uncurry $ \case
+  ne = uncurry $ \case {}
 
 instance InequalityRelation (->) Bool where
   ne = uncurry (Base./=)

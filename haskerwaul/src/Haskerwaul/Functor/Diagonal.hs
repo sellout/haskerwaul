@@ -1,4 +1,4 @@
-{-# language UndecidableInstances #-}
+{-# LANGUAGE UndecidableInstances #-}
 
 module Haskerwaul.Functor.Diagonal where
 
@@ -11,5 +11,5 @@ import Haskerwaul.Functor
 -- - [nLab](https://ncatlab.org/nlab/show/diagonal+functor)
 newtype Diagonal t a = Diagonal {unDiagonal :: t a a}
 
-instance Bifunctor c c (->) t => Functor c (->) (Diagonal t) where
+instance (Bifunctor c c (->) t) => Functor c (->) (Diagonal t) where
   map f (Diagonal t) = Diagonal (bimap f f t)

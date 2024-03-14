@@ -7,5 +7,5 @@ import Haskerwaul.Transformation.Dinatural
 type SemigroupoidLaws = SemigroupLaws (DinaturalTransformation (->)) Procompose
 
 -- | Simply a specialization of `semigroupLaws` for when we're testing categories.
-semigroupoidLaws :: Semigroupoid c => SemigroupoidLaws c
+semigroupoidLaws :: (Semigroupoid c) => SemigroupoidLaws c
 semigroupoidLaws = semigroupLaws

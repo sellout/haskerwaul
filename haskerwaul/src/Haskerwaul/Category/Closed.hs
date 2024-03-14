@@ -1,15 +1,16 @@
-{-# language UndecidableInstances
-           , UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Category.Closed
-  ( module Haskerwaul.Category.Closed
-  -- * extended modules
-  , module Haskerwaul.Category
-  ) where
+  ( module Haskerwaul.Category.Closed,
 
-import           Data.Constraint ((:-), (:=>))
-import           Data.Kind (Type)
+    -- * extended modules
+    module Haskerwaul.Category,
+  )
+where
 
+import Data.Constraint ((:-), (:=>))
+import Data.Kind (Type)
 import Haskerwaul.Category
 import Haskerwaul.Category.Kleisli
 import Haskerwaul.Category.Opposite
@@ -38,11 +39,12 @@ instance ClosedCategory (->) where
 
 -- | This is a natural transformation as an exponential object in a category
 --   whose arrows are `NaturalTransformation`.
-data ExpTransformation (c :: Type -> Type -> Type) f g a =
-  ET { runET :: f a `c` g a }
+data ExpTransformation (c :: Type -> Type -> Type) f g a = ET {runET :: f a `c` g a}
 
-instance (ClosedCategory d, BOb (FOb (Ob c) (Ob d)) (FOb (Ob c) (Ob d)) (FOb (Ob c) (Ob d)) (ExpTransformation (InternalHom d))) =>
-         ClosedCategory (NaturalTransformation c (d :: Type -> Type -> Type)) where
+instance
+  (ClosedCategory d, BOb (FOb (Ob c) (Ob d)) (FOb (Ob c) (Ob d)) (FOb (Ob c) (Ob d)) (ExpTransformation (InternalHom d))) =>
+  ClosedCategory (NaturalTransformation c (d :: Type -> Type -> Type))
+  where
   type InternalHom (NaturalTransformation c d) = ExpTransformation (InternalHom d)
 
 instance ClosedCategory (:-) where
@@ -51,12 +53,16 @@ instance ClosedCategory (:-) where
 instance ClosedCategory (NaturalTransformation c (:-)) where
   type InternalHom (NaturalTransformation c (:-)) = ConstraintTransformation (:-)
 
-instance (ClosedCategory c, TOb (Ob c) (Opposite (InternalHom c))) =>
-         ClosedCategory (Opposite c) where
+instance
+  (ClosedCategory c, TOb (Ob c) (Opposite (InternalHom c))) =>
+  ClosedCategory (Opposite c)
+  where
   type InternalHom (Opposite c) = Opposite (InternalHom c)
-  
-instance (ClosedCategory c, TOb (Ob c) (Isomorphism c)) =>
-         ClosedCategory (Isomorphism c) where
+
+instance
+  (ClosedCategory c, TOb (Ob c) (Isomorphism c)) =>
+  ClosedCategory (Isomorphism c)
+  where
   type InternalHom (Isomorphism c) = Isomorphism c
 
 -- This instance can't be provided generically, I don't think. It does exist for
@@ -64,9 +70,13 @@ instance (ClosedCategory c, TOb (Ob c) (Isomorphism c)) =>
 -- instance (ClosedCategory c, Monad c m) => ClosedCategory (Kleisli c m) where
 --   type InternalHom (Kleisli c m) = Kleisli (InternalHom c) m
 
-instance {-# overlappable #-}
-         ( Ob c ~ All
-         , ClosedCategory c, Monad c m
-         , BOb (Ob c) (Ob c) (Ob c) (Kleisli (InternalHom c) m)) =>
-         ClosedCategory (Kleisli (c :: Type -> Type -> Type) m) where
+instance
+  {-# OVERLAPPABLE #-}
+  ( Ob c ~ All,
+    ClosedCategory c,
+    Monad c m,
+    BOb (Ob c) (Ob c) (Ob c) (Kleisli (InternalHom c) m)
+  ) =>
+  ClosedCategory (Kleisli (c :: Type -> Type -> Type) m)
+  where
   type InternalHom (Kleisli c m) = Kleisli (InternalHom c) m

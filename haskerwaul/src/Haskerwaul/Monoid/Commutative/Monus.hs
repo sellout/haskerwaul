@@ -1,18 +1,19 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Monoid.Commutative.Monus
-  ( module Haskerwaul.Monoid.Commutative.Monus
-  -- * extended modules
-  , module Haskerwaul.Monoid.Commutative
-  ) where
+  ( module Haskerwaul.Monoid.Commutative.Monus,
 
-import qualified Prelude as Base
-import           Numeric.Natural
+    -- * extended modules
+    module Haskerwaul.Monoid.Commutative,
+  )
+where
 
 import Haskerwaul.Monoid.Commutative
 import Haskerwaul.Semiring.Pre.Near
+import Numeric.Natural
+import qualified Prelude as Base
 
-class CommutativeMonoid c t a => CommutativeMonoidMonus c t a where
+class (CommutativeMonoid c t a) => CommutativeMonoidMonus c t a where
   -- | [nLab](https://ncatlab.org/nlab/show/monus)
   monus :: t a a `c` a
 

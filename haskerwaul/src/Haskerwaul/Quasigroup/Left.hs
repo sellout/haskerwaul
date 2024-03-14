@@ -1,28 +1,29 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Quasigroup.Left
-  ( module Haskerwaul.Quasigroup.Left
-  -- * extended modules
-  , module Haskerwaul.Magma
-  ) where
+  ( module Haskerwaul.Quasigroup.Left,
 
-import           Prelude (Integer)
-import qualified Prelude as Base (Num(..))
-import           Data.Either (Either)
+    -- * extended modules
+    module Haskerwaul.Magma,
+  )
+where
+
+import Data.Either (Either)
 import qualified Data.Either as Base
-import           Data.Int (Int)
-import           Data.Void (Void)
+import Data.Int (Int)
+import Data.Void (Void)
 import qualified Data.Void as Base
-
 import Haskerwaul.Magma
 import Haskerwaul.Semiring.Components
+import Prelude (Integer)
+import qualified Prelude as Base (Num (..))
 
 -- | [nLab](https://ncatlab.org/nlab/show/quasigroup#definitions)
 --
 -- = laws
 --   [left quotient 1]: @`op` (`leftQuotient` x y) y == x@
 --   [left quotient 2]: @`leftQuotient` (`op` x y) y == x@
-class Magma c t a => LeftQuasigroup c t a where
+class (Magma c t a) => LeftQuasigroup c t a where
   leftQuotient :: t a a `c` a
 
 instance LeftQuasigroup (->) Either Void where

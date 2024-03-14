@@ -1,19 +1,20 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Lattice.Distributive
-  ( module Haskerwaul.Lattice.Distributive
-  -- * extended modules
-  , module Haskerwaul.Lattice.Modular
-  ) where
+  ( module Haskerwaul.Lattice.Distributive,
+
+    -- * extended modules
+    module Haskerwaul.Lattice.Modular,
+  )
+where
 
 import qualified Data.Bool as Base
 import qualified Data.Int as Base
 import qualified Data.Word as Base
-
 import Haskerwaul.Lattice.Modular
 
 -- | [nLab](https://ncatlab.org/nlab/show/distributive+lattice)
-class ModularLattice c t a => DistributiveLattice c t a
+class (ModularLattice c t a) => DistributiveLattice c t a
 
 instance DistributiveLattice (->) (,) Base.Bool
 

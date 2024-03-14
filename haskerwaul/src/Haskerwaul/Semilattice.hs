@@ -1,11 +1,13 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Semilattice
-  ( module Haskerwaul.Semilattice
-  -- * extended modules
-  , module Haskerwaul.Band
-  , module Haskerwaul.Semigroup.Commutative
-  ) where
+  ( module Haskerwaul.Semilattice,
+
+    -- * extended modules
+    module Haskerwaul.Band,
+    module Haskerwaul.Semigroup.Commutative,
+  )
+where
 
 import Haskerwaul.Band
 import Haskerwaul.Semigroup.Commutative

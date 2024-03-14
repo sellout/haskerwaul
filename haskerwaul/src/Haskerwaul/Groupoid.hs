@@ -1,12 +1,14 @@
-{-# language UndecidableInstances
-           , UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Groupoid
-  ( module Haskerwaul.Groupoid
-  -- * extended modules
-  , module Haskerwaul.Category
-  , module Haskerwaul.Group
-  ) where
+  ( module Haskerwaul.Groupoid,
+
+    -- * extended modules
+    module Haskerwaul.Category,
+    module Haskerwaul.Group,
+  )
+where
 
 import Haskerwaul.Category
 import Haskerwaul.Group

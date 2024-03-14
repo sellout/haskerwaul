@@ -1,11 +1,13 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Field.Totalized.Zero
-  ( module Haskerwaul.Field.Totalized.Zero
-  -- * extended modules
-  , module Haskerwaul.Field.Totalized
-  , module Haskerwaul.Meadow
-  ) where
+  ( module Haskerwaul.Field.Totalized.Zero,
+
+    -- * extended modules
+    module Haskerwaul.Field.Totalized,
+    module Haskerwaul.Meadow,
+  )
+where
 
 import Haskerwaul.Field.Totalized
 import Haskerwaul.Meadow

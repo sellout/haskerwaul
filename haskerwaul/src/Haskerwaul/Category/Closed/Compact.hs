@@ -1,16 +1,17 @@
-{-# language TypeApplications
-           , UndecidableInstances
-           , UndecidableSuperClasses #-}
+{-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Category.Closed.Compact
-  ( module Haskerwaul.Category.Closed.Compact
-  -- * extended modules
-  , module Haskerwaul.Category.Monoidal.Closed
-  , module Haskerwaul.Category.Monoidal.Traced
-  ) where
+  ( module Haskerwaul.Category.Closed.Compact,
 
-import           Data.Constraint ((\\))
+    -- * extended modules
+    module Haskerwaul.Category.Monoidal.Closed,
+    module Haskerwaul.Category.Monoidal.Traced,
+  )
+where
 
+import Data.Constraint ((\\))
 import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Monoidal.Closed
 import Haskerwaul.Category.Monoidal.Rigid
@@ -27,17 +28,21 @@ import Haskerwaul.Object.Invertible
 -- - [Wikipedia](https://en.wikipedia.org/wiki/Compact_closed_category)
 --
 --  __NB__: Instances for this are autmatically coalesced.
-class ( ClosedMonoidalCategory c t
-      , RigidMonoidalCategory c t
-      , SymmetricMonoidalCategory c t
-      , forall a. Ob c a => Invertible c t a) =>
-      CompactClosedCategory c t
+class
+  ( ClosedMonoidalCategory c t,
+    RigidMonoidalCategory c t,
+    SymmetricMonoidalCategory c t,
+    forall a. (Ob c a) => Invertible c t a
+  ) =>
+  CompactClosedCategory c t
 
-instance ( ClosedMonoidalCategory c t
-         , RigidMonoidalCategory c t
-         , SymmetricMonoidalCategory c t
-         , forall a. Ob c a => Invertible c t a) =>
-         CompactClosedCategory c t
+instance
+  ( ClosedMonoidalCategory c t,
+    RigidMonoidalCategory c t,
+    SymmetricMonoidalCategory c t,
+    forall a. (Ob c a) => Invertible c t a
+  ) =>
+  CompactClosedCategory c t
 
 -- -- | Compact closed categories are self-dual.
 -- instance CompactClosedCategory c t => CompactClosedCategory (Opposite c) t

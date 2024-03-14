@@ -1,8 +1,10 @@
 module Haskerwaul.Category.Small.Locally
-  ( module Haskerwaul.Category.Small.Locally
-  -- * extended modules
-  , module Haskerwaul.Category
-  ) where
+  ( module Haskerwaul.Category.Small.Locally,
+
+    -- * extended modules
+    module Haskerwaul.Category,
+  )
+where
 
 import Haskerwaul.Category
 

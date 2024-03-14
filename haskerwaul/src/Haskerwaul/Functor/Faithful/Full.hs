@@ -1,13 +1,14 @@
 module Haskerwaul.Functor.Faithful.Full
-  ( module Haskerwaul.Functor.Faithful.Full
-  -- * extended modules
-  , module Haskerwaul.Functor.Faithful
-  , module Haskerwaul.Functor.Full
-  ) where
+  ( module Haskerwaul.Functor.Faithful.Full,
 
-import           Data.Constraint ((:-), Dict, unmapDict)
-import           Data.Functor.Identity (Identity(..))
+    -- * extended modules
+    module Haskerwaul.Functor.Faithful,
+    module Haskerwaul.Functor.Full,
+  )
+where
 
+import Data.Constraint (Dict, unmapDict, (:-))
+import Data.Functor.Identity (Identity (..))
 import Haskerwaul.Functor.Faithful
 import Haskerwaul.Functor.Full
 import Haskerwaul.Isomorphism
@@ -15,8 +16,10 @@ import Haskerwaul.Object
 import Haskerwaul.Semigroupoid
 
 -- | [nLab](https://ncatlab.org/nlab/show/full+and+faithful+functor)
-class (FullFunctor c d f, FaithfulFunctor c d f) =>
-      FullFaithfulFunctor c d f where
+class
+  (FullFunctor c d f, FaithfulFunctor c d f) =>
+  FullFaithfulFunctor c d f
+  where
   -- | This is truly a functor itself, but its signature doesn't match that
   --   required by `Functor`.
   --
@@ -24,9 +27,9 @@ class (FullFunctor c d f, FaithfulFunctor c d f) =>
   unmap :: (Ob c a, Ob c b) => f a `d` f b -> a `c` b
 
 -- | The isomorphism induced by a full & faithful functor.
-fullFaithfulIso
-  :: (FullFaithfulFunctor c d f, Ob c a, Ob c b)
-  => Isomorphism (->) (a `c` b) (f a `d` f b)
+fullFaithfulIso ::
+  (FullFaithfulFunctor c d f, Ob c a, Ob c b) =>
+  Isomorphism (->) (a `c` b) (f a `d` f b)
 fullFaithfulIso = Iso map unmap
 
 -- | `Dict` is a `FullFaithfulFunctor` between the category of constraints and

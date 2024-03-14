@@ -1,11 +1,13 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Quasigroup
-  ( module Haskerwaul.Quasigroup
-  -- * extended modules
-  , module Haskerwaul.Quasigroup.Left
-  , module Haskerwaul.Quasigroup.Right
-  ) where
+  ( module Haskerwaul.Quasigroup,
+
+    -- * extended modules
+    module Haskerwaul.Quasigroup.Left,
+    module Haskerwaul.Quasigroup.Right,
+  )
+where
 
 import Haskerwaul.Quasigroup.Left
 import Haskerwaul.Quasigroup.Right

@@ -1,8 +1,10 @@
 module Haskerwaul.Category.CoKleisli
-  ( module Haskerwaul.Category.CoKleisli
-  -- * extended modules
-  , module Haskerwaul.Category.Kleisli
-  ) where
+  ( module Haskerwaul.Category.CoKleisli,
+
+    -- * extended modules
+    module Haskerwaul.Category.Kleisli,
+  )
+where
 
 import Haskerwaul.Category.Kleisli
 import Haskerwaul.Category.Opposite

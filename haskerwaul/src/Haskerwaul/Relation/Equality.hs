@@ -1,12 +1,14 @@
-{-# language UndecidableInstances
-           , UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Relation.Equality
-  ( module Haskerwaul.Relation.Equality
-  -- * extended modules
-  , module Haskerwaul.Order.Partial
-  , module Haskerwaul.Relation.Equivalence
-  ) where
+  ( module Haskerwaul.Relation.Equality,
+
+    -- * extended modules
+    module Haskerwaul.Order.Partial,
+    module Haskerwaul.Relation.Equivalence,
+  )
+where
 
 import Haskerwaul.Order.Partial
 import Haskerwaul.Relation.Equivalence
@@ -17,7 +19,7 @@ import Haskerwaul.Topos.Elementary
 --  __NB__: Instances for this are automatically coalesced.
 class (EquivalenceRelation c a, PartialOrder c a) => EqualityRelation c a
 
-eq :: EqualityRelation c a => BinaryRelation c a a
+eq :: (EqualityRelation c a) => BinaryRelation c a a
 eq = equiv
 
 instance (EquivalenceRelation c a, PartialOrder c a) => EqualityRelation c a

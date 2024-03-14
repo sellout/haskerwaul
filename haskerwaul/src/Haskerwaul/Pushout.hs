@@ -1,8 +1,10 @@
 module Haskerwaul.Pushout
-  ( module Haskerwaul.Pushout
-  -- * extended modules
-  , module Haskerwaul.Pullback
-  ) where
+  ( module Haskerwaul.Pushout,
+
+    -- * extended modules
+    module Haskerwaul.Pullback,
+  )
+where
 
 import Haskerwaul.Category.Opposite
 import Haskerwaul.Pullback

@@ -1,12 +1,14 @@
-{-# language UndecidableInstances
-           , UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Ring.Boolean
-  ( module Haskerwaul.Ring.Boolean
-  -- * extended modules
-  , module Haskerwaul.Ring.Commutative
-  , module Haskerwaul.Semilattice.Bounded
-  ) where
+  ( module Haskerwaul.Ring.Boolean,
+
+    -- * extended modules
+    module Haskerwaul.Ring.Commutative,
+    module Haskerwaul.Semilattice.Bounded,
+  )
+where
 
 import Haskerwaul.Ring.Commutative
 import Haskerwaul.Semilattice.Bounded
@@ -21,8 +23,10 @@ import Haskerwaul.Semilattice.Bounded
 -- - [Wikipedia](https://en.wikipedia.org/wiki/Boolean_ring)
 --
 --  __NB__: Instances for this are automatically coalesced.
-class (CommutativeRing c t a, BoundedSemilattice c t (Multiplicative a)) =>
-      BooleanRing c t a
+class
+  (CommutativeRing c t a, BoundedSemilattice c t (Multiplicative a)) =>
+  BooleanRing c t a
 
-instance (AbelianGroup c t (Additive a), BoundedSemilattice c t (Multiplicative a)) =>
-         BooleanRing c t a
+instance
+  (AbelianGroup c t (Additive a), BoundedSemilattice c t (Multiplicative a)) =>
+  BooleanRing c t a

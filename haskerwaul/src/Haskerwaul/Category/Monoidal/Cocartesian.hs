@@ -1,8 +1,9 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Category.Monoidal.Cocartesian
-  ( module Haskerwaul.Category.Monoidal.Cocartesian
-  ) where
+  ( module Haskerwaul.Category.Monoidal.Cocartesian,
+  )
+where
 
 import Haskerwaul.Category.Monoidal.Cartesian
 import Haskerwaul.Category.Opposite

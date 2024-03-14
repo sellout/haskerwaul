@@ -11,20 +11,19 @@
 --          so we avoid it.
 module Haskerwaul.Semiring.Components where
 
-import           Prelude (Integer)
-import qualified Prelude as Base (Num(..))
-import           Data.Bool (Bool(..))
+import Data.Bool (Bool (..))
 import qualified Data.Bool as Base
-import           Data.Int
+import Data.Int
 import qualified Data.Monoid as Base
 import qualified Data.Semigroup as Base
-import           Data.Word
-import           Numeric.Natural
-
+import Data.Word
 import Haskerwaul.Lattice.Components
+import Numeric.Natural
+import Prelude (Integer)
+import qualified Prelude as Base (Num (..))
 
 -- | The additive component of a semiring-like structure.
-newtype Additive a = Add { sum :: a }
+newtype Additive a = Add {sum :: a}
 
 -- > Bool instances
 
@@ -145,7 +144,7 @@ instance Base.Monoid (Additive Word64) where
   mempty = Add 0
 
 -- | The multiplicative component of a semiring-like structure.
-newtype Multiplicative a = Multiply { product :: a }
+newtype Multiplicative a = Multiply {product :: a}
 
 -- > Bool instances
 

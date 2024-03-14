@@ -1,10 +1,10 @@
 module Haskerwaul.Embedding.Yoneda
-  ( module Haskerwaul.Embedding.Yoneda
-  , module Haskerwaul.Extension.Kan.Right
-  ) where
+  ( module Haskerwaul.Embedding.Yoneda,
+    module Haskerwaul.Extension.Kan.Right,
+  )
+where
 
-import           Data.Functor.Identity (Identity)
-
+import Data.Functor.Identity (Identity)
 import Haskerwaul.Extension.Kan.Right
 
 -- |

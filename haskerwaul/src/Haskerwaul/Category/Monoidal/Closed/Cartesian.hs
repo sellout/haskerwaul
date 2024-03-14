@@ -1,18 +1,19 @@
-{-# language TypeApplications
-           , UndecidableInstances
-           , UndecidableSuperClasses #-}
+{-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Category.Monoidal.Closed.Cartesian
-  ( module Haskerwaul.Category.Monoidal.Closed.Cartesian
-  -- * extended modules
-  , module Haskerwaul.Category.Closed.Cartesian
-  , module Haskerwaul.Category.Monoidal.Cartesian
-  , module Haskerwaul.Category.Monoidal.Closed
-  , module Haskerwaul.Object.Exponential
-  ) where
+  ( module Haskerwaul.Category.Monoidal.Closed.Cartesian,
 
-import           Data.Constraint ((\\))
+    -- * extended modules
+    module Haskerwaul.Category.Closed.Cartesian,
+    module Haskerwaul.Category.Monoidal.Cartesian,
+    module Haskerwaul.Category.Monoidal.Closed,
+    module Haskerwaul.Object.Exponential,
+  )
+where
 
+import Data.Constraint ((\\))
 import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Closed.Cartesian
 import Haskerwaul.Category.Monoidal.Cartesian
@@ -33,21 +34,24 @@ import Haskerwaul.Skewfield
 -- = references
 --
 -- - [nLab](https://ncatlab.org/nlab/show/cartesian+closed+category)
-class (CartesianMonoidalCategory c, CartesianClosedCategory c, ClosedMonoidalCategory c (Prod c)) =>
-      CartesianClosedMonoidalCategory c where
+class
+  (CartesianMonoidalCategory c, CartesianClosedCategory c, ClosedMonoidalCategory c (Prod c)) =>
+  CartesianClosedMonoidalCategory c
+  where
   -- | this is basically @`to` `curry` `$` `id`@, but you need `tuple` in order
   --   to define it that way, so this breaks the cycle.
   tuple :: (Ob c x, Ob c y) => x `c` Exp c y (Prod c x y)
 
-curryIso
-  :: (CartesianClosedMonoidalCategory c, Ob c x, Ob c y, Ob c z)
-  => Isomorphism (->) (Prod c x y `c` z) (x `c` Exp c y z)
+curryIso ::
+  (CartesianClosedMonoidalCategory c, Ob c x, Ob c y, Ob c z) =>
+  Isomorphism (->) (Prod c x y `c` z) (x `c` Exp c y z)
 curryIso = Iso curry uncurry
 
 instance CartesianClosedMonoidalCategory (->) where
   tuple = (,)
 
 -- * Operators
+
 --
 --   In order to have binary /operators/, we must be able to `curry` binary
 --  /operations/. This requires at least a closed monoidal category. However, we
@@ -55,30 +59,44 @@ instance CartesianClosedMonoidalCategory (->) where
 --   monomorphize the tensor, so we require a `CartesianClosedMonoidalCategory`,
 --   since that selects a particular tensor for us.
 
-($) :: forall c a b. (CartesianClosedMonoidalCategory c, Ob c a, Ob c b)
-    => InternalHom c a b `c` InternalHom c a b
+($) ::
+  forall c a b.
+  (CartesianClosedMonoidalCategory c, Ob c a, Ob c b) =>
+  InternalHom c a b `c` InternalHom c a b
 ($) = curry @_ @(Prod c) apply \\ inT @(Ob c) @(InternalHom c) @a @b
 
-(<>) :: forall c a. (CartesianClosedMonoidalCategory c, Magma c (Prod c) a)
-     => a `c` InternalHom c a a
+(<>) ::
+  forall c a.
+  (CartesianClosedMonoidalCategory c, Magma c (Prod c) a) =>
+  a `c` InternalHom c a a
 (<>) = curry @_ @(Prod c) op
 
-(.-) :: forall c a. (c ~ (->), CartesianClosedMonoidalCategory c, RigMonus c (Prod c) a)
-     => a `c` InternalHom c a a
+(.-) ::
+  forall c a.
+  (c ~ (->), CartesianClosedMonoidalCategory c, RigMonus c (Prod c) a) =>
+  a `c` InternalHom c a a
 (.-) = curry @_ @(Prod c) (sum . monus . bimap Add Add)
 
-(+) :: forall c a. (c ~ (->), CartesianClosedMonoidalCategory c, NearPreSemiring c (Prod c) a)
-    => a `c` InternalHom c a a
+(+) ::
+  forall c a.
+  (c ~ (->), CartesianClosedMonoidalCategory c, NearPreSemiring c (Prod c) a) =>
+  a `c` InternalHom c a a
 (+) = curry @_ @(Prod c) add
 
-(*) :: forall c a. (c ~ (->), CartesianClosedMonoidalCategory c, NearPreSemiring c (Prod c) a)
-    => a `c` InternalHom c a a
+(*) ::
+  forall c a.
+  (c ~ (->), CartesianClosedMonoidalCategory c, NearPreSemiring c (Prod c) a) =>
+  a `c` InternalHom c a a
 (*) = curry @_ @(Prod c) multiply
 
-(-) :: forall c a. (c ~ (->), CartesianClosedMonoidalCategory c, Ring c (Prod c) a)
-    => a `c` InternalHom c a a
+(-) ::
+  forall c a.
+  (c ~ (->), CartesianClosedMonoidalCategory c, Ring c (Prod c) a) =>
+  a `c` InternalHom c a a
 (-) = curry @_ @(Prod c) subtract
 
-(/) :: forall c a. (c ~ (->), CartesianClosedMonoidalCategory c, Skewfield c (Prod c) a)
-    => a `c` InternalHom c a a
+(/) ::
+  forall c a.
+  (c ~ (->), CartesianClosedMonoidalCategory c, Skewfield c (Prod c) a) =>
+  a `c` InternalHom c a a
 (/) = curry @_ @(Prod c) divide

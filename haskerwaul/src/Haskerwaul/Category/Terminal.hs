@@ -1,9 +1,8 @@
 module Haskerwaul.Category.Terminal where
 
-import           Data.Constraint.Deferrable ((:~:)(..))
-import           Data.Kind (Type)
-import           Data.Proxy (Proxy(..))
-
+import Data.Constraint.Deferrable ((:~:) (..))
+import Data.Kind (Type)
+import Data.Proxy (Proxy (..))
 import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Monoidal
 import Haskerwaul.Category.Opposite
@@ -46,7 +45,7 @@ instance SemigroupalCategory TerminalCategory t where
   assoc = terminalIso
 
 instance MonoidalCategory' (TerminalCategory :: Type -> Type -> Type) t where
-  -- | Doesn't matter what type we use here, as they're all isomorphic.
+  -- \| Doesn't matter what type we use here, as they're all isomorphic.
   type Unit TerminalCategory t = ()
 
 instance MonoidalCategory (TerminalCategory :: Type -> Type -> Type) t where
@@ -54,12 +53,12 @@ instance MonoidalCategory (TerminalCategory :: Type -> Type -> Type) t where
   rightIdentity = terminalIso
 
 instance HasTerminalObject (TerminalCategory :: Type -> Type -> Type) where
-  -- | Doesn't matter what type we use here, as they're all isomorphic.
+  -- \| Doesn't matter what type we use here, as they're all isomorphic.
   type TerminalObject TerminalCategory = ()
   (!) = TermId
 
 instance HasTerminalObject (Opposite (TerminalCategory :: Type -> Type -> Type)) where
-  -- | Doesn't matter what type we use here, as they're all isomorphic.
+  -- \| Doesn't matter what type we use here, as they're all isomorphic.
   type TerminalObject (Opposite TerminalCategory) = ()
   (!) = Opposite TermId
 

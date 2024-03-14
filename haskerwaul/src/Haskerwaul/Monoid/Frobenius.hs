@@ -1,11 +1,13 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Monoid.Frobenius
-  ( module Haskerwaul.Monoid.Frobenius
-  -- * extended modules
-  , module Haskerwaul.Comonoid
-  , module Haskerwaul.Monoid
-  ) where
+  ( module Haskerwaul.Monoid.Frobenius,
+
+    -- * extended modules
+    module Haskerwaul.Comonoid,
+    module Haskerwaul.Monoid,
+  )
+where
 
 import Haskerwaul.Comonoid
 import Haskerwaul.Monoid

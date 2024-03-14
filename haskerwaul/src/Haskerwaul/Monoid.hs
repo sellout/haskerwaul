@@ -1,11 +1,13 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Monoid
-  ( module Haskerwaul.Monoid
-  -- * extended modules
-  , module Haskerwaul.Magma.Unital
-  , module Haskerwaul.Semigroup
-  ) where
+  ( module Haskerwaul.Monoid,
+
+    -- * extended modules
+    module Haskerwaul.Magma.Unital,
+    module Haskerwaul.Semigroup,
+  )
+where
 
 import Haskerwaul.Magma.Unital
 import Haskerwaul.Semigroup

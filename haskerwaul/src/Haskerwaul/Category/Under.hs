@@ -1,11 +1,13 @@
 module Haskerwaul.Category.Under
-  ( module Haskerwaul.Category.Under
-  -- * extended modules
-  , module Haskerwaul.Category.Over
-  ) where
+  ( module Haskerwaul.Category.Under,
 
-import Haskerwaul.Category.Over
+    -- * extended modules
+    module Haskerwaul.Category.Over,
+  )
+where
+
 import Haskerwaul.Category.Opposite
+import Haskerwaul.Category.Over
 
 -- | In our representation of an under (or coslice) category __x/c__, the
 --   objects are /represented by/ the objects of the underlying category, but

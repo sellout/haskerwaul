@@ -1,29 +1,30 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Order.Prefix
-  ( module Haskerwaul.Order.Prefix
-  -- * extended modules
-  , module Haskerwaul.Order.Partial
-  ) where
+  ( module Haskerwaul.Order.Prefix,
 
-import           Data.Bool (Bool)
-import           Data.Int (Int, Int8, Int16, Int32, Int64)
-import           Data.Ratio (Ratio)
-import           Data.Void (Void)
-import           Data.Word (Word, Word8, Word16, Word32, Word64)
+    -- * extended modules
+    module Haskerwaul.Order.Partial,
+  )
+where
+
+import Data.Bool (Bool)
+import Data.Int (Int, Int16, Int32, Int64, Int8)
+import Data.Ratio (Ratio)
+import Data.Void (Void)
+import Data.Word (Word, Word16, Word32, Word64, Word8)
 import qualified GHC.Real as Base
-import           Numeric.Natural (Natural)
-import           Prelude (Double, Float, Integer)
-
 import Haskerwaul.Order.Canonical
 import Haskerwaul.Order.Partial
+import Numeric.Natural (Natural)
+import Prelude (Double, Float, Integer)
 
 -- | [nLab](https://ncatlab.org/nlab/show/prefix+order)
 --
 -- = laws
 --
 -- - [downward totality]: @`le` (x, z) && `le` (y, z) ==> `le` (x, y) || `le` (y, x)@
-class PartialOrder c a => PrefixOrder c a
+class (PartialOrder c a) => PrefixOrder c a
 
 instance PrefixOrder (->) ()
 
@@ -55,7 +56,7 @@ instance PrefixOrder (->) (Canonical Word32)
 
 instance PrefixOrder (->) (Canonical Word64)
 
-instance Base.Integral a => PrefixOrder (->) (Canonical (Ratio a))
+instance (Base.Integral a) => PrefixOrder (->) (Canonical (Ratio a))
 
 -- | `Float` doesn't have a stronger ordering than this because of NaNs. NaNs
 --   are incomparable to anything.

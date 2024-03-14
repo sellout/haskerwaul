@@ -1,10 +1,12 @@
-{-# language UndecidableInstances #-}
+{-# LANGUAGE UndecidableInstances #-}
 
 module Haskerwaul.Subcategory.Wide
-  ( module Haskerwaul.Subcategory.Wide
-  -- * extended modules
-  , module Haskerwaul.Subcategory
-  ) where
+  ( module Haskerwaul.Subcategory.Wide,
+
+    -- * extended modules
+    module Haskerwaul.Subcategory,
+  )
+where
 
 import Haskerwaul.Object
 import Haskerwaul.Subcategory

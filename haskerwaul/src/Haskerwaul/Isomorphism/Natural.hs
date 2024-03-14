@@ -1,9 +1,11 @@
 module Haskerwaul.Isomorphism.Natural
-  ( module Haskerwaul.Isomorphism.Natural
-  -- * extended modules
-  , module Haskerwaul.Isomorphism
-  , module Haskerwaul.Transformation.Natural
-  ) where
+  ( module Haskerwaul.Isomorphism.Natural,
+
+    -- * extended modules
+    module Haskerwaul.Isomorphism,
+    module Haskerwaul.Transformation.Natural,
+  )
+where
 
 import Haskerwaul.Isomorphism
 import Haskerwaul.Transformation.Natural

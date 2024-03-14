@@ -1,9 +1,8 @@
-{-# language TypeApplications #-}
+{-# LANGUAGE TypeApplications #-}
 
 module Haskerwaul.Law.Identity.Graphic where
 
-import           Data.Constraint ((\\))
-
+import Data.Constraint ((\\))
 import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Monoidal.Cartesian
 import Haskerwaul.Isomorphism
@@ -23,4 +22,4 @@ graphicIdentityLaw ::
   Law c EqualityRelation (Prod c a a) a
 graphicIdentityLaw op' =
   Law op' (op' . bimap @c @c id (op' . to braid) . from assoc . bimap @c @c diagonal id)
-  \\ inT @(Ob c) @(Prod c) @a @a
+    \\ inT @(Ob c) @(Prod c) @a @a

@@ -1,4 +1,4 @@
-{-# language TypeApplications #-}
+{-# LANGUAGE TypeApplications #-}
 
 module Haskerwaul.Law.Identity.Right where
 
@@ -9,6 +9,10 @@ import Haskerwaul.Law
 import Haskerwaul.Object
 import Haskerwaul.Relation.Equality
 
-rightIdentityLaw :: forall c t a. (MonoidalCategory c t, Ob c a)
-                => t a a `c` a -> Unit c t `c` a -> Law c EqualityRelation (t a (Unit c t)) a
+rightIdentityLaw ::
+  forall c t a.
+  (MonoidalCategory c t, Ob c a) =>
+  t a a `c` a ->
+  Unit c t `c` a ->
+  Law c EqualityRelation (t a (Unit c t)) a
 rightIdentityLaw op' unit' = Law (to rightIdentity) (op' . bimap @c id unit')

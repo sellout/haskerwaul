@@ -6,6 +6,8 @@ import Haskerwaul.Object
 import Haskerwaul.Relation.Equality
 
 -- | [nLab](https://ncatlab.org/nlab/show/idempotent)
-idempotency :: (CartesianMonoidalCategory c, Ob c a)
-            => Prod c a a `c` a -> Law c EqualityRelation a a
+idempotency ::
+  (CartesianMonoidalCategory c, Ob c a) =>
+  Prod c a a `c` a ->
+  Law c EqualityRelation a a
 idempotency op' = Law id (op' . diagonal)

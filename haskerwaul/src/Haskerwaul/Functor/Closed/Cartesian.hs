@@ -1,16 +1,20 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Functor.Closed.Cartesian
-  ( module Haskerwaul.Functor.Closed.Cartesian
-  -- * extended modules
-  , module Haskerwaul.Functor.Monoidal.Closed
-  ) where
+  ( module Haskerwaul.Functor.Closed.Cartesian,
+
+    -- * extended modules
+    module Haskerwaul.Functor.Monoidal.Closed,
+  )
+where
 
 import Haskerwaul.Category.Monoidal.Closed.Cartesian
 import Haskerwaul.Functor.Monoidal.Closed
 
 -- | [nLab](https://ncatlab.org/nlab/show/cartesian+closed+functor)
-class ( CartesianClosedMonoidalCategory c
-      , CartesianClosedMonoidalCategory d
-      , ClosedMonoidalFunctor c (Prod c) d (Prod d) f) =>
-      CartesianClosedFunctor c d f
+class
+  ( CartesianClosedMonoidalCategory c,
+    CartesianClosedMonoidalCategory d,
+    ClosedMonoidalFunctor c (Prod c) d (Prod d) f
+  ) =>
+  CartesianClosedFunctor c d f

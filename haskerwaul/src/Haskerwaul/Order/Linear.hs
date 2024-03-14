@@ -1,13 +1,14 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Order.Linear
-  ( module Haskerwaul.Order.Linear
+  ( module Haskerwaul.Order.Linear,
+
     -- * extended modules
-  , module Haskerwaul.Quasiorder
-  ) where
+    module Haskerwaul.Quasiorder,
+  )
+where
 
-import           Data.Void (Void)
-
+import Data.Void (Void)
 import Haskerwaul.Category.Boolean
 import Haskerwaul.Isomorphism
 import Haskerwaul.Negation
@@ -27,7 +28,7 @@ import Haskerwaul.Topos.Elementary
 -- = references
 --
 -- - [nLab](https://ncatlab.org/nlab/show/linear+order)
-class Quasiorder c a => LinearOrder c a
+class (Quasiorder c a) => LinearOrder c a
 
 gt :: forall c a. (ElementaryTopos c, LinearOrder c a) => HomogeneousRelation c a
 gt = lt . to braid

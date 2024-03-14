@@ -1,21 +1,22 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Algebra.Heyting
-  ( module Haskerwaul.Algebra.Heyting
-  -- * extended modules
-  , module Haskerwaul.Lattice.Distributive.Bounded
-  ) where
+  ( module Haskerwaul.Algebra.Heyting,
 
-import qualified Prelude as Base (Bounded(..))
+    -- * extended modules
+    module Haskerwaul.Lattice.Distributive.Bounded,
+  )
+where
+
 import qualified Data.Bool as Base
 import qualified Data.Int as Base
 import qualified Data.Ord as Base
 import qualified Data.Word as Base
-
 import Haskerwaul.Lattice.Distributive.Bounded
+import qualified Prelude as Base (Bounded (..))
 
 -- | [nLab](https://ncatlab.org/nlab/show/Heyting+algebra)
-class BoundedDistributiveLattice c t a => HeytingAlgebra c t a where
+class (BoundedDistributiveLattice c t a) => HeytingAlgebra c t a where
   implies :: t a a `c` a
 
 -- | A common definition of implication for totally-ordered sets. It's possible

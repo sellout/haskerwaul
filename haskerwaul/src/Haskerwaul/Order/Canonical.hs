@@ -9,4 +9,4 @@ module Haskerwaul.Order.Canonical where
 --
 --   So `Canonical` is a way of tagging an instance that's implied as a canonical ordering, as
 --   opposed to an equivalence relation or something.
-newtype Canonical a = Canonical { decanonicalize :: a }
+newtype Canonical a = Canonical {decanonicalize :: a}

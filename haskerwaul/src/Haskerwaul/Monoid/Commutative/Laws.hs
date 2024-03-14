@@ -1,4 +1,4 @@
-{-# language RecordWildCards #-}
+{-# LANGUAGE RecordWildCards #-}
 
 module Haskerwaul.Monoid.Commutative.Laws where
 
@@ -7,16 +7,15 @@ import Haskerwaul.Monoid.Commutative
 import Haskerwaul.Monoid.Laws
 import Haskerwaul.Semigroup.Commutative.Laws
 
-data CommutativeMonoidLaws c t a =
-  CommutativeMonoidLaws
-    { commutativeSemigroup :: CommutativeSemigroupLaws c t a
-    , monoid :: MonoidLaws c t a
-    }
+data CommutativeMonoidLaws c t a = CommutativeMonoidLaws
+  { commutativeSemigroup :: CommutativeSemigroupLaws c t a,
+    monoid :: MonoidLaws c t a
+  }
 
 commutativeMonoidLaws ::
   (BraidedMonoidalCategory c t, CommutativeMonoid c t a) => CommutativeMonoidLaws c t a
 commutativeMonoidLaws =
   CommutativeMonoidLaws
-    { commutativeSemigroup = commutativeSemigroupLaws
-    , monoid = monoidLaws
+    { commutativeSemigroup = commutativeSemigroupLaws,
+      monoid = monoidLaws
     }

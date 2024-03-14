@@ -1,14 +1,15 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Category.Monoidal.Rigid
-  ( module Haskerwaul.Category.Monoidal.Rigid
-  -- * extended modules
-  , module Haskerwaul.Category.Monoidal.Rigid.Left
-  , module Haskerwaul.Category.Monoidal.Rigid.Right
-  ) where
+  ( module Haskerwaul.Category.Monoidal.Rigid,
 
-import           Data.Kind (Type)
+    -- * extended modules
+    module Haskerwaul.Category.Monoidal.Rigid.Left,
+    module Haskerwaul.Category.Monoidal.Rigid.Right,
+  )
+where
 
+import Data.Kind (Type)
 import Haskerwaul.Category.Monoidal
 import Haskerwaul.Category.Monoidal.Rigid.Left
 import Haskerwaul.Category.Monoidal.Rigid.Right
@@ -21,8 +22,10 @@ import Haskerwaul.Category.Monoidal.Rigid.Right
 --   its left dual: this need not be the case in general, [...]"
 --
 --  __NB__: Instances for this are automatically coelesced.
-class (LeftRigidMonoidalCategory c t, RightRigidMonoidalCategory c t) =>
-      RigidMonoidalCategory (c :: ok -> ok -> Type) t
+class
+  (LeftRigidMonoidalCategory c t, RightRigidMonoidalCategory c t) =>
+  RigidMonoidalCategory (c :: ok -> ok -> Type) t
 
-instance (LeftRigidMonoidalCategory c t, RightRigidMonoidalCategory c t) =>
-         RigidMonoidalCategory c t
+instance
+  (LeftRigidMonoidalCategory c t, RightRigidMonoidalCategory c t) =>
+  RigidMonoidalCategory c t

@@ -1,10 +1,12 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Category.Boolean
-  ( module Haskerwaul.Category.Boolean
-  -- * extended modules
-  , module Haskerwaul.Category.Heyting
-  ) where
+  ( module Haskerwaul.Category.Boolean,
+
+    -- * extended modules
+    module Haskerwaul.Category.Heyting,
+  )
+where
 
 import Haskerwaul.Category.Heyting
 
@@ -14,5 +16,4 @@ import Haskerwaul.Category.Heyting
 -- = references
 --
 -- - [nLab](http://ncatlab.org/nlab/show/Boolean+category)
-class HeytingCategory c => BooleanCategory c
-
+class (HeytingCategory c) => BooleanCategory c

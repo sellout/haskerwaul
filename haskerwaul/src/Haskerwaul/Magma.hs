@@ -1,26 +1,25 @@
-{-# language UndecidableInstances
-           , UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Magma where
 
 import qualified Control.Category as Base
 import qualified Data.Bifunctor as Base
-import           Data.Bool (Bool)
-import           Data.Constraint ((:-)(..), Dict(..), top)
-import           Data.Either (Either(..))
-import           Data.Int (Int, Int8, Int16, Int32, Int64)
-import           Data.Kind (Constraint)
+import Data.Bool (Bool)
+import Data.Constraint (Dict (..), top, (:-) (..))
+import Data.Either (Either (..))
+import Data.Int (Int, Int16, Int32, Int64, Int8)
+import Data.Kind (Constraint)
 import qualified Data.Monoid as Base
 import qualified Data.Ord as Base
 import qualified Data.Semigroup as Base
 import qualified Data.Tuple as Base
-import           Data.Word (Word, Word8, Word16, Word32, Word64)
-import           Numeric.Natural (Natural)
-import           Prelude (Integer)
-
+import Data.Word (Word, Word16, Word32, Word64, Word8)
 import Haskerwaul.Constraint
 import Haskerwaul.Lattice.Components
 import Haskerwaul.Object
+import Numeric.Natural (Natural)
+import Prelude (Integer)
 
 -- | [nLab](https://ncatlab.org/nlab/show/magma)
 --
@@ -32,7 +31,7 @@ import Haskerwaul.Object
 class (TOb (Ob c) t, Ob c a) => Magma c t a where
   op :: t a a `c` a
 
-instance {-# overlappable #-} Base.Semigroup a => Magma (->) (,) a where
+instance {-# OVERLAPPABLE #-} (Base.Semigroup a) => Magma (->) (,) a where
   op = Base.uncurry (Base.<>)
 
 instance (Magma (->) (,) a, Magma (->) (,) b) => Magma (->) (,) (a, b) where

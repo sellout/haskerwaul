@@ -1,11 +1,13 @@
-{-# language UndecidableInstances
-           , UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Object.Exponential
-  ( module Haskerwaul.Object.Exponential
-  -- * extended modules
-  , module Haskerwaul.Residual
-  ) where
+  ( module Haskerwaul.Object.Exponential,
+
+    -- * extended modules
+    module Haskerwaul.Residual,
+  )
+where
 
 import Haskerwaul.Category.Monoidal.Cartesian
 import Haskerwaul.Residual

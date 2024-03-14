@@ -1,9 +1,10 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Category.Heyting
-  ( module Haskerwaul.Category.Heyting
-  , module Haskerwaul.Category.Coherent
-  ) where
+  ( module Haskerwaul.Category.Heyting,
+    module Haskerwaul.Category.Coherent,
+  )
+where
 
 import Haskerwaul.Category.Coherent
 
@@ -12,4 +13,4 @@ import Haskerwaul.Category.Coherent
 -- = references
 --
 -- - [nLab](http://ncatlab.org/nlab/show/Heyting+category)
-class CoherentCategory c => HeytingCategory c
+class (CoherentCategory c) => HeytingCategory c

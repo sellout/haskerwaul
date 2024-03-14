@@ -1,12 +1,14 @@
-{-# language UndecidableInstances
-           , UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Lattice
-  ( module Haskerwaul.Lattice
-  -- * extended modules
-  , module Haskerwaul.Lattice.Components
-  , module Haskerwaul.Semilattice
-  ) where
+  ( module Haskerwaul.Lattice,
+
+    -- * extended modules
+    module Haskerwaul.Lattice.Components,
+    module Haskerwaul.Semilattice,
+  )
+where
 
 import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Semigroupal

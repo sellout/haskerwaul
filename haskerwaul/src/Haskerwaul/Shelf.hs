@@ -1,11 +1,13 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Shelf
-  ( module Haskerwaul.Shelf
-  -- * extended modules
-  , module Haskerwaul.Shelf.Left
-  , module Haskerwaul.Shelf.Right
-  ) where
+  ( module Haskerwaul.Shelf,
+
+    -- * extended modules
+    module Haskerwaul.Shelf.Left,
+    module Haskerwaul.Shelf.Right,
+  )
+where
 
 import Haskerwaul.Shelf.Left
 import Haskerwaul.Shelf.Right

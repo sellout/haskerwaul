@@ -1,8 +1,10 @@
 module Haskerwaul.Endofunctor
-  ( module Haskerwaul.Endofunctor
-  -- * extended modules
-  , module Haskerwaul.Functor
-  ) where
+  ( module Haskerwaul.Endofunctor,
+
+    -- * extended modules
+    module Haskerwaul.Functor,
+  )
+where
 
 import Haskerwaul.Functor
 

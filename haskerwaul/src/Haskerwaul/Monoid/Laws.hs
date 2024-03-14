@@ -1,16 +1,15 @@
-{-# language RecordWildCards #-}
+{-# LANGUAGE RecordWildCards #-}
 
 module Haskerwaul.Monoid.Laws where
 
-import Haskerwaul.Magma.Unital.Laws
 import Haskerwaul.Category.Monoidal
+import Haskerwaul.Magma.Unital.Laws
 import Haskerwaul.Semigroup.Laws
 
-data MonoidLaws c t a =
-  MonoidLaws
-    { semigroup :: SemigroupLaws c t a
-    , unitalMagma :: UnitalMagmaLaws c t a
-    }
+data MonoidLaws c t a = MonoidLaws
+  { semigroup :: SemigroupLaws c t a,
+    unitalMagma :: UnitalMagmaLaws c t a
+  }
 
 -- | The constraints here should be simply @`Monoid` c t a@, the
 --  `MonoidalCategory` should be included in the `Monoid` (but that last bit
@@ -18,6 +17,6 @@ data MonoidLaws c t a =
 monoidLaws :: (MonoidalCategory c t, Monoid c t a) => MonoidLaws c t a
 monoidLaws =
   MonoidLaws
-    { semigroup = semigroupLaws
-    , unitalMagma = unitalMagmaLaws
+    { semigroup = semigroupLaws,
+      unitalMagma = unitalMagmaLaws
     }

@@ -1,4 +1,4 @@
-{-# language UndecidableInstances #-}
+{-# LANGUAGE UndecidableInstances #-}
 
 module Haskerwaul.Negation where
 
@@ -12,10 +12,12 @@ import Haskerwaul.Topos.Elementary
 -- | A newtype to indicate the complement of a particular relation.
 --
 --   [nLab](https://ncatlab.org/nlab/show/negation)
-newtype Negate a = Negate { negation :: a }
+newtype Negate a = Negate {negation :: a}
 
-instance (c ~ (->), ElementaryTopos c, ApartnessRelation c a, Ob c (Negate a)) =>
-         HomogeneousRelation' c (Negate a) where
+instance
+  (c ~ (->), ElementaryTopos c, ApartnessRelation c a, Ob c (Negate a)) =>
+  HomogeneousRelation' c (Negate a)
+  where
   rel = ne . bimap negation negation
 
 -- | [nLab](https://ncatlab.org/nlab/show/apartness+relation#related_notions)

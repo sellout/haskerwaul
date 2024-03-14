@@ -1,15 +1,16 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Lattice.Modular
-  ( module Haskerwaul.Lattice.Modular
-  -- * extended modules
-  , module Haskerwaul.Lattice
-  ) where
+  ( module Haskerwaul.Lattice.Modular,
+
+    -- * extended modules
+    module Haskerwaul.Lattice,
+  )
+where
 
 import qualified Data.Bool as Base
 import qualified Data.Int as Base
 import qualified Data.Word as Base
-
 import Haskerwaul.Lattice
 
 -- |
@@ -17,7 +18,7 @@ import Haskerwaul.Lattice
 --
 -- - [nLab](https://ncatlab.org/nlab/show/modular+lattice)
 -- - [Wikipedia](https://en.wikipedia.org/wiki/Modular_lattice)
-class Lattice c t a => ModularLattice c t a
+class (Lattice c t a) => ModularLattice c t a
 
 instance ModularLattice (->) (,) Base.Bool
 

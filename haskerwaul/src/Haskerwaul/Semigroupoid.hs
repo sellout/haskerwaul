@@ -5,15 +5,16 @@
 --          because it avoids them being orphan instances, since `Procompose` is
 --          defined here.
 module Haskerwaul.Semigroupoid
-  ( module Haskerwaul.Semigroupoid
-  -- * extended modules
-  , module Haskerwaul.Semigroup
-  ) where
+  ( module Haskerwaul.Semigroupoid,
+
+    -- * extended modules
+    module Haskerwaul.Semigroup,
+  )
+where
 
 import qualified Control.Category as Base
-import           Data.Constraint.Deferrable ((:~:)(..))
-import           Data.Proxy (Proxy(..))
-
+import Data.Constraint.Deferrable ((:~:) (..))
+import Data.Proxy (Proxy (..))
 import Haskerwaul.Magma.Unital
 import Haskerwaul.Quasigroup.Left
 import Haskerwaul.Quasigroup.Right
@@ -39,12 +40,15 @@ data Procompose c d a b = forall z. Procompose (z `c` b) (a `d` z)
 type Semigroupoid = Semigroup (DinaturalTransformation (->)) Procompose
 
 -- | Just a bit of sugar over `op`, when it's used categorcally.
-(.) :: Magma (DinaturalTransformation (->)) Procompose c
-    => z `c` b -> a `c` z -> a `c` b
+(.) ::
+  (Magma (DinaturalTransformation (->)) Procompose c) =>
+  z `c` b ->
+  a `c` z ->
+  a `c` b
 f . g = runDT op (Procompose f g)
 
 -- | Just a bit of sugar over `unit`, when it's used categorcally.
-id :: UnitalMagma (DinaturalTransformation (->)) Procompose c => a `c` a
+id :: (UnitalMagma (DinaturalTransformation (->)) Procompose c) => a `c` a
 id = runDT (unit (Proxy :: Proxy Procompose)) Refl
 
 -- | The correct unit here is the Hom functor, but I don't know how to define
@@ -53,31 +57,44 @@ instance MonoidalCategory' (DinaturalTransformation (->)) Procompose where
   type Unit (DinaturalTransformation (->)) Procompose = (:~:)
 
 -- | All `Base.Category` instances are also `Semigroupoid` instances.
-instance {-# overlappable #-} Base.Category c =>
-                              Magma (DinaturalTransformation (->)) Procompose c where
+instance
+  {-# OVERLAPPABLE #-}
+  (Base.Category c) =>
+  Magma (DinaturalTransformation (->)) Procompose c
+  where
   op = DT (\(Procompose f g) -> f Base.. g)
 
 -- | All `Base.Category` instances are also `Semigroupoid` instances.
-instance {-# overlappable #-} Base.Category c =>
-                              Semigroup (DinaturalTransformation (->)) Procompose c
+instance
+  {-# OVERLAPPABLE #-}
+  (Base.Category c) =>
+  Semigroup (DinaturalTransformation (->)) Procompose c
 
 -- | All `Base.Category` instances are also `Haskerwaul.Category` instances.
-instance {-# overlappable #-} Base.Category c =>
-                              UnitalMagma (DinaturalTransformation (->)) Procompose c where
+instance
+  {-# OVERLAPPABLE #-}
+  (Base.Category c) =>
+  UnitalMagma (DinaturalTransformation (->)) Procompose c
+  where
   unit Proxy = DT (\Refl -> Base.id)
 
 -- | If /C/ is a `Semigroupoid`, then so are /C/-valued bifunctors.
-instance Magma (DinaturalTransformation (->)) Procompose c =>
-         Magma (DinaturalTransformation (->)) Procompose (DinaturalTransformation c) where
+instance
+  (Magma (DinaturalTransformation (->)) Procompose c) =>
+  Magma (DinaturalTransformation (->)) Procompose (DinaturalTransformation c)
+  where
   op = DT (\(Procompose (DT f) (DT g)) -> DT (f . g))
 
 -- | If /C/ is a `Semigroupoid`, then so are /C/-valued bifunctors.
-instance Semigroup (DinaturalTransformation (->)) Procompose c =>
-         Semigroup (DinaturalTransformation (->)) Procompose (DinaturalTransformation c)
+instance
+  (Semigroup (DinaturalTransformation (->)) Procompose c) =>
+  Semigroup (DinaturalTransformation (->)) Procompose (DinaturalTransformation c)
 
 -- | If /C/ is a `Category`, then so are /C/-valued bifunctors.
-instance UnitalMagma (DinaturalTransformation (->)) Procompose c =>
-         UnitalMagma (DinaturalTransformation (->)) Procompose (DinaturalTransformation c) where
+instance
+  (UnitalMagma (DinaturalTransformation (->)) Procompose c) =>
+  UnitalMagma (DinaturalTransformation (->)) Procompose (DinaturalTransformation c)
+  where
   unit Proxy = DT (\Refl -> DT id)
 
 -- | a discrete groupoid

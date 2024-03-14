@@ -1,19 +1,22 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Functor.Closed.Lax
-  ( module Haskerwaul.Functor.Closed.Lax
-  -- * extended modules
-  , module Haskerwaul.Functor
-  ) where
+  ( module Haskerwaul.Functor.Closed.Lax,
 
-import           Data.Proxy (Proxy)
+    -- * extended modules
+    module Haskerwaul.Functor,
+  )
+where
 
+import Data.Proxy (Proxy)
 import Haskerwaul.Category.Monoidal.Closed
 import Haskerwaul.Functor
 
 -- | [nLab](https://ncatlab.org/nlab/show/closed+functor)
-class (ClosedCategory c, ClosedCategory d, Functor c d f) =>
-      LaxClosedFunctor c d f where
+class
+  (ClosedCategory c, ClosedCategory d, Functor c d f) =>
+  LaxClosedFunctor c d f
+  where
   fHat :: Proxy c -> f (InternalHom c x y) `d` InternalHom d (f x) (f y)
 
 -- -- | Every `LaxMonoidalFunctor` between `ClosedMonoidalCategories` gives rise to
@@ -22,4 +25,4 @@ class (ClosedCategory c, ClosedCategory d, Functor c d f) =>
 --          , ClosedMonoidalCategory d
 --          , LaxMonoidalFunctor c d f) =>
 --          LaxClosedFunctor c d f where
---   fHat = 
+--   fHat =

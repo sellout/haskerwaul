@@ -1,15 +1,16 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Dioid.Commutative
-  ( module Haskerwaul.Dioid.Commutative
-  -- * extended modules
-  , module Haskerwaul.Dioid
-  ) where
+  ( module Haskerwaul.Dioid.Commutative,
 
-import           Numeric.Natural
+    -- * extended modules
+    module Haskerwaul.Dioid,
+  )
+where
 
 import Haskerwaul.Dioid
-import Haskerwaul.Lattice.Components (Join(..))
+import Haskerwaul.Lattice.Components (Join (..))
+import Numeric.Natural
 
 -- | [nLab](https://ncatlab.org/nlab/show/idempotent+semiring)
 --
@@ -19,6 +20,6 @@ import Haskerwaul.Lattice.Components (Join(..))
 --
 -- = laws
 --   [commutativity on `multiply`]: @`multiply` x y == `multiply` y x@
-class Dioid c t a => CommutativeDioid c t a
+class (Dioid c t a) => CommutativeDioid c t a
 
 instance CommutativeDioid (->) (,) (Join Natural)

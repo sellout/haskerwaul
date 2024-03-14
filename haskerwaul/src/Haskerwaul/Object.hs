@@ -1,15 +1,14 @@
-{-# language TypeApplications #-}
+{-# LANGUAGE TypeApplications #-}
 
 module Haskerwaul.Object where
 
-import           Data.Constraint ((:-)(..), Dict(..), (\\))
-import           Data.Kind (Constraint, Type)
+import Data.Constraint (Dict (..), (:-) (..), (\\))
+import Data.Kind (Constraint, Type)
 import qualified Data.Ord as Base
 import qualified Data.Set as Set
-import           Data.Type.Equality ((:~:))
-import           Prelude (Either, Eq, Show)
-
+import Data.Type.Equality ((:~:))
 import Haskerwaul.Constraint
+import Prelude (Either, Eq, Show)
 
 -- | The objects in the category. This allows us to restrict them more than
 --   the kind alone would do. By default it is the empty constraint, and
@@ -36,8 +35,10 @@ class FOb cOb dOb f where
 instance FOb cOb All f where
   inF = Sub Dict
 
-instance (FOb cOb dOb f, FOb cOb' dOb' f) =>
-         FOb (CFProd cOb cOb') (CFProd dOb dOb') f where
+instance
+  (FOb cOb dOb f, FOb cOb' dOb' f) =>
+  FOb (CFProd cOb cOb') (CFProd dOb dOb') f
+  where
   inF :: forall x. CFProd cOb cOb' x :- CFProd dOb dOb' (f x)
   inF = Sub (Dict \\ inF @cOb @dOb @f @x \\ inF @cOb' @dOb' @f @x)
 
@@ -57,15 +58,17 @@ instance BOb (FOb cOb dOb) (FOb eOb fOb) (FOb gOb All) t where
 instance BOb (BOb cOb dOb eOb) (BOb fOb gOb hOb) (BOb iOb jOb All) t where
   inB = Sub Dict
 
-instance (BOb cOb dOb eOb b, BOb cOb' dOb' eOb' b) =>
-         BOb (CFProd cOb cOb') (CFProd dOb dOb') (CFProd eOb eOb') b where
+instance
+  (BOb cOb dOb eOb b, BOb cOb' dOb' eOb' b) =>
+  BOb (CFProd cOb cOb') (CFProd dOb dOb') (CFProd eOb eOb') b
+  where
   inB :: forall x y. (CFProd cOb cOb' x, CFProd dOb dOb' y) :- CFProd eOb eOb' (b x y)
   inB = Sub (Dict \\ inB @cOb @dOb @eOb @b @x @y \\ inB @cOb' @dOb' @eOb' @b @x @y)
 
 -- | An `Ob` for a tensor.
 type TOb cOb = BOb cOb cOb cOb
 
-inT :: TOb cOb t => (cOb x, cOb y) :- cOb (t x y)
+inT :: (TOb cOb t) => (cOb x, cOb y) :- cOb (t x y)
 inT = inB
 
 -- Instances that would be orphan anywhere else, but are only needed for

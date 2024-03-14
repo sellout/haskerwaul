@@ -1,12 +1,14 @@
-{-# language UndecidableInstances
-           , UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Module.Right
-  ( module Haskerwaul.Module.Right
-  -- * extended modules
-  , module Haskerwaul.Group.Abelian
-  , module Haskerwaul.Ring
-  ) where
+  ( module Haskerwaul.Module.Right,
+
+    -- * extended modules
+    module Haskerwaul.Group.Abelian,
+    module Haskerwaul.Ring,
+  )
+where
 
 import Haskerwaul.Group.Abelian
 import Haskerwaul.Ring

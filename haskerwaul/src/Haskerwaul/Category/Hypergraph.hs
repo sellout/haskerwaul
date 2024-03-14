@@ -1,9 +1,11 @@
 module Haskerwaul.Category.Hypergraph
-  ( module Haskerwaul.Category.Hypergraph
-  -- * extended modules
-  , module Haskerwaul.Category.Monoidal.Symmetric
-  , module Haskerwaul.Monoid.Frobenius.Commutative.Special
-  ) where
+  ( module Haskerwaul.Category.Hypergraph,
+
+    -- * extended modules
+    module Haskerwaul.Category.Monoidal.Symmetric,
+    module Haskerwaul.Monoid.Frobenius.Commutative.Special,
+  )
+where
 
 import Haskerwaul.Category.Monoidal.Symmetric
 import Haskerwaul.Monoid.Frobenius.Commutative.Special

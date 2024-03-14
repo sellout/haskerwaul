@@ -4,7 +4,7 @@
   ...
 }: {
   ## Haskell linter
-  programs.treefmt.programs.hlint.enable = true;
+  programs.treefmt.programs.hlint.enable = false;
   ## TODO: Wrap this to find our generated hlint config in the store.
   project.devPackages = [pkgs.hlint];
   project.file.".hlint.yaml".text = lib.generators.toYAML {} [

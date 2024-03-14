@@ -1,16 +1,15 @@
 -- __NB__: Pattern matching for `op`, etc. has broken exhaustivity checking.
-{-# options_ghc -fno-warn-incomplete-patterns #-}
+{-# OPTIONS_GHC -fno-warn-incomplete-patterns #-}
 
 module Haskerwaul.Category.Empty where
 
-import           Data.Proxy (Proxy(..))
-import           Data.Type.Equality ((:~:)(..))
-import           Prelude (error)
-
+import Data.Proxy (Proxy (..))
+import Data.Type.Equality ((:~:) (..))
 import Haskerwaul.Constraint
 import Haskerwaul.Groupoid
 import Haskerwaul.Object
 import Haskerwaul.Transformation.Dinatural
+import Prelude (error)
 
 -- | [nLab](https://ncatlab.org/nlab/show/empty+category)
 --
@@ -19,13 +18,13 @@ import Haskerwaul.Transformation.Dinatural
 data EmptyCategory a b
 
 fromEmpty :: EmptyCategory a b -> a `c` b
-fromEmpty = \case
+fromEmpty = \case {}
 
 -- | There are no objects in the empty category.
 type instance Ob EmptyCategory = None
 
 instance Magma (DinaturalTransformation (->)) Procompose EmptyCategory where
-  op = DT (\case)
+  op = DT (\case {})
 
 instance Semigroup (DinaturalTransformation (->)) Procompose EmptyCategory
 
@@ -37,12 +36,13 @@ instance Semigroup (DinaturalTransformation (->)) Procompose EmptyCategory
 instance UnitalMagma (DinaturalTransformation (->)) Procompose EmptyCategory where
   unit Proxy =
     DT
-    (\Refl ->
-       error
-       "There is no object, thus no identity morphism, in the empty category.")
+      ( \Refl ->
+          error
+            "There is no object, thus no identity morphism, in the empty category."
+      )
 
 instance LeftQuasigroup (DinaturalTransformation (->)) Procompose EmptyCategory where
-  leftQuotient = DT (\case)
+  leftQuotient = DT (\case {})
 
 instance RightQuasigroup (DinaturalTransformation (->)) Procompose EmptyCategory where
-  rightQuotient = DT (\case)
+  rightQuotient = DT (\case {})

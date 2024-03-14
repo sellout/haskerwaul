@@ -9,21 +9,20 @@
 --          >>>   mempty = Meet Base.minBound
 --          but we don't expect `Prelude.Bounded` instances to be lawful in any
 --          way, so we avoid it.
-
 module Haskerwaul.Lattice.Components where
 
-import           Prelude (Integer)
-import qualified Prelude as Base (Bounded(..))
-import           Data.Bool
-import           Data.Int
+import Data.Bool
+import Data.Int
 import qualified Data.Monoid as Base
 import qualified Data.Ord as Base
 import qualified Data.Semigroup as Base
-import           Data.Word
-import           Numeric.Natural
+import Data.Word
+import Numeric.Natural
+import Prelude (Integer)
+import qualified Prelude as Base (Bounded (..))
 
 -- | The meet component of a lattice-like structure.
-newtype Meet a = Meet { getMeet :: a }
+newtype Meet a = Meet {getMeet :: a}
 
 -- > `Bool` instances
 
@@ -132,7 +131,7 @@ instance Base.Monoid (Meet Word64) where
   mempty = Meet Base.maxBound
 
 -- | The join component of a lattice-like structure.
-newtype Join a = Join { getJoin :: a }
+newtype Join a = Join {getJoin :: a}
 
 -- > `Bool` instances
 

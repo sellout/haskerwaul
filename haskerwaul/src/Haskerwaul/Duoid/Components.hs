@@ -8,6 +8,6 @@
 --          this kind, until we manage to make them kind-polymorphic.
 module Haskerwaul.Duoid.Components where
 
-newtype Diamond a i = Diamond { getDiamond :: a i }
+newtype Diamond a i = Diamond {getDiamond :: a i}
 
-newtype Star a i = Star { getStar :: a i }
+newtype Star a i = Star {getStar :: a i}

@@ -1,10 +1,12 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Meadow.Cancellation
-  ( module Haskerwaul.Meadow.Cancellation
-  -- * extended modules
-  , module Haskerwaul.Meadow
-  ) where
+  ( module Haskerwaul.Meadow.Cancellation,
+
+    -- * extended modules
+    module Haskerwaul.Meadow,
+  )
+where
 
 import Haskerwaul.Meadow
 
@@ -12,5 +14,4 @@ import Haskerwaul.Meadow
 --
 -- = laws
 --   [cancellation]: @x /= 0 => x * (`inverse` x) == 1@
-class Meadow c t a => CancellationMeadow c t a
-
+class (Meadow c t a) => CancellationMeadow c t a

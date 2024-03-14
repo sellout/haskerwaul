@@ -1,10 +1,12 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Congruence
-  ( module Haskerwaul.Congruence
-  -- * extended modules
-  , module Haskerwaul.Relation.Equivalence
-  ) where
+  ( module Haskerwaul.Congruence,
+
+    -- * extended modules
+    module Haskerwaul.Relation.Equivalence,
+  )
+where
 
 import Haskerwaul.Category.Complete.Finitely
 import Haskerwaul.Relation.Equivalence

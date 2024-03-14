@@ -1,5 +1,5 @@
-{-# language UndecidableInstances
-           , UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 -- | There is a
 --  `Haskerwaul.Category.Monoidal.Cartesian.CartesianMonoidalCategory` of
@@ -10,16 +10,19 @@
 --   classes.
 module Haskerwaul.Constraint where
 
-import           Data.Constraint ((:-)(..), (:=>)(..), Class(..), Dict(..))
-import           Data.Functor.Compose (Compose(..))
-import           Data.Kind (Constraint)
+import Data.Constraint (Class (..), Dict (..), (:-) (..), (:=>) (..))
+import Data.Functor.Compose (Compose (..))
+import Data.Kind (Constraint)
 
 -- | A natural transformation in the category of constraints.
-class (f a :=> g a) =>
-      ConstraintTransformation
-      c
-      (f :: ok -> Constraint)
-      (g :: ok -> Constraint) a where
+class
+  (f a :=> g a) =>
+  ConstraintTransformation
+    c
+    (f :: ok -> Constraint)
+    (g :: ok -> Constraint)
+    a
+  where
   constrainNT :: f a `c` g a
 
 instance (f a :=> g a) => ConstraintTransformation (:-) f g a where
@@ -41,7 +44,7 @@ instance (con a, con' a) :=> (CFProd con con' a) where
   ins = Sub Dict
 
 -- | An empty constraint of any kind.
-class    All a
+class All a
 
 instance All a
 

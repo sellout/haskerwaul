@@ -1,11 +1,13 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Category.Complete.Finitely
-  ( module Haskerwaul.Category.Complete.Finitely
-  -- * extended modules
-  , module Haskerwaul.Category.LocallyCartesian
-  , module Haskerwaul.Object.Terminal
-  ) where
+  ( module Haskerwaul.Category.Complete.Finitely,
+
+    -- * extended modules
+    module Haskerwaul.Category.LocallyCartesian,
+    module Haskerwaul.Object.Terminal,
+  )
+where
 
 import Haskerwaul.Category.LocallyCartesian
 import Haskerwaul.Object.Terminal

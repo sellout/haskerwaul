@@ -1,11 +1,13 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Bimonoid
-  ( module Haskerwaul.Bimonoid
-  -- * extended modules
-  , module Haskerwaul.Comonoid
-  , module Haskerwaul.Monoid
-  ) where
+  ( module Haskerwaul.Bimonoid,
+
+    -- * extended modules
+    module Haskerwaul.Comonoid,
+    module Haskerwaul.Monoid,
+  )
+where
 
 import Haskerwaul.Category.Monoidal.Cartesian
 import Haskerwaul.Comonoid

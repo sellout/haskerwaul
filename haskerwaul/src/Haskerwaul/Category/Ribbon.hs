@@ -1,11 +1,13 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Category.Ribbon
-  ( module Haskerwaul.Category.Ribbon
-  -- * extended modules
-  , module Haskerwaul.Category.Monoidal.Balanced
-  , module Haskerwaul.Category.Monoidal.Rigid
-  ) where
+  ( module Haskerwaul.Category.Ribbon,
+
+    -- * extended modules
+    module Haskerwaul.Category.Monoidal.Balanced,
+    module Haskerwaul.Category.Monoidal.Rigid,
+  )
+where
 
 import Haskerwaul.Category.Monoidal.Balanced
 import Haskerwaul.Category.Monoidal.Rigid

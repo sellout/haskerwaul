@@ -1,8 +1,10 @@
 module Haskerwaul.Monad.Codensity
-  ( module Haskerwaul.Monad.Codensity
-  -- * extended modules
-  , module Haskerwaul.Extension.Kan.Right
-  ) where
+  ( module Haskerwaul.Monad.Codensity,
+
+    -- * extended modules
+    module Haskerwaul.Extension.Kan.Right,
+  )
+where
 
 import Haskerwaul.Extension.Kan.Right
 

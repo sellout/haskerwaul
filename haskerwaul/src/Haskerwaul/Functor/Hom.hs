@@ -1,8 +1,10 @@
 module Haskerwaul.Functor.Hom
-  ( module Haskerwaul.Functor.Hom
-  -- * extended modules
-  , module Haskerwaul.Profunctor
-  ) where
+  ( module Haskerwaul.Functor.Hom,
+
+    -- * extended modules
+    module Haskerwaul.Profunctor,
+  )
+where
 
 import Haskerwaul.Profunctor
 

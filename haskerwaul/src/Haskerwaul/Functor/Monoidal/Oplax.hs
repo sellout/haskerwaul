@@ -1,10 +1,12 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Functor.Monoidal.Oplax
-  ( module Haskerwaul.Functor.Monoidal.Oplax
-  -- * extended modules
-  , module Haskerwaul.Functor.Monoidal.Lax
-  ) where
+  ( module Haskerwaul.Functor.Monoidal.Oplax,
+
+    -- * extended modules
+    module Haskerwaul.Functor.Monoidal.Lax,
+  )
+where
 
 import Haskerwaul.Category.Opposite
 import Haskerwaul.Functor.Monoidal.Lax

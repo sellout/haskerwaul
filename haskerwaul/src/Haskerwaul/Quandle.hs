@@ -1,11 +1,13 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Quandle
-  ( module Haskerwaul.Quandle
-  -- * extended modules
-  , module Haskerwaul.Quasigroup.Right
-  , module Haskerwaul.Rack
-  ) where
+  ( module Haskerwaul.Quandle,
+
+    -- * extended modules
+    module Haskerwaul.Quasigroup.Right,
+    module Haskerwaul.Rack,
+  )
+where
 
 import Haskerwaul.Quasigroup.Right
 import Haskerwaul.Rack

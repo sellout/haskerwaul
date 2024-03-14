@@ -1,11 +1,10 @@
-{-# language UndecidableInstances #-}
+{-# LANGUAGE UndecidableInstances #-}
 
 module Haskerwaul.Category.Over where
 
-import           Data.Constraint.Deferrable ((:~:)(..))
-import           Data.Kind (Type)
-import           Data.Proxy (Proxy (..))
-
+import Data.Constraint.Deferrable ((:~:) (..))
+import Data.Kind (Type)
+import Data.Proxy (Proxy (..))
 import Haskerwaul.Bifunctor
 import Haskerwaul.Isomorphism
 import Haskerwaul.Object
@@ -24,7 +23,7 @@ newtype Over (c :: ok -> ok -> Type) (x :: ok) a b = Over (a `c` x -> b `c` x)
 
 type instance Ob (Over c x) = Ob c
 
-instance Semigroupoid c => Magma (DinaturalTransformation (->)) Procompose (Over c x) where
+instance (Semigroupoid c) => Magma (DinaturalTransformation (->)) Procompose (Over c x) where
   op = DT (\(Procompose (Over f) (Over g)) -> Over (f . g))
 
 instance (Semigroupoid c, Ob c x) => Semigroup (DinaturalTransformation (->)) Procompose (Over c x)
@@ -33,7 +32,6 @@ instance (Category c, Ob c x) => UnitalMagma (DinaturalTransformation (->)) Proc
   unit Proxy = DT (\Refl -> Over id)
 
 -- instance Bifunctor c c c t => Bifunctor (Over c x) (Over c x) (Over c x) t where
-  
 
 -- instance (SemigroupalCategory c t, Ob c x) => SemigroupalCategory (Over c x) t where
 --   -- assoc = Iso (Over (to assoc)) (Over (from assoc))
@@ -62,9 +60,7 @@ instance (Category c, Ob c x) => UnitalMagma (DinaturalTransformation (->)) Proc
 
 -- instance (CartesianClosedCategory c, Ob c x) => CartesianClosedCategory (Over c x) where
 
-  
-
 -- -- | [nLab](https://ncatlab.org/nlab/show/over-topos)
 -- instance (ElementaryTopos c, Ob c x) => ElementaryTopos (Over c x) where
 --   type Class (Over c x) = Prod c (Class c) x
--- --  true = 
+-- --  true =

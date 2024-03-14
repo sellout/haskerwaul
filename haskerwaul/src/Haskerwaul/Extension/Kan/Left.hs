@@ -1,13 +1,13 @@
-{-# language GADTSyntax
-           , TypeApplications
-           , UndecidableInstances #-}
+{-# LANGUAGE GADTSyntax #-}
+{-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE UndecidableInstances #-}
 
 module Haskerwaul.Extension.Kan.Left
-  ( module Haskerwaul.Extension.Kan.Left
-  ) where
+  ( module Haskerwaul.Extension.Kan.Left,
+  )
+where
 
-import           Data.Constraint ((\\))
-
+import Data.Constraint ((\\))
 import Haskerwaul.Functor
 import Haskerwaul.Object
 import Haskerwaul.Semigroupoid
@@ -31,8 +31,10 @@ import Haskerwaul.Semigroupoid
 -- - [nLab](https://ncatlab.org/nlab/show/Kan+extension)
 -- - [Wikipedia](https://en.wikipedia.org/wiki/Kan_extension)
 data LeftKanExtension c c' p f a where
-  Lan :: Ob c b => p b `c'` a -> f b -> LeftKanExtension c c' p f a
+  Lan :: (Ob c b) => p b `c'` a -> f b -> LeftKanExtension c c' p f a
 
-instance (d ~ (->), Semigroupoid c', FOb (Ob c) (Ob c') p) =>
-         Functor c' d (LeftKanExtension c c' p f) where
+instance
+  (d ~ (->), Semigroupoid c', FOb (Ob c) (Ob c') p) =>
+  Functor c' d (LeftKanExtension c c' p f)
+  where
   map f (Lan (g :: p x `c'` a) h) = Lan (f . g \\ inF @(Ob c) @(Ob c') @p @x) h

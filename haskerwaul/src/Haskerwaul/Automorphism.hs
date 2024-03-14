@@ -1,8 +1,10 @@
 module Haskerwaul.Automorphism
-  ( module Haskerwaul.Automorphism
-  -- * extended modules
-  , module Haskerwaul.Isomorphism
-  ) where
+  ( module Haskerwaul.Automorphism,
+
+    -- * extended modules
+    module Haskerwaul.Isomorphism,
+  )
+where
 
 import Haskerwaul.Isomorphism
 

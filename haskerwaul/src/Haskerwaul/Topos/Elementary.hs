@@ -1,15 +1,16 @@
-{-# language UndecidableInstances
-           , UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Topos.Elementary
-  ( module Haskerwaul.Topos.Elementary
-  -- * extended modules
-  , module Haskerwaul.Category.Monoidal.Closed.Cartesian
-  ) where
+  ( module Haskerwaul.Topos.Elementary,
 
-import           Data.Bool (Bool(..))
-import           Data.Kind (Type)
+    -- * extended modules
+    module Haskerwaul.Category.Monoidal.Closed.Cartesian,
+  )
+where
 
+import Data.Bool (Bool (..))
+import Data.Kind (Type)
 import Haskerwaul.Algebra.Heyting
 import Haskerwaul.Category.Monoidal.Closed.Cartesian
 import Haskerwaul.Object
@@ -19,11 +20,14 @@ import Haskerwaul.Object
 --  __TODO__: There should be a @`HeytingAlgebra` c (`Prod` c) (`Class` c)@
 --            constraint here, but that currently forces our object to kind
 --           `Type`, so we omit it to allow for more flexible instances.
-class (CartesianClosedMonoidalCategory c, Ob c (Class c)) =>
-      ElementaryTopos (c :: ok -> ok -> Type) where
+class
+  (CartesianClosedMonoidalCategory c, Ob c (Class c)) =>
+  ElementaryTopos (c :: ok -> ok -> Type)
+  where
   -- | The classifying object in the category.
   --   [nLab](https://ncatlab.org/nlab/show/classifying+space)
   type Class c :: ok
+
   -- | The subobject classifier.
   --   [nLab](https://ncatlab.org/nlab/show/subobject+classifier)
   --

@@ -1,30 +1,31 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Order.Total
-  ( module Haskerwaul.Order.Total
-  -- * extended modules
-  , module Haskerwaul.Order.Prefix
-  ) where
+  ( module Haskerwaul.Order.Total,
 
-import           Data.Bool (Bool)
-import           Data.Int (Int, Int8, Int16, Int32, Int64)
-import           Data.Ratio (Ratio)
-import           Data.Void (Void)
-import           Data.Word (Word, Word8, Word16, Word32, Word64)
+    -- * extended modules
+    module Haskerwaul.Order.Prefix,
+  )
+where
+
+import Data.Bool (Bool)
+import Data.Int (Int, Int16, Int32, Int64, Int8)
+import Data.Ratio (Ratio)
+import Data.Void (Void)
+import Data.Word (Word, Word16, Word32, Word64, Word8)
 import qualified GHC.Real as Base
-import           Numeric.Natural (Natural)
-import           Prelude (Integer)
-
 import Haskerwaul.Isomorphism
 import Haskerwaul.Order.Canonical
 import Haskerwaul.Order.Prefix
 import Haskerwaul.Topos.Elementary
+import Numeric.Natural (Natural)
+import Prelude (Integer)
 
 -- | [nLab](https://ncatlab.org/nlab/show/total+order)
 --
 -- = laws
 --   [totality]: @`le` (x, y) || `le` (y, x) == `true` ()@
-class PrefixOrder c a => TotalOrder c a
+class (PrefixOrder c a) => TotalOrder c a
 
 ge :: (ElementaryTopos c, TotalOrder c a) => BinaryRelation c a a
 ge = le . to braid
@@ -59,7 +60,7 @@ instance TotalOrder (->) (Canonical Word32)
 
 instance TotalOrder (->) (Canonical Word64)
 
-instance Base.Integral a => TotalOrder (->) (Canonical (Ratio a))
+instance (Base.Integral a) => TotalOrder (->) (Canonical (Ratio a))
 
 -- * operators
 

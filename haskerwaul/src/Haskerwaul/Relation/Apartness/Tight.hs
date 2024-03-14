@@ -1,12 +1,14 @@
-{-# language UndecidableInstances
-           , UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Relation.Apartness.Tight
-  ( module Haskerwaul.Relation.Apartness.Tight
-  -- * extended modules
-  , module Haskerwaul.Relation.Apartness
-  , module Haskerwaul.Relation.Inequality.Tight
-  ) where
+  ( module Haskerwaul.Relation.Apartness.Tight,
+
+    -- * extended modules
+    module Haskerwaul.Relation.Apartness,
+    module Haskerwaul.Relation.Inequality.Tight,
+  )
+where
 
 import Haskerwaul.Relation.Apartness
 import Haskerwaul.Relation.Inequality.Tight
@@ -20,8 +22,10 @@ import Haskerwaul.Relation.Inequality.Tight
 --   [connected]: @`eq` x y \/ `neq` x y@
 --   [irreflexive]: @x `#` x == false@
 --   [symmetric]: @x `#` y ==> y `#` x@
-class (TightInequalityRelation c a, ApartnessRelation c a) =>
-      TightApartnessRelation c a
+class
+  (TightInequalityRelation c a, ApartnessRelation c a) =>
+  TightApartnessRelation c a
 
-instance (TightInequalityRelation c a, ApartnessRelation c a) =>
-         TightApartnessRelation c a
+instance
+  (TightInequalityRelation c a, ApartnessRelation c a) =>
+  TightApartnessRelation c a

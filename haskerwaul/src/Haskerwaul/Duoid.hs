@@ -1,13 +1,15 @@
-{-# language TypeApplications
-           , UndecidableInstances
-           , UndecidableSuperClasses #-}
+{-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Duoid
-  ( module Haskerwaul.Duoid
-  -- * extended modules
-  , module Haskerwaul.Duoid.Components
-  , module Haskerwaul.Monoid
-  ) where
+  ( module Haskerwaul.Duoid,
+
+    -- * extended modules
+    module Haskerwaul.Duoid.Components,
+    module Haskerwaul.Monoid,
+  )
+where
 
 import Haskerwaul.Category.Duoidal
 import Haskerwaul.Duoid.Components
@@ -27,8 +29,10 @@ import Haskerwaul.Monoid
 -- - [nLab](https://ncatlab.org/nlab/show/duoidal+category#definition)
 --
 --  __NB__: Instances for this are automatically coalesced.
-class (DuoidalCategory c di st, Monoid c di a, Monoid c st a) =>
-      Duoid c di st a
+class
+  (DuoidalCategory c di st, Monoid c di a, Monoid c st a) =>
+  Duoid c di st a
 
-instance (DuoidalCategory c di st, Monoid c di a, Monoid c st a) =>
-         Duoid c di st a
+instance
+  (DuoidalCategory c di st, Monoid c di a, Monoid c st a) =>
+  Duoid c di st a

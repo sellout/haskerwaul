@@ -1,11 +1,13 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Quasigroup.Invertible
-  ( module Haskerwaul.Quasigroup.Invertible
-  -- * extended modules
-  , module Haskerwaul.Magma.Invertible
-  , module Haskerwaul.Quasigroup
-  ) where
+  ( module Haskerwaul.Quasigroup.Invertible,
+
+    -- * extended modules
+    module Haskerwaul.Magma.Invertible,
+    module Haskerwaul.Quasigroup,
+  )
+where
 
 import Haskerwaul.Magma.Invertible
 import Haskerwaul.Quasigroup

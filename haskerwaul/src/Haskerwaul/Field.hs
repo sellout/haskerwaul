@@ -1,11 +1,13 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Field
-  ( module Haskerwaul.Field
-  -- * extended modules
-  , module Haskerwaul.Group.Abelian
-  , module Haskerwaul.Skewfield
-  ) where
+  ( module Haskerwaul.Field,
+
+    -- * extended modules
+    module Haskerwaul.Group.Abelian,
+    module Haskerwaul.Skewfield,
+  )
+where
 
 import Haskerwaul.Group.Abelian
 import Haskerwaul.Skewfield

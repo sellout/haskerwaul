@@ -1,9 +1,11 @@
 module Haskerwaul.Category.Monoidal.Distributive
-  ( module Haskerwaul.Category.Monoidal.Distributive
-  -- * extended modules
-  , module Haskerwaul.Category.Monoidal.Cocartesian
-  , module Haskerwaul.Category.Rig
-  ) where
+  ( module Haskerwaul.Category.Monoidal.Distributive,
+
+    -- * extended modules
+    module Haskerwaul.Category.Monoidal.Cocartesian,
+    module Haskerwaul.Category.Rig,
+  )
+where
 
 import Haskerwaul.Category.Monoidal.Cocartesian
 import Haskerwaul.Category.Rig

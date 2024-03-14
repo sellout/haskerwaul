@@ -1,19 +1,20 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Relation.Apartness
-  ( module Haskerwaul.Relation.Apartness
-  -- * extended modules
-  , module Haskerwaul.Relation.Inequality
-  ) where
+  ( module Haskerwaul.Relation.Apartness,
 
-import           Data.Bool (Bool)
-import           Data.Int (Int, Int8, Int16, Int32, Int64)
-import           Data.Void (Void)
-import           Data.Word (Word, Word8, Word16, Word32, Word64)
-import           Numeric.Natural (Natural)
-import           Prelude (Double, Float, Integer)
+    -- * extended modules
+    module Haskerwaul.Relation.Inequality,
+  )
+where
 
+import Data.Bool (Bool)
+import Data.Int (Int, Int16, Int32, Int64, Int8)
+import Data.Void (Void)
+import Data.Word (Word, Word16, Word32, Word64, Word8)
 import Haskerwaul.Relation.Inequality
+import Numeric.Natural (Natural)
+import Prelude (Double, Float, Integer)
 
 -- | [nLab](https://ncatlab.org/nlab/show/apartness+relation)
 --
@@ -21,7 +22,7 @@ import Haskerwaul.Relation.Inequality
 --   [comparison]: @x `#` z ==> x `#` y \/ y `#` z@
 --   [irreflexive]: @x `#` x == false@
 --   [symmetric]: @x `#` y ==> y `#` x@
-class InequalityRelation c a => ApartnessRelation c a
+class (InequalityRelation c a) => ApartnessRelation c a
 
 instance ApartnessRelation (->) ()
 

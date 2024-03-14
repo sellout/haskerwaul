@@ -1,10 +1,10 @@
 module Haskerwaul.Monad.Frobenius
-  ( module Haskerwaul.Monad.Frobenius
-  , module Haskerwaul.Monoid.Frobenius
-  ) where
+  ( module Haskerwaul.Monad.Frobenius,
+    module Haskerwaul.Monoid.Frobenius,
+  )
+where
 
-import           Data.Functor.Compose (Compose)
-
+import Data.Functor.Compose (Compose)
 import Haskerwaul.Monoid.Frobenius
 import Haskerwaul.Transformation.Natural
 

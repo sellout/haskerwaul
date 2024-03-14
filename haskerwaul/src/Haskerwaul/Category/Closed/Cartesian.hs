@@ -1,14 +1,15 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Category.Closed.Cartesian
-  ( module Haskerwaul.Category.Closed.Cartesian
-  -- * extended modules
-  , module Haskerwaul.Category.Closed.Symmetric
-  ) where
+  ( module Haskerwaul.Category.Closed.Cartesian,
+
+    -- * extended modules
+    module Haskerwaul.Category.Closed.Symmetric,
+  )
+where
 
 import qualified Control.Monad as Base
 import qualified Data.Function as Base
-
 import Haskerwaul.Category.Closed.Symmetric
 import Haskerwaul.Object
 
@@ -19,7 +20,7 @@ import Haskerwaul.Object
 -- = references
 --
 -- - [nLab](https://ncatlab.org/nlab/show/closed+category#symmetric_and_cartesian_versions)
-class ClosedCategory c => CartesianClosedCategory c where
+class (ClosedCategory c) => CartesianClosedCategory c where
   const :: (Ob c a, Ob c b) => b `c` InternalHom c a b
   flattenHom :: (Ob c a, Ob c b) => InternalHom c a (InternalHom c a b) `c` InternalHom c a b
 

@@ -1,25 +1,24 @@
-{-# language UndecidableInstances
-           , UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Relation.Homogeneous
-  ( module Haskerwaul.Relation.Homogeneous
-  -- * extended modules
-  , module Haskerwaul.Relation.Binary
-  ) where
+  ( module Haskerwaul.Relation.Homogeneous,
 
-import           Data.Bool (Bool (..))
+    -- * extended modules
+    module Haskerwaul.Relation.Binary,
+  )
+where
+
+import Data.Bool (Bool (..))
 import qualified Data.Eq as Base
-import           Data.Functor.Const (Const (..))
-import           Data.Functor.Identity (Identity (..))
-import           Data.Int (Int, Int8, Int16, Int32, Int64)
+import Data.Functor.Const (Const (..))
+import Data.Functor.Identity (Identity (..))
+import Data.Int (Int, Int16, Int32, Int64, Int8)
 import qualified Data.Ord as Base
-import           Data.Ratio (Ratio)
-import           Data.Void (Void)
-import           Data.Word (Word, Word8, Word16, Word32, Word64)
+import Data.Ratio (Ratio)
+import Data.Void (Void)
+import Data.Word (Word, Word16, Word32, Word64, Word8)
 import qualified GHC.Real as Base
-import           Numeric.Natural (Natural)
-import           Prelude (Double, Float, Integer)
-
 import Haskerwaul.Bifunctor
 import Haskerwaul.Lattice.Components
 import Haskerwaul.Object
@@ -27,6 +26,8 @@ import Haskerwaul.Order.Canonical
 import Haskerwaul.Relation.Binary
 import Haskerwaul.Semiring.Components
 import Haskerwaul.Topos.Elementary
+import Numeric.Natural (Natural)
+import Prelude (Double, Float, Integer)
 
 -- | [nLab](https://ncatlab.org/nlab/show/relation)
 type HomogeneousRelation c a = BinaryRelation c a a
@@ -39,14 +40,14 @@ type HomogeneousRelation c a = BinaryRelation c a a
 -- - commutative
 -- - reflexive
 -- - transitive
-class Ob c a => HomogeneousRelation' c a where
+class (Ob c a) => HomogeneousRelation' c a where
   rel :: HomogeneousRelation c a
 
 instance HomogeneousRelation' (->) () where
   rel ((), ()) = True
 
 instance HomogeneousRelation' (->) Void where
-  rel = uncurry $ \case
+  rel = uncurry $ \case {}
 
 instance HomogeneousRelation' (->) Bool where
   rel = uncurry (Base.==)
@@ -138,35 +139,47 @@ instance HomogeneousRelation' (->) (Canonical Float) where
 instance HomogeneousRelation' (->) (Canonical Double) where
   rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
 
-instance Base.Integral a => HomogeneousRelation' (->) (Canonical (Ratio a)) where
+instance (Base.Integral a) => HomogeneousRelation' (->) (Canonical (Ratio a)) where
   rel = uncurry (Base.<=) . bimap decanonicalize decanonicalize
 
-instance {-# incoherent #-}
-         (c ~ (->), ElementaryTopos c, HomogeneousRelation' c a, Ob c (Const a b)) =>
-         HomogeneousRelation' c (Const a b) where
+instance
+  {-# INCOHERENT #-}
+  (c ~ (->), ElementaryTopos c, HomogeneousRelation' c a, Ob c (Const a b)) =>
+  HomogeneousRelation' c (Const a b)
+  where
   rel = rel . bimap getConst getConst
 
-instance {-# incoherent #-}
-         (c ~ (->), ElementaryTopos c, HomogeneousRelation' c a, Ob c (Identity a)) =>
-         HomogeneousRelation' c (Identity a) where
+instance
+  {-# INCOHERENT #-}
+  (c ~ (->), ElementaryTopos c, HomogeneousRelation' c a, Ob c (Identity a)) =>
+  HomogeneousRelation' c (Identity a)
+  where
   rel = rel . bimap runIdentity runIdentity
 
-instance {-# incoherent #-}
-         (c ~ (->), ElementaryTopos c, HomogeneousRelation' c a, Ob c (Meet a)) =>
-         HomogeneousRelation' c (Meet a) where
+instance
+  {-# INCOHERENT #-}
+  (c ~ (->), ElementaryTopos c, HomogeneousRelation' c a, Ob c (Meet a)) =>
+  HomogeneousRelation' c (Meet a)
+  where
   rel = rel . bimap getMeet getMeet
 
-instance {-# incoherent #-}
-         (c ~ (->), ElementaryTopos c, HomogeneousRelation' c a, Ob c (Join a)) =>
-         HomogeneousRelation' c (Join a) where
+instance
+  {-# INCOHERENT #-}
+  (c ~ (->), ElementaryTopos c, HomogeneousRelation' c a, Ob c (Join a)) =>
+  HomogeneousRelation' c (Join a)
+  where
   rel = rel . bimap getJoin getJoin
 
-instance {-# incoherent #-}
-         (c ~ (->), ElementaryTopos c, HomogeneousRelation' c a, Ob c (Additive a)) =>
-         HomogeneousRelation' c (Additive a) where
+instance
+  {-# INCOHERENT #-}
+  (c ~ (->), ElementaryTopos c, HomogeneousRelation' c a, Ob c (Additive a)) =>
+  HomogeneousRelation' c (Additive a)
+  where
   rel = rel . bimap sum sum
 
-instance {-# incoherent #-}
-         (c ~ (->), ElementaryTopos c, HomogeneousRelation' c a, Ob c (Multiplicative a)) =>
-         HomogeneousRelation' c (Multiplicative a) where
+instance
+  {-# INCOHERENT #-}
+  (c ~ (->), ElementaryTopos c, HomogeneousRelation' c a, Ob c (Multiplicative a)) =>
+  HomogeneousRelation' c (Multiplicative a)
+  where
   rel = rel . bimap product product

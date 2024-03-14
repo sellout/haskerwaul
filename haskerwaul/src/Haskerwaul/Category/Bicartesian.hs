@@ -1,11 +1,13 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Category.Bicartesian
-  ( module Haskerwaul.Category.Bicartesian
-  -- * extended modules
-  , module Haskerwaul.Category.Monoidal.Cartesian
-  , module Haskerwaul.Category.Monoidal.Cocartesian
-  ) where
+  ( module Haskerwaul.Category.Bicartesian,
+
+    -- * extended modules
+    module Haskerwaul.Category.Monoidal.Cartesian,
+    module Haskerwaul.Category.Monoidal.Cocartesian,
+  )
+where
 
 import Haskerwaul.Category.Monoidal.Cartesian
 import Haskerwaul.Category.Monoidal.Cocartesian

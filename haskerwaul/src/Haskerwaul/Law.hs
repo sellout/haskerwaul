@@ -1,9 +1,8 @@
 -- | Defining laws in a category-polymorphic way is tricky.
 module Haskerwaul.Law where
 
-import           Data.Constraint (Constraint)
-import           Data.Kind (Type)
-
+import Data.Constraint (Constraint)
+import Data.Kind (Type)
 import Haskerwaul.Bifunctor
 import Haskerwaul.Object
 import Haskerwaul.Relation.Homogeneous
@@ -27,8 +26,7 @@ import Haskerwaul.Topos.Elementary
 --          use all the operations involved. However, if you have a @relation@
 --          that isn't reflexive, you don't get to choose which side is the
 --          simpler one.
-data Law c (relation :: (Type -> Type -> Type) -> Type -> Constraint) a b =
-  Law
+data Law c (relation :: (Type -> Type -> Type) -> Type -> Constraint) a b = Law
   { expectation :: a `c` b,
     actual :: a `c` b
   }
@@ -44,8 +42,10 @@ data Law c (relation :: (Type -> Type -> Type) -> Type -> Constraint) a b =
 --   topos, then you can use `id`. Otherwise, you may have various newtype
 --   wrappers and unwrappers, like `NT`/`runNT`, `Opposite`/`opposite`, etc. and
 --   they can generally be composed to move across vast spaces of __Cat__.
-checkLaw
-  :: (ElementaryTopos c, rel c y, HomogeneousRelation' c y, Ob c x)
-  => (a `d` b -> x `c` y) -> Law d rel a b -> x `c` Class c
+checkLaw ::
+  (ElementaryTopos c, rel c y, HomogeneousRelation' c y, Ob c x) =>
+  (a `d` b -> x `c` y) ->
+  Law d rel a b ->
+  x `c` Class c
 checkLaw translate (Law exp act) =
   rel . bimap (translate exp) (translate act) . diagonal

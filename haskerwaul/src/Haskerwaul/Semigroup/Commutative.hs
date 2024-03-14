@@ -1,11 +1,13 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Semigroup.Commutative
-  ( module Haskerwaul.Semigroup.Commutative
-  -- * extended modules
-  , module Haskerwaul.Magma.Commutative
-  , module Haskerwaul.Semigroup
-  ) where
+  ( module Haskerwaul.Semigroup.Commutative,
+
+    -- * extended modules
+    module Haskerwaul.Magma.Commutative,
+    module Haskerwaul.Semigroup,
+  )
+where
 
 import Haskerwaul.Magma.Commutative
 import Haskerwaul.Semigroup

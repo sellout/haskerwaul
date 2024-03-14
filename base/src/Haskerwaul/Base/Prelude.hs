@@ -1,4 +1,4 @@
-{-# language TypeApplications #-}
+{-# LANGUAGE TypeApplications #-}
 
 -- | This is intended to be a /mostly/ drop-in replacement for "Prelude", but
 --   with all the definitions in terms of things from Haskerwaul to improve
@@ -14,18 +14,21 @@
 --   be usable with the rest of "Haskerwaul".
 module Haskerwaul.Base.Prelude where
 
-import           Data.Proxy (Proxy (..))
-
+import Data.Proxy (Proxy (..))
 import qualified Haskerwaul as H
 
 -- | Generalization of `Prelude.&&`.
-(&&) :: forall c a. (c ~ (->), H.CartesianClosedMonoidalCategory c, H.Lattice c (H.Prod c) a)
-     => a `c` H.Exp c a a
+(&&) ::
+  forall c a.
+  (c ~ (->), H.CartesianClosedMonoidalCategory c, H.Lattice c (H.Prod c) a) =>
+  a `c` H.Exp c a a
 (&&) = H.curry @_ @(H.Prod c) H.meet
 
 -- | Generalization of `Prelude.||`.
-(||) :: forall c a. (c ~ (->), H.CartesianClosedMonoidalCategory c, H.Lattice c (H.Prod c) a)
-     => a `c` H.Exp c a a
+(||) ::
+  forall c a.
+  (c ~ (->), H.CartesianClosedMonoidalCategory c, H.Lattice c (H.Prod c) a) =>
+  a `c` H.Exp c a a
 (||) = H.curry @_ @(H.Prod c) H.join
 
 -- | Generalization of `Prelude.not`.
@@ -37,8 +40,11 @@ otherwise :: H.Class (->)
 otherwise = H.true ()
 
 -- | Generalization of `Prelude.either`.
-either :: (H.Bifunctor c1 c2 d f, H.Ob c1 a1, H.Ob c1 b1, H.Ob c2 a2, H.Ob c2 b2)
-       => a1 `c1` b1 -> a2 `c2` b2 -> f a1 a2 `d` f b1 b2
+either ::
+  (H.Bifunctor c1 c2 d f, H.Ob c1 a1, H.Ob c1 b1, H.Ob c2 a2, H.Ob c2 b2) =>
+  a1 `c1` b1 ->
+  a2 `c2` b2 ->
+  f a1 a2 `d` f b1 b2
 either = H.bimap
 
 -- | Generalization of `Prelude.fst`.
@@ -50,16 +56,21 @@ snd :: (H.CartesianMonoidalCategory c, H.Ob c a, H.Ob c b) => H.Prod c a b `c` b
 snd = H.exr
 
 -- | Generalization of `Prelude.curry`.
-curry :: (H.ClosedMonoidalCategory c t, H.Ob c x, H.Ob c y, H.Ob c z)
-      => t x y `c` z -> x `c` H.InternalHom c y z
+curry ::
+  (H.ClosedMonoidalCategory c t, H.Ob c x, H.Ob c y, H.Ob c z) =>
+  t x y `c` z ->
+  x `c` H.InternalHom c y z
 curry = H.curry
 
 -- | Generalization of `Prelude.uncurry`.
-uncurry :: (H.ClosedMonoidalCategory c t, H.Ob c x, H.Ob c y, H.Ob c z)
-        => x `c` H.InternalHom c y z -> t x y `c` z
+uncurry ::
+  (H.ClosedMonoidalCategory c t, H.Ob c x, H.Ob c y, H.Ob c z) =>
+  x `c` H.InternalHom c y z ->
+  t x y `c` z
 uncurry = H.uncurry
 
 -- | Generalization of `Prelude.subtract`.
-subtract :: (c ~ (->), H.CartesianClosedMonoidalCategory c, H.Ring c (H.Prod c) a)
-         => a `c` H.Exp c a a
+subtract ::
+  (c ~ (->), H.CartesianClosedMonoidalCategory c, H.Ring c (H.Prod c) a) =>
+  a `c` H.Exp c a a
 subtract = (H.-)

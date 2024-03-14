@@ -1,11 +1,13 @@
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Group.Abelian
-  ( module Haskerwaul.Group.Abelian
-  -- * extended modules
-  , module Haskerwaul.Group
-  , module Haskerwaul.Monoid.Commutative
-  ) where
+  ( module Haskerwaul.Group.Abelian,
+
+    -- * extended modules
+    module Haskerwaul.Group,
+    module Haskerwaul.Monoid.Commutative,
+  )
+where
 
 import Haskerwaul.Group
 import Haskerwaul.Loop.Commutative

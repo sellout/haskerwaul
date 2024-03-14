@@ -1,17 +1,16 @@
-{-# language TypeApplications #-}
-{-# language UndecidableSuperClasses #-}
+{-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.GaloisConnection where
 
-import           Data.Proxy (Proxy (..))
-import           Data.Ratio (Rational)
-import           GHC.Float (Double, Float)
+import Data.Proxy (Proxy (..))
+import Data.Ratio (Rational)
+import GHC.Float (Double, Float)
 import qualified GHC.Float as Base
 import qualified GHC.Real as Base
-
 import Haskerwaul.Order.Canonical
-import Haskerwaul.Semigroupoid
 import Haskerwaul.Preorder
+import Haskerwaul.Semigroupoid
 
 -- |
 --

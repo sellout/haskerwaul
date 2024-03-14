@@ -1,27 +1,28 @@
-{-# language UndecidableInstances
-           , UndecidableSuperClasses #-}
+{-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Preorder
-  ( module Haskerwaul.Preorder
-  -- * extended modules
-  , module Haskerwaul.Relation.Homogeneous
-  ) where
+  ( module Haskerwaul.Preorder,
 
-import           Data.Bool (Bool)
-import           Data.Int (Int, Int8, Int16, Int32, Int64)
-import           Data.Ratio (Ratio)
-import           Data.Void (Void)
-import           Data.Word (Word, Word8, Word16, Word32, Word64)
+    -- * extended modules
+    module Haskerwaul.Relation.Homogeneous,
+  )
+where
+
+import Data.Bool (Bool)
+import Data.Int (Int, Int16, Int32, Int64, Int8)
+import Data.Ratio (Ratio)
+import Data.Void (Void)
+import Data.Word (Word, Word16, Word32, Word64, Word8)
 import qualified GHC.Real as Base
-import           Numeric.Natural (Natural)
-import           Prelude (Double, Float, Integer)
-
 import Haskerwaul.Object
 import Haskerwaul.Order.Canonical
 import Haskerwaul.Relation.Binary
 import Haskerwaul.Relation.Homogeneous
 import Haskerwaul.Semiring.Components
 import Haskerwaul.Topos.Elementary
+import Numeric.Natural (Natural)
+import Prelude (Double, Float, Integer)
 
 -- | There are too many valid instances of this for almost any type for it to be
 --   something to implement directly. This is generally provided automatically
@@ -32,9 +33,9 @@ import Haskerwaul.Topos.Elementary
 -- = laws
 --   [`Haskerwaul.Law.Reflexivity.reflexivity`]: @`le` (x, x) == `true` ()@
 --   [transitivity]: @`le` (x, y) && `le (y, z)` ==> `le` (x, z)@
-class HomogeneousRelation' c a => Preorder c a
+class (HomogeneousRelation' c a) => Preorder c a
 
-le :: Preorder c a => BinaryRelation c a a
+le :: (Preorder c a) => BinaryRelation c a a
 le = rel
 
 instance Preorder (->) ()
@@ -71,15 +72,17 @@ instance Preorder (->) (Canonical Float)
 
 instance Preorder (->) (Canonical Double)
 
-instance Base.Integral a => Preorder (->) (Canonical (Ratio a))
+instance (Base.Integral a) => Preorder (->) (Canonical (Ratio a))
 
-instance {-# incoherent #-}
-         (c ~ (->), ElementaryTopos c, Preorder c a, Ob c (Additive a)) =>
-         Preorder c (Additive a)
+instance
+  {-# INCOHERENT #-}
+  (c ~ (->), ElementaryTopos c, Preorder c a, Ob c (Additive a)) =>
+  Preorder c (Additive a)
 
-instance {-# incoherent #-}
-         (c ~ (->), ElementaryTopos c, Preorder c a, Ob c (Multiplicative a)) =>
-         Preorder c (Multiplicative a)
+instance
+  {-# INCOHERENT #-}
+  (c ~ (->), ElementaryTopos c, Preorder c a, Ob c (Multiplicative a)) =>
+  Preorder c (Multiplicative a)
 
 -- * Operators
 
