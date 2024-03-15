@@ -1,3 +1,4 @@
+{-# LANGUAGE Safe #-}
 {-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Semilattice.Bounded

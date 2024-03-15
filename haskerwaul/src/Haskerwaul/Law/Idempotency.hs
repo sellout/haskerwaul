@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Law.Idempotency where
 
 import Haskerwaul.Category.Monoidal.Cartesian

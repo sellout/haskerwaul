@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Semigroupoid.Laws where
 
 import Haskerwaul.Semigroup.Laws

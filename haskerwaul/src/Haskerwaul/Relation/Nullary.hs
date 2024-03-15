@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Relation.Nullary where
 
 import Haskerwaul.Topos.Elementary

@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Semigroup.Commutative.Laws where
 
 import Haskerwaul.Category.Monoidal.Braided

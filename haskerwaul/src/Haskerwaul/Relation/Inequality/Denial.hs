@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Relation.Inequality.Denial
   ( module Haskerwaul.Relation.Inequality.Denial,
 

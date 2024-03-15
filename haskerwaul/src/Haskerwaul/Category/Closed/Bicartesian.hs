@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Category.Closed.Bicartesian
   ( module Haskerwaul.Category.Closed.Bicartesian,
 

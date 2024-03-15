@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Category.Small.Locally
   ( module Haskerwaul.Category.Small.Locally,
 

@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Isomorphism.Natural
   ( module Haskerwaul.Isomorphism.Natural,
 

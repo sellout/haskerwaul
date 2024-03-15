@@ -1,3 +1,4 @@
+{-# LANGUAGE Safe #-}
 module Haskerwaul.Category.Monoidal.Symmetric where
 
 import           Data.Kind (Type)

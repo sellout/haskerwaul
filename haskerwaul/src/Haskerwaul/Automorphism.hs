@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Automorphism
   ( module Haskerwaul.Automorphism,
 

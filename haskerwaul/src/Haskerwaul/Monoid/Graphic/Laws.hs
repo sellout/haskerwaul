@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Monoid.Graphic.Laws where
 
 import Haskerwaul.Band.LeftRegular.Laws

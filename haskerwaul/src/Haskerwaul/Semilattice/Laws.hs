@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Semilattice.Laws where
 
 import Haskerwaul.Band.Laws

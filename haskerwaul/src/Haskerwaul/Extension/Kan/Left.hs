@@ -1,4 +1,5 @@
 {-# LANGUAGE GADTSyntax #-}
+{-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableInstances #-}

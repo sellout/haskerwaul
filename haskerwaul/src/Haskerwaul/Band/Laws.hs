@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Band.Laws where
 
 import Haskerwaul.Band

@@ -1,3 +1,4 @@
+{-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableInstances #-}
@@ -5,9 +6,9 @@
 module Haskerwaul.Category.Kleisli where
 
 import Data.Constraint ((\\))
-import Data.Constraint.Deferrable ((:~:) (..))
 import Data.Kind (Type)
 import Data.Proxy (Proxy (..))
+import Data.Type.Equality ((:~:) (..))
 import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Monoidal.Cartesian
 import Haskerwaul.Constraint

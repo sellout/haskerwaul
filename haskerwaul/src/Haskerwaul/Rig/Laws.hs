@@ -1,4 +1,5 @@
 {-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE Safe #-}
 
 module Haskerwaul.Rig.Laws where
 

@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Category.Product where
 
 -- | [nLab](https://ncatlab.org/nlab/show/product+category)

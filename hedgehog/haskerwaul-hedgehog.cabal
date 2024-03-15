@@ -105,7 +105,7 @@ common defaults
     -Wno-unsafe
     -- TODO: prune these warnings
     -Wno-all-missed-specialisations
-    -- -fpackage-trust
+    -fpackage-trust
     -trust base
   if impl(ghc < 8.8.1)
     ghc-options:
@@ -171,8 +171,8 @@ library
   ghc-options:
     -Wno-missing-export-lists
     -Wno-missing-import-lists
-    -Wno-missing-safe-haskell-mode
     -Wno-simplifiable-class-constraints
+    -trust constraints
   exposed-modules:
     Haskerwaul.Hedgehog
     Haskerwaul.Hedgehog.Applied.Set

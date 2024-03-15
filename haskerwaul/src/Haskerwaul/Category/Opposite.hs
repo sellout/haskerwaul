@@ -1,3 +1,4 @@
+{-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableInstances #-}
@@ -6,13 +7,13 @@ module Haskerwaul.Category.Opposite where
 
 import Control.Arrow ((&&&))
 import Data.Constraint (Bottom (..), bottom, (:-) (..))
-import Data.Constraint.Deferrable ((:~:) (..))
 import Data.Either (Either (..))
 import Data.Functor.Compose (Compose (..))
 import Data.Functor.Identity (Identity (..))
 import Data.Kind (Type)
 import Data.Proxy (Proxy (..))
 import qualified Data.Tuple as Base
+import Data.Type.Equality ((:~:) (..))
 import qualified Data.Void as Base
 import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Monoidal.Balanced

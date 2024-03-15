@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Category.CoKleisli
   ( module Haskerwaul.Category.CoKleisli,
 

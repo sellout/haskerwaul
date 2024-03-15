@@ -2,6 +2,7 @@
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE Unsafe #-}
 
 -- | This wraps the laws from Haskerwaul in a way that makes them testable with
 --   Hedgehog.
@@ -23,45 +24,45 @@
 -- 6. one generator for each input type (regardless of whether it's an output type).
 module Haskerwaul.Hedgehog where
 
-import Control.Monad ((=<<))
-import Data.Constraint.Deferrable ((:~:) (..))
-import Data.Eq (Eq)
-import Data.Kind (Type)
-import Data.Proxy (Proxy (..))
-import Data.String (String, fromString)
-import Data.Typeable (Typeable, typeRep)
-import Haskerwaul.Band.Laws as Band
-import Haskerwaul.Band.LeftRegular.Laws as LeftRegularBand
-import Haskerwaul.Bifunctor
-import Haskerwaul.Category.Laws
-import Haskerwaul.Category.Semigroupal.Laws as Semigroupal
-import Haskerwaul.Duoid.Laws
+import safe Control.Monad ((=<<))
+import safe Data.Eq (Eq)
+import safe Data.Kind (Type)
+import safe Data.Proxy (Proxy (..))
+import safe Data.String (String, fromString)
+import safe Data.Type.Equality ((:~:) (..))
+import safe Data.Typeable (Typeable, typeRep)
+import safe Haskerwaul.Band.Laws as Band
+import safe Haskerwaul.Band.LeftRegular.Laws as LeftRegularBand
+import safe Haskerwaul.Bifunctor
+import safe Haskerwaul.Category.Laws
+import safe Haskerwaul.Category.Semigroupal.Laws as Semigroupal
+import safe Haskerwaul.Duoid.Laws
 import Haskerwaul.Hedgehog.Topos
-import Haskerwaul.Isomorphism.Laws
-import Haskerwaul.Lattice
-import Haskerwaul.Lattice.Bounded.Laws as BoundedLattice
-import Haskerwaul.Lattice.Laws as Lattice
-import Haskerwaul.Law
-import Haskerwaul.Magma.Commutative.Laws
-import Haskerwaul.Magma.Unital.Laws
-import Haskerwaul.Monoid.Commutative.Laws as CommutativeMonoid
-import Haskerwaul.Monoid.Graphic.Laws as GraphicMonoid
-import Haskerwaul.Monoid.Laws as Monoid
-import Haskerwaul.Object
-import Haskerwaul.Profunctor
-import Haskerwaul.Rig.Laws as Rig
-import Haskerwaul.Semigroup.Commutative.Laws as CommutativeSemigroup
-import Haskerwaul.Semigroup.Laws as Semigroup
-import Haskerwaul.Semigroupoid.Laws
-import Haskerwaul.Semilattice.Bounded.Laws as BoundedSemilattice
-import Haskerwaul.Semilattice.Laws as Semilattice
-import Haskerwaul.Semiring
-import Haskerwaul.Shelf.Left.Laws
-import Haskerwaul.Shelf.Right.Laws
-import Haskerwaul.Topos.Elementary hiding (leftIdentity, rightIdentity)
-import Haskerwaul.Transformation.Dinatural
+import safe Haskerwaul.Isomorphism.Laws
+import safe Haskerwaul.Lattice
+import safe Haskerwaul.Lattice.Bounded.Laws as BoundedLattice
+import safe Haskerwaul.Lattice.Laws as Lattice
+import safe Haskerwaul.Law
+import safe Haskerwaul.Magma.Commutative.Laws
+import safe Haskerwaul.Magma.Unital.Laws
+import safe Haskerwaul.Monoid.Commutative.Laws as CommutativeMonoid
+import safe Haskerwaul.Monoid.Graphic.Laws as GraphicMonoid
+import safe Haskerwaul.Monoid.Laws as Monoid
+import safe Haskerwaul.Object
+import safe Haskerwaul.Profunctor
+import safe Haskerwaul.Rig.Laws as Rig
+import safe Haskerwaul.Semigroup.Commutative.Laws as CommutativeSemigroup
+import safe Haskerwaul.Semigroup.Laws as Semigroup
+import safe Haskerwaul.Semigroupoid.Laws
+import safe Haskerwaul.Semilattice.Bounded.Laws as BoundedSemilattice
+import safe Haskerwaul.Semilattice.Laws as Semilattice
+import safe Haskerwaul.Semiring
+import safe Haskerwaul.Shelf.Left.Laws
+import safe Haskerwaul.Shelf.Right.Laws
+import safe Haskerwaul.Topos.Elementary hiding (leftIdentity, rightIdentity)
+import safe Haskerwaul.Transformation.Dinatural
 import Hedgehog hiding (label)
-import Text.Show (Show (..))
+import safe Text.Show (Show (..))
 
 showType :: forall a. (Typeable a) => Proxy a -> PropertyName
 showType = fromString . show . typeRep

@@ -1,4 +1,5 @@
 {-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeApplications #-}
 
 module Haskerwaul.Duoid.Laws where

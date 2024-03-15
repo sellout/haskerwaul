@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Cone where
 
 import Haskerwaul.Bifunctor

@@ -1,28 +1,29 @@
 {-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE Unsafe #-}
 
 module Haskerwaul.Hedgehog.Applied.Set where
 
-import Control.Applicative
-import Data.Bool (Bool)
-import Data.Constraint ((\\))
-import Data.Constraint.Deferrable ((:~:) (..))
-import Data.Either
-import Data.Functor (fmap)
-import Data.Int (Int16, Int32, Int8)
-import Haskerwaul hiding (pure, ($))
-import Haskerwaul.Category.Semigroupal.Laws
+import safe Control.Applicative
+import safe Data.Bool (Bool)
+import safe Data.Constraint ((\\))
+import safe Data.Either
+import safe Data.Functor (fmap)
+import safe Data.Int (Int16, Int32, Int8)
+import safe Data.Type.Equality ((:~:) (..))
+import safe Haskerwaul hiding (pure, ($))
+import safe Haskerwaul.Category.Semigroupal.Laws
 import Haskerwaul.Hedgehog
 import Haskerwaul.Hedgehog.Topos
-import Haskerwaul.Lattice.Bounded.Laws
-import Haskerwaul.Lattice.Laws
-import Haskerwaul.Monoid.Commutative.Laws
-import Haskerwaul.Monoid.Laws
-import Haskerwaul.Rig.Laws
+import safe Haskerwaul.Lattice.Bounded.Laws
+import safe Haskerwaul.Lattice.Laws
+import safe Haskerwaul.Monoid.Commutative.Laws
+import safe Haskerwaul.Monoid.Laws
+import safe Haskerwaul.Rig.Laws
 import Hedgehog
 import qualified Hedgehog.Function as Fn
 import qualified Hedgehog.Gen as Gen
-import Text.Show (show)
-import Prelude (Eq, Show, ($))
+import safe Text.Show (show)
+import safe Prelude (Eq, Show, ($))
 
 genTuple :: Gen a -> Gen b -> Gen (a, b)
 genTuple = liftA2 (,)

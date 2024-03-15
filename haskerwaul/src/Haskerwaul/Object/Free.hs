@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Object.Free where
 
 import Haskerwaul.Category.Closed

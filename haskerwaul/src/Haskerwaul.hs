@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 -- | This re-exports everything in the library, providing a unified model of
 --   category theory.
 --

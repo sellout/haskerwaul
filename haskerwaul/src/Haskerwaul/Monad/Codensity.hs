@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Monad.Codensity
   ( module Haskerwaul.Monad.Codensity,
 

@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Pushout
   ( module Haskerwaul.Pushout,
 

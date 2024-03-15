@@ -1,9 +1,10 @@
+{-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeFamilies #-}
 
 module Haskerwaul.Isomorphism where
 
-import Data.Constraint.Deferrable ((:~:) (..))
 import Data.Proxy (Proxy (..))
+import Data.Type.Equality ((:~:) (..))
 import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Monoidal'
 import Haskerwaul.Magma.Unital

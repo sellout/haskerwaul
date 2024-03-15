@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Prelude
   ( module Haskerwaul.Base.Prelude,
   )

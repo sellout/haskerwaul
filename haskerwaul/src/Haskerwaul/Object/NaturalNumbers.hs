@@ -1,3 +1,4 @@
+{-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeFamilies #-}
 
 module Haskerwaul.Object.NaturalNumbers where

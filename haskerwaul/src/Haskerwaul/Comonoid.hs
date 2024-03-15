@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Comonoid
   ( module Haskerwaul.Comonoid,
 

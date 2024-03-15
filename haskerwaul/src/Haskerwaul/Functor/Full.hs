@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Functor.Full
   ( module Haskerwaul.Functor.Full,
 

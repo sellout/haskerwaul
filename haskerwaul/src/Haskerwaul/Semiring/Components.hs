@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 -- | This module provides the newtypes that are used to distinguish the
 --   components of semiring-like structures. It also contains instances over
 --   these types for classes defined in "base".

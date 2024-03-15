@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Category.Distributive
   ( module Haskerwaul.Category.Distributive,
 

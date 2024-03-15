@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Cospan
   ( module Haskerwaul.Cospan,
 

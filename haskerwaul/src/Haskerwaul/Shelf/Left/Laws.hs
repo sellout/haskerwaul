@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Shelf.Left.Laws where
 
 import Haskerwaul.Category.Monoidal.Cartesian

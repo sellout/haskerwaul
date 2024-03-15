@@ -1,3 +1,4 @@
+{-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableInstances #-}
 
@@ -10,7 +11,6 @@ module Haskerwaul.Subcategory.Full
 where
 
 import Control.Arrow ((&&&))
-import Data.Constraint.Deferrable ((:~:) (..))
 import Data.Functor.Compose (Compose (..))
 import Data.Functor.Identity (Identity (..))
 import Data.Kind (Constraint, Type)
@@ -18,6 +18,7 @@ import qualified Data.Ord as Base
 import Data.Proxy (Proxy (..))
 import qualified Data.Set as Set
 import qualified Data.Tuple as Base
+import Data.Type.Equality ((:~:) (..))
 import Haskerwaul.Algebra.Heyting
 import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Opposite

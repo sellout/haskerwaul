@@ -1,3 +1,4 @@
+{-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeFamilies #-}
 
@@ -7,12 +8,12 @@ import qualified Control.Applicative as Base
 import qualified Control.Category as Base
 import qualified Control.Monad as Base
 import Data.Constraint (Dict (..), refl, (:-) (..), (\\))
-import Data.Constraint.Deferrable ((:~:) (..))
 import Data.Functor.Compose (Compose (..))
 import Data.Functor.Const (Const (..))
 import Data.Functor.Identity (Identity (..))
 import Data.Kind (Type)
 import Data.Proxy (Proxy (..))
+import Data.Type.Equality ((:~:) (..))
 import Haskerwaul.Category.Monoidal'
 import Haskerwaul.Constraint
 import Haskerwaul.Functor

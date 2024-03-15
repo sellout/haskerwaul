@@ -1,11 +1,12 @@
+{-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeFamilies #-}
 
 module Haskerwaul.Span where
 
 import Data.Constraint ((\\))
-import Data.Constraint.Deferrable ((:~:) (..))
 import Data.Proxy (Proxy (..))
+import Data.Type.Equality ((:~:) (..))
 import Haskerwaul.Category.Monoidal.Cartesian
 import Haskerwaul.Constraint
 import Haskerwaul.Object

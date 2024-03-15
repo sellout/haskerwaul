@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Embedding.Yoneda
   ( module Haskerwaul.Embedding.Yoneda,
     module Haskerwaul.Extension.Kan.Right,

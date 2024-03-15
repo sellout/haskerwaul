@@ -1,3 +1,4 @@
+{-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeApplications #-}
 
 module Haskerwaul.Category.Semigroupal.Laws where

@@ -1,3 +1,4 @@
+{-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableInstances #-}
 {-# LANGUAGE UndecidableSuperClasses #-}
@@ -13,12 +14,12 @@ where
 
 import qualified Control.Category as Base
 import Data.Constraint (cls, ins, refl, top, trans, weaken1, weaken2, (&&&), (:-))
-import Data.Constraint.Deferrable ((:~:) (..))
 import Data.Either (Either (..))
 import qualified Data.Either as Base
 import Data.Functor.Const (Const (..))
 import Data.Proxy (Proxy (..))
 import qualified Data.Tuple as Base
+import Data.Type.Equality ((:~:) (..))
 import qualified Data.Void as Base
 import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Monoidal'

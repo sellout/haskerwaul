@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Cocone
   ( module Haskerwaul.Cocone,
 

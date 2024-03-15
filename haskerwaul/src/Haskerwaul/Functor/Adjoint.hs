@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Functor.Adjoint where
 
 import Data.Proxy (Proxy)

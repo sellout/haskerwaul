@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Functor.Hom
   ( module Haskerwaul.Functor.Hom,
 

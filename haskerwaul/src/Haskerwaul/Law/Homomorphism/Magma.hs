@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Law.Homomorphism.Magma where
 
 import Haskerwaul.Bifunctor

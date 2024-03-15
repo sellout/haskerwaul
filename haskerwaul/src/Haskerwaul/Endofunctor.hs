@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Endofunctor
   ( module Haskerwaul.Endofunctor,
 

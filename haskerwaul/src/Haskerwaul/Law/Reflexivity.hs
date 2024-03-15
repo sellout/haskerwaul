@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Law.Reflexivity where
 
 import Haskerwaul.Law

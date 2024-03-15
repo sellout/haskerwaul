@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Pullback where
 
 import Haskerwaul.Category.Monoidal.Cartesian

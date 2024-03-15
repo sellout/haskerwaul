@@ -1,3 +1,4 @@
+{-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeFamilies #-}
 
 -- |
@@ -15,8 +16,8 @@ module Haskerwaul.Semigroupoid
 where
 
 import qualified Control.Category as Base
-import Data.Constraint.Deferrable ((:~:) (..))
 import Data.Proxy (Proxy (..))
+import Data.Type.Equality ((:~:) (..))
 import Haskerwaul.Magma.Unital
 import Haskerwaul.Quasigroup.Left
 import Haskerwaul.Quasigroup.Right

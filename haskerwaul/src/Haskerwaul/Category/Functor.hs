@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Category.Functor
   ( module Haskerwaul.Category.Functor,
 

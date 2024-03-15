@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Category.Hypergraph
   ( module Haskerwaul.Category.Hypergraph,
 

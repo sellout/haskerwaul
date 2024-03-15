@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Magma.Commutative.Laws where
 
 import Haskerwaul.Category.Monoidal.Braided

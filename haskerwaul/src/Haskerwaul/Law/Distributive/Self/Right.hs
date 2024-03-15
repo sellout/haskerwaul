@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Law.Distributive.Self.Right where
 
 import Haskerwaul.Category.Monoidal.Cartesian

@@ -1,3 +1,4 @@
+{-# LANGUAGE Safe #-}
 -- __NB__: The @rel c y@ constraint on `checkLaw` is technically redundant, but
 --         constraints-0.14 might allow us to specify the relationship between
 --        `HomogeneousRelation'` and @rel@ so that it isn’t.

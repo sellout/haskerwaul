@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Functor.Faithful
   ( module Haskerwaul.Functor.Faithful,
 

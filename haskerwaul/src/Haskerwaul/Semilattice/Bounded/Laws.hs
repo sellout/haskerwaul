@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Semilattice.Bounded.Laws where
 
 import Haskerwaul.Category.Monoidal.Cartesian

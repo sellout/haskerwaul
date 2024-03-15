@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Object.Initial
   ( module Haskerwaul.Object.Initial,
 

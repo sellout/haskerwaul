@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Law.Symmetry where
 
 import Haskerwaul.Law

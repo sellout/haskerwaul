@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Relation.Binary where
 
 import Haskerwaul.Topos.Elementary

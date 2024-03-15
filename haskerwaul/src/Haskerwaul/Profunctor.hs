@@ -1,3 +1,4 @@
+{-# LANGUAGE Safe #-}
 {-# LANGUAGE UndecidableInstances #-}
 
 module Haskerwaul.Profunctor

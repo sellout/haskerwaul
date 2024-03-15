@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Category.Rig.ColaxDistributive
   ( module Haskerwaul.Category.Rig.ColaxDistributive,
 

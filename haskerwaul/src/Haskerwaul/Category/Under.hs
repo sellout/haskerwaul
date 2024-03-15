@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Category.Under
   ( module Haskerwaul.Category.Under,
 

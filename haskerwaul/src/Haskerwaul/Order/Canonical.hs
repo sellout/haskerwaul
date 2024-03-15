@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Order.Canonical where
 
 -- | Some type classes are too broad to pin down with a single instance. E.g., for `Preorder`, even

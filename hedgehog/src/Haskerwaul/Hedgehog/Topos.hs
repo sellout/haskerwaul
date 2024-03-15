@@ -1,24 +1,25 @@
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE Unsafe #-}
 
 -- | This defines an `ElementaryTopos` instance for Hedgehog, such that it can
 --   be used to apply all of the properties defined in Haskerwaul.
 module Haskerwaul.Hedgehog.Topos where
 
-import Control.Applicative
-import Data.Eq (Eq)
-import Data.Type.Equality ((:~:) (..))
-import Haskerwaul.Bifunctor
-import Haskerwaul.Constraint
-import Haskerwaul.Isomorphism
-import Haskerwaul.Object
-import Haskerwaul.Object.Terminal
-import Haskerwaul.Relation.Equality
-import Haskerwaul.Topos.Elementary
-import Haskerwaul.Transformation.Dinatural
+import safe Control.Applicative
+import safe Data.Eq (Eq)
+import safe Data.Type.Equality ((:~:) (..))
+import safe Haskerwaul.Bifunctor
+import safe Haskerwaul.Constraint
+import safe Haskerwaul.Isomorphism
+import safe Haskerwaul.Object
+import safe Haskerwaul.Object.Terminal
+import safe Haskerwaul.Relation.Equality
+import safe Haskerwaul.Topos.Elementary
+import safe Haskerwaul.Transformation.Dinatural
 import Hedgehog
-import System.IO
-import Text.Show (Show)
+import safe System.IO
+import safe Text.Show (Show)
 
 -- | A trivial newtype over __Hask__ that lets us choose a different classifying
 --   object (i.e., `Property`-like instead of `Bool`).

@@ -1,11 +1,12 @@
+{-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableInstances #-}
 
 module Haskerwaul.Category.Over where
 
-import Data.Constraint.Deferrable ((:~:) (..))
 import Data.Kind (Type)
 import Data.Proxy (Proxy (..))
+import Data.Type.Equality ((:~:) (..))
 import Haskerwaul.Object
 import Haskerwaul.Topos.Elementary
 import Haskerwaul.Transformation.Dinatural

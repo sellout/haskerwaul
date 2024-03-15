@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 module Haskerwaul.Monad.Frobenius
   ( module Haskerwaul.Monad.Frobenius,
     module Haskerwaul.Monoid.Frobenius,

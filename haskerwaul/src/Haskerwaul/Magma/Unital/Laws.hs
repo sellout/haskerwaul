@@ -1,4 +1,5 @@
 {-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeApplications #-}
 
 module Haskerwaul.Magma.Unital.Laws where
