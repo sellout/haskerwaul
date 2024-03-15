@@ -1,3 +1,7 @@
+-- __NB__: The `Ob` constraints look redundant, because they‘re not yet
+--         specified on `.`..
+{-# OPTIONS_GHC -Wno-redundant-constraints #-}
+
 module Haskerwaul.Law.Homomorphism.Identity where
 
 import Data.Proxy (Proxy (..))

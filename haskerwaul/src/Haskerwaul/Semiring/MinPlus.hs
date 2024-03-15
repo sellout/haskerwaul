@@ -1,3 +1,6 @@
+{-# LANGUAGE TypeFamilies #-}
+{-# OPTIONS_GHC -Wno-orphans #-}
+
 module Haskerwaul.Semiring.MinPlus
   ( module Haskerwaul.Semiring.MinPlus,
 

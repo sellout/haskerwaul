@@ -3,11 +3,18 @@
 --   these types for classes defined in "base".
 --
 --  __NB__: A lot of these instances could be potentially simplified like
---          >>> instance Base.Bounded a => Base.Monoid (Meet a) where
---          >>>   mempty = Meet Base.maxBound
---          >>> instance Base.Bounded a => Base.Monoid (Join a) where
---          >>>   mempty = Meet Base.minBound
---          but we don't expect `Prelude.Bounded` instances to be lawful in any
+--      >>> :{
+--        instance (Base.Ord a) => Base.Semigroup (Meet a) where
+--          Meet a <> Meet b = Meet (Base.min a b)
+--        instance (Base.Bounded a, Base.Ord a) => Base.Monoid (Meet a) where
+--          mempty = Meet Base.maxBound
+--        instance (Base.Ord a) => Base.Semigroup (Join a) where
+--          Join a <> Join b = Join (Base.max a b)
+--        instance (Base.Bounded a, Base.Ord a) => Base.Monoid (Join a) where
+--          mempty = Join Base.minBound
+--      :}
+--
+--          but we don't expect `Base.Bounded` instances to be lawful in any
 --          way, so we avoid it.
 module Haskerwaul.Lattice.Components where
 

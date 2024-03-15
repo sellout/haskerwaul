@@ -1,3 +1,5 @@
+{-# LANGUAGE TypeFamilies #-}
+
 module Haskerwaul.Object.NaturalNumbers where
 
 import Haskerwaul.Object.Terminal

@@ -3,22 +3,14 @@
 module Haskerwaul.Hedgehog.Applied.Set where
 
 import Control.Applicative
-import Data.Bitraversable (bitraverse)
 import Data.Bool (Bool)
 import Data.Constraint ((\\))
 import Data.Constraint.Deferrable ((:~:) (..))
 import Data.Either
 import Data.Functor (fmap)
-import Data.Functor.Compose (Compose (..))
-import Data.Functor.Identity (Identity (..))
 import Data.Int (Int16, Int32, Int8)
-import Data.List (lookup)
-import Data.Maybe (fromMaybe)
-import Data.Traversable (sequenceA, traverse)
-import Data.Word (Word8)
 import Haskerwaul hiding (pure, ($))
 import Haskerwaul.Category.Semigroupal.Laws
-import Haskerwaul.Duoid.Laws
 import Haskerwaul.Hedgehog
 import Haskerwaul.Hedgehog.Topos
 import Haskerwaul.Lattice.Bounded.Laws
@@ -30,8 +22,7 @@ import Hedgehog
 import qualified Hedgehog.Function as Fn
 import qualified Hedgehog.Gen as Gen
 import Text.Show (show)
-import Prelude (Eq, Show, enumFrom, error, ($))
-import qualified Prelude as Base
+import Prelude (Eq, Show, ($))
 
 genTuple :: Gen a -> Gen b -> Gen (a, b)
 genTuple = liftA2 (,)

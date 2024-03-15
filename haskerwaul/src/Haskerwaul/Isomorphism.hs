@@ -1,3 +1,5 @@
+{-# LANGUAGE TypeFamilies #-}
+
 module Haskerwaul.Isomorphism where
 
 import Data.Constraint.Deferrable ((:~:) (..))

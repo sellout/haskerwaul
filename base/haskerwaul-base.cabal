@@ -94,22 +94,37 @@ common defaults
     base ^>= {4.12.0, 4.13.0, 4.14.0, 4.15.0, 4.16.0, 4.17.0, 4.18.0, 4.19.0},
   ghc-options:
     -Weverything
-    -- If we didn’t allow inferred-safe imports, nothing would be `Safe`.
-    -Wno-inferred-safe-imports
     -- Type inference good.
     -Wno-missing-local-signatures
     -- Warns even when `Unsafe` is explicit, not inferred. See
     -- https://gitlab.haskell.org/ghc/ghc/-/issues/16689
     -Wno-unsafe
-    -- `-trust` triggers this warning when applied to transitive dependencies
-    -Wno-unused-packages
-    -fpackage-trust
+    -- TODO: prune these warnings
+    -Wno-all-missed-specialisations
+    -- -fpackage-trust
     -trust base
-  if impl(ghc >= 8.10.1)
-    -- We support GHC versions without these features
+  if impl(ghc < 8.8.1)
     ghc-options:
-      -Wno-missing-kind-signatures
+      -- This used to warn even when `Safe` was explicit.
+      -Wno-safe
+  if impl(ghc >= 8.10.1)
+    ghc-options:
+      -- If we didn’t allow inferred-safe imports, nothing would be `Safe`.
+      -Wno-inferred-safe-imports
+      -- We support GHC versions without qualified-post.
       -Wno-prepositive-qualified-module
+      -- `-trust` triggers this warning when applied to transitive dependencies.
+      -Wno-unused-packages
+  if impl(ghc >= 9.2.1)
+    ghc-options:
+      -- We support GHC versions without kind signatures.
+      -Wno-missing-kind-signatures
+  if impl(ghc >= 9.8.1)
+    ghc-options:
+      -- We support GHC versions without kind signatures.
+      -Wno-missing-poly-kind-signatures
+      -- Inference good.
+      -Wno-missing-role-annotations
   default-extensions:
     DefaultSignatures
     ExplicitNamespaces
@@ -146,6 +161,10 @@ library
     haskerwaul,
   hs-source-dirs:
     src
+  ghc-options:
+    -Wno-missing-export-lists
+    -Wno-missing-import-lists
+    -Wno-missing-safe-haskell-mode
   exposed-modules:
     Haskerwaul.Base.Prelude
 

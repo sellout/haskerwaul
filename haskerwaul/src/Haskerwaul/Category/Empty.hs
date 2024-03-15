@@ -1,3 +1,4 @@
+{-# LANGUAGE TypeFamilies #-}
 -- __NB__: Pattern matching for `op`, etc. has broken exhaustivity checking.
 {-# OPTIONS_GHC -fno-warn-incomplete-patterns #-}
 

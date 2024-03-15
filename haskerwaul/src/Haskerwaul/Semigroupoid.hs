@@ -1,3 +1,5 @@
+{-# LANGUAGE TypeFamilies #-}
+
 -- |
 --  __NB__: This module includes `UnitalMagma` and `Quasigroup` instances for
 --          various categories (even though those would fit better in

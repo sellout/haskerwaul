@@ -11,7 +11,6 @@ where
 import Haskerwaul.Category.Opposite
 import Haskerwaul.Monad
 import Haskerwaul.Object
-import Haskerwaul.Semigroupoid
 
 -- | [nLab](https://ncatlab.org/nlab/show/comonad)
 type Comonad' c ob = Monad' (Op c) ob

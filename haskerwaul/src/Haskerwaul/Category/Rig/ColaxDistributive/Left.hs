@@ -1,4 +1,5 @@
 {-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Category.Rig.ColaxDistributive.Left
@@ -46,7 +47,6 @@ instance
   ( CartesianMonoidalCategory c,
     t ~ Prod c,
     -- unnecessary constraints, implied by the ones above
-    MonoidalCategory c t,
     MonoidalCategory c t
   ) =>
   LeftColaxDistributiveRigCategory c t t

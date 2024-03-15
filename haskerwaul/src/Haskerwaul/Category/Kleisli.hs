@@ -1,4 +1,5 @@
 {-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableInstances #-}
 
 module Haskerwaul.Category.Kleisli where
@@ -19,13 +20,13 @@ import Haskerwaul.Transformation.Dinatural
 -- | [nLab](https://ncatlab.org/nlab/show/Kleisli+category)
 --
 --  __TODO__: Implement this as
--- >>> type Kleisli c m = FullSubcategory FreeAlgebra (EilenbergMoore c m)
+-- --> type Kleisli c m = FullSubcategory FreeAlgebra (EilenbergMoore c m)
 newtype Kleisli (c :: ok -> ok -> Type) m a b = Kleisli {runKleisli :: a `c` m b}
 
-type instance Ob (Kleisli c m) = Ob c
+type instance Ob (Kleisli c _) = Ob c
 
 instance
-  (Ob c ~ All, Semigroupoid c, Monad c m, FOb (Ob c) (Ob c) m) =>
+  (Ob c ~ All, Semigroupoid c, Monad c m) =>
   Magma (DinaturalTransformation (->)) Procompose (Kleisli c m)
   where
   op =

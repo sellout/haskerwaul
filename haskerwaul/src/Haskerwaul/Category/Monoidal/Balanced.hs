@@ -1,6 +1,9 @@
-{-# LANGUAGE DefaultSignatures #-}
+{-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableInstances #-}
 {-# LANGUAGE UndecidableSuperClasses #-}
+-- __NB__: GHC claims that the constraints on the default impl of `balance` are
+--         redundant, but symmetry law is needed for that property to hold.
+{-# OPTIONS_GHC -Wno-redundant-constraints #-}
 
 module Haskerwaul.Category.Monoidal.Balanced
   ( module Haskerwaul.Category.Monoidal.Balanced,

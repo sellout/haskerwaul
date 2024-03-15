@@ -1,3 +1,4 @@
+{-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableInstances #-}
 
 module Haskerwaul.Subcategory.Full
@@ -317,7 +318,7 @@ instance
   curry (FS f) = FS (curry f)
 
 instance
-  (CartesianClosedCategory c, TOb ob (Prod c), ob (Unit c (Prod c)), TOb ob (InternalHom c)) =>
+  (CartesianClosedCategory c, ob (Unit c (Prod c)), TOb ob (InternalHom c)) =>
   CartesianClosedCategory (FullSubcategory ob c)
   where
   const = FS const

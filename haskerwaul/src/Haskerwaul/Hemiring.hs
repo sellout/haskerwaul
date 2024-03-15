@@ -11,7 +11,6 @@ module Haskerwaul.Hemiring
 where
 
 import Haskerwaul.Hemiring.Near
-import Haskerwaul.Magma
 import Haskerwaul.Monoid.Commutative
 
 -- | [Wikipedia](https://en.wikipedia.org/wiki/Semiring#Generalizations)

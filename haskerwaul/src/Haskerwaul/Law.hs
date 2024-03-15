@@ -1,8 +1,12 @@
+-- __NB__: The @rel c y@ constraint on `checkLaw` is technically redundant, but
+--         constraints-0.14 might allow us to specify the relationship between
+--        `HomogeneousRelation'` and @rel@ so that it isn’t.
+{-# OPTIONS_GHC -Wno-redundant-constraints #-}
+
 -- | Defining laws in a category-polymorphic way is tricky.
 module Haskerwaul.Law where
 
-import Data.Constraint (Constraint)
-import Data.Kind (Type)
+import Data.Kind (Constraint, Type)
 import Haskerwaul.Bifunctor
 import Haskerwaul.Object
 import Haskerwaul.Relation.Homogeneous

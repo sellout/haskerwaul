@@ -1,3 +1,5 @@
+{-# LANGUAGE TypeFamilies #-}
+
 module Haskerwaul.Category.Terminal where
 
 import Data.Constraint.Deferrable ((:~:) (..))

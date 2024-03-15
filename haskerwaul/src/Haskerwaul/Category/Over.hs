@@ -1,3 +1,4 @@
+{-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableInstances #-}
 
 module Haskerwaul.Category.Over where
@@ -5,8 +6,6 @@ module Haskerwaul.Category.Over where
 import Data.Constraint.Deferrable ((:~:) (..))
 import Data.Kind (Type)
 import Data.Proxy (Proxy (..))
-import Haskerwaul.Bifunctor
-import Haskerwaul.Isomorphism
 import Haskerwaul.Object
 import Haskerwaul.Topos.Elementary
 import Haskerwaul.Transformation.Dinatural
@@ -21,7 +20,7 @@ import Haskerwaul.Transformation.Dinatural
 -- - [Wikipedia](https://en.wikipedia.org/wiki/Comma_category#Slice_category)
 newtype Over (c :: ok -> ok -> Type) (x :: ok) a b = Over (a `c` x -> b `c` x)
 
-type instance Ob (Over c x) = Ob c
+type instance Ob (Over c _) = Ob c
 
 instance (Semigroupoid c) => Magma (DinaturalTransformation (->)) Procompose (Over c x) where
   op = DT (\(Procompose (Over f) (Over g)) -> Over (f . g))

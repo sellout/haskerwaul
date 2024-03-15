@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableInstances #-}
-{-# OPTIONS_GHC -Wwarn #-}
 
 -- | This wraps the laws from Haskerwaul in a way that makes them testable with
 --   Hedgehog.
@@ -68,7 +68,7 @@ showType = fromString . show . typeRep
 
 semigroup_laws ::
   forall c t a x y.
-  (Typeable c, Eq y, Show y) =>
+  (Eq y, Show y) =>
   PropertyName ->
   SemigroupLaws c t a ->
   (t (t a a) a `c` a -> x `HH` y) ->
@@ -83,7 +83,7 @@ semigroup_laws label law translate display genX =
 
 commutativeMagma_laws ::
   forall c t a x y.
-  (Typeable c, Eq y, Show y) =>
+  (Eq y, Show y) =>
   PropertyName ->
   CommutativeMagmaLaws c t a ->
   (t a a `c` a -> x `HH` y) ->
@@ -117,7 +117,7 @@ unitalMagma_laws label law transL transR dispL dispR genX1 genX2 =
   ]
 
 band_laws ::
-  (Typeable c, Eq y, Show y) =>
+  (Eq y, Show y) =>
   PropertyName ->
   BandLaws c a ->
   (Prod c (Prod c a a) a `c` a -> x `HH` y) ->
@@ -134,7 +134,7 @@ band_laws label law transA transI dispA genX genY =
        ]
 
 monoid_laws ::
-  (Typeable c, Eq y, Show y) =>
+  (Eq y, Show y) =>
   PropertyName ->
   MonoidLaws c t a ->
   (t (t a a) a `c` a -> x `HH` y) ->
@@ -152,7 +152,7 @@ monoid_laws label law trans transL transR display dispL dispR genX genX1 genX2 =
     <> unitalMagma_laws label (unitalMagma law) transL transR dispL dispR genX1 genX2
 
 commutativeSemigroup_laws ::
-  (Typeable c, Eq y, Show y) =>
+  (Eq y, Show y) =>
   PropertyName ->
   CommutativeSemigroupLaws c t a ->
   (t a a `c` a -> x `HH` y) ->
@@ -167,7 +167,7 @@ commutativeSemigroup_laws label law trans transA display dispA genX genX0 =
     <> semigroup_laws label (CommutativeSemigroup.semigroup law) transA dispA genX0
 
 commutativeMonoid_laws ::
-  (Typeable c, Eq y, Show y) =>
+  (Eq y, Show y) =>
   PropertyName ->
   CommutativeMonoidLaws c t a ->
   (t a a `c` a -> x `HH` y) ->
@@ -188,7 +188,7 @@ commutativeMonoid_laws label law trans transA transL transR display dispA dispL 
     <> monoid_laws label (CommutativeMonoid.monoid law) transA transL transR dispA dispL dispR genX0 genX1 genX2
 
 leftRegularBand_laws ::
-  (Typeable c, Eq y, Show y) =>
+  (Eq y, Show y) =>
   PropertyName ->
   LeftRegularBandLaws c a ->
   (Prod c (Prod c a a) a `c` a -> x `HH` y) ->
@@ -236,7 +236,7 @@ rightShelf_laws label law trans display gen =
   ]
 
 graphicMonoid_laws ::
-  (Typeable c, Eq y, Show y) =>
+  (Eq y, Show y) =>
   PropertyName ->
   GraphicMonoidLaws c a ->
   (Prod c (Prod c a a) a `c` a -> x `HH` y) ->
@@ -263,7 +263,7 @@ graphicMonoid_laws label law transA transG transI trans transL transR dispA disp
     <> monoid_laws label (GraphicMonoid.monoid law) transA transL transR dispA dispL dispR genX genX1 genX2
 
 semilattice_laws ::
-  (Typeable c, Eq y, Show y) =>
+  (Eq y, Show y) =>
   PropertyName ->
   SemilatticeLaws c a ->
   (Prod c a a `c` a -> x `HH` y) ->
@@ -280,7 +280,7 @@ semilattice_laws label law trans transA transY display dispA genX genX0 genY =
     <> band_laws label (Semilattice.band law) transA transY dispA genX0 genY
 
 boundedSemilattice_laws ::
-  (Typeable c, Eq y, Show y) =>
+  (Eq y, Show y) =>
   PropertyName ->
   BoundedSemilatticeLaws c a ->
   (Prod c a a `c` a -> x `HH` y) ->
@@ -307,7 +307,7 @@ boundedSemilattice_laws label law trans transA transL transR transI transG displ
     <> semilattice_laws label (semilattice law) trans transA transI display dispA genX genX0 genY
 
 duoid_laws ::
-  (Typeable c, Eq y, Show y) =>
+  (Eq y, Show y) =>
   PropertyName ->
   DuoidLaws c di st a ->
   (di (di a a) a `c` a -> x `HH` y) ->
@@ -492,7 +492,7 @@ boundedLattice_laws label law trans transA transI transL transR transG display d
 --  __TODO__: Missing a lot of intermediate types here.
 rig_laws ::
   forall c t a x x0 x1 x2 y.
-  (c ~ (->), BraidedMonoidalCategory c t, Typeable c, Eq y, Show y) =>
+  (c ~ (->), BraidedMonoidalCategory c t, Eq y, Show y) =>
   PropertyName ->
   RigLaws c t a ->
   (t a a `c` a -> x `HH` y) ->
@@ -543,7 +543,7 @@ lowerDT post morphism = HH (post . runDT morphism)
 
 semigroupoid_laws ::
   forall ok (c :: ok -> ok -> Type) (a :: ok) (b :: ok) y.
-  (Typeable ok, Eq y, Show y) =>
+  (Eq y, Show y) =>
   PropertyName ->
   SemigroupoidLaws c ->
   (a `c` b -> y) ->
@@ -555,7 +555,7 @@ semigroupoid_laws label law post =
 
 category_laws ::
   forall ok (c :: ok -> ok -> Type) (a :: ok) (b :: ok) y.
-  (Typeable ok, Eq y, Show y) =>
+  (Eq y, Show y) =>
   PropertyName ->
   CategoryLaws c ->
   (a `c` b -> y) ->
@@ -571,7 +571,7 @@ category_laws label law post =
 
 semigroupalCategory_laws ::
   forall ok (c :: ok -> ok -> Type) (t :: ok -> ok -> ok) (a :: ok) (b :: ok) m n o x3 x4 y.
-  (Typeable ok, Ob c m, Ob c n, Ob c o, Eq y, Show y, Eq x3, Show x3, Eq x4, Show x4) =>
+  (Ob c m, Ob c n, Ob c o, Eq y, Show y, Eq x3, Show x3, Eq x4, Show x4) =>
   PropertyName ->
   SemigroupalCategoryLaws c t ->
   (t m (t n o) `c` t m (t n o) -> x3 `HH` x3) ->

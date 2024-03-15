@@ -1,4 +1,5 @@
 {-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE TypeFamilies #-}
 
 module Haskerwaul.Transformation.Dinatural where
 
@@ -14,7 +15,7 @@ import Haskerwaul.Object
 -- - [Wikipedia](https://en.wikipedia.org/wiki/Dinatural_transformation)
 newtype DinaturalTransformation d f g = DT {runDT :: forall a b. f a b `d` g a b}
 
-type instance Ob (DinaturalTransformation d) = All
+type instance Ob (DinaturalTransformation _) = All
 
 -- | Like `FTensor`, but lifted from the target category to a bifunctor.
 --

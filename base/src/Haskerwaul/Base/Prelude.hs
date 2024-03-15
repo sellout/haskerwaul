@@ -1,4 +1,5 @@
 {-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE TypeFamilies #-}
 
 -- | This is intended to be a /mostly/ drop-in replacement for "Prelude", but
 --   with all the definitions in terms of things from Haskerwaul to improve

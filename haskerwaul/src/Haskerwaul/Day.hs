@@ -1,4 +1,5 @@
 {-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableInstances #-}
 
 module Haskerwaul.Day where
@@ -80,10 +81,7 @@ instance
   (c ~ (->), d ~ (->), LaxMonoidalFunctor c ct d dt f) =>
   Semigroup (NaturalTransformation c d) (Day c ct dt) f
 
-instance
-  (d ~ (->), Semigroupoid c, Functor c d f, Functor c d g) =>
-  Functor c d (Day c ct dt f g)
-  where
+instance (d ~ (->), Semigroupoid c) => Functor c d (Day c ct dt f g) where
   map f = \(Day t fn) -> Day t (f . fn)
 
 instance

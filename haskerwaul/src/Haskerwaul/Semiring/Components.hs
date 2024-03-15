@@ -3,10 +3,13 @@
 --   these types for classes defined in "base".
 --
 --  __NB__: A lot of these instances could be potentially simplified like
---          >>> instance Base.Num a => Base.Semigroup (Additive a) where
---          >>>   Add x <> Add y = Add (x Base.+ y)
---          >>> instance Base.Num a => Base.Semigroup (Multiplicative a) where
---          >>>   Multiply x <> Multiply y = Multiply (x Base.* y)
+--      >>> :{
+--        instance Base.Num a => Base.Semigroup (Additive a) where
+--          Add x <> Add y = Add (x Base.+ y)
+--        instance Base.Num a => Base.Semigroup (Multiplicative a) where
+--          Multiply x <> Multiply y = Multiply (x Base.* y)
+--      :}
+--
 --          but we don't expect `Prelude.Num` instances to be lawful in any way,
 --          so we avoid it.
 module Haskerwaul.Semiring.Components where

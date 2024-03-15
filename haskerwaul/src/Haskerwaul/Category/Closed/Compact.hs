@@ -1,3 +1,4 @@
+{-# LANGUAGE QuantifiedConstraints #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE UndecidableInstances #-}
 {-# LANGUAGE UndecidableSuperClasses #-}
@@ -11,17 +12,15 @@ module Haskerwaul.Category.Closed.Compact
   )
 where
 
-import Data.Constraint ((\\))
-import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Monoidal.Closed
 import Haskerwaul.Category.Monoidal.Rigid
 import Haskerwaul.Category.Monoidal.Symmetric
 import Haskerwaul.Category.Monoidal.Traced
-import Haskerwaul.Isomorphism
 import Haskerwaul.Object
 import Haskerwaul.Object.Invertible
 
 -- |
+--
 -- = references
 --
 -- - [nLab](https://ncatlab.org/nlab/show/compact+closed+category)
