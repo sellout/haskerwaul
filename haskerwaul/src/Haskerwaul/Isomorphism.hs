@@ -6,7 +6,7 @@ module Haskerwaul.Isomorphism where
 import Data.Proxy (Proxy (..))
 import Data.Type.Equality ((:~:) (..))
 import Haskerwaul.Bifunctor
-import Haskerwaul.Category.Monoidal'
+import Haskerwaul.Category.MonoidalUnit
 import Haskerwaul.Magma.Unital
 import Haskerwaul.Object
 import Haskerwaul.Semigroupoid

@@ -8,7 +8,7 @@ module Haskerwaul.Category.Monoidal
   ( module Haskerwaul.Category.Monoidal,
 
     -- * extended modules
-    module Haskerwaul.Category.Monoidal',
+    module Haskerwaul.Category.MonoidalUnit,
     module Haskerwaul.Category.Semigroupal,
   )
 where
@@ -27,7 +27,7 @@ import Data.Type.Equality ((:~:) (..))
 #endif
 import qualified Data.Void as Base
 import Haskerwaul.Bifunctor
-import Haskerwaul.Category.Monoidal'
+import Haskerwaul.Category.MonoidalUnit
 import Haskerwaul.Category.Semigroupal
 import Haskerwaul.Constraint
 import Haskerwaul.Isomorphism

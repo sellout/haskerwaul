@@ -10,7 +10,7 @@ module Haskerwaul.Functor.Monoidal.Strong
 where
 
 import Data.Proxy (Proxy)
-import Haskerwaul.Category.Monoidal'
+import Haskerwaul.Category.MonoidalUnit
 import Haskerwaul.Functor.Monoidal.Lax
 import Haskerwaul.Isomorphism
 import Haskerwaul.Object

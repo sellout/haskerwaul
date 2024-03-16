@@ -76,7 +76,7 @@ module Haskerwaul
     module Haskerwaul.Category.Monoidal.Rigid.Right,
     module Haskerwaul.Category.Monoidal.Symmetric,
     module Haskerwaul.Category.Monoidal.Traced,
-    module Haskerwaul.Category.Monoidal',
+    module Haskerwaul.Category.MonoidalUnit,
 
     -- * cones
     module Haskerwaul.Cocone,
@@ -365,7 +365,6 @@ import Haskerwaul.Category.Hypergraph
 import Haskerwaul.Category.Kleisli
 import Haskerwaul.Category.LocallyCartesian
 import Haskerwaul.Category.Monoidal
-import Haskerwaul.Category.Monoidal'
 import Haskerwaul.Category.Monoidal.Balanced
 import Haskerwaul.Category.Monoidal.Braided
 import Haskerwaul.Category.Monoidal.Cartesian
@@ -379,6 +378,7 @@ import Haskerwaul.Category.Monoidal.Rigid.Left
 import Haskerwaul.Category.Monoidal.Rigid.Right
 import Haskerwaul.Category.Monoidal.Symmetric
 import Haskerwaul.Category.Monoidal.Traced
+import Haskerwaul.Category.MonoidalUnit
 import Haskerwaul.Category.Opposite
 import Haskerwaul.Category.Over
 import Haskerwaul.Category.Pointed

@@ -10,7 +10,6 @@ module Haskerwaul.Category.Monoidal.Traced
   )
 where
 
-import Haskerwaul.Category.Monoidal'
 import Haskerwaul.Category.Monoidal.Balanced
 import Haskerwaul.Object
 

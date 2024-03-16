@@ -6,7 +6,7 @@ module Haskerwaul.Magma.Unital
   ( module Haskerwaul.Magma.Unital,
 
     -- * extended modules
-    module Haskerwaul.Category.Monoidal',
+    module Haskerwaul.Category.MonoidalUnit,
     module Haskerwaul.Magma,
   )
 where
@@ -20,7 +20,7 @@ import qualified Data.Monoid as Base
 import Data.Proxy (Proxy (..))
 import qualified Data.Void as Base
 import Data.Word (Word, Word16, Word32, Word64, Word8)
-import Haskerwaul.Category.Monoidal'
+import Haskerwaul.Category.MonoidalUnit
 import Haskerwaul.Constraint
 import Haskerwaul.Lattice.Components
 import Haskerwaul.Magma

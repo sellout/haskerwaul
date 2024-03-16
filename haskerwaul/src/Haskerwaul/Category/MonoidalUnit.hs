@@ -4,7 +4,7 @@
 {-# LANGUAGE UndecidableSuperClasses #-}
 
 -- | This module exists to break the cycle with "Haskerwaul.Magma.Unital".
-module Haskerwaul.Category.Monoidal' where
+module Haskerwaul.Category.MonoidalUnit where
 
 import Data.Constraint ((:-))
 import Data.Either (Either (..))

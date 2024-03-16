@@ -16,7 +16,7 @@ import Data.Kind (Type)
 #if MIN_VERSION_base(4, 17, 0)
 import Data.Type.Equality (type (~))
 #endif
-import Haskerwaul.Category.Monoidal'
+import Haskerwaul.Category.MonoidalUnit
 import Haskerwaul.Isomorphism
 import Haskerwaul.Object
 import Haskerwaul.Object.Dualizable

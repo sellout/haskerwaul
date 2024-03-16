@@ -19,7 +19,7 @@ import Data.Type.Equality ((:~:) (..), type (~))
 #else
 import Data.Type.Equality ((:~:) (..))
 #endif
-import Haskerwaul.Category.Monoidal'
+import Haskerwaul.Category.MonoidalUnit
 import Haskerwaul.Constraint
 import Haskerwaul.Functor
 import Haskerwaul.Monoid

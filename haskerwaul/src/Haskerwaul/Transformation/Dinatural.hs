@@ -3,7 +3,7 @@
 
 module Haskerwaul.Transformation.Dinatural where
 
-import Haskerwaul.Category.Monoidal'
+import Haskerwaul.Category.MonoidalUnit
 import Haskerwaul.Constraint
 import Haskerwaul.Object
 

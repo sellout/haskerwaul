@@ -223,7 +223,7 @@ library
     Haskerwaul.Category.Monoidal.Rigid.Right
     Haskerwaul.Category.Monoidal.Symmetric
     Haskerwaul.Category.Monoidal.Traced
-    Haskerwaul.Category.Monoidal'
+    Haskerwaul.Category.MonoidalUnit
     Haskerwaul.Category.Opposite
     Haskerwaul.Category.Over
     Haskerwaul.Category.Pointed
