@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeFamilies #-}
@@ -16,6 +17,9 @@ import Data.Constraint (Dict (..), mapDict, (:-) (..))
 import qualified Data.Functor as Base
 import Data.Functor.Compose (Compose (..))
 import Data.Functor.Const (Const (..))
+#if MIN_VERSION_base(4, 17, 0)
+import Data.Type.Equality (type (~))
+#endif
 import Haskerwaul.Object
 import Haskerwaul.Semigroupoid
 
@@ -62,7 +66,10 @@ instance Functor (:-) (->) Dict where
 --   you're trying to define an instance where the source and destination
 --   categories are both @(->)@, you should be instantiating `Base.Functor`
 --   directly, and allow this instance to lift it into Haskerwaul.
-instance {-# OVERLAPPABLE #-} (Base.Functor f) => Functor (->) (->) f where
+--
+--  __NB__: This instance can be @INCOHERENT@ with an instance like @`Functor` c
+--          (->) Foo@, in which case we prefer the other instance.
+instance {-# INCOHERENT #-} (Base.Functor f) => Functor (->) (->) f where
   map = Base.fmap
 
 -- | The constant functor to a particular object in the target category.

@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeFamilies #-}
@@ -29,7 +30,11 @@ import safe Data.Eq (Eq)
 import safe Data.Kind (Type)
 import safe Data.Proxy (Proxy (..))
 import safe Data.String (String, fromString)
+#if MIN_VERSION_base(4, 17, 0)
+import safe Data.Type.Equality ((:~:) (..), type (~))
+#else
 import safe Data.Type.Equality ((:~:) (..))
+#endif
 import safe Data.Typeable (Typeable, typeRep)
 import safe Haskerwaul.Band.Laws as Band
 import safe Haskerwaul.Band.LeftRegular.Laws as LeftRegularBand

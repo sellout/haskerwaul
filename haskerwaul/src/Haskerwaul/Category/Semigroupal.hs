@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableInstances #-}
@@ -14,6 +15,9 @@ where
 import Data.Constraint (Class (..), Dict (..), refl, trans, (***), (:-) (..), (:=>) (..))
 import Data.Either (Either (..))
 import Data.Proxy (Proxy (..))
+#if MIN_VERSION_base(4, 17, 0)
+import Data.Type.Equality (type (~))
+#endif
 import Haskerwaul.Bifunctor
 import Haskerwaul.Category
 import Haskerwaul.Constraint

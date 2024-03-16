@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableInstances #-}
@@ -14,6 +15,9 @@ where
 import Data.Bool (Bool)
 import Data.Int (Int, Int16, Int32, Int64, Int8)
 import Data.Proxy (Proxy (..))
+#if MIN_VERSION_base(4, 17, 0)
+import Data.Type.Equality (type (~))
+#endif
 import Data.Word (Word, Word16, Word32, Word64, Word8)
 import Haskerwaul.Lattice.Orthocomplemented
 import Haskerwaul.Negation

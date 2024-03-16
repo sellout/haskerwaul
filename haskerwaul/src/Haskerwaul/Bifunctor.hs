@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeFamilies #-}
@@ -10,6 +11,9 @@ import qualified Data.Bifunctor as Base
 import Data.Constraint (Class (..), trans, (***), (:-) (..), (:=>) (..), (\\))
 import Data.Functor.Const (Const (..))
 import Data.Proxy (Proxy (..))
+#if MIN_VERSION_base(4, 17, 0)
+import Data.Type.Equality (type (~))
+#endif
 import Haskerwaul.Category
 import Haskerwaul.Constraint
 import Haskerwaul.Object
@@ -125,7 +129,7 @@ instance
   Semigroup c t (Const a b)
 
 instance
-  (c ~ (->), Bifunctor c c c t, UnitalMagma c t a) =>
+  (c ~ (->), MonoidalCategory' c t, Bifunctor c c c t, UnitalMagma c t a) =>
   UnitalMagma c t (Const a b)
   where
   unit p = Const . unit p
@@ -172,7 +176,7 @@ instance
   Semigroup c t (BConst a b d)
 
 instance
-  (c ~ (->), Bifunctor c c c t, UnitalMagma c t a) =>
+  (c ~ (->), MonoidalCategory' c t, Bifunctor c c c t, UnitalMagma c t a) =>
   UnitalMagma c t (BConst a b d)
   where
   unit p = BConst . unit p

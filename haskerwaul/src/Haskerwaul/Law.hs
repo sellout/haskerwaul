@@ -48,9 +48,9 @@ data Law c (relation :: (Type -> Type -> Type) -> Type -> Constraint) a b = Law
 --   wrappers and unwrappers, like `NT`/`runNT`, `Opposite`/`opposite`, etc. and
 --   they can generally be composed to move across vast spaces of __Cat__.
 checkLaw ::
-  (ElementaryTopos c, rel c y, HomogeneousRelation' c y, Ob c x) =>
+  (ElementaryTopos c, relation c y, HomogeneousRelation' c y, Ob c x) =>
   (a `d` b -> x `c` y) ->
-  Law d rel a b ->
+  Law d relation a b ->
   x `c` Class c
 checkLaw translate (Law exp act) =
   rel . bimap (translate exp) (translate act) . diagonal

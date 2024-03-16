@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableInstances #-}
@@ -22,6 +23,9 @@ import Data.Constraint
   )
 import Data.Kind (Type)
 import qualified Data.Tuple as Base
+#if MIN_VERSION_base(4, 17, 0)
+import Data.Type.Equality (type (~))
+#endif
 import Haskerwaul.Category.Monoidal.Symmetric
 import Haskerwaul.Constraint
 import Haskerwaul.Object
@@ -75,11 +79,13 @@ instance CartesianMonoidalCategory (->) where
   exr = Base.snd
   diagonal x = (x, x)
 
-instance
-  (d ~ (->), CartesianMonoidalCategory d) =>
-  CartesianMonoidalCategory (NaturalTransformation c d)
-  where
-  type Prod (NaturalTransformation c d) = FTensor (Prod d)
+-- |
+--
+--  __TODO__: Generalizing this to @(d `~` (`->`), `CartesianMonoidalCategory` d) =>@
+--            leads to conflicting family instances with the
+--            @`NaturalTransformation` c (`:-`)@ instance below.
+instance CartesianMonoidalCategory (NaturalTransformation c (->)) where
+  type Prod (NaturalTransformation c (->)) = FTensor (,)
   exl = NT (exl . lowerFTensor)
   exr = NT (exr . lowerFTensor)
   diagonal = NT (FTensor . diagonal)

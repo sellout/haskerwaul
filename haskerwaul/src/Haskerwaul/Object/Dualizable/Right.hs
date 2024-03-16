@@ -25,7 +25,7 @@ class (MonoidalCategory c t, Ob c a, Ob c (RightDual c t a)) => RightDualizable 
 
 rightDualMorphism ::
   forall c t a b.
-  (MonoidalCategory c t, RightDualizable c t a, RightDualizable c t b) =>
+  (RightDualizable c t a, RightDualizable c t b) =>
   Proxy t ->
   a `c` b ->
   RightDual c t b `c` RightDual c t a

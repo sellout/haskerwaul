@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeFamilies #-}
@@ -17,6 +18,9 @@
 module Haskerwaul.Base.Prelude where
 
 import Data.Proxy (Proxy (..))
+#if MIN_VERSION_base(4, 17, 0)
+import Data.Type.Equality (type (~))
+#endif
 import qualified Haskerwaul as H
 
 -- | Generalization of `Prelude.&&`.

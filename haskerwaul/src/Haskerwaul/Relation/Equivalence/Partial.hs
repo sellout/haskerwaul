@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableInstances #-}
@@ -13,6 +14,9 @@ where
 
 import Data.Functor.Const (Const)
 import Data.Functor.Identity (Identity)
+#if MIN_VERSION_base(4, 17, 0)
+import Data.Type.Equality (type (~))
+#endif
 import Data.Void (Void)
 import Haskerwaul.Lattice.Components
 import Haskerwaul.Object

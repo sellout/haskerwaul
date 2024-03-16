@@ -1,7 +1,16 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableInstances #-}
+
+-- __NB__: Newer versions of GHC require more constraints in some cases to avoid
+--        “loopy” resolution issues. These constraints are seen as redundant on
+--         older compilers.
+#if MIN_VERSION_GLASGOW_HASKELL(9, 6, 0, 0)
+#else
+{-# OPTIONS_GHC -Wno-redundant-constraints #-}
+#endif
 
 module Haskerwaul.Category.Opposite where
 
@@ -13,13 +22,16 @@ import Data.Functor.Identity (Identity (..))
 import Data.Kind (Type)
 import Data.Proxy (Proxy (..))
 import qualified Data.Tuple as Base
+#if MIN_VERSION_base(4, 17, 0)
+import Data.Type.Equality ((:~:) (..), type (~))
+#else
 import Data.Type.Equality ((:~:) (..))
+#endif
 import qualified Data.Void as Base
 import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Monoidal.Balanced
 import Haskerwaul.Category.Monoidal.Cartesian
 import Haskerwaul.Constraint
-import Haskerwaul.Functor
 import Haskerwaul.Isomorphism
 import Haskerwaul.Monad
 import Haskerwaul.Object
@@ -155,7 +167,13 @@ instance (Semigroupoid c) => Bifunctor (Opposite c) c (->) c where
 --   -- bimap :: b :- a -> c :- d -> (a :=> c) :- (b :=> d)
 --   bimap f g = trans g (trans ins (opposite f))
 
-instance {-# OVERLAPPABLE #-} (Monad' (Opposite (->)) m) => Monad (Opposite (->)) m where
+-- __NB__: The equivalent context @(Monad' (->) m)@ leads to a deduction failure.
+instance
+  ( Monoid (NaturalTransformation (Opposite (->)) (Opposite (->))) Compose m,
+    Endofunctor (Opposite (->)) m
+  ) =>
+  Monad (Opposite (->)) m
+  where
   pure = runNT @_ @(Opposite (->)) (unit (Proxy :: Proxy Compose)) . Opposite runIdentity
   flatten = runNT @_ @(Opposite (->)) op . Opposite getCompose
 
@@ -182,7 +200,7 @@ instance CartesianMonoidalCategory (Opposite (->)) where
 
 instance
   {-# OVERLAPPABLE #-}
-  (MonoidalCategory c t, u ~ Unit c t) =>
+  (MonoidalCategory c t, TOb (Ob c) t, u ~ Unit c t) =>
   Magma (Opposite c) t u
   where
   op = Opposite (from rightIdentity)

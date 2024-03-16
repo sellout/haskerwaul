@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeFamilies #-}
@@ -17,6 +18,9 @@ import Data.Int (Int, Int16, Int32, Int64, Int8)
 import Data.Ratio (Ratio)
 import Data.Void (Void)
 import Data.Word (Word, Word16, Word32, Word64, Word8)
+#if MIN_VERSION_base(4, 17, 0)
+import Data.Type.Equality (type (~))
+#endif
 import qualified GHC.Real as Base
 import Haskerwaul.Bifunctor
 import Haskerwaul.Isomorphism

@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeFamilies #-}
@@ -13,7 +14,11 @@ import Data.Functor.Const (Const (..))
 import Data.Functor.Identity (Identity (..))
 import Data.Kind (Type)
 import Data.Proxy (Proxy (..))
+#if MIN_VERSION_base(4, 17, 0)
+import Data.Type.Equality ((:~:) (..), type (~))
+#else
 import Data.Type.Equality ((:~:) (..))
+#endif
 import Haskerwaul.Category.Monoidal'
 import Haskerwaul.Constraint
 import Haskerwaul.Functor

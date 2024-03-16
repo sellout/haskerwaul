@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeFamilies #-}
@@ -17,6 +18,9 @@ import Data.Constraint ((\\))
 import Data.Kind (Type)
 import Data.Proxy (Proxy (..))
 import qualified Data.Tuple as Base
+#if MIN_VERSION_base(4, 17, 0)
+import Data.Type.Equality (type (~))
+#endif
 import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Closed
 import Haskerwaul.Category.Kleisli

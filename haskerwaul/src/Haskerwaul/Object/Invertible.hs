@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableInstances #-}
@@ -12,6 +13,9 @@ module Haskerwaul.Object.Invertible
 where
 
 import Data.Kind (Type)
+#if MIN_VERSION_base(4, 17, 0)
+import Data.Type.Equality (type (~))
+#endif
 import Haskerwaul.Category.Monoidal'
 import Haskerwaul.Isomorphism
 import Haskerwaul.Object

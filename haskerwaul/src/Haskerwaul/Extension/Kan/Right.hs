@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeFamilies #-}
@@ -9,6 +10,9 @@ module Haskerwaul.Extension.Kan.Right
 where
 
 import Data.Constraint ((\\))
+#if MIN_VERSION_base(4, 17, 0)
+import Data.Type.Equality (type (~))
+#endif
 import Haskerwaul.Functor
 import Haskerwaul.Object
 import Haskerwaul.Semigroupoid

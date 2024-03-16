@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeFamilies #-}
@@ -16,6 +17,9 @@ import Data.Constraint ((\\))
 import Data.Functor.Compose (Compose)
 import Data.Functor.Identity (Identity (..))
 import Data.Proxy (Proxy (..))
+#if MIN_VERSION_base(4, 17, 0)
+import Data.Type.Equality (type (~))
+#endif
 import Haskerwaul.Bimonoid
 import Haskerwaul.Category.Duoidal
 import Haskerwaul.Category.Monoidal.Braided

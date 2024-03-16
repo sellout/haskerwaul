@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeFamilies #-}
@@ -16,6 +17,9 @@ where
 
 import Data.Constraint ((\\))
 import Data.Proxy (Proxy (..))
+#if MIN_VERSION_base(4, 17, 0)
+import Data.Type.Equality (type (~))
+#endif
 import Haskerwaul.Bifunctor
 import Haskerwaul.Isomorphism
 import Haskerwaul.Lattice
@@ -49,7 +53,7 @@ class
 --             @`ElementaryTopos` c@?
 canonicalOrderFromSemilattice ::
   forall c a.
-  (ElementaryTopos c, Ob c a, EquivalenceRelation c a, Semilattice c (Prod c) a) =>
+  (ElementaryTopos c, EquivalenceRelation c a, Semilattice c (Prod c) a) =>
   BinaryRelation c a a
 canonicalOrderFromSemilattice =
   equiv . first @c p op . to assoc . second p (diagonal @_ @c)

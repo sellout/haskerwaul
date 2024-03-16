@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeFamilies #-}
@@ -8,6 +9,9 @@ module Haskerwaul.Day where
 import Data.Constraint (Dict (..), (:-) (..))
 import Data.Either (Either (..))
 import Data.Proxy (Proxy (..))
+#if MIN_VERSION_base(4, 17, 0)
+import Data.Type.Equality (type (~))
+#endif
 import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Closed.Cartesian
 import Haskerwaul.Category.Monoidal.Closed

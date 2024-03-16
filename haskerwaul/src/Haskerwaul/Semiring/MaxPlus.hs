@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# OPTIONS_GHC -Wno-orphans #-}
@@ -10,6 +11,9 @@ module Haskerwaul.Semiring.MaxPlus
   )
 where
 
+#if MIN_VERSION_base(4, 17, 0)
+import Data.Type.Equality (type (~))
+#endif
 import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Monoidal
 import Haskerwaul.Hemiring
@@ -42,7 +46,13 @@ instance
 
 -- | With a `BoundedLattice`, we actually end up with an `IdempotentRig`.
 instance
-  (c ~ (->), MonoidalCategory c t, Hemiring c t a, BoundedLattice c t a) =>
+  ( c ~ (->),
+    -- NB: Needed in GHC 9.8 to avoid -Wloopy-superclass-solve
+    MonoidalCategory' c t,
+    MonoidalCategory c t,
+    Hemiring c t a,
+    BoundedLattice c t a
+  ) =>
   UnitalMagma c t (Additive (Join a))
   where
   unit t = Add . unit t
@@ -58,7 +68,13 @@ instance
   Semigroup c t (Multiplicative (Join a))
 
 instance
-  (c ~ (->), MonoidalCategory c t, Hemiring c t a, Lattice c t a) =>
+  ( c ~ (->),
+    -- NB: Needed in GHC 9.8 to avoid -Wloopy-superclass-solve
+    MonoidalCategory' c t,
+    MonoidalCategory c t,
+    Hemiring c t a,
+    Lattice c t a
+  ) =>
   UnitalMagma c t (Multiplicative (Join a))
   where
   unit t = Multiply . Join . zero t

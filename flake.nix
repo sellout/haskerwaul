@@ -79,9 +79,63 @@
               ##       standard overlay.
               (flaky.overlays.haskell-dependencies final prev)
               (self.overlays.haskell final prev)
+              (self.overlays.haskellDependencies final prev)
             ]);
 
         haskell = concat.lib.haskellOverlay cabalPackages;
+
+        haskellDependencies = final: prev: hfinal: hprev:
+          (
+            if nixpkgs.lib.versionAtLeast hprev.ghc.version "9.8.0"
+            then let
+              hspecVersion = "2_11_7";
+            in {
+              ## The default versions in Nixpkgs 23.11 don’t support GHC 9.8.
+              doctest = hfinal.doctest_0_22_2;
+              hedgehog = hfinal."hedgehog_1_4";
+              hedgehog-fn = final.haskell.lib.doJailbreak hprev.hedgehog-fn;
+              hspec = hfinal."hspec_${hspecVersion}";
+              hspec-core = hfinal."hspec-core_${hspecVersion}";
+              hspec-discover = hfinal."hspec-discover_${hspecVersion}";
+              hspec-meta = hfinal."hspec-meta_${hspecVersion}";
+              semigroupoids = hfinal.semigroupoids_6_0_0_1;
+              tagged = hfinal.tagged_0_8_8;
+              th-abstraction = hfinal.th-abstraction_0_6_0_0;
+              ## `Control.Monad.Trans.List` is gone with GHC 9.8, but
+              ## `lifted-base` hasn’t updated its tests to avoid it.
+              lifted-base = final.haskell.lib.dontCheck hprev.lifted-base;
+              ## The default versions in Nixpkgs 23.11 don’t support
+              ## th-abstraction 0.6.
+              aeson = final.haskell.lib.doJailbreak hprev.aeson;
+              bifunctors = hfinal.bifunctors_5_6_1;
+              free = hfinal.free_5_2;
+            }
+            else if nixpkgs.lib.versionAtLeast hprev.ghc.version "8.10.0"
+            then {}
+            else
+              {
+                ## NB: Fails a single test case under GHC 8.8.4.
+                doctest = final.haskell.lib.dontCheck hprev.doctest;
+                ## NB: Tests fail to build under GHC 8.8.4.
+                vector = final.haskell.lib.dontCheck hprev.vector;
+              }
+              // (
+                if final.system == "i686-linux"
+                then {
+                  ## NB: Fails `prop_double_assoc` under GHC 8.8.4 on i686-linux.
+                  QuickCheck = final.haskell.lib.dontCheck hprev.QuickCheck;
+                }
+                else {}
+              )
+          )
+          // (
+            if final.system == "i686-linux"
+            then {
+              enummapset = final.haskell.lib.dontCheck hprev.enummapset;
+              sqlite-simple = final.haskell.lib.dontCheck hprev.sqlite-simple;
+            }
+            else {}
+          );
       };
 
       homeConfigurations =

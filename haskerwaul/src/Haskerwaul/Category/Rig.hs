@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE GADTs #-}
 {-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeApplications #-}
@@ -15,6 +16,9 @@ where
 import Data.Constraint ((\\))
 import Data.Either (Either (..))
 import Data.Proxy (Proxy (..))
+#if MIN_VERSION_base(4, 17, 0)
+import Data.Type.Equality (type (~))
+#endif
 import qualified Data.Void as Base
 import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Rig.ColaxDistributive
@@ -63,8 +67,8 @@ instance RigCategory (->) (,) Either where
 
 -- * additional tensors
 
--- | Specialized to @`These` (->) (,) `Either` `Void`@, this is like `Either`,
---   and specialized to @`These` (->) (,) `Either` ()@, this is like
+-- | Specialized to @`These` (,) `Either` `Void`@, this is like `Either`,
+--   and specialized to @`These` (,) `Either` ()@, this is like
 --  `Data.These.These`. Other choices for @x@ provide additional variants, and
 --   there are corresponding tensors in any `RigCategory`.
 --

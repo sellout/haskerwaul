@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableInstances #-}
@@ -19,7 +20,11 @@ import qualified Data.Either as Base
 import Data.Functor.Const (Const (..))
 import Data.Proxy (Proxy (..))
 import qualified Data.Tuple as Base
+#if MIN_VERSION_base(4, 17, 0)
+import Data.Type.Equality ((:~:) (..), type (~))
+#else
 import Data.Type.Equality ((:~:) (..))
+#endif
 import qualified Data.Void as Base
 import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Monoidal'

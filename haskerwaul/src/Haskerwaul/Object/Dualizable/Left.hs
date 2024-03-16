@@ -25,7 +25,7 @@ class (MonoidalCategory c t, Ob c a, Ob c (LeftDual c t a)) => LeftDualizable (c
 
 leftDualMorphism ::
   forall c t a b.
-  (MonoidalCategory c t, LeftDualizable c t a, LeftDualizable c t b) =>
+  (LeftDualizable c t a, LeftDualizable c t b) =>
   Proxy t ->
   a `c` b ->
   LeftDual c t b `c` LeftDual c t a

@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeFamilies #-}
@@ -6,7 +7,11 @@ module Haskerwaul.Span where
 
 import Data.Constraint ((\\))
 import Data.Proxy (Proxy (..))
+#if MIN_VERSION_base(4, 17, 0)
+import Data.Type.Equality ((:~:) (..), type (~))
+#else
 import Data.Type.Equality ((:~:) (..))
+#endif
 import Haskerwaul.Category.Monoidal.Cartesian
 import Haskerwaul.Constraint
 import Haskerwaul.Object

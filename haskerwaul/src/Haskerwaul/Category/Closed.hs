@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableInstances #-}
@@ -13,6 +14,9 @@ where
 
 import Data.Constraint ((:-), (:=>))
 import Data.Kind (Type)
+#if MIN_VERSION_base(4, 17, 0)
+import Data.Type.Equality (type (~))
+#endif
 import Haskerwaul.Category
 import Haskerwaul.Category.Kleisli
 import Haskerwaul.Category.Opposite
@@ -43,11 +47,20 @@ instance ClosedCategory (->) where
 --   whose arrows are `NaturalTransformation`.
 data ExpTransformation (c :: Type -> Type -> Type) f g a = ET {runET :: f a `c` g a}
 
+#if MIN_VERSION_GLASGOW_HASKELL(9, 4, 0, 0)
+-- |
+--
+--  __TODO__: GHC >= 9.4 complains about conflicting family instances for the
+--            more general instance, so we restrict it on newer compilers.
+instance ClosedCategory (NaturalTransformation c (->)) where
+  type InternalHom (NaturalTransformation c (->)) = ExpTransformation (->)
+#else
 instance
   (ClosedCategory d, BOb (FOb (Ob c) (Ob d)) (FOb (Ob c) (Ob d)) (FOb (Ob c) (Ob d)) (ExpTransformation (InternalHom d))) =>
   ClosedCategory (NaturalTransformation c (d :: Type -> Type -> Type))
   where
   type InternalHom (NaturalTransformation c d) = ExpTransformation (InternalHom d)
+#endif
 
 instance ClosedCategory (:-) where
   type InternalHom (:-) = (:=>)

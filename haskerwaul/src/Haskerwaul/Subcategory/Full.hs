@@ -1,6 +1,16 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE Safe #-}
+{-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableInstances #-}
+
+-- __NB__: Newer versions of GHC require more constraints in some cases to avoid
+--        “loopy” resolution issues. These constraints are seen as redundant on
+--         older compilers.
+#if MIN_VERSION_GLASGOW_HASKELL(9, 6, 0, 0)
+#else
+{-# OPTIONS_GHC -Wno-redundant-constraints #-}
+#endif
 
 module Haskerwaul.Subcategory.Full
   ( module Haskerwaul.Subcategory.Full,
@@ -18,6 +28,9 @@ import qualified Data.Ord as Base
 import Data.Proxy (Proxy (..))
 import qualified Data.Set as Set
 import qualified Data.Tuple as Base
+#if MIN_VERSION_base(4, 17, 0)
+import Data.Type.Equality (type (~))
+#endif
 import Data.Type.Equality ((:~:) (..))
 import Haskerwaul.Algebra.Heyting
 import Haskerwaul.Bifunctor
@@ -26,6 +39,7 @@ import Haskerwaul.Constraint
 import Haskerwaul.Endofunctor
 import Haskerwaul.Isomorphism
 import Haskerwaul.Lattice.Complemented.Uniquely
+import Haskerwaul.Monad
 import Haskerwaul.Object
 import Haskerwaul.Quasigroup.Left
 import Haskerwaul.Quasigroup.Right
@@ -87,6 +101,15 @@ instance
     (FullSubcategory ob c)
   where
   rightQuotient = DT FS . rightQuotient . bimap (DT inclusion) (DT inclusion)
+
+instance
+  ( Endofunctor (FullSubcategory ob (->)) m,
+    Monad' (FullSubcategory ob (->)) m
+  ) =>
+  Monad (FullSubcategory ob (->)) m
+  where
+  pure = runNT @_ @(FullSubcategory ob (->)) (unit (Proxy :: Proxy Compose)) . FS Identity
+  flatten = runNT @_ @(FullSubcategory ob (->)) op . FS Compose
 
 instance
   {-# OVERLAPPABLE #-}
@@ -182,89 +205,180 @@ instance
   (!) = FS (!)
 
 instance
-  (SemigroupalCategory (FullSubcategory ob c) t, ob a, Magma c t a) =>
+  ( SemigroupalCategory (FullSubcategory ob c) t,
+    ob a,
+    BOb ob ob ob t,
+    Magma c t a
+  ) =>
   Magma (FullSubcategory ob c) t a
   where
   op = FS op
 
 instance
-  (SemigroupalCategory (FullSubcategory ob c) t, ob a, Magma (Opposite c) t a) =>
+  ( SemigroupalCategory (FullSubcategory ob c) t,
+    ob a,
+    BOb ob ob ob t,
+    Magma (Opposite c) t a
+  ) =>
   Magma (Opposite (FullSubcategory ob c)) t a
   where
   op = Opposite (FS (opposite op))
 
 instance
-  (SemigroupalCategory (FullSubcategory ob c) t, ob a, CommutativeMagma c t a) =>
+  ( SemigroupalCategory (FullSubcategory ob c) t,
+    ob a,
+    BOb ob ob ob t,
+    CommutativeMagma c t a
+  ) =>
   CommutativeMagma (FullSubcategory ob c) t a
 
 instance
-  (SemigroupalCategory (FullSubcategory ob c) t, ob a, CommutativeMagma (Opposite c) t a) =>
+  ( SemigroupalCategory (FullSubcategory ob c) t,
+    ob a,
+    BOb ob ob ob t,
+    CommutativeMagma (Opposite c) t a
+  ) =>
   CommutativeMagma (Opposite (FullSubcategory ob c)) t a
 
 instance
-  (SemigroupalCategory (FullSubcategory ob c) t, ob a, LeftShelf c t a) =>
+  ( SemigroupalCategory (FullSubcategory ob c) t,
+    ob a,
+    BOb ob ob ob t,
+    LeftShelf c t a
+  ) =>
   LeftShelf (FullSubcategory ob c) t a
 
 instance
-  (SemigroupalCategory (FullSubcategory ob c) t, ob a, LeftShelf (Opposite c) t a) =>
+  ( SemigroupalCategory (FullSubcategory ob c) t,
+    ob a,
+    BOb ob ob ob t,
+    LeftShelf (Opposite c) t a
+  ) =>
   LeftShelf (Opposite (FullSubcategory ob c)) t a
 
 instance
-  (SemigroupalCategory (FullSubcategory ob c) t, ob a, Band c t a) =>
+  ( SemigroupalCategory (FullSubcategory ob c) t,
+    ob a,
+    BOb ob ob ob t,
+    Band c t a
+  ) =>
   Band (FullSubcategory ob c) t a
 
 instance
-  (SemigroupalCategory (FullSubcategory ob c) t, ob a, Band (Opposite c) t a) =>
+  ( SemigroupalCategory (FullSubcategory ob c) t,
+    ob a,
+    BOb ob ob ob t,
+    Band (Opposite c) t a
+  ) =>
   Band (Opposite (FullSubcategory ob c)) t a
 
 instance
-  (SemigroupalCategory (FullSubcategory ob c) t, ob a, LeftRegularBand c t a) =>
+  ( SemigroupalCategory (FullSubcategory ob c) t,
+    ob a,
+    BOb ob ob ob t,
+    LeftRegularBand c t a
+  ) =>
   LeftRegularBand (FullSubcategory ob c) t a
 
 instance
-  (SemigroupalCategory (FullSubcategory ob c) t, ob a, LeftRegularBand (Opposite c) t a) =>
+  ( SemigroupalCategory (FullSubcategory ob c) t,
+    ob a,
+    BOb ob ob ob t,
+    LeftRegularBand (Opposite c) t a
+  ) =>
   LeftRegularBand (Opposite (FullSubcategory ob c)) t a
 
 instance
-  (SemigroupalCategory (FullSubcategory ob c) t, ob a, Semigroup c t a) =>
+  ( SemigroupalCategory (FullSubcategory ob c) t,
+    ob a,
+    BOb ob ob ob t,
+    Semigroup c t a
+  ) =>
   Semigroup (FullSubcategory ob c) t a
 
 instance
-  (SemigroupalCategory (FullSubcategory ob c) t, ob a, Semigroup (Opposite c) t a) =>
+  ( SemigroupalCategory (FullSubcategory ob c) t,
+    ob a,
+    BOb ob ob ob t,
+    Semigroup (Opposite c) t a
+  ) =>
   Semigroup (Opposite (FullSubcategory ob c)) t a
 
 instance
-  (MonoidalCategory (FullSubcategory ob c) t, ob a, ob (Unit c t), UnitalMagma c t a) =>
+  ( MonoidalCategory (FullSubcategory ob c) t,
+    ob a,
+    BOb ob ob ob t,
+    ob (Unit c t),
+    UnitalMagma c t a
+  ) =>
   UnitalMagma (FullSubcategory ob c) t a
   where
   unit t = FS (unit t)
 
 instance
-  (MonoidalCategory (FullSubcategory ob c) t, ob a, ob (Unit c t), UnitalMagma (Opposite c) t a) =>
+  ( MonoidalCategory (FullSubcategory ob c) t,
+    ob a,
+    BOb ob ob ob t,
+    ob (Unit c t),
+    UnitalMagma (Opposite c) t a
+  ) =>
   UnitalMagma (Opposite (FullSubcategory ob c)) t a
   where
   unit t = Opposite (FS (opposite (unit t)))
 
 instance
-  (MonoidalCategory (FullSubcategory ob c) t, ob a, ob (Meet a), ob (Join a), ob (Unit c t), ComplementedLattice c t a) =>
+  ( MonoidalCategory (FullSubcategory ob c) t,
+    BOb ob ob ob t,
+    ob a,
+    ob (Meet a),
+    ob (Join a),
+    ob (Unit c t),
+    ComplementedLattice c t a
+  ) =>
   ComplementedLattice (FullSubcategory ob c) t a
 
 instance
-  (MonoidalCategory (FullSubcategory ob c) t, ob a, ob (Meet a), ob (Join a), ob (Unit c t), UniquelyComplementedLattice c t a) =>
+  ( MonoidalCategory (FullSubcategory ob c) t,
+    BOb ob ob ob t,
+    ob a,
+    ob (Meet a),
+    ob (Join a),
+    ob (Unit c t),
+    UniquelyComplementedLattice c t a
+  ) =>
   UniquelyComplementedLattice (FullSubcategory ob c) t a
   where
   complement p = FS (complement p)
 
 instance
-  (MonoidalCategory (FullSubcategory ob c) t, ob a, ob (Meet a), ob (Join a), ModularLattice c t a) =>
+  ( MonoidalCategory (FullSubcategory ob c) t,
+    BOb ob ob ob t,
+    ob a,
+    ob (Meet a),
+    ob (Join a),
+    ModularLattice c t a
+  ) =>
   ModularLattice (FullSubcategory ob c) t a
 
 instance
-  (MonoidalCategory (FullSubcategory ob c) t, ob a, ob (Meet a), ob (Join a), DistributiveLattice c t a) =>
+  ( MonoidalCategory (FullSubcategory ob c) t,
+    BOb ob ob ob t,
+    ob a,
+    ob (Meet a),
+    ob (Join a),
+    DistributiveLattice c t a
+  ) =>
   DistributiveLattice (FullSubcategory ob c) t a
 
 instance
-  (MonoidalCategory (FullSubcategory ob c) t, ob a, ob (Meet a), ob (Join a), ob (Unit c t), HeytingAlgebra c t a) =>
+  ( MonoidalCategory (FullSubcategory ob c) t,
+    ob a,
+    BOb ob ob ob t,
+    ob (Meet a),
+    ob (Join a),
+    ob (Unit c t),
+    HeytingAlgebra c t a
+  ) =>
   HeytingAlgebra (FullSubcategory ob c) t a
   where
   implies = FS implies

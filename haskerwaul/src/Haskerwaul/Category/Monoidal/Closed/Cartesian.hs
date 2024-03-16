@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeFamilies #-}
@@ -16,6 +17,9 @@ module Haskerwaul.Category.Monoidal.Closed.Cartesian
 where
 
 import Data.Constraint ((\\))
+#if MIN_VERSION_base(4, 17, 0)
+import Data.Type.Equality (type (~))
+#endif
 import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Closed.Cartesian
 import Haskerwaul.Category.Monoidal.Cartesian

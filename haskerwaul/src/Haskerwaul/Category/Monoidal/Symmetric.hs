@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableInstances #-}
@@ -13,6 +14,9 @@ where
 
 import Data.Constraint ((:-))
 import Data.Either (Either (..))
+#if MIN_VERSION_base(4, 17, 0)
+import Data.Type.Equality (type (~))
+#endif
 import Haskerwaul.Category.Monoidal.Balanced
 import Haskerwaul.Constraint
 import Haskerwaul.Isomorphism

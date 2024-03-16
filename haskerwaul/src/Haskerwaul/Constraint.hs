@@ -60,8 +60,8 @@ class None a where
 none :: None a :- f a
 none = Sub (getCompose nope)
 
--- | Because `(,)` is handled oddly, we can't use it in
---  @`Haskerwaul.Category.Semigroupal.SemigroupalCategory` `(:-)` `(,)`@. This
+-- | Because @,@ is handled oddly, we can't use it in
+--  @`Haskerwaul.Category.Semigroupal.SemigroupalCategory` (`:-`) (,)@. This
 --   is our workaround.
 class (a, b) => Combine a b
 

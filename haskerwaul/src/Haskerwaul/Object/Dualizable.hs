@@ -36,7 +36,7 @@ instance (LeftDualizable c t a, RightDualizable c t a) => Dualizable c t a
 
 phi ::
   forall c t x y.
-  (MonoidalCategory c t, LeftDualizable c t x, Ob c y) =>
+  (LeftDualizable c t x, Ob c y) =>
   Unit c t `c` t (LeftDual c t x) y ->
   x `c` y
 phi f =
@@ -46,7 +46,7 @@ phi f =
 
 psi ::
   forall c t x y.
-  (MonoidalCategory c t, LeftDualizable c t x, Ob c y) =>
+  (LeftDualizable c t x, Ob c y) =>
   x `c` y ->
   Unit c t `c` t (LeftDual c t x) y
 psi g = second @c @c Proxy g . leftCounit

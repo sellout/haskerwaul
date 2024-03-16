@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableSuperClasses #-}
@@ -10,6 +11,9 @@ module Haskerwaul.Order.Linear
   )
 where
 
+#if MIN_VERSION_base(4, 17, 0)
+import Data.Type.Equality (type (~))
+#endif
 import Data.Void (Void)
 import Haskerwaul.Category.Boolean
 import Haskerwaul.Isomorphism

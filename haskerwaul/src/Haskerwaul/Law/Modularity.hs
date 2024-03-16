@@ -18,10 +18,8 @@ import Haskerwaul.Topos.Elementary
 modularity ::
   forall c a b.
   -- see `ElementaryTopos` for why the `HeytingAlgebra` constraint isn't implied
-  ( HeytingAlgebra c (Prod c) (Class c),
-    ElementaryTopos c,
-    Ob c a,
-    Ob c b,
+  ( ElementaryTopos c,
+    HeytingAlgebra c (Prod c) (Class c),
     Preorder c a,
     EquivalenceRelation c b
   ) =>

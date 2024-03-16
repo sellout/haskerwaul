@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE Safe #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableInstances #-}
@@ -8,6 +9,9 @@ module Haskerwaul.Object.Terminal where
 import Data.Constraint (Dict (..), (:-) (..))
 import Data.Functor.Const (Const (..))
 import Data.Kind (Constraint, Type)
+#if MIN_VERSION_base(4, 17, 0)
+import Data.Type.Equality (type (~))
+#endif
 import Haskerwaul.Constraint
 import Haskerwaul.Object
 import Haskerwaul.Semigroupoid
@@ -36,11 +40,13 @@ instance HasTerminalObject (NaturalTransformation c (:-)) where
   type TerminalObject (NaturalTransformation c (:-)) = All
   (!) = NT (Sub Dict)
 
-instance
-  (d ~ (->), HasTerminalObject d) =>
-  HasTerminalObject (NaturalTransformation c d)
-  where
-  type TerminalObject (NaturalTransformation c d) = Const (TerminalObject d)
+-- |
+--
+--  __TODO__: Generalizing this to @(d `~` (`->`), `HasTerminalObject` d) =>@
+--            leads to conflicting family instances with the
+--            @`NaturalTransformation` c (`:-`)@ instance above.
+instance HasTerminalObject (NaturalTransformation c (->)) where
+  type TerminalObject (NaturalTransformation c (->)) = Const ()
 
   -- TODO: Replace this with `NT (first (!))`, but it currently causes an import
   --       cycle.
