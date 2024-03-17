@@ -162,10 +162,12 @@ custom-setup
 library
   import: defaults
   build-depends:
-    constraints,
-    haskerwaul,
-    hedgehog,
-    hedgehog-fn,
+    constraints ^>= {0.11, 0.13.1, 0.14},
+    haskerwaul ^>= {0.1.0},
+    -- NB: hedgehog < 1.0 doesn’t export `label`, which we need for building up
+    --     complex test cases.
+    hedgehog ^>= {1.0, 1.1, 1.2, 1.4},
+    hedgehog-fn ^>= {1.0},
   hs-source-dirs:
     src
   ghc-options:
@@ -184,7 +186,7 @@ test-suite doctests
   hs-source-dirs: tests
   main-is: doctests.hs
   build-depends:
-    doctest ^>= {0.16.0, 0.17.0, 0.18.0, 0.19.0, 0.20.0, 0.21.0, 0.22.0},
+    doctest ^>= {0.16.0, 0.18.1, 0.20.1, 0.21.1, 0.22.2},
     haskerwaul-hedgehog,
   -- TODO: The sections below here are necessary because we don’t have control
   --       over the generated `Build_doctests.hs` file. So we have to silence
