@@ -109,6 +109,14 @@
             bifunctors = hfinal.bifunctors_5_6_1;
             free = hfinal.free_5_2;
           }
+          ## TODO: The failures that led to this are inconsistent, but
+          ##       persistent.
+          else if nixpkgs.lib.versionAtLeast hprev.ghc.version "9.6.0"
+          then {
+            ormolu = hfinal.ormolu_0_7_2_0;
+            streaming-commons =
+              final.haskell.lib.dontCheck hprev.streaming-commons;
+          }
           else if nixpkgs.lib.versionAtLeast hprev.ghc.version "8.10.0"
           then {}
           else
