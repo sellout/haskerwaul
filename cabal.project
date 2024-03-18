@@ -1,0 +1,14 @@
+flags:
+  -noisy-deprecations
+
+program-options
+  ghc-options:
+    -Werror
+
+tests: True
+
+packages:
+  ./base/haskerwaul-base.cabal
+  ./haskerwaul/haskerwaul.cabal
+  ./hedgehog/haskerwaul-hedgehog.cabal
+  ./trample/haskerwaul-trample.cabal

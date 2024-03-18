@@ -1,5 +1,9 @@
 # Haskerwaul
 
+[![built with garnix](https://img.shields.io/endpoint?url=https%3A%2F%2Fgarnix.io%2Fapi%2Fbadges%2Fsellout%2Fhaskerwaul)](https://garnix.io)
+[![Packaging status](https://repology.org/badge/tiny-repos/haskell:haskerwaul.svg)](https://repology.org/project/haskell:haskerwaul/versions)
+[![latest packaged versions](https://repology.org/badge/latest-versions/haskell:haskerwaul.svg)](https://repology.org/project/haskell:haskerwaul/versions)
+
 Howling into the primordial ooze of category theory.
 
 ## overview
@@ -11,12 +15,16 @@ The structure is largely based on [nLab](https://ncatlab.org/nlab/show/HomePage)
 ## usage
 
 This library attempts to play well with the existing type classes in base. E.g., we promote instances from base with instances like this:
+
 ```haskell
-instance {-# overlappable #-}
-         Data.Functor.Functor f =>
-         Haskerwaul.Functor.Functor (->) (->) f where
+instance
+  {-# OVERLAPPABLE #-}
+  (Data.Functor.Functor f) =>
+  Haskerwaul.Functor.Functor (->) (->) f
+  where
   map = Data.Functor.fmap
 ```
+
 Which also means that if you're defining your own instances, you'd be well-served to implement them using the type classes from base whenever possible, getting a bunch of Haskerwaul instances for free (e.g., if you implement `Control.Category.Category`, I think you must get at least three separate Haskerwaul instances ([`Magma`](./src/Haskerwaul/Magma.hs), [`Semigroup`](./src/Haskerwaul/Semigroup.hs), and [`UnitalMagma`](./src/Haskerwaul/Magma/Unital.hs) -- things like [`Semigroupoid`](./src/Haskerwaul/Semigroupoid.hs) and [`Category`](./src/Haskerwaul/Category.hs) are either type synonyms or have universal instances already defined. Once you have the instance from base, you can implement richer classes like `CartesianClosedCategory` using Haskerwaul's classes.
 
 However, this library does not play well with `Prelude`, co-opting a bunch of the same names, so it's helpful to either enable `NoImplicitPrelude` or import Haskerwaul qualified. Unfortunately, [the `Haskerwaul` module](./src/Haskerwaul.hs) is not quite a custom Prelude and I've avoided expanding it into one, because there are a lot of points of contention when designing a Prelude. But perhaps it can be used as the basis of one.
@@ -108,17 +116,21 @@ are restricted to **Hask** means that we are often very overconstrained as a
 result (see `~ (->)` above).
 
 So, we try to avoid newtypes as much as possible. In `base`, you see things like
+
 ```haskell
 newtype Ap f a = Ap { getAp :: f a }
 instance (Applicative f, Monoid a) => Monoid (Ap f a) where
   ...
 ```
+
 but that forces `f :: k -> Type` (granted, `Applicative` already forces
 `f :: Type -> Type`, so it's no loss in `base`). However, we want to stay more
 kind-polymorphic, so we take a different tradeoff and write stuff like
+
 ```haskell
 instance (LaxMonoidalFunctor c ct d dt f, Monoid c ct a) => Monoid d dt (f a)
 ```
+
 (where `LaxMonoidalFunctor` is our equivalent of `Applicative`), which means we
 need `UndecidableInstances`, but it's worth it to be kind-polymorphic.
 
@@ -130,6 +142,7 @@ the `PartialOrder` that is richer than the discrete one implied by the
 `EqualityRelation` needs to be made distinct via a newtype. And similarly, the
 (unique) `EqualityRelation` also needs a newtype to make it distinct from the
 `InequalityRelation` that it's derived from.
+`nix build` will build and test the project fully.
 
 See "newtypes" above.
 
@@ -138,13 +151,17 @@ See "newtypes" above.
 In "plain" category theory, the Hom functor for a category **C** is a functor **C** x **C** -> **Set**. Enriched category theory generalizes that **Set** to some arbitrary monoidal category **V**. E.g., in the case of preorders, **V** may be **Set** (where the image is only singleton sets and the empty set) or it can be **Bool**, which more precisely models the exists-or-not nature of the relationship.
 
 One way to model this is to add a parameter `v` to `Category c`, like
+
 ```haskell
 class Monoid (DinaturalTransformation v) Procompose c => Category v c
 ```
+
 However, this means that the same category, enriched differently, has multiple instances. Modeling the enrichment separaetely, e.g.,
+
 ```haskell
 class (MonoidalCategory v, Category c) => EnrichedCategory v c
 ```
+
 seems good, but the Hom functor is fundamental to the definition of composition in `c`. Finally, perhaps we can encode some "primary" **V** existentially, and model other enrichments via functors from **V**.
 
 ### PolyKinds
@@ -152,6 +169,50 @@ seems good, but the Hom functor is fundamental to the definition of composition 
 This library strives to take advantage of `PolyKinds`, which make it possible to say things like `Category ~ Monoid (NaturalTransformation (->)) Procompose`, however we use newtypes like `Additive` and `Multiplicative` to say things like `Semiring a ~ (Monoid (Additive a), Monoid (Multiplicative a))`, and since fully-applied type constructors need to have kind `Type` it means that `Semiring` _isn't_ kind-polymorphic.
 
 As a result, at various places in the code we find ourselves stuck dealing with `Type` when we'd like to remain polymorphic. Remedying this would be very helpful.
+
+## development environment
+
+We recommend the following steps to make working in this repository as easy as possible.
+
+### `direnv allow`
+
+This command ensures that any work you do within this repository is done within a consistent reproducible environment. That environment provides various debugging tools, etc. When you leave this directory, you will leave that environment behind, so it doesn’t impact anything else on your system.
+
+### `git config --local include.path ../.config/git/config`
+
+This will apply our repository-specific Git configuration to `git` commands run against this repository. It’s lightweight (you should definitely look at it before applying this command) – it does things like telling `git blame` to ignore formatting-only commits.
+
+## building & development
+
+Especially if you are unfamiliar with the haskell ecosystem, there is a Nix build (both with and without a flake). If you are unfamiliar with Nix, [Nix adjacent](...) can help you get things working in the shortest time and least effort possible.
+
+### if you have `nix` installed
+
+`nix build` will build and test the project fully.
+
+`nix develop` will put you into an environment where the traditional build tooling works. If you also have `direnv` installed, then you should automatically be in that environment when you're in a directory in this project.
+
+### traditional build
+
+This project is built with [Cabal](https://cabal.readthedocs.io/en/stable/index.html). Individual packages will work with older versions, but ./cabal.package requires Cabal 3.6+.
+
+## versioning
+
+In the absolute, almost every change is a breaking change. This section describes how we mitigate that to provide minor updates and revisions.
+
+Here are some common changes that can have unintended effects:
+
+- adding instances can conflict with downstream orphans,
+- adding a module can conflict with a module from another package,
+- adding a definition to an existing module can conflict if there are unqualified imports, and
+- even small bugfixes can introduce breaking changes where downstream depended on the broken results.
+
+To mitigate some of those issues for versioning, we assume the following usage:
+
+- modules should be imported using `PackageImports`, so that adding modules is a _minor_ change;
+- modules should be imported qualified, so that adding definitions is a _minor_ change;
+- adding instances can't be mitigated in the same way, and it's not uncommon for downstream libraries to add orphans instances when they're omitted from upstream libraries. However, since these conflicts can only happen via direct dependencies, and represent an explicit downstream workaround, it’s reasonable to expect a quick downstream update to remove or conditionalize the workaround. So, this is considered a _minor major_ change;
+- deprecation is considered a _revision_ change, however it will often be paired with _minor_ changes. `-Werror` can cause this to fail, but published libraries shouldn't be compiled with `-Werror`.
 
 ## comparisons
 

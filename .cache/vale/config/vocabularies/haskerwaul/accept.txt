@@ -1,0 +1,12 @@
+direnv
+garnix
+[Nn]ix
+Pfeil
+ShellCheck
+bugfix
+comonad
+conditionalize
+functor
+GADT
+Kleisli
+Kmett

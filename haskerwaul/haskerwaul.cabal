@@ -1,0 +1,480 @@
+cabal-version: 3.0
+
+name: haskerwaul
+version: 0.1.0.0
+synopsis: Category-parametric programming
+description: This library gives an extremely abstract presentation of various CT
+             and abstract algebra concepts.
+author: Greg Pfeil <greg@technomadic.org>
+maintainer: Greg Pfeil <greg@technomadic.org>
+copyright: 2019–2024 Greg Pfeil
+homepage: https://github.com/sellout/haskerwaul#readme
+bug-reports: https://github.com/sellout/haskerwaul/issues
+category: Control
+build-type: Custom
+license: AGPL-3.0-or-later
+license-files:
+  LICENSE
+extra-source-files:
+  README.md
+tested-with:
+  GHC == {
+--  GHCup   Nixpkgs
+    7.10.3,
+    8.0.1,
+    8.2.1,
+    8.4.1,
+    8.6.1,
+    8.8.1,  8.8.4,
+    8.10.1, 8.10.7,
+    9.0.1,  9.0.2,
+    9.2.1,  9.2.8,
+    9.4.1,  9.4.8,
+    9.6.1,  9.6.2,
+            9.8.1
+  }
+
+source-repository head
+  type: git
+  location: git@github.com:sellout/haskerwaul.git
+
+-- This mimics the GHC2021 extension
+-- (https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/control.html?highlight=doandifthenelse#extension-GHC2021),
+-- but supporting compilers back to GHC 7.10. If the oldest supported compiler
+-- is GHC 9.2, then this stanza can be removed and `import: GHC2021` can be
+-- replaced by `default-language: GHC2021`.
+common GHC2021
+  default-language: Haskell2010
+  default-extensions:
+    BangPatterns
+    BinaryLiterals
+    ConstraintKinds
+    DeriveDataTypeable
+    DeriveGeneric
+    -- DeriveLift -- uncomment if the oldest supported version is GHC 8.10.1+
+    DeriveTraversable
+    DerivingStrategies
+    DoAndIfThenElse
+    EmptyCase
+    ExistentialQuantification
+    FlexibleContexts
+    FlexibleInstances
+    GADTSyntax
+    GeneralizedNewtypeDeriving
+    HexFloatLiterals
+    -- ImportQualifiedPost -- uncomment if the oldest supported version is GHC 8.10.1+
+    InstanceSigs
+    LambdaCase
+    MagicHash
+    MonadComprehensions
+    MonomorphismRestriction
+    MultiParamTypeClasses
+    NamedFieldPuns
+    NamedWildCards
+    NumericUnderscores
+    PolyKinds
+    PostfixOperators
+    RankNTypes
+    ScopedTypeVariables
+    StandaloneDeriving
+    -- StandaloneKindSignatures -- uncomment if the oldest supported version is GHC 8.10.1+
+    TupleSections
+    TypeApplications
+    TypeOperators
+    UnicodeSyntax
+    NoExplicitNamespaces
+
+flag noisy-deprecations
+  description:
+    Prior to GHC 9.10, the `DEPRECATED` pragma can’t distinguish between terms
+    and types. Consenquently, you can get spurious warnings when there’s a name
+    collision and the name in the other namespace is deprecated. Or you can
+    choose to not get those warnings, at the risk of not being warned when
+    there’s a name collision and the namespace you’re referencing is the one
+    that’s deprecated.
+
+common defaults
+  import: GHC2021
+  build-depends:
+    base ^>= {4.12.0, 4.13.0, 4.14.0, 4.15.0, 4.16.0, 4.17.0, 4.18.0, 4.19.0},
+  ghc-options:
+    -Weverything
+    -- Type inference good.
+    -Wno-missing-local-signatures
+    -- Warns even when `Unsafe` is explicit, not inferred. See
+    -- https://gitlab.haskell.org/ghc/ghc/-/issues/16689
+    -Wno-unsafe
+    -- TODO: prune these warnings
+    -Wno-all-missed-specialisations
+    -fpackage-trust
+    -trust base
+  if impl(ghc < 8.8.1)
+    ghc-options:
+      -- This used to warn even when `Safe` was explicit.
+      -Wno-safe
+  if impl(ghc >= 8.10.1)
+    ghc-options:
+      -- If we didn’t allow inferred-safe imports, nothing would be `Safe`.
+      -Wno-inferred-safe-imports
+      -- We support GHC versions without qualified-post.
+      -Wno-prepositive-qualified-module
+      -- `-trust` triggers this warning when applied to transitive dependencies.
+      -Wno-unused-packages
+  if impl(ghc >= 9.2.1)
+    ghc-options:
+      -- We support GHC versions without kind signatures.
+      -Wno-missing-kind-signatures
+  if impl(ghc >= 9.8.1)
+    ghc-options:
+      -- We support GHC versions without kind signatures.
+      -Wno-missing-poly-kind-signatures
+      -- Inference good.
+      -Wno-missing-role-annotations
+  default-extensions:
+    DefaultSignatures
+    ExplicitNamespaces
+    FunctionalDependencies
+    LiberalTypeSynonyms
+    -- replace with `LexicalNegation` if the oldest supported version is GHC 9.0.1+
+    NegativeLiterals
+    PackageImports
+    ParallelListComp
+    -- QualifiedDo - uncomment if the oldest supported version is GHC 9.0.1+
+    RecursiveDo
+    -- RequiredTypeArguments - uncomment if the oldest supported version is GHC 9.10.1+
+    StrictData
+    TemplateHaskellQuotes
+    TransformListComp
+    NoGeneralizedNewtypeDeriving
+    NoImplicitPrelude
+    NoMonomorphismRestriction
+    NoPatternGuards
+    NoTypeApplications
+  if flag(noisy-deprecations)
+    cpp-options: -DSELLOUT_NOISY_DEPRECATIONS
+
+custom-setup
+  setup-depends:
+    -- TODO: Remove `Cabal` dep once haskell/cabal#3751 is fixed.
+    Cabal ^>= {3.0.0, 3.2.0, 3.4.0, 3.6.0, 3.8.0, 3.10.0},
+    base ^>= {4.12.0, 4.13.0, 4.14.0, 4.15.0, 4.16.0, 4.17.0, 4.18.0, 4.19.0},
+    cabal-doctest ^>= {1.0.0},
+
+library
+  import: defaults
+  build-depends:
+    -- NB: constraints < 0.11 results in extra redundant constraints.
+    constraints ^>= {0.11, 0.13.1, 0.14},
+    containers ^>= {0.6.0},
+  hs-source-dirs:
+    src
+  ghc-options:
+    -Wno-missing-export-lists
+    -Wno-missing-import-lists
+    -Wno-simplifiable-class-constraints
+    -trust constraints
+    -trust containers
+  exposed-modules:
+    Haskerwaul
+    Haskerwaul.Algebra.Boolean
+    Haskerwaul.Algebra.Heyting
+    Haskerwaul.Algebra.Heyting.Complete
+    Haskerwaul.Automorphism
+    Haskerwaul.Band
+    Haskerwaul.Band.Laws
+    Haskerwaul.Band.LeftRegular
+    Haskerwaul.Band.LeftRegular.Laws
+    Haskerwaul.Band.Rectangular
+    Haskerwaul.Bifunctor
+    Haskerwaul.Bimonoid
+    Haskerwaul.Category
+    Haskerwaul.Category.Bicartesian
+    Haskerwaul.Category.Boolean
+    Haskerwaul.Category.Closed
+    Haskerwaul.Category.Closed.Bicartesian
+    Haskerwaul.Category.Closed.Cartesian
+    Haskerwaul.Category.Closed.Compact
+    Haskerwaul.Category.Closed.Symmetric
+    Haskerwaul.Category.Coherent
+    Haskerwaul.Category.CoKleisli
+    Haskerwaul.Category.Complete.Finitely
+    Haskerwaul.Category.Concrete
+    Haskerwaul.Category.Distributive
+    Haskerwaul.Category.Distributive.Linearly
+    Haskerwaul.Category.Duoidal
+    Haskerwaul.Category.Duoidal.Normal
+    Haskerwaul.Category.Empty
+    Haskerwaul.Category.Functor
+    Haskerwaul.Category.Heyting
+    Haskerwaul.Category.Hypergraph
+    Haskerwaul.Category.Kleisli
+    Haskerwaul.Category.Laws
+    Haskerwaul.Category.LocallyCartesian
+    Haskerwaul.Category.Monoidal
+    Haskerwaul.Category.Monoidal.Balanced
+    Haskerwaul.Category.Monoidal.Braided
+    Haskerwaul.Category.Monoidal.Cartesian
+    Haskerwaul.Category.Monoidal.Cartesian.Traced
+    Haskerwaul.Category.Monoidal.Closed
+    Haskerwaul.Category.Monoidal.Closed.Cartesian
+    Haskerwaul.Category.Monoidal.Cocartesian
+    Haskerwaul.Category.Monoidal.Distributive
+    Haskerwaul.Category.Monoidal.Rigid
+    Haskerwaul.Category.Monoidal.Rigid.Left
+    Haskerwaul.Category.Monoidal.Rigid.Right
+    Haskerwaul.Category.Monoidal.Symmetric
+    Haskerwaul.Category.Monoidal.Traced
+    Haskerwaul.Category.MonoidalUnit
+    Haskerwaul.Category.Opposite
+    Haskerwaul.Category.Over
+    Haskerwaul.Category.Pointed
+    Haskerwaul.Category.Product
+    Haskerwaul.Category.Regular
+    Haskerwaul.Category.Ribbon
+    Haskerwaul.Category.Rig
+    Haskerwaul.Category.Rig.ColaxDistributive
+    Haskerwaul.Category.Rig.ColaxDistributive.Left
+    Haskerwaul.Category.Rig.ColaxDistributive.Right
+    Haskerwaul.Category.Semigroupal
+    Haskerwaul.Category.Semigroupal.Laws
+    Haskerwaul.Category.Small.Locally
+    Haskerwaul.Category.Terminal
+    Haskerwaul.Category.Under
+    Haskerwaul.Cocone
+    Haskerwaul.Comonad
+    Haskerwaul.Comonoid
+    Haskerwaul.Cone
+    Haskerwaul.Congruence
+    Haskerwaul.Constraint
+    Haskerwaul.Cospan
+    Haskerwaul.Day
+    Haskerwaul.Dioid
+    Haskerwaul.Dioid.Commutative
+    Haskerwaul.Duoid
+    Haskerwaul.Duoid.Laws
+    Haskerwaul.Embedding.Yoneda
+    Haskerwaul.Endofunctor
+    Haskerwaul.Endomorphism
+    Haskerwaul.Extension.Kan.Left
+    Haskerwaul.Extension.Kan.Right
+    Haskerwaul.Field
+    Haskerwaul.Field.Totalized
+    Haskerwaul.Field.Totalized.One
+    Haskerwaul.Field.Totalized.Zero
+    Haskerwaul.Functor
+    Haskerwaul.Functor.Adjoint
+    Haskerwaul.Functor.Closed.Cartesian
+    Haskerwaul.Functor.Closed.Lax
+    Haskerwaul.Functor.Closed.Strong
+    Haskerwaul.Functor.Contravariant
+    Haskerwaul.Functor.Diagonal
+    Haskerwaul.Functor.Faithful
+    Haskerwaul.Functor.Faithful.Full
+    Haskerwaul.Functor.Full
+    Haskerwaul.Functor.Hom
+    Haskerwaul.Functor.Hom.Internal
+    Haskerwaul.Functor.Monoidal.Closed
+    Haskerwaul.Functor.Monoidal.Lax
+    Haskerwaul.Functor.Monoidal.Oplax
+    Haskerwaul.Functor.Monoidal.Strong
+    Haskerwaul.Functor.Strong
+    Haskerwaul.GaloisConnection
+    Haskerwaul.Group
+    Haskerwaul.Group.Abelian
+    Haskerwaul.Groupoid
+    Haskerwaul.Hemiring
+    Haskerwaul.Hemiring.Near
+    Haskerwaul.Isomorphism
+    Haskerwaul.Isomorphism.Laws
+    Haskerwaul.Isomorphism.Natural
+    Haskerwaul.Lattice
+    Haskerwaul.Lattice.Bounded
+    Haskerwaul.Lattice.Bounded.Laws
+    Haskerwaul.Lattice.Complemented
+    Haskerwaul.Lattice.Complemented.Uniquely
+    Haskerwaul.Lattice.Complete
+    Haskerwaul.Lattice.Distributive
+    Haskerwaul.Lattice.Distributive.Bounded
+    Haskerwaul.Lattice.Laws
+    Haskerwaul.Lattice.Modular
+    Haskerwaul.Lattice.Orthocomplemented
+    Haskerwaul.Lattice.Orthomodular
+    Haskerwaul.Law
+    Haskerwaul.Law.Alternativity.Left
+    Haskerwaul.Law.Alternativity.Right
+    Haskerwaul.Law.Associativity
+    Haskerwaul.Law.Asymmetry
+    Haskerwaul.Law.Commutativity
+    Haskerwaul.Law.Distributive.Left
+    Haskerwaul.Law.Distributive.Right
+    Haskerwaul.Law.Distributive.Self.Left
+    Haskerwaul.Law.Distributive.Self.Right
+    Haskerwaul.Law.Flexibility
+    Haskerwaul.Law.Homomorphism.Identity
+    Haskerwaul.Law.Homomorphism.Magma
+    Haskerwaul.Law.Idempotency
+    Haskerwaul.Law.Identity.Graphic
+    Haskerwaul.Law.Identity.Left
+    Haskerwaul.Law.Identity.Right
+    Haskerwaul.Law.Interchange
+    Haskerwaul.Law.Modularity
+    Haskerwaul.Law.Quotient.Left
+    Haskerwaul.Law.Quotient.Right
+    Haskerwaul.Law.Reflexivity
+    Haskerwaul.Law.Symmetry
+    Haskerwaul.Loop
+    Haskerwaul.Loop.Commutative
+    Haskerwaul.Magma
+    Haskerwaul.Magma.Commutative
+    Haskerwaul.Magma.Commutative.Laws
+    Haskerwaul.Magma.Invertible
+    Haskerwaul.Magma.Invertible.Commutative
+    Haskerwaul.Magma.Invertible.Left
+    Haskerwaul.Magma.Invertible.Right
+    Haskerwaul.Magma.Unital
+    Haskerwaul.Magma.Unital.Laws
+    Haskerwaul.Meadow
+    Haskerwaul.Meadow.Cancellation
+    Haskerwaul.Meadow.NonInvolutive
+    Haskerwaul.Meadow.NonTrivial
+    Haskerwaul.Module
+    Haskerwaul.Module.Left
+    Haskerwaul.Module.Right
+    Haskerwaul.Monad
+    Haskerwaul.Monad.Codensity
+    Haskerwaul.Monad.Frobenius
+    Haskerwaul.Monoid
+    Haskerwaul.Monoid.Commutative
+    Haskerwaul.Monoid.Commutative.Laws
+    Haskerwaul.Monoid.Commutative.Monus
+    Haskerwaul.Monoid.Frobenius
+    Haskerwaul.Monoid.Frobenius.Commutative
+    Haskerwaul.Monoid.Frobenius.Commutative.Special
+    Haskerwaul.Monoid.Frobenius.Special
+    Haskerwaul.Monoid.Graphic
+    Haskerwaul.Monoid.Graphic.Laws
+    Haskerwaul.Monoid.Hopf
+    Haskerwaul.Monoid.Laws
+    Haskerwaul.Negation
+    Haskerwaul.Object
+    Haskerwaul.Object.Dualizable
+    Haskerwaul.Object.Dualizable.Left
+    Haskerwaul.Object.Dualizable.Right
+    Haskerwaul.Object.Exponential
+    Haskerwaul.Object.Free
+    Haskerwaul.Object.Initial
+    Haskerwaul.Object.Integers
+    Haskerwaul.Object.Invertible
+    Haskerwaul.Object.NaturalNumbers
+    Haskerwaul.Object.Terminal
+    Haskerwaul.Order.Canonical
+    Haskerwaul.Order.Linear
+    Haskerwaul.Order.Partial
+    Haskerwaul.Order.Prefix
+    Haskerwaul.Order.Total
+    -- __TODO__: eliminate the Orphans module
+    Haskerwaul.Orphans
+    Haskerwaul.Preorder
+    Haskerwaul.Profunctor
+    Haskerwaul.Pullback
+    Haskerwaul.Pushout
+    Haskerwaul.Quandle
+    Haskerwaul.Quasigroup
+    Haskerwaul.Quasigroup.Commutative
+    Haskerwaul.Quasigroup.Invertible
+    Haskerwaul.Quasigroup.Invertible.Commutative
+    Haskerwaul.Quasigroup.Left
+    Haskerwaul.Quasigroup.Right
+    Haskerwaul.Quasiorder
+    Haskerwaul.Rack
+    -- Haskerwaul.RebindableSyntax
+    Haskerwaul.Relation.Apartness
+    Haskerwaul.Relation.Apartness.Tight
+    Haskerwaul.Relation.Binary
+    Haskerwaul.Relation.Dependency
+    Haskerwaul.Relation.Equality
+    Haskerwaul.Relation.Equality.Decidable
+    Haskerwaul.Relation.Equality.Stable
+    Haskerwaul.Relation.Equivalence
+    Haskerwaul.Relation.Equivalence.Partial
+    Haskerwaul.Relation.Homogeneous
+    Haskerwaul.Relation.Inequality
+    Haskerwaul.Relation.Inequality.Denial
+    Haskerwaul.Relation.Inequality.Tight
+    Haskerwaul.Relation.Nullary
+    Haskerwaul.Relation.Tolerance
+    Haskerwaul.Relation.Unary
+    Haskerwaul.Residual
+    Haskerwaul.Residual.Left
+    Haskerwaul.Residual.Right
+    Haskerwaul.Rig
+    Haskerwaul.Rig.Idempotent
+    Haskerwaul.Rig.Laws
+    Haskerwaul.Rig.Monus
+    Haskerwaul.Rig.Near
+    Haskerwaul.Ring
+    Haskerwaul.Ring.Boolean
+    Haskerwaul.Ring.Commutative
+    Haskerwaul.Ring.Nonunital
+    Haskerwaul.Semigroup
+    Haskerwaul.Semigroup.Commutative
+    Haskerwaul.Semigroup.Commutative.Laws
+    Haskerwaul.Semigroup.Inverse
+    Haskerwaul.Semigroup.Laws
+    Haskerwaul.Semilattice
+    Haskerwaul.Semilattice.Bounded
+    Haskerwaul.Semilattice.Bounded.Laws
+    Haskerwaul.Semilattice.Laws
+    Haskerwaul.Semigroupoid
+    Haskerwaul.Semigroupoid.Laws
+    Haskerwaul.Semiring
+    Haskerwaul.Semiring.Idempotent
+    Haskerwaul.Semiring.MaxPlus
+    Haskerwaul.Semiring.MinPlus
+    Haskerwaul.Semiring.Near
+    Haskerwaul.Semiring.Pre
+    Haskerwaul.Semiring.Pre.Near
+    Haskerwaul.Semiring.Tropical
+    Haskerwaul.Shelf
+    Haskerwaul.Shelf.Left
+    Haskerwaul.Shelf.Left.Laws
+    Haskerwaul.Shelf.Right
+    Haskerwaul.Shelf.Right.Laws
+    Haskerwaul.Skewfield
+    Haskerwaul.Span
+    Haskerwaul.Subcategory
+    Haskerwaul.Subcategory.Full
+    Haskerwaul.Subcategory.Wide
+    Haskerwaul.Topos.Elementary
+    Haskerwaul.Topos.Grothendieck
+    Haskerwaul.Transformation.Dinatural
+    Haskerwaul.Transformation.Natural
+  other-modules:
+    Haskerwaul.Duoid.Components
+    Haskerwaul.Lattice.Components
+    Haskerwaul.Semiring.Components
+
+test-suite doctests
+  import: defaults
+  type: exitcode-stdio-1.0
+  hs-source-dirs: tests
+  main-is: doctests.hs
+  build-depends:
+    doctest ^>= {0.16.0, 0.18.1, 0.20.1, 0.21.1, 0.22.2},
+    haskerwaul,
+  -- TODO: The sections below here are necessary because we don’t have control
+  --       over the generated `Build_doctests.hs` file. So we have to silence
+  --       all of its warnings one way or another.
+  ghc-options:
+    -Wno-missing-export-lists
+    -Wno-missing-import-lists
+    -Wno-safe
+  if impl(ghc >= 8.8.1)
+    ghc-options:
+      -- This used to warn even when `Safe` was explicit.
+      -Wno-missing-deriving-strategies
+  default-extensions:
+    -- Since we can’t add `{-# LANGUAGE Safe -#}` to the generated
+    -- “Build_doctests.hs”, we set it here, and that means it has to match
+    -- doctests.hs, which is `Unsafe`.
+    Unsafe
