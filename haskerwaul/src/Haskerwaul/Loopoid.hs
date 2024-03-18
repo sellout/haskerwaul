@@ -10,14 +10,14 @@ module Haskerwaul.Loopoid
   )
 where
 
+import Haskerwaul.Categorification.Horizontal
 import Haskerwaul.Loop
 import Haskerwaul.Magmoid.Unital
 import Haskerwaul.Quasigroupoid
-import Haskerwaul.Transformation.Dinatural
 
 -- |
 --
 -- = references
 --
 -- - [nLab](https://ncatlab.org/nlab/show/loopoid)
-type Loopoid = Loop (DinaturalTransformation (->)) Procompose
+type Loopoid = HorizontalCategorification Loop

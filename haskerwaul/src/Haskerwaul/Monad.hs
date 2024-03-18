@@ -18,7 +18,6 @@ import Data.Proxy (Proxy (..))
 import Haskerwaul.Endofunctor
 import Haskerwaul.Monoid
 import Haskerwaul.Object
-import Haskerwaul.Semicategory
 import Haskerwaul.Transformation.Natural
 
 -- | [nLab](https://ncatlab.org/nlab/show/monad)

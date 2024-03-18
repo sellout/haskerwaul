@@ -9,13 +9,13 @@ module Haskerwaul.Magmoid.Flexible
   )
 where
 
+import Haskerwaul.Categorification.Horizontal
 import Haskerwaul.Magma.Flexible
 import Haskerwaul.Magmoid
-import Haskerwaul.Transformation.Dinatural
 
 -- |
 --
 -- = references
 --
 -- - [nLab](https://ncatlab.org/nlab/show/flexible+magmoid)
-type FlexibleMagmoid = FlexibleMagma (DinaturalTransformation (->)) Procompose
+type FlexibleMagmoid = HorizontalCategorification FlexibleMagma

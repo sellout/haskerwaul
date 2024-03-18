@@ -187,6 +187,7 @@ library
     Haskerwaul.Band.Rectangular
     Haskerwaul.Bifunctor
     Haskerwaul.Bimonoid
+    Haskerwaul.Categorification.Horizontal
     Haskerwaul.Category
     Haskerwaul.Category.Bicartesian
     Haskerwaul.Category.Boolean

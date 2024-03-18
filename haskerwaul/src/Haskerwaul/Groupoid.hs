@@ -9,13 +9,13 @@ module Haskerwaul.Groupoid
   )
 where
 
+import Haskerwaul.Categorification.Horizontal
 import Haskerwaul.Category
 import Haskerwaul.Group
-import Haskerwaul.Transformation.Dinatural
 
 -- |
 --
 -- = references
 --
 -- - [nLab](https://ncatlab.org/nlab/show/groupoid)
-type Groupoid = Group (DinaturalTransformation (->)) Procompose
+type Groupoid = HorizontalCategorification Group

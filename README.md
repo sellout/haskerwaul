@@ -69,7 +69,7 @@ E.g., the most central concept in this library is `Category`, which is defined
 simply as
 
 ```haskell
-type Category = Monoid (DinaturalTransformation (->)) Procompose
+type Category = HorizontalCategorification Monoid
 ```
 
 See [the

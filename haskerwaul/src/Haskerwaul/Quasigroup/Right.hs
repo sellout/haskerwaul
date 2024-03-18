@@ -1,4 +1,5 @@
 {-# LANGUAGE Safe #-}
+{-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Quasigroup.Right
@@ -11,9 +12,11 @@ where
 
 import Data.Either (Either, either)
 import Data.Int (Int)
+import Data.Type.Equality ((:~:) (Refl))
 import Data.Void (Void, absurd)
 import Haskerwaul.Magma
 import Haskerwaul.Semiring.Components
+import Haskerwaul.Transformation.Dinatural
 import Prelude (Integer)
 import qualified Prelude as Base (Num (..))
 
@@ -40,3 +43,14 @@ instance RightQuasigroup (->) (,) (Additive Int) where
 
 instance RightQuasigroup (->) (,) (Additive Integer) where
   rightQuotient (Add x, Add y) = Add (x Base.- y)
+
+-- __NB__: These definitions belong in "Haskerwaul.Quasigroupoid", but they’d be
+--         orphans there.
+
+-- | a discrete groupoid
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/discrete+category)
+instance RightQuasigroup (DinaturalTransformation (->)) Procompose (:~:) where
+  rightQuotient = DT (\(Procompose Refl Refl) -> Refl)

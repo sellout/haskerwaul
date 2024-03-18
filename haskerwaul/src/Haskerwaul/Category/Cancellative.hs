@@ -9,14 +9,13 @@ module Haskerwaul.Category.Cancellative
   )
 where
 
+import Haskerwaul.Categorification.Horizontal
 import Haskerwaul.Category
 import Haskerwaul.Monoid.Cancellative
-import Haskerwaul.Transformation.Dinatural
 
 -- |
 --
 -- = references
 --
 -- - [nLab](https://ncatlab.org/nlab/show/cancellative+category)
-type CancellativeCategory =
-  CancellativeMonoid (DinaturalTransformation (->)) Procompose
+type CancellativeCategory = HorizontalCategorification CancellativeMonoid

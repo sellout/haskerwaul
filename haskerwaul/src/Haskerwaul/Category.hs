@@ -10,14 +10,14 @@ module Haskerwaul.Category
   )
 where
 
+import Haskerwaul.Categorification.Horizontal
 import Haskerwaul.Magmoid.Unital
 import Haskerwaul.Monoid
 import Haskerwaul.Semicategory
-import Haskerwaul.Transformation.Dinatural
 
 -- |
 -- = references
 --
 -- - [nLab](https://ncatlab.org/nlab/show/category)
 -- - [Wikipedia](https://en.wikipedia.org/wiki/Category_(mathematics)
-type Category = Monoid (DinaturalTransformation (->)) Procompose
+type Category = HorizontalCategorification Monoid

@@ -60,7 +60,7 @@ instance
 
 -- | If /C/ is a `FlexibleMagmoid`, then so is /C^op/.
 instance
-  (FlexibleMagma (DinaturalTransformation (->)) Procompose c) =>
+  (FlexibleMagmoid c) =>
   FlexibleMagma (DinaturalTransformation (->)) Procompose (Opposite c)
 
 -- | If /C/ is a `Semicategory`, then so is /C^op/.

@@ -9,14 +9,13 @@ module Haskerwaul.Quasigroupoid.Associative
   )
 where
 
+import Haskerwaul.Categorification.Horizontal
 import Haskerwaul.Quasigroup.Associative
 import Haskerwaul.Quasigroupoid
-import Haskerwaul.Transformation.Dinatural
 
 -- |
 --
 -- = references
 --
 -- - [nLab](https://ncatlab.org/nlab/show/associative+quasigroupoid)
-type AssociativeQuasigroupoid =
-  AssociativeQuasigroup (DinaturalTransformation (->)) Procompose
+type AssociativeQuasigroupoid = HorizontalCategorification AssociativeQuasigroup

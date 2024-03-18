@@ -9,13 +9,13 @@ module Haskerwaul.Quasigroupoid
   )
 where
 
+import Haskerwaul.Categorification.Horizontal
 import Haskerwaul.Magmoid
 import Haskerwaul.Quasigroup
-import Haskerwaul.Transformation.Dinatural
 
 -- |
 --
 -- = references
 --
 -- - [nLab](https://ncatlab.org/nlab/show/quasigroupoid)
-type Quasigroupoid = Quasigroup (DinaturalTransformation (->)) Procompose
+type Quasigroupoid = HorizontalCategorification Quasigroup

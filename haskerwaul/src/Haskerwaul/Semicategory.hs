@@ -9,11 +9,12 @@ module Haskerwaul.Semicategory
   )
 where
 
+import Haskerwaul.Categorification.Horizontal
 import Haskerwaul.Magmoid.Flexible
 import Haskerwaul.Semigroup
-import Haskerwaul.Transformation.Dinatural
 
 -- |
+--
 -- = references
 --
 -- - [nLab](https://ncatlab.org/nlab/show/semicategory)
@@ -22,4 +23,4 @@ import Haskerwaul.Transformation.Dinatural
 --  __TODO__: This should have a @`Haskerwaul.Profunctor.Profunctor` c c c@
 --            constraint, but there are troublesome instances, so we skip the
 --            constraint here and add it on the instances that make use of it.
-type Semicategory = Semigroup (DinaturalTransformation (->)) Procompose
+type Semicategory = HorizontalCategorification Semigroup

@@ -1,4 +1,5 @@
 {-# LANGUAGE Safe #-}
+{-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Semigroup
@@ -9,17 +10,21 @@ module Haskerwaul.Semigroup
   )
 where
 
+import qualified Control.Category as Base
 import Data.Bool (Bool)
 import Data.Constraint (Dict (..), (:-) (..))
 import Data.Either (Either)
 import Data.Int (Int, Int16, Int32, Int64, Int8)
 import Data.Kind (Constraint)
 import qualified Data.Semigroup as Base
+import Data.Type.Equality ((:~:))
 import Data.Word (Word, Word16, Word32, Word64, Word8)
+import Haskerwaul.Categorification.Horizontal
 import Haskerwaul.Constraint
 import Haskerwaul.Lattice.Components
 import Haskerwaul.Magma.Flexible
 import Haskerwaul.Object
+import Haskerwaul.Transformation.Dinatural
 import Numeric.Natural (Natural)
 import Prelude (Integer)
 
@@ -99,3 +104,29 @@ instance Semigroup (->) (,) (Join Word64)
 instance Semigroup (->) (,) (Meet Word64)
 
 instance Semigroup (:-) Combine (() :: Constraint)
+
+-- __NB__: These definitions belong in "Haskerwaul.Semicategory", but they’d be
+--         orphans there.
+
+-- | All `Base.Category` instances are also
+--  `Haskerwaul.Semicategory.Semicategory` instances.
+instance
+  {-# OVERLAPPABLE #-}
+  (Base.Category c) =>
+  Semigroup (DinaturalTransformation (->)) Procompose c
+
+-- | If /C/ is a `Haskerwaul.Semicategory.Semicategory`, then so are /C/-valued
+--   bifunctors.
+instance
+  (HorizontalCategorification Semigroup c) =>
+  Semigroup
+    (DinaturalTransformation (->))
+    Procompose
+    (DinaturalTransformation c)
+
+-- | a discrete groupoid
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/discrete+category)
+instance Semigroup (DinaturalTransformation (->)) Procompose (:~:)

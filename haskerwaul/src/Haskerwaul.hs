@@ -24,6 +24,7 @@ module Haskerwaul
     module Haskerwaul.Band.Rectangular,
 
     -- * categories
+    module Haskerwaul.Categorification.Horizontal,
     module Haskerwaul.Category,
     module Haskerwaul.Category.Bicartesian,
     module Haskerwaul.Category.Boolean,
@@ -359,6 +360,7 @@ import Haskerwaul.Band.LeftRegular
 import Haskerwaul.Band.Rectangular
 import Haskerwaul.Bifunctor
 import Haskerwaul.Bimonoid
+import Haskerwaul.Categorification.Horizontal
 import Haskerwaul.Category
 import Haskerwaul.Category.Bicartesian
 import Haskerwaul.Category.Boolean

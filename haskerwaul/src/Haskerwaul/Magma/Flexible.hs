@@ -1,4 +1,5 @@
 {-# LANGUAGE Safe #-}
+{-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Magma.Flexible
@@ -9,17 +10,21 @@ module Haskerwaul.Magma.Flexible
   )
 where
 
+import qualified Control.Category as Base
 import Data.Bool (Bool)
 import Data.Constraint ((:-) (..))
 import Data.Either (Either)
 import Data.Int (Int, Int16, Int32, Int64, Int8)
 import Data.Kind (Constraint)
 import qualified Data.Semigroup as Base
+import Data.Type.Equality ((:~:))
 import Data.Word (Word, Word16, Word32, Word64, Word8)
+import Haskerwaul.Categorification.Horizontal
 import Haskerwaul.Constraint
 import Haskerwaul.Lattice.Components
 import Haskerwaul.Magma
 import Haskerwaul.Semiring.Components
+import Haskerwaul.Transformation.Dinatural
 import Numeric.Natural (Natural)
 import Prelude (Integer)
 
@@ -157,3 +162,29 @@ instance FlexibleMagma (->) (,) (Join Word64)
 instance FlexibleMagma (->) (,) (Meet Word64)
 
 instance FlexibleMagma (->) (,) (Multiplicative Word64)
+
+-- __NB__: These definitions belong in "Haskerwaul.Magmoid.Flexible", but they’d
+--         be orphans there.
+
+-- | All `Base.Category` instances are also
+--  `Haskerwaul.Magmoid.Flexible.FlexibleMagmoid` instances.
+instance
+  {-# OVERLAPPABLE #-}
+  (Base.Category c) =>
+  FlexibleMagma (DinaturalTransformation (->)) Procompose c
+
+-- | If /C/ is a `Haskerwaul.Magmoid.Flexible.FlexibleMagmoid`, then so are
+--  /C/-valued bifunctors.
+instance
+  (HorizontalCategorification FlexibleMagma c) =>
+  FlexibleMagma
+    (DinaturalTransformation (->))
+    Procompose
+    (DinaturalTransformation c)
+
+-- | a discrete groupoid
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/discrete+category)
+instance FlexibleMagma (DinaturalTransformation (->)) Procompose (:~:)

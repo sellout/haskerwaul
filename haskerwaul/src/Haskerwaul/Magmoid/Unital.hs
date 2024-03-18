@@ -11,6 +11,7 @@ where
 
 import Data.Proxy (Proxy (Proxy))
 import Data.Type.Equality ((:~:) (Refl))
+import Haskerwaul.Categorification.Horizontal
 import Haskerwaul.Magma.Unital
 import Haskerwaul.Magmoid
 import Haskerwaul.Transformation.Dinatural
@@ -24,7 +25,7 @@ import Haskerwaul.Transformation.Dinatural
 --  __TODO__: This should have a @`Haskerwaul.Profunctor.Profunctor` c c c@
 --            constraint, but there are troublesome instances, so we skip the
 --            constraint here and add it on the instances that make use of it.
-type UnitalMagmoid = UnitalMagma (DinaturalTransformation (->)) Procompose
+type UnitalMagmoid = HorizontalCategorification UnitalMagma
 
 -- | Just a bit of sugar over `unit`, when it's used categorcally.
 id :: (UnitalMagmoid c) => a `c` a
