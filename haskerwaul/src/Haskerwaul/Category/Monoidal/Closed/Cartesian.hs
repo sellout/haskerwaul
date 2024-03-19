@@ -58,7 +58,6 @@ instance CartesianClosedMonoidalCategory (->) where
 
 -- * Operators
 
---
 --   In order to have binary /operators/, we must be able to `curry` binary
 --  /operations/. This requires at least a closed monoidal category. However, we
 --   also can't afford to deal with a Proxy (or type application) to

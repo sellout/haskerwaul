@@ -18,8 +18,8 @@ import Haskerwaul.Object
 -- = laws
 --
 --   [superposing]:
---     @`trace` (`to` `assoc` . (`id` *** f)) == `id` *** `trace` f@
---   [vanishing]: @`trace` (`from` `assoc` f) == `trace` (`trace` f) @
+--     @`trace` (`Haskerwaul.Isomorphism.to` `assoc` . (`Haskerwaul.Bifunctor.bimap` `id` f)) == `Haskerwaul.Bifunctor.bimap` `id` (`trace` f)@
+--   [vanishing]: @`trace` (`Haskerwaul.Isomorphism.from` `assoc` f) == `trace` (`trace` f) @
 --   [yanking]: @`trace` `braid` == `id`@
 --
 -- = references

@@ -81,7 +81,7 @@ instance CartesianMonoidalCategory (->) where
 
 -- |
 --
---  __TODO__: Generalizing this to @(d `~` (`->`), `CartesianMonoidalCategory` d) =>@
+--  __TODO__: Generalizing this to @(d `~` (->), `CartesianMonoidalCategory` d) =>@
 --            leads to conflicting family instances with the
 --            @`NaturalTransformation` c (`:-`)@ instance below.
 instance CartesianMonoidalCategory (NaturalTransformation c (->)) where

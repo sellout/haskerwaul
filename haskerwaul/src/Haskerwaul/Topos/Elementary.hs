@@ -17,7 +17,11 @@ import Haskerwaul.Algebra.Heyting
 import Haskerwaul.Category.Monoidal.Closed.Cartesian
 import Haskerwaul.Object
 
--- | [nLab](https://ncatlab.org/nlab/show/topos)
+-- |
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/topos)
 --
 --  __TODO__: There should be a @`HeytingAlgebra` c (`Prod` c) (`Class` c)@
 --            constraint here, but that currently forces our object to kind
@@ -31,7 +35,10 @@ class
   type Class c :: ok
 
   -- | The subobject classifier.
-  --   [nLab](https://ncatlab.org/nlab/show/subobject+classifier)
+  --
+  -- = references
+  --
+  -- - [nLab](https://ncatlab.org/nlab/show/subobject+classifier)
   --
   --  __NB__: This is a `Haskerwaul.Relation.Nullary.NullaryRelation`, but we
   --          can't use the synonym here because it creates an import cycle.

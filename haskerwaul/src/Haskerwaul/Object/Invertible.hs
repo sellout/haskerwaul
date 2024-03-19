@@ -27,14 +27,22 @@ import Haskerwaul.Object.Dualizable
 -- - [nLab](https://ncatlab.org/nlab/show/invertible+object)
 --
 --  __NB__: Instances for this are automatically coalesced.
-class (Dualizable c t a, LeftDual c t a ~ RightDual c t a, Ob c (Dual c t a)) => Invertible (c :: ok -> ok -> Type) t a where
+class
+  (Dualizable c t a, LeftDual c t a ~ RightDual c t a, Ob c (Dual c t a)) =>
+  Invertible (c :: ok -> ok -> Type) t a
+  where
   type Dual c t a :: ok
 
-instance (Dualizable c t a, LeftDual c t a ~ RightDual c t a, Ob c (Dual c t a)) => Invertible (c :: ok -> ok -> Type) t a where
+instance
+  (Dualizable c t a, LeftDual c t a ~ RightDual c t a, Ob c (Dual c t a)) =>
+  Invertible (c :: ok -> ok -> Type) t a
+  where
   type Dual c t a = LeftDual c t a
 
-leftInverseIso :: (Invertible c t a) => Isomorphism c (t (Dual c t a) a) (Unit c t)
+leftInverseIso ::
+  (Invertible c t a) => Isomorphism c (t (Dual c t a) a) (Unit c t)
 leftInverseIso = Iso rightCounit leftCounit
 
-rightInverseIso :: (Invertible c t a) => Isomorphism c (t a (Dual c t a)) (Unit c t)
+rightInverseIso ::
+  (Invertible c t a) => Isomorphism c (t a (Dual c t a)) (Unit c t)
 rightInverseIso = Iso leftUnit rightUnit

@@ -10,8 +10,9 @@
 --  `Haskerwaul.Profunctor.Profunctor`, but even beyond those are things like
 --  `Haskerwaul.Subcategory.Full.inclusion`, which logically forms a faithful
 --   functor from the subcategory, but has no type constructor to allow an
---   instance of `Functor`. Likewise, `Control.Arrow.Arrow` has a functor
---  `Control.Arrow.arr` from __Hask__ to the `Control.Arrow.Arrow` instance.
+--   instance of `Haskerwaul.Functor.Functor`. Likewise, `Control.Arrow.Arrow`
+--   has a functor `Control.Arrow.arr` from __Hask__ to the
+--  `Control.Arrow.Arrow` instance.
 module Haskerwaul.Semifunctor where
 
 import Data.Constraint (Dict (..), mapDict, (:-) (..))
@@ -25,6 +26,7 @@ import Haskerwaul.Object
 import Haskerwaul.Semicategory
 
 -- |
+--
 -- = references
 --
 -- - [nLab](https://ncatlab.org/nlab/show/semifunctor)
@@ -34,7 +36,7 @@ class
   where
   map :: (Ob c a, Ob c b) => a `c` b -> f a `d` f b
 
--- | The composition of two functors is always a functor.
+-- | The composition of two semifunctors is always a semifunctor.
 --
 --  __NB__: This constrains @f@ to be a __Hask__-valued functor, because
 --         `Compose` is. It also constrains @b@ to @(->)@, but that is perhaps
@@ -46,9 +48,12 @@ instance
   where
   map f = Compose . map @b (map @_ @b f) . getCompose
 
--- | __NB__: This instance only exists to eliminate the ambiguity between the
---          `Base.Functor` constrained instance and the above instance when
---           trying to satisfy @`Functor` (->) (->) (`Compose` f g)@.
+-- |
+--
+--  __NB__: This instance only exists to eliminate the ambiguity between the
+--         `Base.Functor` constrained instance and the above instance when
+--          trying to satisfy
+--          @`Semifunctor` (->) (->) (`Compose` f g)@.
 instance
   {-# OVERLAPPING #-}
   (Semifunctor (->) (->) f, Semifunctor (->) (->) g) =>
@@ -56,8 +61,9 @@ instance
   where
   map f = Compose . map @(->) (map @_ @(->) f) . getCompose
 
--- | This encodes that a composition of functors is always a functor, and has a
---   similar restriction to the @`Functor` (`Compose` f g)@ instance.
+-- | This encodes that a composition of semifunctors is always a semifunctor,
+--   and has a similar restriction to the @`Semifunctor` (`Compose` f g)@
+--   instance.
 instance
   (b ~ (->), c ~ (->), Semicategory c) =>
   BOb (Semifunctor b c) (Semifunctor a b) (Semifunctor a c) Compose
@@ -69,8 +75,8 @@ instance
 instance Semifunctor (:-) (->) Dict where
   map = mapDict
 
--- | This instance lifts all instances of `Base.Functor` to _our_ `Functor`. If
---   you're trying to define an instance where the source and destination
+-- | This instance lifts all instances of `Base.Functor` to _our_ `Semifunctor`.
+--   If you're trying to define an instance where the source and destination
 --   categories are both @(->)@, you should be instantiating `Base.Functor`
 --   directly, and allow this instance to lift it into Haskerwaul.
 --
@@ -80,7 +86,7 @@ instance Semifunctor (:-) (->) Dict where
 instance {-# INCOHERENT #-} (Base.Functor f) => Semifunctor (->) (->) f where
   map = Base.fmap
 
--- | The constant functor to a particular object in the target category.
+-- | The constant semifunctor to a particular object in the target semicategory.
 instance
   (d ~ (->), Semicategory c, FOb (Ob c) (Ob d) (Const dOb)) =>
   Semifunctor c d (Const dOb)

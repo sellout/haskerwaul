@@ -35,7 +35,11 @@ import Haskerwaul.Topos.Elementary
 import Numeric.Natural (Natural)
 import Prelude (Double, Float, Integer)
 
--- | [nLab](https://ncatlab.org/nlab/show/relation)
+-- |
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/relation)
 type HomogeneousRelation c a = BinaryRelation c a a
 
 -- | This is not a real thing, but exists to facilitate the interconnectedness

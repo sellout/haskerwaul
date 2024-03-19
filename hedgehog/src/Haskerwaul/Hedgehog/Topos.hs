@@ -22,9 +22,12 @@ import safe System.IO
 import safe Text.Show (Show)
 
 -- | A trivial newtype over __Hask__ that lets us choose a different classifying
---   object (i.e., `Property`-like instead of `Bool`).
+--   object (i.e., `Property`-like instead of `Data.Bool.Bool`).
 --
---   It would be even better if we could treat every input like a generator, e.g., @runHH :: Gen a -> b@
+--  __NB__: This is likely better than something like @`runHH` :: `Gen` a ->
+--         `PropertyT` `IO` b@ as it makes it easy to lift basically anything
+--          into `HH`, and then we only need `Gen` and `PropertyT` at the
+--          boundaries, which also lets us use custom display functions, etc.
 newtype HH a b = HH {runHH :: a -> b}
 
 type instance Ob HH = All

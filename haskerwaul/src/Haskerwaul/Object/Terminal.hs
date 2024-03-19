@@ -42,7 +42,7 @@ instance HasTerminalObject (NaturalTransformation c (:-)) where
 
 -- |
 --
---  __TODO__: Generalizing this to @(d `~` (`->`), `HasTerminalObject` d) =>@
+--  __TODO__: Generalizing this to @(d `~` (->), `HasTerminalObject` d) =>@
 --            leads to conflicting family instances with the
 --            @`NaturalTransformation` c (`:-`)@ instance above.
 instance HasTerminalObject (NaturalTransformation c (->)) where

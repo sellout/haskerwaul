@@ -16,7 +16,11 @@ import Haskerwaul.Monoid.Commutative
 import Haskerwaul.Rig.Near
 import Haskerwaul.Semiring
 
--- | [nLab](https://ncatlab.org/nlab/show/rig)
+-- |
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/rig)
 --
 --  __NB__: Instances for this are automatically coalesced.
 class

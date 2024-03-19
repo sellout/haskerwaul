@@ -67,8 +67,8 @@ instance RigCategory (->) (,) Either where
 
 -- * additional tensors
 
--- | Specialized to @`These` (,) `Either` `Void`@, this is like `Either`,
---   and specialized to @`These` (,) `Either` ()@, this is like
+-- | Specialized to @`These` (,) `Either` `Data.Void.Void`@, this is like
+--  `Either`, and specialized to @`These` (,) `Either` ()@, this is like
 --  `Data.These.These`. Other choices for @x@ provide additional variants, and
 --   there are corresponding tensors in any `RigCategory`.
 --

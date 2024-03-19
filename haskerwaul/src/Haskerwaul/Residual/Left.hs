@@ -14,6 +14,7 @@ import Haskerwaul.Object
 import Haskerwaul.Residual.Right
 
 -- |
+--
 -- = references
 --
 -- - [nLab](https://ncatlab.org/nlab/show/residual)

@@ -21,7 +21,11 @@ import Haskerwaul.Lattice.Bounded
 import Haskerwaul.Rig.Idempotent
 import Haskerwaul.Semiring.Idempotent
 
--- | [nLab](https://ncatlab.org/nlab/show/max-plus+algebra)
+-- |
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/max-plus+algebra)
 type MaxPlusSemiring c t a = IdempotentSemiring c t (Join a)
 
 -- A MaxPlus semiring arises from the combination of a Hemiring and a

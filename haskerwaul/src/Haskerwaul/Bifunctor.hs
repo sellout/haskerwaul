@@ -20,7 +20,11 @@ import Haskerwaul.Object
 import Haskerwaul.Transformation.Dinatural
 import Haskerwaul.Transformation.Natural
 
--- | [nLab](https://ncatlab.org/nlab/show/bifunctor)
+-- |
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/bifunctor)
 --
 --  __TODO__: This should be
 --           @type Bifunctor c1 c2 = `Haskerwaul.Functor.Functor` (c1 :**: c2)@

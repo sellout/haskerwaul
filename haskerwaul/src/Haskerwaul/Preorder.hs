@@ -34,9 +34,12 @@ import Prelude (Double, Float, Integer)
 --   something to implement directly. This is generally provided automatically
 --   via other instances where there is a /canonical/ instance for this type.
 --
---  [nLab](https://ncatlab.org/nlab/show/preorder)
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/preorder)
 --
 -- = laws
+--
 --   [`Haskerwaul.Law.Reflexivity.reflexivity`]: @`le` (x, x) == `true` ()@
 --   [transitivity]: @`le` (x, y) && `le (y, z)` ==> `le` (x, z)@
 class (HomogeneousRelation' c a) => Preorder c a

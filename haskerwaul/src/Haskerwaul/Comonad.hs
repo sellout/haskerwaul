@@ -14,7 +14,11 @@ import Haskerwaul.Category.Opposite
 import Haskerwaul.Monad
 import Haskerwaul.Object
 
--- | [nLab](https://ncatlab.org/nlab/show/comonad)
+-- |
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/comonad)
 type Comonad' c ob = Monad' (Op c) ob
 
 -- | See `Monad` for an explanation as to why both `Comonad'` and `Comonad`.

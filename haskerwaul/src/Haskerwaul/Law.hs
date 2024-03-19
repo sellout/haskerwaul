@@ -45,8 +45,11 @@ data Law c (relation :: (Type -> Type -> Type) -> Type -> Constraint) a b = Law
 --   within. If this is not a homomorphism, all bets are off for your test doing
 --   anything reasonable. The most trivial case is when you are already in the
 --   topos, then you can use `id`. Otherwise, you may have various newtype
---   wrappers and unwrappers, like `NT`/`runNT`, `Opposite`/`opposite`, etc. and
---   they can generally be composed to move across vast spaces of __Cat__.
+--   wrappers and unwrappers, like
+--  `Haskerwaul.Transformation.Natural.NT`/`Haskerwaul.Transformation.Natural.runNT`,
+--  `Haskerwaul.Category.Opposite.Opposite`/`Haskerwaul.Category.Opposite.opposite`,
+--   etc. and they can generally be composed to move across vast spaces of
+--  __Cat__.
 checkLaw ::
   (ElementaryTopos c, relation c y, HomogeneousRelation' c y, Ob c x) =>
   (a `d` b -> x `c` y) ->

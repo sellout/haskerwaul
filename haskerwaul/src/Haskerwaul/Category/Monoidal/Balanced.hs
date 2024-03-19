@@ -28,7 +28,11 @@ import Haskerwaul.Object
 import Haskerwaul.Transformation.Dinatural
 import Haskerwaul.Transformation.Natural
 
--- | [nLab](https://ncatlab.org/nlab/show/balanced+monoidal+category)
+-- |
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/balanced+monoidal+category)
 class (BraidedMonoidalCategory c t) => BalancedMonoidalCategory c t where
   -- | a.k.a "twist"
   balance :: (Ob c a) => Proxy t -> a `c` a

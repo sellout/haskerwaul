@@ -25,10 +25,15 @@ import Haskerwaul.Functor
 import Haskerwaul.Object
 import Haskerwaul.Transformation.Dinatural
 
--- | [nLab](https://ncatlab.org/nlab/show/natural+transformation)
+-- |
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/natural+transformation)
 newtype NaturalTransformation (c :: ok -> ok -> Type) d f g = NT {runNT :: forall a. (Ob c a) => f a `d` g a}
 
 -- |
+--
 -- = references
 --
 -- - [nLab](https://ncatlab.org/nlab/show/whiskering)
@@ -51,6 +56,7 @@ whisker Proxy (NT fn) =
     )
 
 -- |
+--
 -- = references
 --
 -- - [nLab](https://ncatlab.org/nlab/show/whiskering)
@@ -79,7 +85,7 @@ instance MonoidalCategory' (NaturalTransformation c (:-)) CFProd where
 --   category.
 --
 -- - @`FTensor` (,) ~ `Data.Functor.Product.Product`@
--- - @`FTensor` `Either` ~ `Data.Functor.Sum.Sum`@
+-- - @`FTensor` `Data.Either.Either` ~ `Data.Functor.Sum.Sum`@
 newtype FTensor t f g a = FTensor {lowerFTensor :: t (f a) (g a)}
 
 instance

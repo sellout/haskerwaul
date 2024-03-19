@@ -13,6 +13,7 @@ import Haskerwaul.Category.Monoidal.Closed
 import Haskerwaul.Object
 
 -- |
+--
 -- = references
 --
 -- - [nLab](https://ncatlab.org/nlab/show/residual)
