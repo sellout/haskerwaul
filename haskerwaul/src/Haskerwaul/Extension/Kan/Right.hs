@@ -13,9 +13,9 @@ import Data.Constraint ((\\))
 #if MIN_VERSION_base(4, 17, 0)
 import Data.Type.Equality (type (~))
 #endif
+import Haskerwaul.Category
 import Haskerwaul.Functor
 import Haskerwaul.Object
-import Haskerwaul.Semigroupoid
 
 -- |
 -- = references
@@ -26,8 +26,12 @@ newtype RightKanExtension c c' p f a
   = Ran (forall b. (Ob c b) => a `c'` p b -> f b)
 
 instance
-  (d ~ (->), Semigroupoid c', FOb (Ob c) (Ob c') p) =>
-  Functor c' d (RightKanExtension c c' p f)
+  (d ~ (->), Semicategory c', FOb (Ob c) (Ob c') p) =>
+  Semifunctor c' d (RightKanExtension c c' p f)
   where
   map f (Ran g) =
     Ran (\(h :: b `c'` p x) -> g (h . f) \\ inF @(Ob c) @(Ob c') @p @x)
+
+instance
+  (d ~ (->), Category c', FOb (Ob c) (Ob c') p) =>
+  Functor c' d (RightKanExtension c c' p f)

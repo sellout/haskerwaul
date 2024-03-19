@@ -56,9 +56,9 @@ import safe Haskerwaul.Monoid.Laws as Monoid
 import safe Haskerwaul.Object
 import safe Haskerwaul.Profunctor
 import safe Haskerwaul.Rig.Laws as Rig
+import safe Haskerwaul.Semicategory.Laws
 import safe Haskerwaul.Semigroup.Commutative.Laws as CommutativeSemigroup
 import safe Haskerwaul.Semigroup.Laws as Semigroup
-import safe Haskerwaul.Semigroupoid.Laws
 import safe Haskerwaul.Semilattice.Bounded.Laws as BoundedSemilattice
 import safe Haskerwaul.Semilattice.Laws as Semilattice
 import safe Haskerwaul.Semiring
@@ -547,16 +547,16 @@ rig_laws label law trans transA transL transR display dispA dispL dispR genX gen
 lowerDT :: (a `c` b -> y) -> DinaturalTransformation (->) f c -> f a b `HH` y
 lowerDT post morphism = HH (post . runDT morphism)
 
-semigroupoid_laws ::
+semicategory_laws ::
   forall ok (c :: ok -> ok -> Type) (a :: ok) (b :: ok) y.
   (Eq y, Show y) =>
   PropertyName ->
-  SemigroupoidLaws c ->
+  SemicategoryLaws c ->
   (a `c` b -> y) ->
   (Procompose (Procompose c c) c a b -> String) ->
   Gen (Procompose (Procompose c c) c a b) ->
   [(PropertyName, Property)]
-semigroupoid_laws label law post =
+semicategory_laws label law post =
   semigroup_laws label law (lowerDT post)
 
 category_laws ::

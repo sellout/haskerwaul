@@ -23,10 +23,14 @@ newtype Over (c :: ok -> ok -> Type) (x :: ok) a b = Over (a `c` x -> b `c` x)
 
 type instance Ob (Over c _) = Ob c
 
-instance (Semigroupoid c) => Magma (DinaturalTransformation (->)) Procompose (Over c x) where
+instance (Magmoid c) => Magma (DinaturalTransformation (->)) Procompose (Over c x) where
   op = DT (\(Procompose (Over f) (Over g)) -> Over (f . g))
 
-instance (Semigroupoid c, Ob c x) => Semigroup (DinaturalTransformation (->)) Procompose (Over c x)
+instance
+  (FlexibleMagmoid c, Ob c x) =>
+  FlexibleMagma (DinaturalTransformation (->)) Procompose (Over c x)
+
+instance (Semicategory c, Ob c x) => Semigroup (DinaturalTransformation (->)) Procompose (Over c x)
 
 instance (Category c, Ob c x) => UnitalMagma (DinaturalTransformation (->)) Procompose (Over c x) where
   unit Proxy = DT (\Refl -> Over id)

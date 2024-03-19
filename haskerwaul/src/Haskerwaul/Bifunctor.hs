@@ -54,7 +54,7 @@ instance Bifunctor (->) c (->) Const where
   bimap f _ = Const . f . getConst
 
 instance
-  (d ~ (->), Semigroupoid d, Bifunctor c1 c2 d t) =>
+  (d ~ (->), Semicategory d, Bifunctor c1 c2 d t) =>
   Bifunctor
     (NaturalTransformation c' c1)
     (NaturalTransformation c' c2)
@@ -82,7 +82,7 @@ instance
       )
 
 instance
-  (Ob c1 ~ All, Ob c2 ~ All, d ~ (->), Semigroupoid d, Bifunctor c1 c2 d t) =>
+  (Ob c1 ~ All, Ob c2 ~ All, d ~ (->), Semicategory d, Bifunctor c1 c2 d t) =>
   Bifunctor
     (DinaturalTransformation c1)
     (DinaturalTransformation c2)
@@ -125,6 +125,10 @@ instance
   op = Const . op . bimap getConst getConst
 
 instance
+  (c ~ (->), Bifunctor c c c t, FlexibleMagma c t a) =>
+  FlexibleMagma c t (Const a b)
+
+instance
   (c ~ (->), Bifunctor c c c t, Semigroup c t a) =>
   Semigroup c t (Const a b)
 
@@ -144,6 +148,15 @@ instance
   Magma (NaturalTransformation c d) (FTensor dt) (Const u)
   where
   op = NT (op . lowerFTensor)
+
+instance
+  ( d ~ (->),
+    MonoidalCategory' d dt,
+    Bifunctor d d d dt,
+    u ~ Unit d dt,
+    FlexibleMagma d dt u
+  ) =>
+  FlexibleMagma (NaturalTransformation c d) (FTensor dt) (Const u)
 
 instance
   ( d ~ (->),
@@ -172,6 +185,10 @@ instance
   op = BConst . op . bimap getBConst getBConst
 
 instance
+  (c ~ (->), Bifunctor c c c t, FlexibleMagma c t a) =>
+  FlexibleMagma c t (BConst a b d)
+
+instance
   (c ~ (->), Bifunctor c c c t, Semigroup c t a) =>
   Semigroup c t (BConst a b d)
 
@@ -191,6 +208,15 @@ instance
   Magma (DinaturalTransformation d) (BTensor dt) (BConst u)
   where
   op = DT (op . lowerBTensor)
+
+instance
+  ( d ~ (->),
+    MonoidalCategory' d dt,
+    Bifunctor d d d dt,
+    u ~ Unit d dt,
+    FlexibleMagma d dt u
+  ) =>
+  FlexibleMagma (DinaturalTransformation d) (BTensor dt) (BConst u)
 
 instance
   ( d ~ (->),

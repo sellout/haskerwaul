@@ -42,6 +42,10 @@ instance
 
 instance
   (Ob c ~ All, CartesianMonoidalCategory c) =>
+  FlexibleMagma (DinaturalTransformation (->)) Procompose (Span c)
+
+instance
+  (Ob c ~ All, CartesianMonoidalCategory c) =>
   Semigroup (DinaturalTransformation (->)) Procompose (Span c)
 
 instance (MonoidalCategory c t) => MonoidalCategory' (Span c) t where
@@ -56,6 +60,10 @@ instance
 
 instance (SemigroupalCategory c t, Magma c t a) => Magma (Span c) t a where
   op = Span id op \\ inT @(Ob c) @t @a @a
+
+instance
+  (SemigroupalCategory c t, FlexibleMagma c t a) =>
+  FlexibleMagma (Span c) t a
 
 instance (SemigroupalCategory c t, Semigroup c t a) => Semigroup (Span c) t a
 

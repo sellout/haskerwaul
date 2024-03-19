@@ -28,6 +28,8 @@ type instance Ob EmptyCategory = None
 instance Magma (DinaturalTransformation (->)) Procompose EmptyCategory where
   op = DT (\case {})
 
+instance FlexibleMagma (DinaturalTransformation (->)) Procompose EmptyCategory
+
 instance Semigroup (DinaturalTransformation (->)) Procompose EmptyCategory
 
 -- | __FIXME__: It should be impossible to apply this `unit`, because there is

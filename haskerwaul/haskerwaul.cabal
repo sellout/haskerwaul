@@ -187,9 +187,11 @@ library
     Haskerwaul.Band.Rectangular
     Haskerwaul.Bifunctor
     Haskerwaul.Bimonoid
+    Haskerwaul.Categorification.Horizontal
     Haskerwaul.Category
     Haskerwaul.Category.Bicartesian
     Haskerwaul.Category.Boolean
+    Haskerwaul.Category.Cancellative
     Haskerwaul.Category.Closed
     Haskerwaul.Category.Closed.Bicartesian
     Haskerwaul.Category.Closed.Cartesian
@@ -228,6 +230,7 @@ library
     Haskerwaul.Category.Opposite
     Haskerwaul.Category.Over
     Haskerwaul.Category.Pointed
+    Haskerwaul.Category.Presheaves
     Haskerwaul.Category.Product
     Haskerwaul.Category.Regular
     Haskerwaul.Category.Ribbon
@@ -237,6 +240,7 @@ library
     Haskerwaul.Category.Rig.ColaxDistributive.Right
     Haskerwaul.Category.Semigroupal
     Haskerwaul.Category.Semigroupal.Laws
+    Haskerwaul.Category.Small
     Haskerwaul.Category.Small.Locally
     Haskerwaul.Category.Terminal
     Haskerwaul.Category.Under
@@ -324,15 +328,20 @@ library
     Haskerwaul.Law.Symmetry
     Haskerwaul.Loop
     Haskerwaul.Loop.Commutative
+    Haskerwaul.Loopoid
     Haskerwaul.Magma
     Haskerwaul.Magma.Commutative
     Haskerwaul.Magma.Commutative.Laws
+    Haskerwaul.Magma.Flexible
     Haskerwaul.Magma.Invertible
     Haskerwaul.Magma.Invertible.Commutative
     Haskerwaul.Magma.Invertible.Left
     Haskerwaul.Magma.Invertible.Right
     Haskerwaul.Magma.Unital
     Haskerwaul.Magma.Unital.Laws
+    Haskerwaul.Magmoid
+    Haskerwaul.Magmoid.Flexible
+    Haskerwaul.Magmoid.Unital
     Haskerwaul.Meadow
     Haskerwaul.Meadow.Cancellation
     Haskerwaul.Meadow.NonInvolutive
@@ -344,6 +353,7 @@ library
     Haskerwaul.Monad.Codensity
     Haskerwaul.Monad.Frobenius
     Haskerwaul.Monoid
+    Haskerwaul.Monoid.Cancellative
     Haskerwaul.Monoid.Commutative
     Haskerwaul.Monoid.Commutative.Laws
     Haskerwaul.Monoid.Commutative.Monus
@@ -375,16 +385,20 @@ library
     -- __TODO__: eliminate the Orphans module
     Haskerwaul.Orphans
     Haskerwaul.Preorder
+    Haskerwaul.Presheaf
     Haskerwaul.Profunctor
     Haskerwaul.Pullback
     Haskerwaul.Pushout
     Haskerwaul.Quandle
     Haskerwaul.Quasigroup
+    Haskerwaul.Quasigroup.Associative
     Haskerwaul.Quasigroup.Commutative
     Haskerwaul.Quasigroup.Invertible
     Haskerwaul.Quasigroup.Invertible.Commutative
     Haskerwaul.Quasigroup.Left
     Haskerwaul.Quasigroup.Right
+    Haskerwaul.Quasigroupoid
+    Haskerwaul.Quasigroupoid.Associative
     Haskerwaul.Quasiorder
     Haskerwaul.Rack
     -- Haskerwaul.RebindableSyntax
@@ -416,6 +430,9 @@ library
     Haskerwaul.Ring.Boolean
     Haskerwaul.Ring.Commutative
     Haskerwaul.Ring.Nonunital
+    Haskerwaul.Semicategory
+    Haskerwaul.Semicategory.Laws
+    Haskerwaul.Semifunctor
     Haskerwaul.Semigroup
     Haskerwaul.Semigroup.Commutative
     Haskerwaul.Semigroup.Commutative.Laws
@@ -425,8 +442,7 @@ library
     Haskerwaul.Semilattice.Bounded
     Haskerwaul.Semilattice.Bounded.Laws
     Haskerwaul.Semilattice.Laws
-    Haskerwaul.Semigroupoid
-    Haskerwaul.Semigroupoid.Laws
+    Haskerwaul.Semipresheaf
     Haskerwaul.Semiring
     Haskerwaul.Semiring.Idempotent
     Haskerwaul.Semiring.MaxPlus

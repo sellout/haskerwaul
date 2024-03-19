@@ -1,4 +1,5 @@
 {-# LANGUAGE Safe #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 module Haskerwaul.Functor.Faithful.Full
   ( module Haskerwaul.Functor.Faithful.Full,
@@ -15,7 +16,7 @@ import Haskerwaul.Functor.Faithful
 import Haskerwaul.Functor.Full
 import Haskerwaul.Isomorphism
 import Haskerwaul.Object
-import Haskerwaul.Semigroupoid
+import Haskerwaul.Semicategory
 
 -- | [nLab](https://ncatlab.org/nlab/show/full+and+faithful+functor)
 class

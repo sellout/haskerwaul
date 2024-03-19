@@ -25,7 +25,7 @@ instance
   map = Data.Functor.fmap
 ```
 
-Which also means that if you're defining your own instances, you'd be well-served to implement them using the type classes from base whenever possible, getting a bunch of Haskerwaul instances for free (e.g., if you implement `Control.Category.Category`, I think you must get at least three separate Haskerwaul instances ([`Magma`](./src/Haskerwaul/Magma.hs), [`Semigroup`](./src/Haskerwaul/Semigroup.hs), and [`UnitalMagma`](./src/Haskerwaul/Magma/Unital.hs) -- things like [`Semigroupoid`](./src/Haskerwaul/Semigroupoid.hs) and [`Category`](./src/Haskerwaul/Category.hs) are either type synonyms or have universal instances already defined. Once you have the instance from base, you can implement richer classes like `CartesianClosedCategory` using Haskerwaul's classes.
+Which also means that if you're defining your own instances, you'd be well-served to implement them using the type classes from base whenever possible, getting a bunch of Haskerwaul instances for free (e.g., if you implement `Control.Category.Category`, I think you must get at least three separate Haskerwaul instances ([`Magma`](./src/Haskerwaul/Magma.hs), [`Semigroup`](./src/Haskerwaul/Semigroup.hs), and [`UnitalMagma`](./src/Haskerwaul/Magma/Unital.hs) -- things like [`Semicategory`](./src/Haskerwaul/Semicategory.hs) and [`Category`](./src/Haskerwaul/Category.hs) are either type synonyms or have universal instances already defined. Once you have the instance from base, you can implement richer classes like `CartesianClosedCategory` using Haskerwaul's classes.
 
 However, this library does not play well with `Prelude`, co-opting a bunch of the same names, so it's helpful to either enable `NoImplicitPrelude` or import Haskerwaul qualified. Unfortunately, [the `Haskerwaul` module](./src/Haskerwaul.hs) is not quite a custom Prelude and I've avoided expanding it into one, because there are a lot of points of contention when designing a Prelude. But perhaps it can be used as the basis of one.
 
@@ -61,6 +61,23 @@ There are a lot of one-character type parameters here, but we try to use them at
 - `c`, `c'`, `d`, ... -- categories representing the arrows of the category (kind `ok -> ok -> Type`)
 - `a`, `b`, `x`, `y`, `z` -- objects in a category and/or elements of those objects (kind `ok`)
 - `t`, `t'`, `ct`, `dt` -- tensors (kind `ok -> ok -> ok`) in a category (`ct` and `dt` distinguish when we're talking about tensors in categories `c` and `d`)
+
+## [horizontal categorification](https://ncatlab.org/nlab/show/horizontal+categorification) / oidification
+
+Horizontally categorified concepts are generally defined via type synonyms.
+E.g., the most central concept in this library is `Category`, which is defined
+simply as
+
+```haskell
+type Category = HorizontalCategorification Monoid
+```
+
+See [the
+examples](https://ncatlab.org/nlab/show/horizontal+categorification#examples)
+for a more comprehensive list.
+
+In cases where we can't simply use type synonyms, the Haddock should describe
+why.
 
 ## law checking
 

@@ -3,6 +3,7 @@
 
 module Haskerwaul.Transformation.Dinatural where
 
+import Data.Type.Equality ((:~:))
 import Haskerwaul.Category.MonoidalUnit
 import Haskerwaul.Constraint
 import Haskerwaul.Object
@@ -30,3 +31,15 @@ instance
 
 -- | Like `Const`, but a bifunctor.
 newtype BConst a b c = BConst {getBConst :: a}
+
+-- | Composition of profunctors, a tensor in profunctor categories.
+--
+--  __TODO__: Is this any more general than the version in profunctors? If not,
+--            maybe we should depend on that library (although maybe that
+--            introduces too many other conflicting definitions).
+data Procompose c d a b = forall z. Procompose (z `c` b) (a `d` z)
+
+-- | The correct unit here is the Hom functor, but I don't know how to define
+--   that, and this approach seems to work well enough for now.
+instance MonoidalCategory' (DinaturalTransformation (->)) Procompose where
+  type Unit (DinaturalTransformation (->)) Procompose = (:~:)

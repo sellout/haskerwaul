@@ -14,7 +14,7 @@ import Data.Type.Equality (type (~))
 #endif
 import Haskerwaul.Constraint
 import Haskerwaul.Object
-import Haskerwaul.Semigroupoid
+import Haskerwaul.Semicategory
 import Haskerwaul.Transformation.Dinatural
 import Haskerwaul.Transformation.Natural
 

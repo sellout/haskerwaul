@@ -32,6 +32,8 @@ type instance Ob HH = All
 instance Magma (DinaturalTransformation (->)) Procompose HH where
   op = DT (\(Procompose (HH f) (HH g)) -> HH (runDT op (Procompose f g)))
 
+instance FlexibleMagma (DinaturalTransformation (->)) Procompose HH
+
 instance Semigroup (DinaturalTransformation (->)) Procompose HH
 
 instance UnitalMagma (DinaturalTransformation (->)) Procompose HH where
@@ -88,6 +90,8 @@ instance (Bifunctor (->) (->) (->) f) => Bifunctor HH HH HH f where
 
 instance (Magma (->) t a) => Magma HH t a where
   op = HH op
+
+instance (FlexibleMagma (->) t a) => FlexibleMagma HH t a
 
 instance (Semigroup (->) t a) => Semigroup HH t a
 

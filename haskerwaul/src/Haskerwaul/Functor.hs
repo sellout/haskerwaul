@@ -1,8 +1,8 @@
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE Safe #-}
-{-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE UndecidableSuperClasses #-}
 
 -- | Haskerwaul also provides functors that aren't implementable via the type
 --   class here. E.g., there is `Haskerwaul.Bifunctor.Bifunctor` and
@@ -11,21 +11,31 @@
 --   functor from the subcategory, but has no type constructor to allow an
 --   instance of `Functor`. Likewise, `Control.Arrow.Arrow` has a functor
 --  `Control.Arrow.arr` from __Hask__ to the `Control.Arrow.Arrow` instance.
-module Haskerwaul.Functor where
+module Haskerwaul.Functor
+  ( module Haskerwaul.Functor,
 
-import Data.Constraint (Dict (..), mapDict, (:-) (..))
+    -- * extended modules
+    module Haskerwaul.Semifunctor,
+  )
+where
+
+import Data.Constraint (Dict (..), (:-) (..))
 import qualified Data.Functor as Base
 import Data.Functor.Compose (Compose (..))
 import Data.Functor.Const (Const (..))
 #if MIN_VERSION_base(4, 17, 0)
 import Data.Type.Equality (type (~))
 #endif
+import Haskerwaul.Category
 import Haskerwaul.Object
-import Haskerwaul.Semigroupoid
+import Haskerwaul.Semifunctor
 
--- | [nLab](https://ncatlab.org/nlab/show/functor)
-class (FOb (Ob c) (Ob d) f) => Functor c d f where
-  map :: (Ob c a, Ob c b) => a `c` b -> f a `d` f b
+-- |
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/functor)
+class (Category c, Semifunctor c d f) => Functor c d f
 
 -- | The composition of two functors is always a functor.
 --
@@ -34,10 +44,8 @@ class (FOb (Ob c) (Ob d) f) => Functor c d f where
 --          fixable with something like defining our own `Compose` that carries
 --          the "middle" category around.
 instance
-  (b ~ (->), c ~ (->), Semigroupoid c, Functor b c f, Functor a b g) =>
+  (b ~ (->), c ~ (->), Semicategory c, Functor b c f, Functor a b g) =>
   Functor a c (Compose f g)
-  where
-  map f = Compose . map @b (map @_ @b f) . getCompose
 
 -- | __NB__: This instance only exists to eliminate the ambiguity between the
 --          `Base.Functor` constrained instance and the above instance when
@@ -46,21 +54,18 @@ instance
   {-# OVERLAPPING #-}
   (Functor (->) (->) f, Functor (->) (->) g) =>
   Functor (->) (->) (Compose f g)
-  where
-  map f = Compose . map @(->) (map @_ @(->) f) . getCompose
 
 -- | This encodes that a composition of functors is always a functor, and has a
 --   similar restriction to the @`Functor` (`Compose` f g)@ instance.
 instance
-  (b ~ (->), c ~ (->), Semigroupoid c) =>
+  (b ~ (->), c ~ (->), Semicategory c) =>
   BOb (Functor b c) (Functor a b) (Functor a c) Compose
   where
   inB = Sub Dict
 
 -- | `Dict` is a `Haskerwaul.Functor.Faithful.Full.FullFaithfulFunctor` between
 --   the category of constraints and __Hask__.
-instance Functor (:-) (->) Dict where
-  map = mapDict
+instance Functor (:-) (->) Dict
 
 -- | This instance lifts all instances of `Base.Functor` to _our_ `Functor`. If
 --   you're trying to define an instance where the source and destination
@@ -69,12 +74,9 @@ instance Functor (:-) (->) Dict where
 --
 --  __NB__: This instance can be @INCOHERENT@ with an instance like @`Functor` c
 --          (->) Foo@, in which case we prefer the other instance.
-instance {-# INCOHERENT #-} (Base.Functor f) => Functor (->) (->) f where
-  map = Base.fmap
+instance {-# INCOHERENT #-} (Base.Functor f) => Functor (->) (->) f
 
 -- | The constant functor to a particular object in the target category.
 instance
-  (d ~ (->), FOb (Ob c) (Ob d) (Const dOb)) =>
+  (d ~ (->), Category c, FOb (Ob c) (Ob d) (Const dOb)) =>
   Functor c d (Const dOb)
-  where
-  map _ = Const . getConst

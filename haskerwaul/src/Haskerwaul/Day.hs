@@ -15,6 +15,7 @@ import Data.Type.Equality (type (~))
 import Haskerwaul.Bifunctor
 import Haskerwaul.Category.Closed.Cartesian
 import Haskerwaul.Category.Monoidal.Cartesian
+import Haskerwaul.Constraint
 import Haskerwaul.Duoid.Components
 import Haskerwaul.Functor.Monoidal.Lax
 import Haskerwaul.Isomorphism
@@ -23,7 +24,8 @@ import Haskerwaul.Subcategory.Full
 import Haskerwaul.Transformation.Natural
 
 -- | [nLab](https://ncatlab.org/nlab/show/Day+convolution)
-data Day c ct dt f g a = forall x y. (Ob c x, Ob c y) => Day (dt (f x) (g y)) (ct x y `c` a)
+data Day c ct dt f g a
+  = forall x y. (Ob c x, Ob c y) => Day (dt (f x) (g y)) (ct x y `c` a)
 
 -- | Functor categories have `Day` as a monoidal tensor.
 --
@@ -84,15 +86,24 @@ instance
 
 instance
   (c ~ (->), d ~ (->), LaxMonoidalFunctor c ct d dt f) =>
-  Semigroup (NaturalTransformation c d) (Day c ct dt) f
-
-instance (d ~ (->), Semigroupoid c) => Functor c d (Day c ct dt f g) where
-  map f (Day t fn) = Day t (f . fn)
+  FlexibleMagma (NaturalTransformation c d) (Day c ct dt) f
 
 instance
-  (d ~ (->), Semigroupoid c) =>
-  BOb (Functor c d) (Functor c d) (Functor c d) (Day c ct dt)
+  (c ~ (->), d ~ (->), LaxMonoidalFunctor c ct d dt f) =>
+  Semigroup (NaturalTransformation c d) (Day c ct dt) f
+
+instance (d ~ (->), Semicategory c) => Semifunctor c d (Day c ct dt f g) where
+  map f (Day t fn) = Day t (f . fn)
+
+instance (d ~ (->), Category c) => Functor c d (Day c ct dt f g)
+
+instance
+  (d ~ (->), Semicategory c) =>
+  BOb All All (Semifunctor c d) (Day c ct dt)
   where
+  inB = Sub Dict
+
+instance (d ~ (->), Category c) => BOb All All (Functor c d) (Day c ct dt) where
   inB = Sub Dict
 
 instance

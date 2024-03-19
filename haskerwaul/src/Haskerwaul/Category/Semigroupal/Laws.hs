@@ -7,12 +7,10 @@ import Data.Constraint ((\\))
 import Haskerwaul.Category.Laws
 import Haskerwaul.Category.Semigroupal
 import Haskerwaul.Isomorphism.Laws
-import Haskerwaul.Monoid.Laws
 import Haskerwaul.Object
-import Haskerwaul.Transformation.Dinatural
 
 data SemigroupalCategoryLaws c t = SemigroupalCategoryLaws
-  { category :: MonoidLaws (DinaturalTransformation (->)) Procompose c,
+  { category :: CategoryLaws c,
     associative ::
       forall x y z.
       (Ob c x, Ob c y, Ob c z) =>

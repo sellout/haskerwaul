@@ -24,9 +24,11 @@ module Haskerwaul
     module Haskerwaul.Band.Rectangular,
 
     -- * categories
+    module Haskerwaul.Categorification.Horizontal,
     module Haskerwaul.Category,
     module Haskerwaul.Category.Bicartesian,
     module Haskerwaul.Category.Boolean,
+    module Haskerwaul.Category.Cancellative,
     module Haskerwaul.Category.Coherent,
     module Haskerwaul.Category.CoKleisli,
     module Haskerwaul.Category.Complete.Finitely,
@@ -42,6 +44,7 @@ module Haskerwaul
     module Haskerwaul.Category.Opposite,
     module Haskerwaul.Category.Over,
     module Haskerwaul.Category.Pointed,
+    module Haskerwaul.Category.Presheaves,
     module Haskerwaul.Category.Product,
     module Haskerwaul.Category.Regular,
     module Haskerwaul.Category.Ribbon,
@@ -50,6 +53,7 @@ module Haskerwaul
     module Haskerwaul.Category.Rig.ColaxDistributive.Left,
     module Haskerwaul.Category.Rig.ColaxDistributive.Right,
     module Haskerwaul.Category.Semigroupal,
+    module Haskerwaul.Category.Small,
     module Haskerwaul.Category.Small.Locally,
     module Haskerwaul.Category.Terminal,
     module Haskerwaul.Category.Under,
@@ -119,7 +123,10 @@ module Haskerwaul
     module Haskerwaul.Functor.Hom,
     module Haskerwaul.Functor.Hom.Internal,
     module Haskerwaul.Functor.Strong,
+    module Haskerwaul.Presheaf,
     module Haskerwaul.Profunctor,
+    module Haskerwaul.Semifunctor,
+    module Haskerwaul.Semipresheaf,
 
     -- ** monoidal functors
     module Haskerwaul.Functor.Monoidal.Closed,
@@ -173,15 +180,20 @@ module Haskerwaul
 
     -- * loops
     module Haskerwaul.Loop,
+    module Haskerwaul.Loopoid,
 
     -- * magmas
     module Haskerwaul.Magma,
     module Haskerwaul.Magma.Commutative,
+    module Haskerwaul.Magma.Flexible,
     module Haskerwaul.Magma.Invertible,
     module Haskerwaul.Magma.Invertible.Commutative,
     module Haskerwaul.Magma.Invertible.Left,
     module Haskerwaul.Magma.Invertible.Right,
     module Haskerwaul.Magma.Unital,
+    module Haskerwaul.Magmoid,
+    module Haskerwaul.Magmoid.Flexible,
+    module Haskerwaul.Magmoid.Unital,
 
     -- * meadows
     module Haskerwaul.Meadow,
@@ -204,6 +216,7 @@ module Haskerwaul
     module Haskerwaul.Bimonoid,
     module Haskerwaul.Comonoid,
     module Haskerwaul.Monoid,
+    module Haskerwaul.Monoid.Cancellative,
     module Haskerwaul.Monoid.Commutative,
     module Haskerwaul.Monoid.Commutative.Monus,
     module Haskerwaul.Monoid.Frobenius,
@@ -247,11 +260,14 @@ module Haskerwaul
 
     -- * quasigroups
     module Haskerwaul.Quasigroup,
+    module Haskerwaul.Quasigroup.Associative,
     module Haskerwaul.Quasigroup.Commutative,
     module Haskerwaul.Quasigroup.Invertible,
     module Haskerwaul.Quasigroup.Invertible.Commutative,
     module Haskerwaul.Quasigroup.Left,
     module Haskerwaul.Quasigroup.Right,
+    module Haskerwaul.Quasigroupoid,
+    module Haskerwaul.Quasigroupoid.Associative,
 
     -- * racks
     module Haskerwaul.Quandle,
@@ -297,6 +313,7 @@ module Haskerwaul
     module Haskerwaul.Ring.Nonunital,
 
     -- * semigroups
+    module Haskerwaul.Semicategory,
     module Haskerwaul.Semigroup,
     module Haskerwaul.Semigroup.Commutative,
     module Haskerwaul.Semigroup.Inverse,
@@ -304,7 +321,6 @@ module Haskerwaul
     -- * semilattices
     module Haskerwaul.Semilattice,
     module Haskerwaul.Semilattice.Bounded,
-    module Haskerwaul.Semigroupoid,
 
     -- * semirings
     module Haskerwaul.Semiring,
@@ -344,9 +360,11 @@ import Haskerwaul.Band.LeftRegular
 import Haskerwaul.Band.Rectangular
 import Haskerwaul.Bifunctor
 import Haskerwaul.Bimonoid
+import Haskerwaul.Categorification.Horizontal
 import Haskerwaul.Category
 import Haskerwaul.Category.Bicartesian
 import Haskerwaul.Category.Boolean
+import Haskerwaul.Category.Cancellative
 import Haskerwaul.Category.Closed
 import Haskerwaul.Category.Closed.Bicartesian
 import Haskerwaul.Category.Closed.Cartesian
@@ -382,6 +400,7 @@ import Haskerwaul.Category.MonoidalUnit
 import Haskerwaul.Category.Opposite
 import Haskerwaul.Category.Over
 import Haskerwaul.Category.Pointed
+import Haskerwaul.Category.Presheaves
 import Haskerwaul.Category.Product
 import Haskerwaul.Category.Regular
 import Haskerwaul.Category.Ribbon
@@ -390,6 +409,7 @@ import Haskerwaul.Category.Rig.ColaxDistributive
 import Haskerwaul.Category.Rig.ColaxDistributive.Left
 import Haskerwaul.Category.Rig.ColaxDistributive.Right
 import Haskerwaul.Category.Semigroupal
+import Haskerwaul.Category.Small
 import Haskerwaul.Category.Small.Locally
 import Haskerwaul.Category.Terminal
 import Haskerwaul.Category.Under
@@ -472,13 +492,18 @@ import Haskerwaul.Law.Reflexivity
 import Haskerwaul.Law.Symmetry
 import Haskerwaul.Loop
 import Haskerwaul.Loop.Commutative
+import Haskerwaul.Loopoid
 import Haskerwaul.Magma
 import Haskerwaul.Magma.Commutative
+import Haskerwaul.Magma.Flexible
 import Haskerwaul.Magma.Invertible
 import Haskerwaul.Magma.Invertible.Commutative
 import Haskerwaul.Magma.Invertible.Left
 import Haskerwaul.Magma.Invertible.Right
 import Haskerwaul.Magma.Unital
+import Haskerwaul.Magmoid
+import Haskerwaul.Magmoid.Flexible
+import Haskerwaul.Magmoid.Unital
 import Haskerwaul.Meadow
 import Haskerwaul.Meadow.Cancellation
 import Haskerwaul.Meadow.NonInvolutive
@@ -490,6 +515,7 @@ import Haskerwaul.Monad
 import Haskerwaul.Monad.Codensity
 import Haskerwaul.Monad.Frobenius
 import Haskerwaul.Monoid
+import Haskerwaul.Monoid.Cancellative
 import Haskerwaul.Monoid.Commutative
 import Haskerwaul.Monoid.Commutative.Monus
 import Haskerwaul.Monoid.Frobenius
@@ -517,16 +543,20 @@ import Haskerwaul.Order.Partial
 import Haskerwaul.Order.Prefix
 import Haskerwaul.Order.Total
 import Haskerwaul.Preorder
+import Haskerwaul.Presheaf
 import Haskerwaul.Profunctor
 import Haskerwaul.Pullback
 import Haskerwaul.Pushout
 import Haskerwaul.Quandle
 import Haskerwaul.Quasigroup
+import Haskerwaul.Quasigroup.Associative
 import Haskerwaul.Quasigroup.Commutative
 import Haskerwaul.Quasigroup.Invertible
 import Haskerwaul.Quasigroup.Invertible.Commutative
 import Haskerwaul.Quasigroup.Left
 import Haskerwaul.Quasigroup.Right
+import Haskerwaul.Quasigroupoid
+import Haskerwaul.Quasigroupoid.Associative
 import Haskerwaul.Quasiorder
 import Haskerwaul.Rack
 import Haskerwaul.Relation.Apartness
@@ -555,12 +585,14 @@ import Haskerwaul.Ring
 import Haskerwaul.Ring.Boolean
 import Haskerwaul.Ring.Commutative
 import Haskerwaul.Ring.Nonunital
+import Haskerwaul.Semicategory
+import Haskerwaul.Semifunctor
 import Haskerwaul.Semigroup
 import Haskerwaul.Semigroup.Commutative
 import Haskerwaul.Semigroup.Inverse
-import Haskerwaul.Semigroupoid
 import Haskerwaul.Semilattice
 import Haskerwaul.Semilattice.Bounded
+import Haskerwaul.Semipresheaf
 import Haskerwaul.Semiring
 import Haskerwaul.Semiring.Idempotent
 import Haskerwaul.Semiring.MaxPlus

@@ -1,4 +1,5 @@
 {-# LANGUAGE Safe #-}
+{-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableInstances #-}
 {-# LANGUAGE UndecidableSuperClasses #-}
 
@@ -11,6 +12,7 @@ module Haskerwaul.Magma.Unital
   )
 where
 
+import qualified Control.Category as Base
 import Data.Bool (Bool (..))
 import Data.Constraint (Dict (..), refl, (:-) (..))
 import Data.Either (Either)
@@ -18,14 +20,17 @@ import Data.Int (Int, Int16, Int32, Int64, Int8)
 import Data.Kind (Constraint)
 import qualified Data.Monoid as Base
 import Data.Proxy (Proxy (..))
+import Data.Type.Equality ((:~:) (Refl))
 import qualified Data.Void as Base
 import Data.Word (Word, Word16, Word32, Word64, Word8)
+import Haskerwaul.Categorification.Horizontal
 import Haskerwaul.Category.MonoidalUnit
 import Haskerwaul.Constraint
 import Haskerwaul.Lattice.Components
 import Haskerwaul.Magma
 import Haskerwaul.Object
 import Haskerwaul.Semiring.Components
+import Haskerwaul.Transformation.Dinatural
 import Numeric.Natural (Natural)
 import Prelude (Bounded (..), Integer)
 
@@ -216,3 +221,34 @@ instance UnitalMagma (->) (,) (Multiplicative Word64) where
 
 instance UnitalMagma (:-) Combine (() :: Constraint) where
   unit Proxy = refl
+
+-- __NB__: These definitions belong in "Haskerwaul.Magma.Unital", but they’d be
+--         orphans there.
+
+-- | All `Base.Category` instances are also
+--  `Haskerwaul.Magma.Unital.UnitalMagmoid` instances.
+instance
+  {-# OVERLAPPABLE #-}
+  (Base.Category c) =>
+  UnitalMagma (DinaturalTransformation (->)) Procompose c
+  where
+  unit Proxy = DT (\Refl -> Base.id)
+
+-- | If /C/ is a `Haskerwaul.Magma.Unital.UnitalMagmoid`, then so are /C/-valued
+--   bifunctors.
+instance
+  (HorizontalCategorification UnitalMagma c) =>
+  UnitalMagma
+    (DinaturalTransformation (->))
+    Procompose
+    (DinaturalTransformation c)
+  where
+  unit Proxy = DT (\Refl -> DT (runDT (unit (Proxy :: Proxy Procompose)) Refl))
+
+-- | a discrete groupoid
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/discrete+category)
+instance UnitalMagma (DinaturalTransformation (->)) Procompose (:~:) where
+  unit Proxy = DT (runDT (unit (Proxy :: Proxy Procompose)) Refl)

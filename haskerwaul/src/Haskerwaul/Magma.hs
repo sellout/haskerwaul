@@ -1,4 +1,5 @@
 {-# LANGUAGE Safe #-}
+{-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableInstances #-}
 {-# LANGUAGE UndecidableSuperClasses #-}
 
@@ -15,10 +16,13 @@ import qualified Data.Monoid as Base
 import qualified Data.Ord as Base
 import qualified Data.Semigroup as Base
 import qualified Data.Tuple as Base
+import Data.Type.Equality ((:~:) (Refl))
 import Data.Word (Word, Word16, Word32, Word64, Word8)
+import Haskerwaul.Categorification.Horizontal
 import Haskerwaul.Constraint
 import Haskerwaul.Lattice.Components
 import Haskerwaul.Object
+import Haskerwaul.Transformation.Dinatural
 import Numeric.Natural (Natural)
 import Prelude (Integer)
 
@@ -135,3 +139,39 @@ instance Magma (->) (,) (Meet Word64) where
 
 instance Magma (:-) Combine (() :: Constraint) where
   op = top
+
+-- __NB__: These definitions belong in "Haskerwaul.Magmoid", but they’d be
+--         orphans there.
+
+-- | Just a bit of sugar over `op`, when it's used categorcally.
+(.) ::
+  (Magma (DinaturalTransformation (->)) Procompose c) =>
+  z `c` b ->
+  a `c` z ->
+  a `c` b
+f . g = runDT op (Procompose f g)
+
+-- | All `Base.Category` instances are also `Haskerwaul.Magmoid.Magmoid`
+--   instances.
+instance
+  {-# OVERLAPPABLE #-}
+  (Base.Category c) =>
+  Magma (DinaturalTransformation (->)) Procompose c
+  where
+  op = DT (\(Procompose f g) -> f Base.. g)
+
+-- | If /C/ is a `Haskerwaul.Magmoid.Magmoid`, then so are /C/-valued
+--   bifunctors.
+instance
+  (HorizontalCategorification Magma c) =>
+  Magma (DinaturalTransformation (->)) Procompose (DinaturalTransformation c)
+  where
+  op = DT (\(Procompose (DT f) (DT g)) -> DT (f . g))
+
+-- | a discrete groupoid
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/discrete+category)
+instance Magma (DinaturalTransformation (->)) Procompose (:~:) where
+  op = DT (\(Procompose Refl Refl) -> Refl)

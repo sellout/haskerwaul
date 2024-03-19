@@ -5,7 +5,7 @@ module Haskerwaul.Magma.Commutative
   ( module Haskerwaul.Magma.Commutative,
 
     -- * extended modules
-    module Haskerwaul.Magma,
+    module Haskerwaul.Magma.Flexible,
   )
 where
 
@@ -14,7 +14,7 @@ import Data.Either (Either)
 import Data.Int (Int, Int16, Int32, Int64, Int8)
 import Data.Word (Word, Word16, Word32, Word64, Word8)
 import Haskerwaul.Lattice.Components
-import Haskerwaul.Magma
+import Haskerwaul.Magma.Flexible
 import Haskerwaul.Semiring.Components
 import Numeric.Natural (Natural)
 import Prelude (Integer)
@@ -23,7 +23,7 @@ import Prelude (Integer)
 --
 -- = laws
 --   [`Haskerwaul.Law.Commutativity.commutativity`]: @`op` x y == `op` y x@
-class (Magma c t a) => CommutativeMagma c t a
+class (FlexibleMagma c t a) => CommutativeMagma c t a
 
 instance CommutativeMagma (->) Either a
 

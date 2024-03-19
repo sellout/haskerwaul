@@ -51,21 +51,26 @@ type instance Ob (Opposite c) = Ob c
 --   inB :: forall x y. (cOb x, dOb y, BOb cOb dOb eOb (c x y)) :- BOb dOb cOb eOb (Op c x y)
 --   inB = Sub (Dict \\ inB @cOb @dOb @eOb @c @x @y)
 
--- | If /C/ is a `Semigroupoid`, then so is /C^op/.
+-- | If /C/ is a `Semicategory`, then so is /C^op/.
 instance
-  (Magma (DinaturalTransformation (->)) Procompose c) =>
+  (Magmoid c) =>
   Magma (DinaturalTransformation (->)) Procompose (Opposite c)
   where
   op = DT (\(Procompose (Opposite f) (Opposite g)) -> Opposite (g . f))
 
--- | If /C/ is a `Semigroupoid`, then so is /C^op/.
+-- | If /C/ is a `FlexibleMagmoid`, then so is /C^op/.
 instance
-  (Semigroup (DinaturalTransformation (->)) Procompose c) =>
+  (FlexibleMagmoid c) =>
+  FlexibleMagma (DinaturalTransformation (->)) Procompose (Opposite c)
+
+-- | If /C/ is a `Semicategory`, then so is /C^op/.
+instance
+  (Semicategory c) =>
   Semigroup (DinaturalTransformation (->)) Procompose (Opposite c)
 
 -- | If /C/ is a `Category`, then so is /C^op/.
 instance
-  (UnitalMagma (DinaturalTransformation (->)) Procompose c) =>
+  (UnitalMagmoid c) =>
   UnitalMagma (DinaturalTransformation (->)) Procompose (Opposite c)
   where
   unit Proxy = DT (\Refl -> Opposite id)
@@ -146,22 +151,28 @@ isomorphismOp =
     (DT (Base.uncurry Iso . (Opposite . from &&& Opposite . to)))
     (DT (Base.uncurry Iso . (opposite . from &&& opposite . to)))
 
+-- | Semifunctors are self-dual.
+instance
+  {-# OVERLAPPABLE #-}
+  (Semifunctor c d f) =>
+  Semifunctor (Opposite c) (Opposite d) f
+  where
+  map (Opposite f) = Opposite (map f)
+
 -- | Functors are self-dual.
 instance
   {-# OVERLAPPABLE #-}
   (Functor c d f) =>
   Functor (Opposite c) (Opposite d) f
-  where
-  map (Opposite f) = Opposite (map f)
 
 instance
-  (Semigroupoid c1, Bifunctor c1 c2 d t) =>
+  (Semicategory c1, Bifunctor c1 c2 d t) =>
   Bifunctor (Opposite c1) (Opposite c2) (Opposite d) t
   where
   bimap f g = Opposite (bimap (opposite f) (opposite g))
 
--- | The arrow of every `Semigroupoid` is a `Haskerwaul.Profunctor.Profunctor`.
-instance (Semigroupoid c) => Bifunctor (Opposite c) c (->) c where
+-- | The arrow of every `Semicategory` is a `Haskerwaul.Profunctor.Profunctor`.
+instance (Semicategory c) => Bifunctor (Opposite c) c (->) c where
   bimap f g fn = g . fn . opposite f
 
 -- instance Bifunctor (Opposite (:-)) (:-) (:-) (:=>) where
@@ -205,6 +216,11 @@ instance
   Magma (Opposite c) t u
   where
   op = Opposite (from rightIdentity)
+
+instance
+  {-# OVERLAPPABLE #-}
+  (MonoidalCategory c t, u ~ Unit c t) =>
+  FlexibleMagma (Opposite c) t u
 
 instance
   {-# OVERLAPPABLE #-}
@@ -273,6 +289,10 @@ instance
   Magma (Opposite (NaturalTransformation c c)) Compose (c u)
   where
   op = Opposite (NT (Compose . const))
+
+instance
+  (c ~ (->), ct ~ (,), MonoidalCategory c ct, u ~ Unit c ct) =>
+  FlexibleMagma (Opposite (NaturalTransformation c c)) Compose (c u)
 
 instance
   (c ~ (->), ct ~ (,), MonoidalCategory c ct, u ~ Unit c ct) =>

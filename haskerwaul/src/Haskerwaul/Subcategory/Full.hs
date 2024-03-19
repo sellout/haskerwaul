@@ -63,13 +63,17 @@ instance Subcategory (FullSubcategory ob c) c where
   inclusion (FS f) = f
 
 instance
-  (Magma (DinaturalTransformation (->)) Procompose c) =>
+  (Magmoid c) =>
   Magma (DinaturalTransformation (->)) Procompose (FullSubcategory ob c)
   where
   op = DT (\(Procompose (FS f) (FS g)) -> FS (f . g))
 
 instance
-  (Semigroup (DinaturalTransformation (->)) Procompose c) =>
+  (FlexibleMagmoid c) =>
+  FlexibleMagma (DinaturalTransformation (->)) Procompose (FullSubcategory ob c)
+
+instance
+  (Semicategory c) =>
   Semigroup (DinaturalTransformation (->)) Procompose (FullSubcategory ob c)
 
 instance
@@ -79,7 +83,7 @@ instance
   type Unit (FullSubcategory ob c) t = Unit c t
 
 instance
-  (UnitalMagma (DinaturalTransformation (->)) Procompose c) =>
+  (UnitalMagmoid c) =>
   UnitalMagma (DinaturalTransformation (->)) Procompose (FullSubcategory ob c)
   where
   unit Proxy = DT (\Refl -> FS id)
@@ -128,13 +132,13 @@ instance
 
 instance
   {-# OVERLAPPABLE #-}
-  (Semigroupoid c, Bifunctor c d e t, BOb cOb dOb eOb t) =>
+  (Semicategory c, Bifunctor c d e t, BOb cOb dOb eOb t) =>
   Bifunctor (FullSubcategory cOb c) (FullSubcategory dOb d) (FullSubcategory eOb e) t
   where
   bimap (FS f) (FS g) = FS (bimap f g)
 
 instance
-  (Semigroupoid c, Bifunctor (Opposite c) d e t, BOb cOb dOb eOb t) =>
+  (Semicategory c, Bifunctor (Opposite c) d e t, BOb cOb dOb eOb t) =>
   Bifunctor (Opposite (FullSubcategory cOb c)) (FullSubcategory dOb d) (FullSubcategory eOb e) t
   where
   bimap (Opposite (FS f)) (FS g) = FS (bimap (Opposite f) g)
@@ -174,12 +178,19 @@ instance
 
 -- | See, `Set.Set` /is/ a `Functor`.
 instance
-  Functor
+  Semifunctor
     (FullSubcategory Base.Ord (->))
     (FullSubcategory Base.Ord (->))
     Set.Set
   where
   map = FS . Set.map . inclusion
+
+-- | See, `Set.Set` /is/ a `Functor`.
+instance
+  Functor
+    (FullSubcategory Base.Ord (->))
+    (FullSubcategory Base.Ord (->))
+    Set.Set
 
 -- | Like a `FullSubcategory`, this adds a constraint to a category, but it does
 --   it without the possibility of nesting `FullSubcategory` constructors. I.e.,
@@ -223,6 +234,22 @@ instance
   Magma (Opposite (FullSubcategory ob c)) t a
   where
   op = Opposite (FS (opposite op))
+
+instance
+  ( SemigroupalCategory (FullSubcategory ob c) t,
+    ob a,
+    BOb ob ob ob t,
+    FlexibleMagma c t a
+  ) =>
+  FlexibleMagma (FullSubcategory ob c) t a
+
+instance
+  ( SemigroupalCategory (FullSubcategory ob c) t,
+    ob a,
+    BOb ob ob ob t,
+    FlexibleMagma (Opposite c) t a
+  ) =>
+  FlexibleMagma (Opposite (FullSubcategory ob c)) t a
 
 instance
   ( SemigroupalCategory (FullSubcategory ob c) t,
