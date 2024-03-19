@@ -26,7 +26,9 @@ import Haskerwaul.Semiring.Components
 import Haskerwaul.Topos.Elementary
 
 -- |
+--
 -- = laws
+--
 --   [`Haskerwaul.Law.Symmetry.symmetry`]: @`equiv` x y ==> `equiv` y x@
 --   [transitivity]: @`equiv` x y && `equiv` y z ==> `equiv` x z@
 class (HomogeneousRelation' c a) => PartialEquivalenceRelation c a

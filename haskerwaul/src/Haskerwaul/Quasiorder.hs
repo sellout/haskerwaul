@@ -24,6 +24,7 @@ import qualified Prelude as Base
 -- |
 --
 -- = laws
+--
 --   [irreflexive]: x≮x
 --   [transitive]: If x<y<z, then x<z
 --

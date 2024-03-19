@@ -31,7 +31,11 @@ import Haskerwaul.Object
 import Haskerwaul.Subcategory.Full
 import Haskerwaul.Transformation.Natural
 
--- | [nLab](https://ncatlab.org/nlab/show/duoidal+category)
+-- |
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/duoidal+category)
 --
 --   The other operations (@I → I ⋆ I@, @J ⋄ J → J@, and @I → J@) are implied by
 --   the `Monoid` and `Comonoid` constraints.

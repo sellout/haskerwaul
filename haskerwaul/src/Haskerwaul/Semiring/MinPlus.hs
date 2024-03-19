@@ -21,7 +21,11 @@ import Haskerwaul.Lattice.Bounded
 import Haskerwaul.Rig.Idempotent
 import Haskerwaul.Semiring.Idempotent
 
--- | [nLab](https://ncatlab.org/nlab/show/min-plus+algebra)
+-- |
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/min-plus+algebra)
 type MinPlusSemiring c t a = IdempotentSemiring c t (Meet a)
 
 -- A MinPlus semiring arises from the combination of a Hemiring and a

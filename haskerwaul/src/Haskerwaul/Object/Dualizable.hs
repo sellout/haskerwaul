@@ -51,7 +51,8 @@ psi ::
   Unit c t `c` t (LeftDual c t x) y
 psi g = second @c @c Proxy g . leftCounit
 
--- | This is like `trace` in that any morphism @x -> y@ is isomorphic to one @((), x) -> ((), y)@
+-- | This is like `Haskerwaul.Category.Monoidal.Traced.trace` in that any
+--   morphism @x -> y@ is isomorphic to one @((), x) -> ((), y)@
 trace' ::
   forall c t x.
   (BraidedMonoidalCategory c t, LeftDualizable c t x) =>

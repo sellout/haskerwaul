@@ -25,9 +25,10 @@ import Haskerwaul.Topos.Elementary
 -- |
 --
 -- = laws
---   [asymmetric]: @`lt` (x, y) ==> `not` (`lt` (y, x))@
---   [comparison]: if x<z, then x<y or y<z
---   [connectedness]: if x≮y and y≮x, then x=y
+--   [asymmetric]: @`lt` (x, y) ==> `Haskerwaul.Lattice.Complemented.Uniquelycomplement` (`lt` (y, x))@
+--   [comparison]: @`lt` x z ==> `Haskerwaul.Lattice.join` (`lt` x y) (`lt` y z)@
+--   [connectedness]:
+--     @`Haskerwaul.Lattice.meet` (`Haskerwaul.Lattice.Complemented.Uniquely.complement` (`lt` x y)) (`Haskerwaul.Lattice.Complemented.Uniquely.complement` (`lt` y x)) ==> `Haskerwaul.Relation.Equality.eq` x y@
 --
 --   Implies transitive and irreflexive.
 --
@@ -36,7 +37,8 @@ import Haskerwaul.Topos.Elementary
 -- - [nLab](https://ncatlab.org/nlab/show/linear+order)
 class (Quasiorder c a) => LinearOrder c a
 
-gt :: forall c a. (ElementaryTopos c, LinearOrder c a) => HomogeneousRelation c a
+gt ::
+  forall c a. (ElementaryTopos c, LinearOrder c a) => HomogeneousRelation c a
 gt = lt . to braid
 
 instance LinearOrder (->) ()
@@ -45,8 +47,11 @@ instance LinearOrder (->) Void
 
 -- |
 --
---  __NB__: `c` must be a `BooleanCategory` because this definition requires excluded middle.
-instance (c ~ (->), BooleanCategory c, TotalOrder c a) => LinearOrder c (Negate a)
+--  __NB__: @c@ must be a `BooleanCategory` because this definition requires
+--          excluded middle.
+instance
+  (c ~ (->), BooleanCategory c, TotalOrder c a) =>
+  LinearOrder c (Negate a)
 
 -- instance LinearOrder c a => HomogeneousRelation c (Negate a) where
 --   rel = not . lt . bimap negation negation . braid
@@ -57,8 +62,8 @@ instance (c ~ (->), BooleanCategory c, TotalOrder c a) => LinearOrder c (Negate 
 
 -- -- |
 -- --
--- --  __NB__: `c` must be a `BooleanCategory` because this definition requires excluded middle to
--- --          ensure totality.
+-- --  __NB__: @c@ must be a `BooleanCategory` because this definition requires
+-- --          excluded middle to ensure totality.
 -- instance (BooleanCategory c, LinearOrder c a) => TotalOrder c (Negate a)
 
 -- * operators

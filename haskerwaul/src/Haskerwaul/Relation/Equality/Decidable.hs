@@ -28,7 +28,11 @@ import Haskerwaul.Topos.Elementary
 import Numeric.Natural (Natural)
 import Prelude (Double, Float)
 
--- | [nLab](https://ncatlab.org/nlab/show/decidable+equality)
+-- |
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/decidable+equality)
 class (StableEquality c a) => DecidableEquality c a
 
 neq ::

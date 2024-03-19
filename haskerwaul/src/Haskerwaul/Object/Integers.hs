@@ -12,6 +12,7 @@ import Prelude (Integer)
 import qualified Prelude
 
 -- |
+--
 -- = references
 --
 -- - [nLab](https://ncatlab.org/nlab/show/integers+object)

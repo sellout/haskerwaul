@@ -25,6 +25,7 @@ import Haskerwaul.Transformation.Dinatural
 import Haskerwaul.Transformation.Natural
 
 -- |
+--
 -- = references
 --
 -- - [nLab](https://ncatlab.org/nlab/show/symmetric+monoidal+category)

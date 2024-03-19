@@ -20,9 +20,9 @@ import Prelude (Double, Float, Integer)
 -- | [nLab](https://ncatlab.org/nlab/show/apartness+relation)
 --
 -- = laws
---   [comparison]: @x `#` z ==> x `#` y \/ y `#` z@
---   [irreflexive]: @x `#` x == false@
---   [symmetric]: @x `#` y ==> y `#` x@
+--   [comparison]: @x # z ==> x # y \/ y # z@
+--   [irreflexive]: @x # x == false@
+--   [symmetric]: @x # y ==> y # x@
 class (InequalityRelation c a) => ApartnessRelation c a
 
 instance ApartnessRelation (->) ()

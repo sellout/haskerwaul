@@ -26,6 +26,7 @@ import Haskerwaul.Isomorphism
 import Haskerwaul.Object
 
 -- |
+--
 -- = references
 --
 -- - [nLab](https://ncatlab.org/nlab/show/colax-distributive+rig+category)

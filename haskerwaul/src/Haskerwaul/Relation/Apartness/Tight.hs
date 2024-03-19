@@ -14,15 +14,20 @@ where
 import Haskerwaul.Relation.Apartness
 import Haskerwaul.Relation.Inequality.Tight
 
--- | [nLab](https://ncatlab.org/nlab/show/apartness+relation)
---
---  __NB__: Instances for this are automatically coalesced.
+-- |
 --
 -- = laws
---   [comparison]: @x `#` z ==> x `#` y \/ y `#` z@
---   [connected]: @`eq` x y \/ `neq` x y@
---   [irreflexive]: @x `#` x == false@
---   [symmetric]: @x `#` y ==> y `#` x@
+--   [comparison]: @x # z ==> x # y \/ y # z@
+--   [connected]:
+--     @`Haskerwaul.Relation.Equality.eq` x y \/ `Haskerwaul.Relation.Equality.Decidable.neq` x y@
+--   [irreflexive]: @x # x == false@
+--   [symmetric]: @x # y ==> y # x@
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/apartness+relation)
+--
+--  __NB__: Instances for this are automatically coalesced.
 class
   (TightInequalityRelation c a, ApartnessRelation c a) =>
   TightApartnessRelation c a

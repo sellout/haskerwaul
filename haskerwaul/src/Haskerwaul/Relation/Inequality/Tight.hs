@@ -16,12 +16,17 @@ import Haskerwaul.Relation.Inequality
 import Numeric.Natural (Natural)
 import Prelude (Double, Float, Integer)
 
--- | [nLab](https://ncatlab.org/nlab/show/inequality+relation)
+-- |
 --
 -- = laws
---   [connected]: @`eq` x y \/ `neq` x y@
---   [irreflexive]: @x `neq` x == false@
---   [symmetric]: @x `neq` y ==> y `neq` x@
+--
+--   [connected]: @`Haskerwaul.Relation.Equality.eq` x y \/ `Haskerwaul.Relation.Equality.Decidable.neq` x y@
+--   [irreflexive]: @`Haskerwaul.Relation.Equality.Decidable.neq` x x == false@
+--   [symmetric]: @`Haskerwaul.Relation.Equality.Decidable.neq` x y ==> `Haskerwaul.Relation.Equality.Decidable.neq` y x@
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/inequality+relation)
 class (InequalityRelation c a) => TightInequalityRelation c a
 
 instance TightInequalityRelation (->) ()

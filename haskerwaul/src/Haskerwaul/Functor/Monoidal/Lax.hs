@@ -20,7 +20,11 @@ import Haskerwaul.Endofunctor
 import Haskerwaul.Functor
 import Haskerwaul.Object
 
--- | [nLab](https://ncatlab.org/nlab/show/monoidal+functor)
+-- |
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/monoidal+functor)
 class
   (MonoidalCategory c ct, MonoidalCategory d dt, Functor c d f) =>
   LaxMonoidalFunctor c ct d dt f
@@ -28,14 +32,17 @@ class
   epsilon :: Proxy c -> Proxy ct -> Proxy dt -> Unit d dt `d` f (Unit c ct)
   mu :: (Ob c x, Ob c y) => Proxy c -> dt (f x) (f y) `d` f (ct x y)
 
--- | `Applicative` is base's view of a `LaxMonoidalFunctor` on the Cartesian
---   product in __Hask__.
+-- | `Control.Applicative.Applicative` is base's view of a `LaxMonoidalFunctor`
+--   on the Cartesian product in __Hask__.
 instance (Base.Applicative f) => LaxMonoidalFunctor (->) (,) (->) (,) f where
   epsilon Proxy Proxy Proxy = Base.pure
   mu Proxy = uncurry (Base.liftA2 (,))
 
--- | `LaxMonoidalFunctors` on `Either` in __Hask__ are trivial.
-instance (Endofunctor (->) f) => LaxMonoidalFunctor (->) Either (->) Either f where
+-- | `LaxMonoidalFunctor`s on `Either` in __Hask__ are trivial.
+instance
+  (Endofunctor (->) f) =>
+  LaxMonoidalFunctor (->) Either (->) Either f
+  where
   epsilon Proxy Proxy Proxy = Base.absurd
   mu Proxy = \case
     Left fx -> map Left fx

@@ -8,7 +8,8 @@ import Haskerwaul.Category.MonoidalUnit
 import Haskerwaul.Constraint
 import Haskerwaul.Object
 
--- | Like `NaturalTransformation`, but over a bifunctor.
+-- | Like `Haskerwaul.Transformation.Natural.NaturalTransformation`, but over a
+--   bifunctor.
 --
 -- = resources
 --
@@ -18,7 +19,8 @@ newtype DinaturalTransformation d f g = DT {runDT :: forall a b. f a b `d` g a b
 
 type instance Ob (DinaturalTransformation _) = All
 
--- | Like `FTensor`, but lifted from the target category to a bifunctor.
+-- | Like `Haskerwaul.Transformation.Natural.FTensor`, but lifted from the
+--   target category to a bifunctor.
 --
 --  __NB__: With this definition, `d ~ (->)`, but that doesn't imply `dt ~ (,)`.
 newtype BTensor dt f g a b = BTensor {lowerBTensor :: dt (f a b) (g a b)}
@@ -29,7 +31,7 @@ instance
   where
   type Unit (DinaturalTransformation d) (BTensor dt) = BConst (Unit d dt)
 
--- | Like `Const`, but a bifunctor.
+-- | Like `Data.Functor.Const.Const`, but a bifunctor.
 newtype BConst a b c = BConst {getBConst :: a}
 
 -- | Composition of profunctors, a tensor in profunctor categories.

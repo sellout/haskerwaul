@@ -14,9 +14,9 @@ import Haskerwaul.Relation.Equality
 --   @b@ is commutative in the image of @a@.
 --
 --  __NB__: This should also be able to test the functor laws. If we specialize
---        * @c ~ `Haskerwaul.Transformation.Natural.DinaturalTransformation` (->)@
+--        * @c ~ `Haskerwaul.Transformation.Dinatural.DinaturalTransformation` (->)@
 --          and
---        * @t ~ `Procompose`@,
+--        * @t ~ `Haskerwaul.Transformation.Dinatural.Procompose`@,
 --
 --          leaving @a@ and @b@ to be morphisms in the source and target
 --          categories, respectively.

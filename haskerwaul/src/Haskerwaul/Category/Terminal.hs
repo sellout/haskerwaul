@@ -18,7 +18,11 @@ import Haskerwaul.Object
 import Haskerwaul.Object.Terminal
 import Haskerwaul.Transformation.Dinatural
 
--- | [nLab](https://ncatlab.org/nlab/show/terminal+category)
+-- |
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/terminal+category)
 --
 --  __NB__: This appears to have the same objects as @(->)@, but in this
 --          category, they're all isomorphic.
