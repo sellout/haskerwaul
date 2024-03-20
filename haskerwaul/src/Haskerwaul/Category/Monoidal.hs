@@ -14,7 +14,7 @@ module Haskerwaul.Category.Monoidal
 where
 
 import qualified Control.Category as Base
-import Data.Constraint (cls, ins, refl, top, trans, weaken1, weaken2, (&&&), (:-))
+import Data.Constraint (Dict (Dict), (:-) (Sub), type (&))
 import Data.Either (Either (..))
 import qualified Data.Either as Base
 import Data.Functor.Const (Const (..))
@@ -97,16 +97,10 @@ instance (MonoidalCategory c t) => MonoidalCategory (Isomorphism c) t where
   leftIdentity = Iso leftIdentity (reverse leftIdentity)
   rightIdentity = Iso rightIdentity (reverse rightIdentity)
 
-instance MonoidalCategory (:-) Combine where
-  leftIdentity = Iso (trans weaken2 cls) (trans ins (top &&& refl))
-  rightIdentity = Iso (trans weaken1 cls) (trans ins (refl &&& top))
+instance MonoidalCategory (:-) (&) where
+  leftIdentity = Iso (Sub Dict) (Sub Dict)
+  rightIdentity = Iso (Sub Dict) (Sub Dict)
 
 instance MonoidalCategory (NaturalTransformation c (:-)) CFProd where
-  leftIdentity =
-    Iso
-      (NT (trans weaken2 cls))
-      (NT (trans ins (trans ins top &&& refl)))
-  rightIdentity =
-    Iso
-      (NT (trans weaken1 cls))
-      (NT (trans ins (refl &&& trans ins top)))
+  leftIdentity = Iso (NT (Sub Dict)) (NT (Sub Dict))
+  rightIdentity = Iso (NT (Sub Dict)) (NT (Sub Dict))

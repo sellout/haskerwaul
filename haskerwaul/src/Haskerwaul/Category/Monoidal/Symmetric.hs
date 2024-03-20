@@ -12,7 +12,7 @@ module Haskerwaul.Category.Monoidal.Symmetric
   )
 where
 
-import Data.Constraint ((:-))
+import Data.Constraint ((:-), type (&))
 import Data.Either (Either (..))
 #if MIN_VERSION_base(4, 17, 0)
 import Data.Type.Equality (type (~))
@@ -53,7 +53,7 @@ instance
   (d ~ (->), dt ~ (,), SymmetricMonoidalCategory d dt) =>
   SymmetricMonoidalCategory (NaturalTransformation c d) (FTensor dt)
 
-instance SymmetricMonoidalCategory (:-) Combine
+instance SymmetricMonoidalCategory (:-) (&)
 
 instance SymmetricMonoidalCategory (NaturalTransformation c (:-)) CFProd
 

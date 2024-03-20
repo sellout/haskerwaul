@@ -8,7 +8,7 @@ module Haskerwaul.Magma where
 import qualified Control.Category as Base
 import qualified Data.Bifunctor as Base
 import Data.Bool (Bool)
-import Data.Constraint (Dict (..), top, (:-) (..))
+import Data.Constraint (Dict (..), top, (:-) (..), type (&))
 import Data.Either (Either (..))
 import Data.Int (Int, Int16, Int32, Int64, Int8)
 import Data.Kind (Constraint)
@@ -19,7 +19,6 @@ import qualified Data.Tuple as Base
 import Data.Type.Equality ((:~:) (Refl))
 import Data.Word (Word, Word16, Word32, Word64, Word8)
 import Haskerwaul.Categorification.Horizontal
-import Haskerwaul.Constraint
 import Haskerwaul.Lattice.Components
 import Haskerwaul.Object
 import Haskerwaul.Transformation.Dinatural
@@ -137,7 +136,7 @@ instance Magma (->) (,) (Join Word64) where
 instance Magma (->) (,) (Meet Word64) where
   op = Meet Base.. Base.uncurry Base.min Base.. Base.bimap getMeet getMeet
 
-instance Magma (:-) Combine (() :: Constraint) where
+instance Magma (:-) (&) (() :: Constraint) where
   op = top
 
 -- __NB__: These definitions belong in "Haskerwaul.Magmoid", but they’d be

@@ -12,7 +12,7 @@ module Haskerwaul.Category.Semigroupal
   )
 where
 
-import Data.Constraint (Class (..), Dict (..), refl, trans, (***), (:-) (..), (:=>) (..))
+import Data.Constraint (Dict (Dict), (:-) (Sub), type (&))
 import Data.Either (Either (..))
 import Data.Proxy (Proxy (..))
 #if MIN_VERSION_base(4, 17, 0)
@@ -75,11 +75,8 @@ instance
 instance (SemigroupalCategory c t) => SemigroupalCategory (Isomorphism c) t where
   assoc = Iso assoc (reverse assoc)
 
-instance SemigroupalCategory (:-) Combine where
-  assoc =
-    Iso
-      (trans ins (trans (ins *** refl) (trans (Sub Dict) (trans (refl *** cls) cls))))
-      (trans ins (trans (refl *** ins) (trans (Sub Dict) (trans (cls *** refl) cls))))
+instance SemigroupalCategory (:-) (&) where
+  assoc = Iso (Sub Dict) (Sub Dict)
 
 instance SemigroupalCategory (NaturalTransformation c (:-)) CFProd where
   assoc = Iso (NT (Sub Dict)) (NT (Sub Dict))

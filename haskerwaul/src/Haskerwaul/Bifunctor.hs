@@ -8,7 +8,7 @@
 module Haskerwaul.Bifunctor where
 
 import qualified Data.Bifunctor as Base
-import Data.Constraint (Class (..), trans, (***), (:-) (..), (:=>) (..), (\\))
+import Data.Constraint (Class (..), Dict (Dict), (***), (:-) (Sub), (:=>) (..), (\\), type (&))
 import Data.Functor.Const (Const (..))
 import Data.Proxy (Proxy (..))
 #if MIN_VERSION_base(4, 17, 0)
@@ -105,8 +105,8 @@ instance
   where
   bimap f g = DT (\(Procompose x y) -> Procompose (runDT f x) (runDT g y))
 
-instance Bifunctor (:-) (:-) (:-) Combine where
-  bimap f g = trans ins (trans (f *** g) cls)
+instance Bifunctor (:-) (:-) (:-) (&) where
+  bimap f g = Sub (Dict \\ f \\ g)
 
 instance
   Bifunctor
@@ -115,7 +115,7 @@ instance
     (NaturalTransformation c (:-))
     CFProd
   where
-  bimap f g = NT (trans (trans ins (runNT f *** runNT g)) cls)
+  bimap f g = NT (ins . (runNT f *** runNT g) . cls)
 
 instance Bifunctor c1 c2 (->) (BConst a) where
   bimap _ _ (BConst a) = BConst a

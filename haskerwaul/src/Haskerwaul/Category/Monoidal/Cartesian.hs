@@ -13,14 +13,7 @@ module Haskerwaul.Category.Monoidal.Cartesian
   )
 where
 
-import Data.Constraint
-  ( Dict (..),
-    cls,
-    trans,
-    weaken1,
-    weaken2,
-    (:-) (..),
-  )
+import Data.Constraint (Dict (Dict), (:-) (Sub), type (&))
 import Data.Kind (Type)
 import qualified Data.Tuple as Base
 #if MIN_VERSION_base(4, 17, 0)
@@ -91,15 +84,15 @@ instance CartesianMonoidalCategory (NaturalTransformation c (->)) where
   diagonal = NT (FTensor . diagonal)
 
 instance CartesianMonoidalCategory (:-) where
-  type Prod (:-) = Combine
-  exl = trans weaken1 cls
-  exr = trans weaken2 cls
+  type Prod (:-) = (&)
+  exl = Sub Dict
+  exr = Sub Dict
   diagonal = Sub Dict
 
 instance CartesianMonoidalCategory (NaturalTransformation c (:-)) where
   type Prod (NaturalTransformation c (:-)) = CFProd
-  exl = NT (trans weaken1 cls)
-  exr = NT (trans weaken2 cls)
+  exl = NT (Sub Dict)
+  exr = NT (Sub Dict)
   diagonal = NT (Sub Dict)
 
 instance

@@ -12,7 +12,7 @@ module Haskerwaul.Category.Closed
   )
 where
 
-import Data.Constraint ((:-), (:=>))
+import Data.Constraint ((:-), type (|-))
 import Data.Kind (Type)
 #if MIN_VERSION_base(4, 17, 0)
 import Data.Type.Equality (type (~))
@@ -26,15 +26,20 @@ import Haskerwaul.Monad
 import Haskerwaul.Object
 import Haskerwaul.Transformation.Natural
 
--- | [nLab](https://ncatlab.org/nlab/show/closed+category)
+-- |
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/closed+category)
 --
 --  __TODO__: This should have a
---           @`Haskerwaul.Bifunctor.Bifunctor` (`Opposite` c) c c (`InternalHom` c)@
---            constraint, but it's been troublesome making an instance for
---            `(:=>)`, so we skip the constraint here and add it on the
---            instances that make use of it.
+--            @`Haskerwaul.Bifunctor.Bifunctor` (`Opposite` c) c c (`InternalHom` c)@
+--            constraint, but it's been troublesome making an instance for `|-`,
+--            so we skip the constraint here and add it on the instances that
+--            make use of it.
 class (Category c, TOb (Ob c) (InternalHom c)) => ClosedCategory (c :: ok -> ok -> Type) where
   -- |
+  --
   -- = references
   --
   -- - [nLab](https://ncatlab.org/nlab/show/internal+hom)
@@ -63,10 +68,10 @@ instance
 #endif
 
 instance ClosedCategory (:-) where
-  type InternalHom (:-) = (:=>)
+  type InternalHom (:-) = (|-)
 
 instance ClosedCategory (NaturalTransformation c (:-)) where
-  type InternalHom (NaturalTransformation c (:-)) = ConstraintTransformation (:-)
+  type InternalHom (NaturalTransformation c (:-)) = ConstraintTransformation
 
 instance
   (ClosedCategory c, TOb (Ob c) (Opposite (InternalHom c))) =>

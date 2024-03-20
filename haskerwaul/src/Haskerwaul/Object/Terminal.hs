@@ -6,7 +6,7 @@
 
 module Haskerwaul.Object.Terminal where
 
-import Data.Constraint (Dict (..), (:-) (..))
+import Data.Constraint (Dict (Dict), top, (:-) (Sub))
 import Data.Functor.Const (Const (..))
 import Data.Kind (Constraint, Type)
 #if MIN_VERSION_base(4, 17, 0)
@@ -34,7 +34,7 @@ instance HasTerminalObject (->) where
 
 instance HasTerminalObject (:-) where
   type TerminalObject (:-) = (() :: Constraint)
-  (!) = Sub Dict
+  (!) = top
 
 instance HasTerminalObject (NaturalTransformation c (:-)) where
   type TerminalObject (NaturalTransformation c (:-)) = All

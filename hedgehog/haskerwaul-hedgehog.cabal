@@ -162,7 +162,7 @@ custom-setup
 library
   import: defaults
   build-depends:
-    constraints ^>= {0.11, 0.13.1, 0.14},
+    constraints ^>= {0.14},
     haskerwaul ^>= {0.1.0},
     -- NB: hedgehog < 1.0 doesn’t export `label`, which we need for building up
     --     complex test cases.

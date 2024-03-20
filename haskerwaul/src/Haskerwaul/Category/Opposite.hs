@@ -15,7 +15,7 @@
 module Haskerwaul.Category.Opposite where
 
 import Control.Arrow ((&&&))
-import Data.Constraint (Bottom (..), bottom, (:-) (..))
+import Data.Constraint (Bottom, bottom, (:-))
 import Data.Either (Either (..))
 import Data.Function (const)
 import Data.Functor.Compose (Compose (..))
@@ -39,7 +39,12 @@ import Haskerwaul.Object
 import Haskerwaul.Transformation.Dinatural
 import Haskerwaul.Transformation.Natural
 
--- | [nLab](https://ncatlab.org/nlab/show/opposite+category)
+-- |
+--
+-- = references
+--
+-- - [nLab](https://ncatlab.org/nlab/show/opposite+category)
+-- - [Wikipedia](https://en.wikipedia.org/wiki/Opposite_category)
 newtype Opposite c a b = Opposite {opposite :: b `c` a}
 
 type instance Ob (Opposite c) = Ob c
@@ -175,9 +180,8 @@ instance
 instance (Semicategory c) => Bifunctor (Opposite c) c (->) c where
   bimap f g fn = g . fn . opposite f
 
--- instance Bifunctor (Opposite (:-)) (:-) (:-) (:=>) where
---   -- bimap :: b :- a -> c :- d -> (a :=> c) :- (b :=> d)
---   bimap f g = trans g (trans ins (opposite f))
+-- instance Bifunctor (Opposite (:-)) (:-) (:-) (|-) where
+--   bimap f g = Sub (Dict \\ opposite f \\ g)
 
 -- __NB__: The equivalent context @(Monad' (->) m)@ leads to a deduction failure.
 instance

@@ -12,7 +12,7 @@ where
 
 import qualified Control.Category as Base
 import Data.Bool (Bool)
-import Data.Constraint ((:-) (..))
+import Data.Constraint ((:-) (..), type (&))
 import Data.Either (Either)
 import Data.Int (Int, Int16, Int32, Int64, Int8)
 import Data.Kind (Constraint)
@@ -20,7 +20,6 @@ import qualified Data.Semigroup as Base
 import Data.Type.Equality ((:~:))
 import Data.Word (Word, Word16, Word32, Word64, Word8)
 import Haskerwaul.Categorification.Horizontal
-import Haskerwaul.Constraint
 import Haskerwaul.Lattice.Components
 import Haskerwaul.Magma
 import Haskerwaul.Semiring.Components
@@ -45,7 +44,7 @@ instance
   (FlexibleMagma (->) (,) a, FlexibleMagma (->) (,) b) =>
   FlexibleMagma (->) (,) (a, b)
 
-instance FlexibleMagma (:-) Combine (() :: Constraint)
+instance FlexibleMagma (:-) (&) (() :: Constraint)
 
 instance FlexibleMagma (->) Either a
 

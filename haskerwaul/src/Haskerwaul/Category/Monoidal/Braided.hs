@@ -12,7 +12,7 @@ module Haskerwaul.Category.Monoidal.Braided
   )
 where
 
-import Data.Constraint (Dict (..), (:-) (..))
+import Data.Constraint (Dict (..), (:-) (..), type (&))
 import Data.Either (Either (..))
 import qualified Data.Tuple as Base
 #if MIN_VERSION_base(4, 17, 0)
@@ -56,7 +56,7 @@ instance
       (NT (FTensor . to braid . lowerFTensor))
       (NT (FTensor . from braid . lowerFTensor))
 
-instance BraidedMonoidalCategory (:-) Combine where
+instance BraidedMonoidalCategory (:-) (&) where
   braid = Iso (Sub Dict) (Sub Dict)
 
 instance BraidedMonoidalCategory (NaturalTransformation c (:-)) CFProd where

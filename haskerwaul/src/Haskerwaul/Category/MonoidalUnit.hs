@@ -6,11 +6,10 @@
 -- | This module exists to break the cycle with "Haskerwaul.Magma.Unital".
 module Haskerwaul.Category.MonoidalUnit where
 
-import Data.Constraint ((:-))
+import Data.Constraint ((:-), type (&))
 import Data.Either (Either (..))
 import Data.Kind (Constraint, Type)
 import Data.Void (Void)
-import Haskerwaul.Constraint
 import Haskerwaul.Object
 
 -- |
@@ -35,5 +34,5 @@ instance MonoidalCategory' (->) (,) where
 instance MonoidalCategory' (->) Either where
   type Unit (->) Either = Void
 
-instance MonoidalCategory' (:-) Combine where
-  type Unit (:-) Combine = (() :: Constraint)
+instance MonoidalCategory' (:-) (&) where
+  type Unit (:-) (&) = (() :: Constraint)
