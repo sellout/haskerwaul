@@ -14,7 +14,7 @@ where
 
 import qualified Control.Category as Base
 import Data.Bool (Bool (..))
-import Data.Constraint (Dict (..), refl, (:-) (..))
+import Data.Constraint (Dict (..), refl, (:-) (..), type (&))
 import Data.Either (Either)
 import Data.Int (Int, Int16, Int32, Int64, Int8)
 import Data.Kind (Constraint)
@@ -25,7 +25,6 @@ import qualified Data.Void as Base
 import Data.Word (Word, Word16, Word32, Word64, Word8)
 import Haskerwaul.Categorification.Horizontal
 import Haskerwaul.Category.MonoidalUnit
-import Haskerwaul.Constraint
 import Haskerwaul.Lattice.Components
 import Haskerwaul.Magma
 import Haskerwaul.Object
@@ -219,7 +218,7 @@ instance UnitalMagma (->) (,) (Meet Word64) where
 instance UnitalMagma (->) (,) (Multiplicative Word64) where
   unit Proxy () = Multiply 1
 
-instance UnitalMagma (:-) Combine (() :: Constraint) where
+instance UnitalMagma (:-) (&) (() :: Constraint) where
   unit Proxy = refl
 
 -- __NB__: These definitions belong in "Haskerwaul.Magma.Unital", but they’d be

@@ -12,7 +12,7 @@ where
 
 import qualified Control.Category as Base
 import Data.Bool (Bool)
-import Data.Constraint (Dict (..), (:-) (..))
+import Data.Constraint (Dict (..), (:-) (..), type (&))
 import Data.Either (Either)
 import Data.Int (Int, Int16, Int32, Int64, Int8)
 import Data.Kind (Constraint)
@@ -20,7 +20,6 @@ import qualified Data.Semigroup as Base
 import Data.Type.Equality ((:~:))
 import Data.Word (Word, Word16, Word32, Word64, Word8)
 import Haskerwaul.Categorification.Horizontal
-import Haskerwaul.Constraint
 import Haskerwaul.Lattice.Components
 import Haskerwaul.Magma.Flexible
 import Haskerwaul.Object
@@ -103,7 +102,7 @@ instance Semigroup (->) (,) (Join Word64)
 
 instance Semigroup (->) (,) (Meet Word64)
 
-instance Semigroup (:-) Combine (() :: Constraint)
+instance Semigroup (:-) (&) (() :: Constraint)
 
 -- __NB__: These definitions belong in "Haskerwaul.Semicategory", but they’d be
 --         orphans there.

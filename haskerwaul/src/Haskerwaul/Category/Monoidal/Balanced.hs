@@ -15,7 +15,7 @@ module Haskerwaul.Category.Monoidal.Balanced
   )
 where
 
-import Data.Constraint ((:-))
+import Data.Constraint ((:-), type (&))
 import Data.Either (Either (..))
 import Data.Proxy (Proxy (..))
 #if MIN_VERSION_base(4, 17, 0)
@@ -54,7 +54,7 @@ instance
   where
   balance Proxy = NT (balance (Proxy :: Proxy dt))
 
-instance BalancedMonoidalCategory (:-) Combine where
+instance BalancedMonoidalCategory (:-) (&) where
   balance Proxy = id
 
 instance BalancedMonoidalCategory (NaturalTransformation c (:-)) CFProd where

@@ -163,8 +163,8 @@ custom-setup
 library
   import: defaults
   build-depends:
-    -- NB: constraints < 0.11 results in extra redundant constraints.
-    constraints ^>= {0.11, 0.13.1, 0.14},
+    -- NB: constraints 0.14 adds an internal hom and a Cartesian product
+    constraints ^>= {0.14},
     containers ^>= {0.6.0},
   hs-source-dirs:
     src
