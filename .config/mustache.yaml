@@ -3,6 +3,6 @@
   "name":"haskerwaul",
   "repo":"sellout/haskerwaul",
   "summary":"Category-parametric programming",
-  "version":"0.1.0.0"},
+  },
   "type":{"name":"haskell"}
-  }
+}

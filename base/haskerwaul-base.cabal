@@ -3,7 +3,9 @@ cabal-version: 3.0
 name: haskerwaul-base
 version: 0.1.0.0
 synopsis: ???
-description: ???
+description: Provides a parallel implementation of ‘base’, using definitions
+             from Haskerwaul, to improve compatibility. This is intended to help
+             port existing code, and shouldn’t be used for new code.
 author: Greg Pfeil <greg@technomadic.org>
 maintainer: Greg Pfeil <greg@technomadic.org>
 copyright: 2020–2024 Greg Pfeil
@@ -14,24 +16,26 @@ build-type: Custom
 license: AGPL-3.0-or-later
 license-files:
   LICENSE
-extra-source-files:
+extra-doc-files:
+  CHANGELOG.md
   README.md
+  docs/*.md
 tested-with:
   GHC == {
---  GHCup   Nixpkgs
     8.6.1,
-    8.8.1,  8.8.4,
+    8.8.1,
     8.10.1, 8.10.7,
-    9.0.1,  9.0.2,
-    9.2.1,  9.2.8,
-    9.4.1,  9.4.8,
-    9.6.1,  9.6.2,
-            9.8.1
+    9.0.1, 9.0.2,
+    9.2.1, 9.2.5,
+    9.4.1, 9.4.5,
+    9.6.1, 9.6.3,
+    9.8.1,
+    9.10.1
   }
 
 source-repository head
   type: git
-  location: git@github.com:sellout/haskerwaul.git
+  location: https://github.com/sellout/haskerwaul
 
 -- This mimics the GHC2021 extension
 -- (https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/control.html?highlight=doandifthenelse#extension-GHC2021),
@@ -91,7 +95,7 @@ flag noisy-deprecations
 common defaults
   import: GHC2021
   build-depends:
-    base ^>= {4.12.0, 4.13.0, 4.14.0, 4.15.0, 4.16.0, 4.17.0, 4.18.0, 4.19.0},
+    base ^>= {4.12.0, 4.13.0, 4.14.0, 4.15.0, 4.16.0, 4.17.0, 4.18.0, 4.19.0, 4.20.0},
   ghc-options:
     -Weverything
     -- Type inference good.
@@ -144,6 +148,7 @@ common defaults
     NoImplicitPrelude
     NoMonomorphismRestriction
     NoPatternGuards
+    NoStarIsType
     NoTypeApplications
   if flag(noisy-deprecations)
     cpp-options: -DSELLOUT_NOISY_DEPRECATIONS
@@ -152,7 +157,7 @@ custom-setup
   setup-depends:
     -- TODO: Remove `Cabal` dep once haskell/cabal#3751 is fixed.
     Cabal ^>= {3.0.0, 3.2.0, 3.4.0, 3.6.0, 3.8.0, 3.10.0},
-    base ^>= {4.12.0, 4.13.0, 4.14.0, 4.15.0, 4.16.0, 4.17.0, 4.18.0, 4.19.0},
+    base ^>= {4.12.0, 4.13.0, 4.14.0, 4.15.0, 4.16.0, 4.17.0, 4.18.0, 4.19.0, 4.20.0},
     cabal-doctest ^>= {1.0.0},
 
 library
@@ -174,8 +179,14 @@ test-suite doctests
   hs-source-dirs: tests
   main-is: doctests.hs
   build-depends:
-    doctest ^>= {0.16.0, 0.18.1, 0.20.1, 0.21.1, 0.22.2},
+    doctest ^>= {0.16.0, 0.17.0, 0.18.0, 0.19.0, 0.20.0, 0.21.0, 0.22.0},
     haskerwaul-base,
+  if impl(ghc >= 8.10.1)
+    ghc-options:
+      -- `doctest` requires the package containing the doctests as a dependency
+      -- to ensure it gets built before this test-suite, even though the package
+      -- appears to be unused.
+      -Wno-unused-packages
   -- TODO: The sections below here are necessary because we don’t have control
   --       over the generated `Build_doctests.hs` file. So we have to silence
   --       all of its warnings one way or another.

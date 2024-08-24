@@ -7,7 +7,12 @@
   supportedSystems,
   ...
 }: let
-  githubSystems = ["macos-13" "ubuntu-22.04" "windows-2022"];
+  githubSystems = [
+    "macos-13" # x86_64-darwin
+    "macos-14" # aarch64-darwin
+    "ubuntu-22.04" # x86_64-linux
+    "windows-2022"
+  ];
 in {
   project = {
     name = "haskerwaul";
@@ -16,11 +21,32 @@ in {
     devPackages = [
       pkgs.cabal-install
       pkgs.graphviz
+      ## So cabal-plan(-bounds) can be built in a devShell, since it doesn’t
+      ## work in Nix proper.
+      pkgs.zlib
     ];
   };
 
   imports = [
-    (import ./github-ci.nix githubSystems)
+    (import ./github-ci.nix {
+      inherit (self.lib) defaultGhcVersion;
+      exclude = [
+        ## FIXME: There seems to be a general issue with this GHC version and
+        ##        aarch64-darwin.
+        {
+          ghc = "9.4.1";
+          os = "macos-14";
+        }
+      ];
+      latestGhcVersion = "9.10.1";
+      packages = {
+        haskerwaul = "haskerwaul";
+        haskerwaul-base = "base";
+        haskerwaul-hedgehog = "hedgehog";
+        haskerwaul-trample = "trample";
+      };
+      systems = githubSystems;
+    })
     ./hackage-publish.nix
     ./hlint.nix
   ];
@@ -51,23 +77,51 @@ in {
       enable = true;
       ## Haskell formatter
       programs.ormolu.enable = true;
+      settings.formatter.prettier.excludes = ["*/docs/license-report.md"];
     };
     vale = {
       enable = true;
       excludes = [
         "*.cabal"
         "*.hs"
+        "*.hs-boot"
         "*.lhs"
+        "*/docs/license-report.md"
         "./cabal.project"
       ];
       vocab.${config.project.name}.accept = [
+        "API"
+        "Bool"
         "bugfix"
+        "categorification"
+        "categorified"
         "comonad"
+        "concat"
         "conditionalize"
+        "coproduct"
+        "dev"
+        "enrichment"
+        "exponential"
+        "formatter"
         "functor"
         "GADT"
+        "Hask"
+        "Haskerwaul"
+        "Hom"
         "Kleisli"
         "Kmett"
+        "monoidal"
+        "morphism"
+        "newtype"
+        "nLab"
+        "oidification"
+        "overconstrained"
+        "pragma"
+        "preorder"
+        "README"
+        "topos"
+        "unformatted"
+        "widening"
       ];
     };
   };
@@ -76,30 +130,27 @@ in {
   services.garnix = {
     enable = true;
     builds = {
-      exclude = [
-        # TODO: Remove once garnix-io/garnix#285 is fixed.
-        "homeConfigurations.x86_64-darwin-${config.project.name}-example"
-      ];
+      ## TODO: Remove once garnix-io/garnix#285 is fixed.
+      exclude = ["homeConfigurations.x86_64-darwin-example"];
       include = lib.mkForce (
         [
           "homeConfigurations.*"
           "nixosConfigurations.*"
         ]
-        ++ lib.concatLists (
-          flaky.lib.garnixChecks
-          (
-            sys:
-              [
-                "checks.${sys}.*"
-                "devShells.${sys}.default"
-                "packages.${sys}.default"
-              ]
-              ++ lib.concatMap (ghc: [
-                "devShells.${sys}.${ghc}"
-                "packages.${sys}.${ghc}_all"
-              ])
-              (self.lib.testedGhcVersions sys)
-          )
+        ++ flaky.lib.forGarnixSystems supportedSystems (
+          sys:
+            [
+              "checks.${sys}.*"
+              "devShells.${sys}.default"
+              "packages.${sys}.default"
+            ]
+            ++ lib.concatMap (version: let
+              ghc = self.lib.nixifyGhcVersion version;
+            in [
+              "devShells.${sys}.${ghc}"
+              "packages.${sys}.${ghc}_all"
+            ])
+            (self.lib.testedGhcVersions sys)
         )
       );
     };
@@ -108,7 +159,8 @@ in {
   ##        Need to improve module merging.
   services.github.settings.branches.main.protection.required_status_checks.contexts =
     lib.mkForce
-    (lib.concatMap (sys:
+    (["check-bounds"]
+      ++ lib.concatMap (sys:
         lib.concatMap (ghc: [
           "build (${ghc}, ${sys})"
           "build (--prefer-oldest, ${ghc}, ${sys})"
@@ -116,9 +168,11 @@ in {
         self.lib.nonNixTestedGhcVersions)
       githubSystems
       ++ flaky.lib.forGarnixSystems supportedSystems (sys:
-        lib.concatMap (ghc: [
-          "devShell ghc${ghc} [${sys}]"
-          "package ghc${sys}_all [${sys}]"
+        lib.concatMap (version: let
+          ghc = self.lib.nixifyGhcVersion version;
+        in [
+          "devShell ${ghc} [${sys}]"
+          "package ${ghc}_all [${sys}]"
         ])
         (self.lib.testedGhcVersions sys)
         ++ [
@@ -136,4 +190,5 @@ in {
   #     this is disabled until we have a way to build Haskell without IFD.
   services.flakehub.enable = false;
   services.github.enable = true;
+  services.github.settings.repository.topics = ["category-theory"];
 }

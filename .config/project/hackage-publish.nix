@@ -3,7 +3,9 @@
   pkgs,
   self,
   ...
-}: {
+}: let
+  packagesPath = "\$/packages/";
+in {
   services.github.workflow."hackage-publish.yml".text = lib.generators.toYAML {} {
     name = "Publish release to Hackage";
     on = {
@@ -26,10 +28,19 @@
           "with".ref = "\${{ (inputs.tag != null) && format('refs/tags/{0}', inputs.tag) || '' }}";
         }
         {
+          uses = "haskell-actions/setup@v2";
+          id = "setup-haskell-cabal";
+          "with" = {
+            ghc-version = lib.last self.lib.nonNixTestedGhcVersions;
+            cabal-version = pkgs.cabal-install.version;
+          };
+        }
+        {run = "cabal v2-sdist --output-directory='${packagesPath}' all";}
+        {
           uses = "haskell-actions/hackage-publish@v1";
           "with" = {
+            inherit packagesPath;
             hackageToken = "\${{ secrets.HACKAGE_AUTH_TOKEN }}";
-            packagesPath = "\${{ runner.temp }}/packages";
             publish = false;
           };
         }
