@@ -7,6 +7,26 @@
 
 This package offers the same modules as `base`, but with each prefixed with `Haskerwaul.Base.`. You can update imports incrementally to see what works under Haskerwaul and what doesn’t.
 
+### caveats
+
+If this provided exactly the same API as base, there wouldn’t be much point to this package. Consequently, there are a number of differences.
+
+#### type classes
+
+The type classes provided by this package are generally constrained aliases of the type classes provided by Haskerwaul. This means that the “methods” aren’t, which affects how things are imported. E.g., if you tend to do
+
+```haskell
+import Data.Semigroup (Semigroup((<>)))
+```
+
+you will need to change that to
+
+```haskell
+import Data.Semigroup (Semigroup, (<>))
+```
+
+which is strictly more portable.
+
 ## licensing
 
 This package is licensed under [The GNU AGPL 3.0 or later](./LICENSE). If you need a license for usage that isn’t covered under the AGPL, please contact [Greg Pfeil](mailto:greg@technomadic.org?subject=licensing%20no-recursion).

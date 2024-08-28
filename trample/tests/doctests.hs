@@ -2,10 +2,10 @@
 
 module Main (main) where
 
-import safe "base" Data.Function (($))
-import safe "base" Data.Semigroup (Semigroup ((<>)))
-import safe "base" System.IO (IO)
 import "doctest" Test.DocTest (doctest)
+import safe "haskerwaul-trample" Data.Function (($))
+import safe "haskerwaul-trample" Data.Semigroup ((<>))
+import safe "haskerwaul-trample" System.IO (IO)
 import "this" Build_doctests (flags, module_sources, pkgs)
 
 main :: IO ()

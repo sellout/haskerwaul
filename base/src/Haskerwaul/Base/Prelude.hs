@@ -1,6 +1,5 @@
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE Safe #-}
-{-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeFamilies #-}
 
 -- | This is intended to be a /mostly/ drop-in replacement for "Prelude", but
@@ -15,29 +14,44 @@
 --   methods), which means those are not any more general. But we've tried to
 --   ensure that those type classes imply our own, so instances of them should
 --   be usable with the rest of "Haskerwaul".
-module Haskerwaul.Base.Prelude where
+module Haskerwaul.Base.Prelude
+  ( module Haskerwaul.Base.Data.Eq,
+    module Haskerwaul.Base.Data.Maybe,
+    module Haskerwaul.Base.Data.String,
+    module Haskerwaul.Base.Text.Show,
+    (&&),
+    (||),
+    not,
+    otherwise,
+    either,
+    fst,
+    snd,
+    curry,
+    uncurry,
+    subtract,
+  )
+where
 
 import Data.Proxy (Proxy (..))
 #if MIN_VERSION_base(4, 17, 0)
 import Data.Type.Equality (type (~))
 #endif
 import qualified Haskerwaul as H
+import Haskerwaul.Base.Data.Eq (Eq, (/=), (==))
+import Haskerwaul.Base.Data.Maybe (Maybe (..))
+import Haskerwaul.Base.Data.String (String)
+import Haskerwaul.Base.Data.Tuple (curry, uncurry)
+import Haskerwaul.Base.Text.Show (Show (..))
 
 -- | Generalization of `Prelude.&&`.
-(&&) ::
-  forall c a.
-  (c ~ (->), H.CartesianClosedMonoidalCategory c, H.Lattice c (H.Prod c) a) =>
-  a `c` H.Exp c a a
-(&&) = H.curry @_ @(H.Prod c) H.meet
+(&&) :: forall c a. (c ~ (->), H.Lattice c (H.Prod c) a) => a `c` H.Exp c a a
+(&&) = curry H.meet
 
 infixr 3 &&
 
 -- | Generalization of `Prelude.||`.
-(||) ::
-  forall c a.
-  (c ~ (->), H.CartesianClosedMonoidalCategory c, H.Lattice c (H.Prod c) a) =>
-  a `c` H.Exp c a a
-(||) = H.curry @_ @(H.Prod c) H.join
+(||) :: forall c a. (c ~ (->), H.Lattice c (H.Prod c) a) => a `c` H.Exp c a a
+(||) = curry H.join
 
 infixr 2 ||
 
@@ -64,20 +78,6 @@ fst = H.exl
 -- | Generalization of `Prelude.snd`.
 snd :: (H.CartesianMonoidalCategory c, H.Ob c a, H.Ob c b) => H.Prod c a b `c` b
 snd = H.exr
-
--- | Generalization of `Prelude.curry`.
-curry ::
-  (H.ClosedMonoidalCategory c t, H.Ob c x, H.Ob c y, H.Ob c z) =>
-  t x y `c` z ->
-  x `c` H.InternalHom c y z
-curry = H.curry
-
--- | Generalization of `Prelude.uncurry`.
-uncurry ::
-  (H.ClosedMonoidalCategory c t, H.Ob c x, H.Ob c y, H.Ob c z) =>
-  x `c` H.InternalHom c y z ->
-  t x y `c` z
-uncurry = H.uncurry
 
 -- | Generalization of `Prelude.subtract`.
 subtract ::

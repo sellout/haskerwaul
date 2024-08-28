@@ -104,8 +104,6 @@ common defaults
     -Wno-unsafe
     -- TODO: prune these warnings
     -Wno-all-missed-specialisations
-    -fpackage-trust
-    -trust base
   if impl(ghc < 8.8.1)
     ghc-options:
       -- This used to warn even when `Safe` was explicit.
@@ -116,8 +114,6 @@ common defaults
       -Wno-inferred-safe-imports
       -- We support GHC versions without qualified-post.
       -Wno-prepositive-qualified-module
-      -- `-trust` triggers this warning when applied to transitive dependencies.
-      -Wno-unused-packages
   if impl(ghc >= 9.2.1)
     ghc-options:
       -- We support GHC versions without kind signatures.
@@ -171,8 +167,6 @@ library
     -Wno-missing-export-lists
     -Wno-missing-import-lists
     -Wno-simplifiable-class-constraints
-    -trust constraints
-    -trust containers
   exposed-modules:
     Haskerwaul
     Haskerwaul.Algebra.Boolean

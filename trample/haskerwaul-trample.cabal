@@ -98,8 +98,6 @@ flag noisy-deprecations
 
 common defaults
   import: GHC2021
-  build-depends:
-    base ^>= {4.12.0, 4.13.0, 4.14.0, 4.15.0, 4.16.0, 4.17.0, 4.18.0, 4.19.0, 4.20.0},
   ghc-options:
     -Weverything
     -- Type inference good.
@@ -109,8 +107,6 @@ common defaults
     -Wno-unsafe
     -- TODO: prune these warnings
     -Wno-all-missed-specialisations
-    -fpackage-trust
-    -trust base
   if impl(ghc < 8.8.1)
     ghc-options:
       -- This used to warn even when `Safe` was explicit.
@@ -121,8 +117,6 @@ common defaults
       -Wno-inferred-safe-imports
       -- We support GHC versions without qualified-post.
       -Wno-prepositive-qualified-module
-      -- `-trust` triggers this warning when applied to transitive dependencies.
-      -Wno-unused-packages
   if impl(ghc >= 9.2.1)
     ghc-options:
       -- We support GHC versions without kind signatures.
@@ -176,8 +170,16 @@ library
   ghc-options:
     -Wno-missing-export-lists
     -Wno-missing-import-lists
-    -trust constraints
-  exposed-modules: Prelude
+  exposed-modules:
+    Data.Eq
+    Data.Function
+    Data.Maybe
+    Data.Semigroup
+    Data.String
+    Data.Tuple
+    Prelude
+    System.IO
+    Text.Show
 
 test-suite doctests
   import: defaults
@@ -196,9 +198,6 @@ test-suite doctests
   -- TODO: The sections below here are necessary because we don’t have control
   --       over the generated `Build_doctests.hs` file. So we have to silence
   --       all of its warnings one way or another.
-  mixins:
-    -- NB: The dependency on haskerwaul-trample is only to force it to build before the doctests. Therefore, we can hide the "Prelude" that conflicts with the one from base that’s imported by Build_doctests.hs.
-    haskerwaul-trample hiding (Prelude)
   ghc-options:
     -Wno-missing-export-lists
     -Wno-missing-import-lists
