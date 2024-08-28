@@ -70,3 +70,5 @@ instance
 
 (>) :: (ElementaryTopos c, LinearOrder c a) => a `c` Exp c a (Class c)
 (>) = curry gt
+
+infix 4 >

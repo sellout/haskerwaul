@@ -30,12 +30,16 @@ import qualified Haskerwaul as H
   a `c` H.Exp c a a
 (&&) = H.curry @_ @(H.Prod c) H.meet
 
+infixr 3 &&
+
 -- | Generalization of `Prelude.||`.
 (||) ::
   forall c a.
   (c ~ (->), H.CartesianClosedMonoidalCategory c, H.Lattice c (H.Prod c) a) =>
   a `c` H.Exp c a a
 (||) = H.curry @_ @(H.Prod c) H.join
+
+infixr 2 ||
 
 -- | Generalization of `Prelude.not`.
 not :: (H.UniquelyComplementedLattice c (,) a, H.Ob c a) => a `c` a

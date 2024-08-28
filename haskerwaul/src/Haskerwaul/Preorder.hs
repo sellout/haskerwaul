@@ -97,3 +97,5 @@ instance
 
 (<=) :: (ElementaryTopos c, Preorder c a) => a `c` Exp c a (Class c)
 (<=) = curry le
+
+infix 4 <=

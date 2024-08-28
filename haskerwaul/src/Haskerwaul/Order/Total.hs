@@ -67,3 +67,5 @@ instance (Base.Integral a) => TotalOrder (->) (Canonical (Ratio a))
 
 (>=) :: (ElementaryTopos c, TotalOrder c a) => a `c` Exp c a (Class c)
 (>=) = curry ge
+
+infix 4 >=
