@@ -181,33 +181,35 @@ library
     System.IO
     Text.Show
 
-test-suite doctests
-  import: defaults
-  type: exitcode-stdio-1.0
-  hs-source-dirs: tests
-  main-is: doctests.hs
-  build-depends:
-    doctest ^>= {0.16.0, 0.17.0, 0.18.0, 0.19.0, 0.20.0, 0.21.0, 0.22.0},
-    haskerwaul-trample,
-  if impl(ghc >= 8.10.1)
+-- FIXME: These tests fail to build on GHC 8.6.
+if impl(ghc >= 8.8.0)
+  test-suite doctests
+    import: defaults
+    type: exitcode-stdio-1.0
+    hs-source-dirs: tests
+    main-is: doctests.hs
+    build-depends:
+      doctest ^>= {0.16.0, 0.17.0, 0.18.0, 0.19.0, 0.20.0, 0.21.0, 0.22.0},
+      haskerwaul-trample,
+    if impl(ghc >= 8.10.1)
+      ghc-options:
+        -- `doctest` requires the package containing the doctests as a dependency
+        -- to ensure it gets built before this test-suite, even though the package
+        -- appears to be unused.
+        -Wno-unused-packages
+    -- TODO: The sections below here are necessary because we don’t have control
+    --       over the generated `Build_doctests.hs` file. So we have to silence
+    --       all of its warnings one way or another.
     ghc-options:
-      -- `doctest` requires the package containing the doctests as a dependency
-      -- to ensure it gets built before this test-suite, even though the package
-      -- appears to be unused.
-      -Wno-unused-packages
-  -- TODO: The sections below here are necessary because we don’t have control
-  --       over the generated `Build_doctests.hs` file. So we have to silence
-  --       all of its warnings one way or another.
-  ghc-options:
-    -Wno-missing-export-lists
-    -Wno-missing-import-lists
-    -Wno-safe
-  if impl(ghc >= 8.8.1)
-    ghc-options:
-      -- This used to warn even when `Safe` was explicit.
-      -Wno-missing-deriving-strategies
-  default-extensions:
-    -- Since we can’t add `{-# LANGUAGE Safe -#}` to the generated
-    -- “Build_doctests.hs”, we set it here, and that means it has to match
-    -- doctests.hs, which is `Unsafe`.
-    Unsafe
+      -Wno-missing-export-lists
+      -Wno-missing-import-lists
+      -Wno-safe
+    if impl(ghc >= 8.8.1)
+      ghc-options:
+        -- This used to warn even when `Safe` was explicit.
+        -Wno-missing-deriving-strategies
+    default-extensions:
+      -- Since we can’t add `{-# LANGUAGE Safe -#}` to the generated
+      -- “Build_doctests.hs”, we set it here, and that means it has to match
+      -- doctests.hs, which is `Unsafe`.
+      Unsafe
