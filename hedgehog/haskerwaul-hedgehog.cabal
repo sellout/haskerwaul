@@ -180,7 +180,7 @@ test-suite doctests
   hs-source-dirs: tests
   main-is: doctests.hs
   build-depends:
-    doctest ^>= {0.16.0, 0.17.0, 0.18.0, 0.19.0, 0.20.0, 0.21.0, 0.22.0},
+    doctest ^>= {0.16.0, 0.18.1, 0.20.1, 0.21.1, 0.22.2},
     haskerwaul-hedgehog,
   if impl(ghc >= 8.10.1)
     ghc-options:
