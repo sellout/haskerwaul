@@ -20,28 +20,26 @@ build-type: Custom
 license: AGPL-3.0-or-later
 license-files:
   LICENSE
-extra-source-files:
+extra-doc-files:
+  CHANGELOG.md
   README.md
+  docs/*.md
 tested-with:
   GHC == {
---  GHCup   Nixpkgs
-    7.10.3,
-    8.0.1,
-    8.2.1,
-    8.4.1,
     8.6.1,
-    8.8.1,  8.8.4,
+    8.8.1,
     8.10.1, 8.10.7,
-    9.0.1,  9.0.2,
-    9.2.1,  9.2.8,
-    9.4.1,  9.4.8,
-    9.6.1,  9.6.2,
-            9.8.1
+    9.0.1, 9.0.2,
+    9.2.1, 9.2.5,
+    9.4.1, 9.4.5,
+    9.6.1, 9.6.3,
+    9.8.1,
+    9.10.1
   }
 
 source-repository head
   type: git
-  location: git@github.com:sellout/haskerwaul.git
+  location: https://github.com/sellout/haskerwaul
 
 -- This mimics the GHC2021 extension
 -- (https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/control.html?highlight=doandifthenelse#extension-GHC2021),
@@ -100,8 +98,6 @@ flag noisy-deprecations
 
 common defaults
   import: GHC2021
-  build-depends:
-    base ^>= {4.12.0, 4.13.0, 4.14.0, 4.15.0, 4.16.0, 4.17.0, 4.18.0, 4.19.0},
   ghc-options:
     -Weverything
     -- Type inference good.
@@ -111,8 +107,6 @@ common defaults
     -Wno-unsafe
     -- TODO: prune these warnings
     -Wno-all-missed-specialisations
-    -fpackage-trust
-    -trust base
   if impl(ghc < 8.8.1)
     ghc-options:
       -- This used to warn even when `Safe` was explicit.
@@ -123,8 +117,6 @@ common defaults
       -Wno-inferred-safe-imports
       -- We support GHC versions without qualified-post.
       -Wno-prepositive-qualified-module
-      -- `-trust` triggers this warning when applied to transitive dependencies.
-      -Wno-unused-packages
   if impl(ghc >= 9.2.1)
     ghc-options:
       -- We support GHC versions without kind signatures.
@@ -154,6 +146,7 @@ common defaults
     NoImplicitPrelude
     NoMonomorphismRestriction
     NoPatternGuards
+    NoStarIsType
     NoTypeApplications
   if flag(noisy-deprecations)
     cpp-options: -DSELLOUT_NOISY_DEPRECATIONS
@@ -162,7 +155,7 @@ custom-setup
   setup-depends:
     -- TODO: Remove `Cabal` dep once haskell/cabal#3751 is fixed.
     Cabal ^>= {3.0.0, 3.2.0, 3.4.0, 3.6.0, 3.8.0, 3.10.0},
-    base ^>= {4.12.0, 4.13.0, 4.14.0, 4.15.0, 4.16.0, 4.17.0, 4.18.0, 4.19.0},
+    base ^>= {4.12.0, 4.13.0, 4.14.0, 4.15.0, 4.16.0, 4.17.0, 4.18.0, 4.19.0, 4.20.0},
     cabal-doctest ^>= {1.0.0},
 
 -- This package should be able to be completely generated, since it just
@@ -177,33 +170,46 @@ library
   ghc-options:
     -Wno-missing-export-lists
     -Wno-missing-import-lists
-    -trust constraints
-  exposed-modules: Prelude
+  exposed-modules:
+    Data.Eq
+    Data.Function
+    Data.Maybe
+    Data.Semigroup
+    Data.String
+    Data.Tuple
+    Prelude
+    System.IO
+    Text.Show
 
-test-suite doctests
-  import: defaults
-  type: exitcode-stdio-1.0
-  hs-source-dirs: tests
-  main-is: doctests.hs
-  build-depends:
-    doctest ^>= {0.16.0, 0.18.1, 0.20.1, 0.21.1, 0.22.2},
-    haskerwaul-trample,
-  -- TODO: The sections below here are necessary because we don’t have control
-  --       over the generated `Build_doctests.hs` file. So we have to silence
-  --       all of its warnings one way or another.
-  mixins:
-    -- NB: The dependency on haskerwaul-trample is only to force it to build before the doctests. Therefore, we can hide the "Prelude" that conflicts with the one from base that’s imported by Build_doctests.hs.
-    haskerwaul-trample hiding (Prelude)
-  ghc-options:
-    -Wno-missing-export-lists
-    -Wno-missing-import-lists
-    -Wno-safe
-  if impl(ghc >= 8.8.1)
+-- FIXME: These tests fail to build on GHC 8.6.
+if impl(ghc >= 8.8.0)
+  test-suite doctests
+    import: defaults
+    type: exitcode-stdio-1.0
+    hs-source-dirs: tests
+    main-is: doctests.hs
+    build-depends:
+      doctest ^>= {0.16.0, 0.18.1, 0.20.1, 0.21.1, 0.22.2},
+      haskerwaul-trample,
+    if impl(ghc >= 8.10.1)
+      ghc-options:
+        -- `doctest` requires the package containing the doctests as a dependency
+        -- to ensure it gets built before this test-suite, even though the package
+        -- appears to be unused.
+        -Wno-unused-packages
+    -- TODO: The sections below here are necessary because we don’t have control
+    --       over the generated `Build_doctests.hs` file. So we have to silence
+    --       all of its warnings one way or another.
     ghc-options:
-      -- This used to warn even when `Safe` was explicit.
-      -Wno-missing-deriving-strategies
-  default-extensions:
-    -- Since we can’t add `{-# LANGUAGE Safe -#}` to the generated
-    -- “Build_doctests.hs”, we set it here, and that means it has to match
-    -- doctests.hs, which is `Unsafe`.
-    Unsafe
+      -Wno-missing-export-lists
+      -Wno-missing-import-lists
+      -Wno-safe
+    if impl(ghc >= 8.8.1)
+      ghc-options:
+        -- This used to warn even when `Safe` was explicit.
+        -Wno-missing-deriving-strategies
+    default-extensions:
+      -- Since we can’t add `{-# LANGUAGE Safe -#}` to the generated
+      -- “Build_doctests.hs”, we set it here, and that means it has to match
+      -- doctests.hs, which is `Unsafe`.
+      Unsafe

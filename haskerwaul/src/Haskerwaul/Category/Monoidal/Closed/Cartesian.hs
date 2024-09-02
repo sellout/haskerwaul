@@ -70,11 +70,15 @@ instance CartesianClosedMonoidalCategory (->) where
   InternalHom c a b `c` InternalHom c a b
 ($) = curry @_ @(Prod c) apply \\ inT @(Ob c) @(InternalHom c) @a @b
 
+infix 0 $
+
 (<>) ::
   forall c a.
   (CartesianClosedMonoidalCategory c, Magma c (Prod c) a) =>
   a `c` InternalHom c a a
 (<>) = curry @_ @(Prod c) op
+
+infixr 6 <>
 
 (.-) ::
   forall c a.
@@ -82,11 +86,15 @@ instance CartesianClosedMonoidalCategory (->) where
   a `c` InternalHom c a a
 (.-) = curry @_ @(Prod c) (sum . monus . bimap Add Add)
 
+infixl 6 .-
+
 (+) ::
   forall c a.
   (c ~ (->), CartesianClosedMonoidalCategory c, NearPreSemiring c (Prod c) a) =>
   a `c` InternalHom c a a
 (+) = curry @_ @(Prod c) add
+
+infixl 6 +
 
 (*) ::
   forall c a.
@@ -94,14 +102,20 @@ instance CartesianClosedMonoidalCategory (->) where
   a `c` InternalHom c a a
 (*) = curry @_ @(Prod c) multiply
 
+infixl 7 *
+
 (-) ::
   forall c a.
   (c ~ (->), CartesianClosedMonoidalCategory c, Ring c (Prod c) a) =>
   a `c` InternalHom c a a
 (-) = curry @_ @(Prod c) subtract
 
+infixl 6 -
+
 (/) ::
   forall c a.
   (c ~ (->), CartesianClosedMonoidalCategory c, Skewfield c (Prod c) a) =>
   a `c` InternalHom c a a
 (/) = curry @_ @(Prod c) divide
+
+infixl 7 /

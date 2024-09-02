@@ -29,3 +29,5 @@ instance (EquivalenceRelation c a, PartialOrder c a) => EqualityRelation c a
 
 (==) :: (ElementaryTopos c, EqualityRelation c a) => a `c` Exp c a (Class c)
 (==) = curry eq
+
+infix 4 ==

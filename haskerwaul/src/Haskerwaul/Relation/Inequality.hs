@@ -78,3 +78,5 @@ instance InequalityRelation (->) Double where
 
 (/=) :: (ElementaryTopos c, InequalityRelation c a) => a `c` Exp c a (Class c)
 (/=) = curry ne
+
+infix 4 /=

@@ -115,10 +115,10 @@ unitalMagma_laws ::
   [(PropertyName, Property)]
 unitalMagma_laws label law transL transR dispL dispR genX1 genX2 =
   [ ( "left identity (" <> label <> ")",
-      property (runHH (checkLaw transL (leftIdentity law)) =<< forAllWith dispL $ genX1)
+      property (runHH (checkLaw transL (leftIdentity law)) =<< forAllWith dispL genX1)
     ),
     ( "right identity (" <> label <> ")",
-      property (runHH (checkLaw transR (rightIdentity law)) =<< forAllWith dispR $ genX2)
+      property (runHH (checkLaw transR (rightIdentity law)) =<< forAllWith dispR genX2)
     )
   ]
 
@@ -209,7 +209,7 @@ leftRegularBand_laws ::
 leftRegularBand_laws label law transA transG transI dispA dispG genX genX0 genY =
   band_laws label (LeftRegularBand.band law) transA transI dispA genX genY
     <> [ ( "graphic identity (" <> label <> ")",
-           property (runHH (checkLaw transG (graphicIdentity law)) =<< forAllWith dispG $ genX0)
+           property (runHH (checkLaw transG (graphicIdentity law)) =<< forAllWith dispG genX0)
          )
        ]
 
@@ -223,7 +223,7 @@ leftShelf_laws ::
   [(PropertyName, Property)]
 leftShelf_laws label law trans display gen =
   [ ( "left self-distributive (" <> label <> ")",
-      property (runHH (checkLaw trans (leftSelfDistributive law)) =<< forAllWith display $ gen)
+      property (runHH (checkLaw trans (leftSelfDistributive law)) =<< forAllWith display gen)
     )
   ]
 
@@ -237,7 +237,7 @@ rightShelf_laws ::
   [(PropertyName, Property)]
 rightShelf_laws label law trans display gen =
   [ ( "right self-distributive (" <> label <> ")",
-      property (runHH (checkLaw trans (rightSelfDistributive law)) =<< forAllWith display $ gen)
+      property (runHH (checkLaw trans (rightSelfDistributive law)) =<< forAllWith display gen)
     )
   ]
 
@@ -377,16 +377,16 @@ duoid_laws
     monoid_laws label (diamond law) trans transL transR display dispL dispR genX genX1 genX2
       <> monoid_laws label (star law) trans' transL' transR' display' dispL' dispR' genX' genX1' genX2'
       <> [ ( "interchange (" <> label <> ")",
-             property (runHH (checkLaw trans'' (interchange' law)) =<< forAllWith display'' $ genX'')
+             property (runHH (checkLaw trans'' (interchange' law)) =<< forAllWith display'' genX'')
            ),
            ( "diamond unit (" <> label <> ")",
-             property (runHH (checkLaw transD (diamondUnit law)) =<< forAllWith dispD $ genX1'')
+             property (runHH (checkLaw transD (diamondUnit law)) =<< forAllWith dispD genX1'')
            ),
            ( "star unit (" <> label <> ")",
-             property (runHH (checkLaw transS (starUnit law)) =<< forAllWith dispS $ genX2'')
+             property (runHH (checkLaw transS (starUnit law)) =<< forAllWith dispS genX2'')
            ),
            ( "unit (" <> label <> ")",
-             property (runHH (checkLaw transD (unit' law)) =<< forAllWith dispD $ genX1'')
+             property (runHH (checkLaw transD (unit' law)) =<< forAllWith dispD genX1'')
            )
          ]
 

@@ -50,3 +50,5 @@ instance
 
 (<) :: (ElementaryTopos c, Quasiorder c a) => a `c` Exp c a (Class c)
 (<) = curry lt
+
+infix 4 <

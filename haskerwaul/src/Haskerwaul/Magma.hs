@@ -150,6 +150,8 @@ instance Magma (:-) (&) (() :: Constraint) where
   a `c` b
 f . g = runDT op (Procompose f g)
 
+infixr 9 .
+
 -- | All `Base.Category` instances are also `Haskerwaul.Magmoid.Magmoid`
 --   instances.
 instance
