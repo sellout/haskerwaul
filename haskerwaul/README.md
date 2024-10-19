@@ -236,7 +236,7 @@ Type class instances are imported transitively, and thus changing them can impac
 
 This is a consequence of instances being transitively imported. A new major version of a dependency can remove instances, and that can break downstream clients that unwittingly depended on those instances.
 
-A library MAY declare that it always bumps the `A` component when it removes an instance (as this policy dictates). In that case, only `A` widenings need to induce `A` bumps. `B` widenings can be `D` bumps like other widenings, Alternatively, one may compare the APIs when widening a dependency range, and if no instances have been removed, make it a `D` bump.
+A library _may_ declare that it always bumps the `A` component when it removes an instance (as this policy dictates). In that case, only `A` widenings need to induce `A` bumps. `B` widenings can be `D` bumps like other widenings, Alternatively, one may compare the APIs when widening a dependency range, and if no instances have been removed, make it a `D` bump.
 
 ### breaking changes (increments `B`)
 
@@ -251,6 +251,10 @@ Making a license more restrictive may prevent clients from being able to continu
 #### adding a dependency
 
 A new dependency may make it impossible to find a solution in the face of other packages dependency ranges.
+
+#### any change to fixity
+
+There is no change to fixity that can ensure it doesn’t break existing parses.
 
 ### non-breaking changes (increments `C`)
 
@@ -271,6 +275,12 @@ This is fairly uncommon, in the face of `^>=`-style ranges, but it can happen in
 We disagree with this because packages shouldn’t be _publishing_ with `-Werror`. The intent of deprecation is to indicate that some API _will_ change. To make that signal a major change itself defeats the purpose. You want people to start seeing that warning as soon as possible. The major change occurs when you actually remove the old API.
 
 Yes, in development, `-Werror` is often (and should be) used. However, that just helps developers be aware of deprecations more immediately. They can always add `-Wwarn=deprecation` in some scope if they need to avoid updating it for the time being.
+
+## licensing
+
+This package is licensed under [The GNU AGPL 3.0 or later](./LICENSE). If you need a license for usage that isn’t covered under the AGPL, please contact [Greg Pfeil](mailto:greg@technomadic.org?subject=licensing%20no-recursion).
+
+You should review the [license report](docs/license-report.md) for details about dependency licenses.
 
 ## comparisons
 

@@ -13,7 +13,7 @@ If this provided exactly the same API as base, there wouldn’t be much point to
 
 #### type classes
 
-The type classes provided by this package are generally constrained aliases of the type classes provided by Haskerwaul. This means that the “methods” aren’t, which affects how things are imported. E.g., if you tend to do
+The type classes provided by this package are generally constrained aliases of the type classes provided by Haskerwaul. This means that the “methods” aren’t, which affects how things are imported. For example, if you tend to do
 
 ```haskell
 import Data.Semigroup (Semigroup((<>)))
@@ -116,3 +116,9 @@ This is fairly uncommon, in the face of `^>=`-style ranges, but it can happen in
 We disagree with this because packages shouldn’t be _publishing_ with `-Werror`. The intent of deprecation is to indicate that some API _will_ change. To make that signal a major change itself defeats the purpose. You want people to start seeing that warning as soon as possible. The major change occurs when you actually remove the old API.
 
 Yes, in development, `-Werror` is often (and should be) used. However, that just helps developers be aware of deprecations more immediately. They can always add `-Wwarn=deprecation` in some scope if they need to avoid updating it for the time being.
+
+## licensing
+
+This package is licensed under [The GNU AGPL 3.0 or later](./LICENSE). If you need a license for usage that isn’t covered under the AGPL, please contact [Greg Pfeil](mailto:greg@technomadic.org?subject=licensing%20no-recursion).
+
+You should review the [license report](docs/license-report.md) for details about dependency licenses.
