@@ -35,10 +35,11 @@
     flaky-haskell,
     nixpkgs,
     self,
+    systems,
   }: let
     pname = "haskerwaul";
 
-    supportedSystems = flaky.lib.defaultSystems;
+    supportedSystems = import systems;
 
     cabalPackages = pkgs: hpkgs:
       flaky-haskell.lib.cabalProject2nix
@@ -106,7 +107,8 @@
           supportedSystems);
 
       lib = {
-        nixifyGhcVersion = version: "ghc" + nixpkgs.lib.replaceStrings ["."] [""] version;
+        nixifyGhcVersion = version:
+          "ghc" + nixpkgs.lib.replaceStrings ["."] [""] version;
 
         ## TODO: Extract this automatically from `pkgs.haskellPackages`.
         defaultGhcVersion = "9.6.5";
@@ -162,9 +164,6 @@
           ];
       };
     }
-    ## NB: This uses `eachSystem defaultSystems` instead of `eachDefaultSystem`
-    ##     because users often have to locally replace `defaultSystems` with
-    ##     their specific system to avoid issues with IFD.
     // flake-utils.lib.eachSystem supportedSystems
     (system: let
       pkgs = import nixpkgs {
@@ -212,7 +211,7 @@
           hpkgs.haskell-language-server);
 
       projectConfigurations =
-        flaky.lib.projectConfigurations.default {inherit pkgs self;};
+        flaky.lib.projectConfigurations.haskell {inherit pkgs self;};
 
       checks = self.projectConfigurations.${system}.checks;
       formatter = self.projectConfigurations.${system}.formatter;
@@ -224,6 +223,7 @@
 
     flake-utils.follows = "flaky/flake-utils";
     nixpkgs.follows = "flaky/nixpkgs";
+    systems.follows = "flaky/systems";
 
     flaky-haskell = {
       inputs.flaky.follows = "flaky";
