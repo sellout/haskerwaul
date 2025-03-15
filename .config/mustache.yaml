@@ -1,8 +1,10 @@
-{"project":{
-  "description":"This library gives an extremely abstract presentation of various CT and abstract algebra concepts.",
-  "name":"haskerwaul",
-  "repo":"sellout/haskerwaul",
-  "summary":"Category-parametric programming",
-  },
-  "type":{"name":"haskell"}
+{
+  "project":
+    {
+      "description": "This library gives an extremely abstract presentation of various CT and abstract algebra concepts.",
+      "name": "haskerwaul",
+      "repo": "sellout/haskerwaul",
+      "summary": "Category-parametric programming",
+    },
+  "type": { "name": "haskell" },
 }
