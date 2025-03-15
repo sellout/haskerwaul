@@ -10,3 +10,5 @@ and this project adheres to the [Haskell Package Versioning Policy](https://pvp.
 ### Added
 
 - initial release of this package
+
+[0.1.0.0]: https://github.com/sellout/haskerwaul/releases/tag/v0..1.0.0
