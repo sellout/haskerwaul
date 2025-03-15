@@ -70,21 +70,23 @@
       # - NixOS/nixpkgs#26561
       # - https://discourse.nixos.org/t/nix-haskell-development-2020/6170
       overlays = {
-        default = final: prev:
-          flaky-haskell.lib.overlayHaskellPackages
-          (map self.lib.nixifyGhcVersion
-            (self.lib.supportedGhcVersions final.system))
-          (final: prev:
-            nixpkgs.lib.composeManyExtensions [
-              ## TODO: I think this overlay is only needed by formatters,
-              ##       devShells, etc., so it shouldn’t be included in the
-              ##       standard overlay.
-              (flaky.overlays.haskellDependencies final prev)
-              (self.overlays.haskell final prev)
-              (self.overlays.haskellDependencies final prev)
-            ])
-          final
-          prev;
+        default = final:
+          nixpkgs.lib.composeManyExtensions [
+            flaky.overlays.default
+            (flaky-haskell.lib.overlayHaskellPackages
+              (map self.lib.nixifyGhcVersion
+                (self.lib.supportedGhcVersions final.system))
+              (final: prev:
+                nixpkgs.lib.composeManyExtensions [
+                  ## TODO: I think this overlay is only needed by formatters,
+                  ##       devShells, etc., so it shouldn’t be included in the
+                  ##       standard overlay.
+                  (flaky.overlays.haskellDependencies final prev)
+                  (self.overlays.haskell final prev)
+                  (self.overlays.haskellDependencies final prev)
+                ]))
+          ]
+          final;
 
         haskell = flaky-haskell.lib.haskellOverlay cabalPackages;
 
@@ -94,13 +96,21 @@
         haskellDependencies = final: prev: hfinal: hprev: {};
       };
 
-      homeConfigurations =
+      homeConfigurations = let
+        haskerwaul = self;
+      in
         builtins.listToAttrs
         (builtins.map
           (flaky.lib.homeConfigurations.example self [
             ({pkgs, ...}: {
+              nixpkgs.overlays = [haskerwaul.overlays.default];
               home.packages = [
-                (pkgs.haskellPackages.ghcWithPackages (hpkgs: [hpkgs.${pname}]))
+                (pkgs.haskellPackages.ghcWithPackages (hpkgs: [
+                  hpkgs.haskerwaul
+                  hpkgs.haskerwaul-base
+                  hpkgs.haskerwaul-hedgehog
+                  hpkgs.haskerwaul-trample
+                ]))
               ];
             })
           ])
