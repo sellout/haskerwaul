@@ -9,8 +9,8 @@
       "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
     ];
     ## Isolate the build.
-    registries = false;
     sandbox = "relaxed";
+    use-registries = false;
   };
 
   ### This is a complicated flake. Here’s the rundown:
@@ -70,21 +70,23 @@
       # - NixOS/nixpkgs#26561
       # - https://discourse.nixos.org/t/nix-haskell-development-2020/6170
       overlays = {
-        default = final: prev:
-          flaky-haskell.lib.overlayHaskellPackages
-          (map self.lib.nixifyGhcVersion
-            (self.lib.supportedGhcVersions final.system))
-          (final: prev:
-            nixpkgs.lib.composeManyExtensions [
-              ## TODO: I think this overlay is only needed by formatters,
-              ##       devShells, etc., so it shouldn’t be included in the
-              ##       standard overlay.
-              (flaky.overlays.haskellDependencies final prev)
-              (self.overlays.haskell final prev)
-              (self.overlays.haskellDependencies final prev)
-            ])
-          final
-          prev;
+        default = final:
+          nixpkgs.lib.composeManyExtensions [
+            flaky.overlays.default
+            (flaky-haskell.lib.overlayHaskellPackages
+              (map self.lib.nixifyGhcVersion
+                (self.lib.supportedGhcVersions final.system))
+              (final: prev:
+                nixpkgs.lib.composeManyExtensions [
+                  ## TODO: I think this overlay is only needed by formatters,
+                  ##       devShells, etc., so it shouldn’t be included in the
+                  ##       standard overlay.
+                  (flaky.overlays.haskellDependencies final prev)
+                  (self.overlays.haskell final prev)
+                  (self.overlays.haskellDependencies final prev)
+                ]))
+          ]
+          final;
 
         haskell = flaky-haskell.lib.haskellOverlay cabalPackages;
 
@@ -94,13 +96,21 @@
         haskellDependencies = final: prev: hfinal: hprev: {};
       };
 
-      homeConfigurations =
+      homeConfigurations = let
+        haskerwaul = self;
+      in
         builtins.listToAttrs
         (builtins.map
           (flaky.lib.homeConfigurations.example self [
             ({pkgs, ...}: {
+              nixpkgs.overlays = [haskerwaul.overlays.default];
               home.packages = [
-                (pkgs.haskellPackages.ghcWithPackages (hpkgs: [hpkgs.${pname}]))
+                (pkgs.haskellPackages.ghcWithPackages (hpkgs: [
+                  hpkgs.haskerwaul
+                  hpkgs.haskerwaul-base
+                  hpkgs.haskerwaul-hedgehog
+                  hpkgs.haskerwaul-trample
+                ]))
               ];
             })
           ])
@@ -111,7 +121,7 @@
           "ghc" + nixpkgs.lib.replaceStrings ["."] [""] version;
 
         ## TODO: Extract this automatically from `pkgs.haskellPackages`.
-        defaultGhcVersion = "9.6.5";
+        defaultGhcVersion = "9.6.6";
 
         ## Test the oldest revision possible for each minor release. If it’s not
         ## available in nixpkgs, test the oldest available, then try an older
@@ -162,16 +172,23 @@
             "9.6.5"
             "9.8.2"
           ];
+
+        githubSystems = [
+          "macos-13" # x86_64-darwin
+          "macos-14" # aarch64-darwin
+          "ubuntu-24.04" # x86_64-linux
+          "windows-2022"
+        ];
       };
     }
     // flake-utils.lib.eachSystem supportedSystems
     (system: let
-      pkgs = import nixpkgs {
-        inherit system;
-        ## NB: This uses `self.overlays.default` because packages need to
-        ##     be able to find other packages in this flake as dependencies.
-        overlays = [self.overlays.default];
-      };
+      pkgs = nixpkgs.legacyPackages.${system}.appendOverlays [
+        flaky.overlays.default
+        ## NB: This uses `self.overlays.default` because packages need to be
+        ##     able to find other packages in this flake as dependencies.
+        self.overlays.default
+      ];
     in {
       packages =
         {
@@ -188,6 +205,7 @@
           default =
             self.devShells.${system}.${self.lib.nixifyGhcVersion self.lib.defaultGhcVersion};
         }
+        // self.projectConfigurations.${system}.devShells
         // flaky-haskell.lib.mkDevShells
         pkgs
         (map self.lib.nixifyGhcVersion (self.lib.supportedGhcVersions system))
