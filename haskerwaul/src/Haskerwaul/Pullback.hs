@@ -10,7 +10,8 @@ import Haskerwaul.Object
 --
 -- - [nLab](https://ncatlab.org/nlab/show/pullback)
 -- - [Wikipedia](https://en.wikipedia.org/wiki/Pullback_(category_theory))
-data PullbackSquare c t x y = forall a.
+data PullbackSquare c t x y
+  = forall a.
   PullbackSquare
   { lx :: t x y `c` x,
     ly :: t x y `c` y,
